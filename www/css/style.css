@@ -1,0 +1,24 @@
+/* Empty. Add your own CSS if you like */
+.nav-bar-block, .bar {
+  background-color: #00b9be !important;
+}
+
+.button-white {
+  color: #ffffff !important;
+}
+
+.title {
+  color: #ffffff !important;
+  font-weight: 100 !important;
+  color: white !important;
+  text-align: center !important;
+}
+
+.toggle input:checked + .track {
+  border-color: #00b9be !important;
+  background-color: #00b9be !important;
+}
+
+h1, h2, h3, p, span, button, ion-item, ion-content, .title {
+  font-family: "Helvetica Neue";
+}

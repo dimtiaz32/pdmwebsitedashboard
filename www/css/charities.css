@@ -1,0 +1,100 @@
+.col.top {
+  color:  #00b9be;
+  text-align: center;
+  font-size: large;
+  font-family: "HelveticaNeue-Light";
+}
+
+.col.col-33 {
+  background-image: url("../img/TeensRunDC.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+hr {
+  margin: 0px;
+}
+
+/* Expanding cell stuff*/
+.list .item.item-accordion {
+
+  padding-top: 0;
+  padding-bottom: 0;
+  transition: .1s all linear;
+
+  background-color: white;
+
+  overflow: initial;
+  white-space: initial;
+
+}
+
+.list .item.item-accordion.ng-hide {
+  line-height: 0px;
+
+  background-color: white;
+}
+
+.list .item.item-accordion.ng-hide-add,
+.list .item.item-accordion.ng-hide-remove {
+  display: block !important;
+
+}
+
+.list .item.item-stable {
+  text-align: center;
+  background-color: white;
+  border: none;
+}
+
+
+div.col.col-50 {
+  overflow: hidden;
+}
+
+.row {
+  overflow: hidden;
+}
+
+p.money {
+  text-align: center;
+  font-size: large;
+}
+
+p.small {
+  font-size: large;
+  font-family: "HelveticaNeue-Light";
+  font-weight: lighter;
+}
+
+button.button-slide-up {
+  background-image: url("../img/pull down grey bar straight.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: white;
+  border: none;
+  display: block;
+
+  width: 100%;
+  height: 0.8vh;
+
+  margin-bottom: 3px;
+}
+
+button.button-slide-down {
+  background-image: url("../img/pull down grey bar.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: white;
+  border: none;
+  display: block;
+
+  width: 100%;
+  height: 1.5vh;
+
+  margin-bottom: 3px;
+}
+
