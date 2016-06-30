@@ -35,7 +35,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     views: {
       'auth-signin':{
         templateUrl: 'templates/auth-signin.html',
-        controller: 'AppCtrl'
+        controller: 'LoginCtrl'
       }
     }
   })
