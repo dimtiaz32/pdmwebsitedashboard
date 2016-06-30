@@ -29,7 +29,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     abstract: true,
     templateUrl: "templates/auth.html"
   })
-    
+
   .state('auth.signin', {
     url:'/signin',
     views: {
@@ -75,9 +75,25 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     }
   })
 
+  .state('app.mySponsors',{
+    url:'/mySponsors',
+    views:{
+      'menuContent':{
+        templateUrl:'templates/mySponsors.html',
+        controller: 'MySponsorsCtrl'
+      }
+    }
+  })
 
-
-
+  .state('app.myPledges',{
+    url:'/myPledges',
+    views:{
+      'menuContent':{
+        templateUrl:'templates/myPledges.html',
+        controller: 'MyPledgesCtrl'
+      }
+    }
+  })
 
   .state('app.search', {
     url: '/search',

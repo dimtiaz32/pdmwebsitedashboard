@@ -190,6 +190,13 @@ angular.module('starter.controllers', ['starter.appServices', 'starter.charitySe
     };
   })
 
+.controller('MySponsorsCtrl',function($scope){
+
+})
+
+.controller('MyPledgesCtrl',function($scope){
+  
+})
 
 .controller('PlaylistsCtrl', function($scope) {
   $scope.playlists = [
