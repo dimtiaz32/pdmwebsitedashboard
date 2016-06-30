@@ -3,7 +3,7 @@ angular.module('starter.controllers', ['starter.appServices', 'starter.charitySe
 
 
 
-  .controller('SignUpCtrl', function($scope, $rootScope, $ionicModal, $timeout, AuthAPI){
+  .controller('SignUpCtrl', function($scope, $rootScope, $ionicModal, $timeout, AuthAPI, $window){
     $scope.user = {
       firstName: "",
       lastName: "",
@@ -63,9 +63,9 @@ angular.module('starter.controllers', ['starter.appServices', 'starter.charitySe
         password: password
       }).success(function (data, status, headers, config){
         //TODO: FIND OUT HOW TO SEPARATE THE TOKEN FROM THE RETURNED OBJECT AND SET AS TOKEN
-        $rootScope.setToken(token);
+
         $rootScope.hide();
-        $window.location.href  = ('#/app/run');
+        $window.location.href  = ('#/app/charities');
       })
         .error(function(error){
           $rootScope.hide();
