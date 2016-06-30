@@ -4,8 +4,12 @@
 <ion-content class="has-header padding">
    <div class="list">
       <label class="item item-input">
-      <span class="input-label">Name</span>
-      <input type="text" ng-model="user.name">
+      <span class="input-label">First Name</span>
+      <input type="text" ng-model="user.firstName">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Last Name</span>
+        <input type="text" ng-mode="user.lastName">
       </label>
       <label class="item item-input">
       <span class="input-label">Email</span>
@@ -15,6 +19,10 @@
       <span class="input-label">Password</span>
       <input type="password" ng-model="user.password">
       </label>
+     <label class="item item-input">
+       <span class="input-label">Verify Password</span>
+       <input type="password" ng-model="secondPassword.password" ng-required="">
+     </label>
       <label class="item item-input">
       <button class="button button-block button-positive" ng-click="createUser()">
       Sign Up

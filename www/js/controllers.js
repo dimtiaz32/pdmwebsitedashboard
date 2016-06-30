@@ -1,6 +1,123 @@
-angular.module('starter.controllers', ['starter.appServices', 'starter.charityServices'])
+angular.module('starter.controllers', ['starter.appServices', 'starter.charityServices', 'starter.authServices'])
 
 
+
+
+  .controller('SignUpCtrl', function($scope, $rootScope, $ionicModal, $timeout, AuthAPI){
+    $scope.user = {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: ""
+    };
+
+    $scope.secondPassword = {
+      password:""
+    };
+
+
+    $scope.verifyPassword = function(){
+      var password = this.user.password;
+      var passwordCheck = this.secondPassword.password;
+      var match;
+
+      if (password === passwordCheck){
+        $rootScope.notify("Passwords Match!");
+        console.log("Passwords match!");
+        match = true;
+      } else {
+        $rootScope.notify("Passwords do not match. Please reenter your password");
+        console.log("Error: Passwords do not match");
+        match = false;
+      }
+
+      $rootScope.show("Registering your dreamrun....");
+
+
+    };
+    $scope.createUser = function(){
+      var firstName = this.user.firstName;
+      var lastName = this.user.lastName;
+      var email  =  this.user.email;
+      var password = this.user.password;
+
+      if(!firstName){
+        $rootScope.notify("Please enter a valid first name");
+        console.log("createUser failed: invalid first name");
+      } else if(!lastName){
+        $rootScope.notify("Please enter a valid last name");
+        console.log("createUser failed: invalid last name")
+      } else if(!email){
+        $rootScope.notify("Please enter a valid email address");
+        console.log("createUser failed: invalid email");
+      } else if(!password){
+        $rootScope.notify("Please enter a valid password");
+        console.log("createUser failed: invalid password");
+      }
+
+      $rootScope.notify("Register your account:)");
+      AuthAPI.signup({
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: password
+      }).success(function (data, status, headers, config){
+        //TODO: FIND OUT HOW TO SEPARATE THE TOKEN FROM THE RETURNED OBJECT AND SET AS TOKEN
+        $rootScope.setToken(token);
+        $rootScope.hide();
+        $window.location.href  = ('#/app/run');
+      })
+        .error(function(error){
+          $rootScope.hide();
+          if(error.error && error.error.code == 11000){
+            $rootScope.notify("This email is already in use");
+            console.log("could not register user: email already in use ");
+          } else {
+            $rootScope.notify("An error has occured. Please try again");
+          }
+        });
+    }
+  })
+.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+
+  // With the new view caching in Ionic, Controllers are only called
+  // when they are recreated or on app start, instead of every page change.
+  // To listen for when this page is active (for example, to refresh data),
+  // listen for the $ionicView.enter event:
+  //$scope.$on('$ionicView.enter', function(e) {
+  //});
+
+  // Form data for the login modal
+  $scope.loginData = {};
+
+  // Create the login modal that we will use later
+  $ionicModal.fromTemplateUrl('templates/auth-signin.html', {
+    scope: $scope
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+
+  // Triggered in the login modal to close it
+  $scope.closeLogin = function() {
+    $scope.modal.hide();
+  };
+
+  // Open the login modal
+  $scope.login = function() {
+    $scope.modal.show();
+  };
+
+  // Perform the login action when the user submits the login form
+  $scope.doLogin = function() {
+    console.log('Doing login', $scope.loginData);
+
+    // Simulate a login delay. Remove this and replace with your login
+    // code if using a login system
+    $timeout(function() {
+      $scope.closeLogin();
+    }, 1000);
+  };
+})
 
   .controller('CharitiesCtrl', function($rootScope, $timeout, $ionicModal, $window, $scope, CharityAPI){
     $scope.isCharityDetailDisplayed = false;
@@ -14,7 +131,7 @@ angular.module('starter.controllers', ['starter.appServices', 'starter.charitySe
 
     $scope.list = [];
 
-    
+
 
 
     $scope.toggleCharity = function() {
@@ -73,47 +190,6 @@ angular.module('starter.controllers', ['starter.appServices', 'starter.charitySe
     };
   })
 
-
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
-
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-
-  // Form data for the login modal
-  $scope.loginData = {};
-
-  // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/auth-signin.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
-
-  // Triggered in the login modal to close it
-  $scope.closeLogin = function() {
-    $scope.modal.hide();
-  };
-
-  // Open the login modal
-  $scope.login = function() {
-    $scope.modal.show();
-  };
-
-  // Perform the login action when the user submits the login form
-  $scope.doLogin = function() {
-    console.log('Doing login', $scope.loginData);
-
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
-      $scope.closeLogin();
-    }, 1000);
-  };
-})
 
 .controller('PlaylistsCtrl', function($scope) {
   $scope.playlists = [
