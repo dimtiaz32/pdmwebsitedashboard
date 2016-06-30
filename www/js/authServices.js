@@ -27,6 +27,7 @@ angular.module('starter.authServices', [])
   };
 
   $rootScope.getToken = function(token){
+    //TODO: TRY PASSING A JSON CALL TO GET TOKEN AND SET IT HERE. MIGHT BE A BAD IDEA SECURITY WISE?
     return $window.localStorage.token;
   };
 

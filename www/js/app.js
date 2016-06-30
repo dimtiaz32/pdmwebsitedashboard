@@ -29,13 +29,13 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     abstract: true,
     templateUrl: "templates/auth.html"
   })
-    
+
   .state('auth.signin', {
     url:'/signin',
     views: {
       'auth-signin':{
         templateUrl: 'templates/auth-signin.html',
-        controller: 'AppCtrl'
+        controller: 'LoginCtrl'
       }
     }
   })

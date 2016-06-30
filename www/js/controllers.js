@@ -78,6 +78,45 @@ angular.module('starter.controllers', ['starter.appServices', 'starter.charitySe
         });
     }
   })
+
+  .controller('LoginCtrl', function($scope, $rootScope, $timeout, AuthAPI, $window){
+
+    $scope.user = {
+      email: "",
+      password: ""
+    };
+
+
+
+    $scope.login = function(){
+      var email = this.user.email;
+      var password = this.user.password;
+
+      if(!email){
+        $rootScope.notify("Login failed. Please enter a valid email address");
+        console.log("Invalid text in email field");
+      } else if(!password){
+        $rootScope.notify("Login failed. Please enter a valid password");
+        console.log("Invalid text in password field");
+      }
+
+      AuthAPI.signin({
+        email: email,
+        password: password
+      })
+        .success(function(data, status, headers, config){
+          $rootScope.hide();
+          $window.location.href=('#/app/run');
+        })
+        .error(function(error){
+          $rootScope.hide();
+          $rootScope.notify("Invalid username or password");
+        });
+    }
+
+  })
+
+
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
   // With the new view caching in Ionic, Controllers are only called
@@ -87,36 +126,7 @@ angular.module('starter.controllers', ['starter.appServices', 'starter.charitySe
   //$scope.$on('$ionicView.enter', function(e) {
   //});
 
-  // Form data for the login modal
-  $scope.loginData = {};
 
-  // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/auth-signin.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
-
-  // Triggered in the login modal to close it
-  $scope.closeLogin = function() {
-    $scope.modal.hide();
-  };
-
-  // Open the login modal
-  $scope.login = function() {
-    $scope.modal.show();
-  };
-
-  // Perform the login action when the user submits the login form
-  $scope.doLogin = function() {
-    console.log('Doing login', $scope.loginData);
-
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
-      $scope.closeLogin();
-    }, 1000);
-  };
 })
 
   .controller('CharitiesCtrl', function($rootScope, $timeout, $ionicModal, $window, $scope, CharityAPI){
