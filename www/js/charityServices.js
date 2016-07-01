@@ -84,12 +84,9 @@ angular.module('starter.charityServices', ['ionic'])
         }
       });
     },
-    saveCharity: function(token, form){
+    saveCharity: function(form){
       return $http.post(base+'/charities', form, {
-        method: 'POST',
-        params: {
-          token: token
-        }
+        method: 'POST'
       });
     }
   }

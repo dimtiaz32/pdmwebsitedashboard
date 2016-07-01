@@ -31,7 +31,7 @@ angular.module('starter.controllers', ['starter.appServices', 'starter.charitySe
         match = false;
       }
 
-      $rootScope.show("Registering your dreamrun....");
+      $rootScope.show("Passwords match....");
 
 
     };
@@ -116,7 +116,31 @@ angular.module('starter.controllers', ['starter.appServices', 'starter.charitySe
 
   })
 
+  .controller('SignOutCtrl', function($scope, $rootScope, $localStorage, $timeout, AuthAPI, $window){
+    $scope.logout = function(){
+      $rootScope.notify("Logging the user out");
+      console.log("Logout function activated");
+      var token = $localStorage.getToken();
+      AuthAPI.signout({token: token})
+        .sucess(function(){
+          $rootScope.hide();
+          $scope.removeProfile();
 
+          $window.location.href = ('#/auth/signin');
+          console.log("Signout successful")
+        })
+        .error(function(error){
+            $rootScope.notify("Error logging out: " + error.error);
+            console.log("Error loggin out: " + error.error);
+        });
+    }
+
+    $scope.removeProfile = function(){
+      $localStorage.removeProfile();
+
+    }
+
+  })
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
   // With the new view caching in Ionic, Controllers are only called
@@ -192,6 +216,7 @@ angular.module('starter.controllers', ['starter.appServices', 'starter.charitySe
         .success(function(data, status, headers, config){
           $rootScope.hide();
           //$rootScope.doRefresh(1);
+          $window.location.href = ('#/app/charities');
         })
         .error(function(data, status, headers, config, err){
           $rootScope.hide();
