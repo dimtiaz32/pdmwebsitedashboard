@@ -1,0 +1,153 @@
+/*Three bubbles*/
+
+
+.left-bubble-box {
+
+  width: 33%;
+  display: inline-block;
+
+  position: absolute;
+  top: 10vw;
+  left: 2vw;
+
+}
+
+.center-bubble-box {
+  width: 33%;
+  display: inline-block;
+
+  position: absolute;
+  left: 30vw;
+
+  z-index: 10;
+}
+
+.right-bubble-box {
+  width: 33%;
+  display: inline-block;
+
+  position: absolute;
+  left: 57vw;
+  top: 10vw;
+}
+
+.left-bubble {
+
+  background-image: url("../img/BackgroundCircleDark.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: relative;
+
+
+  width: 100%;
+  height: 0;
+  padding-top: 100%;
+
+  font-family: "HelveticaNeue-Light";
+  text-align: center;
+
+  /*
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    */
+  display: inline-block;
+}
+
+.center-bubble {
+  background-image: url("../img/BackgroundCircleLight.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: relative;
+
+  width: 100%;
+  height: 0;
+  padding-top: 100%;
+
+  font-family: "HelveticaNeue-Light";
+  text-align: center;
+  display: flex;
+
+  display: inline-block;
+}
+
+.right-bubble {
+  background-image: url("../img/BackgroundCircleDark.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: relative;
+
+  width: 100%;
+  height: 0;
+  padding-top: 100%;
+
+  font-family: "HelveticaNeue-Light";
+  text-align: center;
+
+
+  display: inline-block;
+}
+
+.bubble-wrapper {
+  position: relative;
+  margin: auto;
+  width: 95%;
+  height: 30vh;
+}
+
+.week-buttons-wrapper {
+  text-align: center;
+}
+
+div.week-label {
+
+}
+
+ion-content.chart-view {
+  position: relative;
+}
+
+div.bubble-text {
+  position: absolute;
+  text-align: center;
+  align-content: center;
+  top: 20%;
+  left: 20%;
+}
+
+span {
+  position: absolute;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+
+p {
+  font-family: "HelveticaNeue-Light";
+  text-align: center;
+}
+
+button {
+  background-image: url("../img/left arrow.png");
+  background-size: contain;
+  background: no-repeat;
+  border: none;
+  height:10%;
+  width: 5%;
+  background-color: white;
+
+}
+
+button.button.right-button {
+  background-image: url("../img/right arrow.png");
+  background-position: center;
+  background-color: white;
+
+
+}
+
+button.button.left-button {
+  background-image: url("../img/left arrow.png");
+  background-position: center;
+  background-color: white;
+}

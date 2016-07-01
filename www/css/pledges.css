@@ -1,0 +1,117 @@
+.sponsor-header {
+  background-image: url("../img/User Header Background.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+
+  width: 100%;
+
+
+  text-align: center;
+  display: inline-block;
+}
+
+.col {
+  background-color: transparent;
+}
+
+.col.col-50.image {
+  background-image: url("../img/Avatar.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
+}
+
+.col.col-67 {
+  color: white;
+  font-family: "HelveticaNeue-Light";
+  font-size: 1.5em;
+
+  text-align: left;
+}
+.col.col-33 {
+  color: white;
+  font-family: "HelveticaNeue-Light";
+  font-size: .65em;
+
+  font-weight: thin;
+  line-height: 100%;
+  text-align: right;
+}
+
+h2 {
+  font-family: "HelveticaNeue-Light";
+  font-weight: thin;
+  font-size: 2em;
+
+  color: white;
+  text-align: center;
+
+  margin: auto;
+}
+
+.wrapper {
+  width: 100vw;
+  height: 100vh;
+}
+
+.button.button-small.button-clear.button-PDMLight {
+  color: #00b9be; /*PDMLight color*/
+  font-size: 1em;
+  font-weight: thick;
+}
+
+.button.button-clear.button-sponsor-help {
+  color: #00b9be; /*PDMLight color*/
+  font-size: 1em;
+  font-weight: thick;
+  text-align: center;
+  margin: auto;
+}
+
+hr {
+  background-color: #00b9be;
+  color: #00b9be;
+  padding: none;
+  height: 3px;
+  border: none;
+  margin: 0px;
+}
+
+h3 {
+  font-family: "HelveticaNeue-Light";
+  font-size: 1.5em;
+  font-weight: thin;
+  text-align: left;
+}
+
+.col.pledge {
+  text-align: right;
+  line-height: 80%;
+}
+p.pledge {
+  font-family: "Helvetica Neue";
+  font-weight: bold;
+  color: black;
+  text-align: right;
+
+}
+p.ending-date {
+  font-family: "HelveticaNeue-Light";
+  font-weight: thin;
+  font-size: .9em;
+  text-align: right;
+
+}
+
+a.item.item-icon-left {
+  font-family: "HelveticaNeue-Light";
+  height: 100%;
+}
+
+.cell-vertical-center-text {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
