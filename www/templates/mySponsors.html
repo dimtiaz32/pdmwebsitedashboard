@@ -15,7 +15,7 @@
     </div>
   -->
     <ion-content class="has-header">
-
+      <ion-refresher ng-hide="noData || incomplete" on-refresh="doRefresh('2')"></ion-refresher>
       <div class="wrapper">
 
         <div class="sponsor-header">
@@ -51,21 +51,21 @@
         </div>
         <hr>
         <div class="list">
-
           <!-- use this template for all the cells-->
-          <a class="item item-icon-left">
+          <a class="item item-icon-left" ng-repeat="item in list">
 
-            <span class="cell-vertical-center-text">Albert Salamander</span>
+            <span class="cell-vertical-center-text">{{ item.donor.firstName }} {{item.donor.lastName}}</span>
 
               <span class="item-note">
-                <p class="pledge">10¢/mile</p>
-                <p class="ending-date">Sept 13</p>
+                <p class="pledge">{{ item.per_mile_donation }}¢/mile</p>
+                <p class="ending-date">{{ item.end_date }}</p>
               </span>
           </a>
-
-          <button class="button button-block button-clear button-sponsor-help">Need Help Getting Sponsors?</button>
-
         </div>
+        <span ng-show="noData">
+            No Sponsor now.
+        </span>
+        <button class="button button-block button-clear button-sponsor-help">Need Help Getting Sponsors?</button>
 
 
 

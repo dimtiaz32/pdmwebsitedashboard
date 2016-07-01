@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['starter.appServices', 'starter.charityServices', 'starter.authServices'])
+angular.module('starter.controllers', ['starter.appServices', 'starter.charityServices', 'starter.authServices','starter.sponsorServices'])
 
 
 
@@ -200,12 +200,32 @@ angular.module('starter.controllers', ['starter.appServices', 'starter.charitySe
     };
   })
 
-.controller('MySponsorsCtrl',function($scope){
+.controller('MySponsorsCtrl',function($rootScope, $scope, SponsorAPI){
+
+    $rootScope.$on('fetchCompleted', function(){
+        SponsorAPI.getAll($rootScope.getToken(),"userId").success(function(data, status, headers, config){
+            $scope.list = [];
+            for (var i = 0; i < data.length; i++) {
+                $scope.list.push(data[i]);
+            };
+
+            if(data.length == 0) {
+                $scope.noData = true;
+            } else {
+                $scope.noData = false;
+            }
+
+        }).error(function(data, status, headers, config){
+            $rootScope.notify("Oops something went wrong!! Please try again later");
+        });
+
+    });
+
 
 })
 
 .controller('MyPledgesCtrl',function($scope){
-  
+
 })
 
 .controller('PlaylistsCtrl', function($scope) {
