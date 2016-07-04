@@ -1,4 +1,9 @@
-angular.module('starter.controllers', ['starter.appServices', 'starter.charityServices', 'starter.authServices','starter.sponsorServices'])
+angular.module('starter.controllers', ['starter.appServices',
+  'starter.charityServices',
+  'starter.authServices',
+  'starter.sponsorServices',
+  'starter.runServices'
+])
 
 
 
@@ -141,7 +146,34 @@ angular.module('starter.controllers', ['starter.appServices', 'starter.charitySe
     }
 
   })
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+
+  .controller('RunCtrl', function($scope, $rootScope, $ionicLoading, RunAPI){
+    $scope.mapCreated = function(map){
+      $scope.map = map;
+    };
+
+    $scope.centerOnMe = function(){
+      console.log("Centering");
+      if(!$scope.map){
+        return;
+      }
+
+      $scope.loading = $ionicLoading.show({
+        content: 'Getting current location',
+        showBackdrop: false
+      });
+
+      navigator.geolocation.getCurrentPosition(function(pos){
+        console.log('Got pos', pos);
+        $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+        $scope.loading.hide();
+      }, function(error){
+        alert('Unable to get location: ' + error.message);
+      });
+    };
+  })
+
+  .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -154,23 +186,34 @@ angular.module('starter.controllers', ['starter.appServices', 'starter.charitySe
 })
 
   .controller('CharitiesCtrl', function($rootScope, $timeout, $ionicModal, $window, $scope, CharityAPI){
-    $scope.isCharityDetailDisplayed = false;
 
-    $scope.chosenCharity = {
-      name: "Teens Run DC",
-      description: "This charity does a whole bunch of stuff for teens. Support it.",
-      moneyPastWeek: "$1.54",
-      moneyPastYear: "$234.56"
-    };
+    CharityAPI.getAll()
+      .success(function(data, status, headers, config){
+        $rootScope.show("Retrieving our list of charities...");
+        console.log("API call getAll succeeded");
 
-    $scope.list = [];
+        $scope.charityList = [];
+
+        for(var i = 0; i < data.length; i++){
+          $scope.list.push(data[i]);
+        }
+        $scope.select = function(){
+          //put code to select charity and pass id to user
+        };
+
+        $rootScope.hide();
+
+      })
+      .error(function(err){
+        $rootScope.hide();
+        $rootScope.notify("Something went wrong retrieving the list of charities");
+        console.log("Error retrieving charities");
+      });
 
 
 
 
-    $scope.toggleCharity = function() {
-      $scope.isCharityDetailDisplayed = !$scope.isCharityDetailDisplayed;
-    }
+
   })
 
 

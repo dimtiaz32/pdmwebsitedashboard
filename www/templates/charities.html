@@ -3,60 +3,73 @@
   <head>
     <link rel="stylesheet" type="text/css" href="../css/charities.css">
   </head>
-  <ion-content class="has-header">
-    <div class="row row-center">
-      <div class="col top">
-        Every mile raises {{user.perMileDonation}} for
+  <ion-content class="has-header"> <!--on-refresh="onRefresh()"-->
+      <!-- Option to add refresher to charities. Not sure its necessary-->
+      <!--<ion-refresher on-refresh="doRefresh(1)"></ion-refresher>-->
+    <ion-list>
+      <div ng-repeat="item in charityList">
+        <div class="item item-text-wrap">
+          <span>
+            {{item.charity}}
+          </span>
+        </div>
       </div>
-    </div>
-    <hr>
-
-    <ion-list>
-
-      <ion-item class="item-stable" ng-click="toggleCharity()">
-        {{chosenCharity.name}}
-      </ion-item>
-
-      <ion-item class="item-accordion item-text-wrap" ng-show="isCharityDetailDisplayed">
-
-
-        <div class="row">
-          <div class="col col-33">
-            <div class="charity-image"></div>
-          </div>
-          <div class="col col-66">
-            <p>
-              {{user.selectedCharity.description}}
-            </p>
-          </div>
-        </div>
-        <hr>
-        <div class="row">
-          <div class="col col-50">
-            <p class="small">Funds raised in the past <b>30 days</b></p>
-            <p class="money">{{chosenCharity.moneyPastWeek}}</p>
-          </div>
-          <div class="col col-50">
-            <p class="small">Total funds raised in <b>past year</b></p>
-            <p class="money">{{chosenCharity.moneyPastYear}}</p>
-          </div>
-        </div>
-
-
-      </ion-item>
-
     </ion-list>
 
-    <button class="button-slide"
-            ng-class="isCharityDetailDisplayed ? 'button-slide-down' : 'button-slide-up'"
-            ng-click="isCharityDetailDisplayed  = !isCharityDetailDisplayed ">
-    </button>
 
-    <ion-list>
-      <ion-item>
-        {{charity.name}}
-      </ion-item>
-    </ion-list>
+    <!--<div class="row row-center">-->
+      <!--<div class="col top">-->
+        <!--Every mile raises {{user.perMileDonation}} for-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<hr>-->
+
+    <!--<ion-list>-->
+
+      <!--<ion-item class="item-stable" ng-click="toggleCharity()">-->
+        <!--{{chosenCharity.name}}-->
+      <!--</ion-item>-->
+
+      <!--<ion-item class="item-accordion item-text-wrap" ng-show="isCharityDetailDisplayed">-->
+
+
+        <!--<div class="row">-->
+          <!--<div class="col col-33">-->
+            <!--<div class="charity-image"></div>-->
+          <!--</div>-->
+          <!--<div class="col col-66">-->
+            <!--<p>-->
+              <!--{{user.selectedCharity.description}}-->
+            <!--</p>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<hr>-->
+        <!--<div class="row">-->
+          <!--<div class="col col-50">-->
+            <!--<p class="small">Funds raised in the past <b>30 days</b></p>-->
+            <!--<p class="money">{{chosenCharity.moneyPastWeek}}</p>-->
+          <!--</div>-->
+          <!--<div class="col col-50">-->
+            <!--<p class="small">Total funds raised in <b>past year</b></p>-->
+            <!--<p class="money">{{chosenCharity.moneyPastYear}}</p>-->
+          <!--</div>-->
+        <!--</div>-->
+
+
+      <!--</ion-item>-->
+
+    <!--</ion-list>-->
+
+    <!--<button class="button-slide"-->
+            <!--ng-class="isCharityDetailDisplayed ? 'button-slide-down' : 'button-slide-up'"-->
+            <!--ng-click="isCharityDetailDisplayed  = !isCharityDetailDisplayed ">-->
+    <!--</button>-->
+
+    <!--<ion-list>-->
+      <!--<ion-item>-->
+        <!--{{charity.name}}-->
+      <!--</ion-item>-->
+    <!--</ion-list>-->
 
   </ion-content>
 
