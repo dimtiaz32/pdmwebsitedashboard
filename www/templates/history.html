@@ -1,0 +1,99 @@
+<ion-content class="BarCtrl">
+
+  <div class="month-slide-wrapper">
+    <ion-slide-box on-slide-changed="slideHasChanged($index)">
+      <ion-slide>
+        <div class="month-slide">January</div>
+      </ion-slide>
+      <ion-slide>
+        <div class="month-slide">February</div>
+      </ion-slide>
+      <ion-slide>
+        <div class="month-slide">March</div>
+      </ion-slide>
+      <ion-slide>
+        <div class="month-slide">April</div>
+      </ion-slide>
+      <ion-slide>
+        <div class="month-slide">May</div>
+      </ion-slide>
+      <ion-slide>
+        <div class="month-slide">June</div>
+      </ion-slide>
+      <ion-slide>
+        <div class="month-slide">July</div>
+      </ion-slide>
+      <ion-slide>
+        <div class="month-slide">August</div>
+      </ion-slide>
+      <ion-slide>
+        <div class="month-slide">September</div>
+      </ion-slide>
+      <ion-slide>
+        <div class="month-slide">October</div>
+      </ion-slide>
+      <ion-slide>
+        <div class="month-slide">November</div>
+      </ion-slide>
+      <ion-slide>
+        <div class="month-slide">December</div>
+      </ion-slide>
+    </ion-slide-box>
+  </div>
+
+  <div class="bubble-wrapper">
+
+    <div class="left-bubble-box">
+      <p class="label">Money Raised</p>
+      <p class="value">$7.80</p>
+    </div>
+
+    <div class="center-bubble-box">
+      <p class="label">Total Distance</p>
+      <p class="value">78</p>
+      <p class="units">miles</p>
+    </div>
+
+    <div class="right-bubble-box">
+      <p class="label">Average Pace</p>
+      <p class="value">7:25</p>
+      <p class="units">min:mile</p>
+    </div>
+
+  </div>
+
+  <div class="week-buttons-wrapper">
+    <div class="row">
+      <div class="col col-40" style="text-align: right">
+        <button class="button left-button"></button>
+      </div>
+      <div class="col col-20 col-center">
+        6/1 - 6/7
+      </div>
+      <div class="col col-40" style="text-align: left">
+        <button class="button right-button"></button>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <canvas id="bar" class="chart chart-bar"
+            chart-data="data" chart-labels="labels" chart-series="series">
+    </canvas>
+
+  </div>
+
+
+  <!--
+      <ion-content class="chart-view">
+        <div class="card">
+
+          <canvas id="bar" class="chart chart-bar" data="data" labels="labels" legend="true" series="series" options="{showTooltips: false}"></canvas>
+
+        </div>
+      </ion-content>
+
+  -->
+
+</ion-content>

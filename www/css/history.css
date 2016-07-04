@@ -1,141 +1,99 @@
 /*Three bubbles*/
 
+.bubble-wrapper {
+  /*margin: auto;*/
+  width: 100vw;
+  height: 45vw;
+}
 
 .left-bubble-box {
-
-  width: 33%;
-  display: inline-block;
+  width: 33vw;
+  height: 33vw;
 
   position: absolute;
   top: 10vw;
-  left: 2vw;
+  left: 4vw;
 
+  background-image: url("../img/BackgroundCircleDark.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  /* padding-top: 33vw;*/
+
+  text-align: center;
 }
 
 .center-bubble-box {
-  width: 33%;
-  display: inline-block;
+  width: 33vw;
+  height: 33vw;
 
   position: absolute;
-  left: 30vw;
+  left: 33vw;
+
+  background-image: url("../img/BackgroundCircleLight.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  /* padding-top: 33vw;*/
+
+  text-align: center;
 
   z-index: 10;
 }
 
 .right-bubble-box {
-  width: 33%;
-  display: inline-block;
+  width: 33vw;
+  height: 33vw;
 
   position: absolute;
-  left: 57vw;
   top: 10vw;
-}
-
-.left-bubble {
+  right: 5vw;
 
   background-image: url("../img/BackgroundCircleDark.png");
   background-size: contain;
   background-repeat: no-repeat;
-  position: relative;
+  /* padding-top: 33vw;*/
 
-
-  width: 100%;
-  height: 0;
-  padding-top: 100%;
-
-  font-family: "HelveticaNeue-Light";
   text-align: center;
-
-  /*
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-    */
-  display: inline-block;
 }
 
-.center-bubble {
-  background-image: url("../img/BackgroundCircleLight.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-  position: relative;
-
-  width: 100%;
-  height: 0;
-  padding-top: 100%;
-
+p.label {
   font-family: "HelveticaNeue-Light";
-  text-align: center;
-  display: flex;
-
-  display: inline-block;
+  padding-top: 30%;
+  font-size: x-large;
 }
 
-.right-bubble {
-  background-image: url("../img/BackgroundCircleDark.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-  position: relative;
-
-  width: 100%;
-  height: 0;
-  padding-top: 100%;
-
+p.value {
   font-family: "HelveticaNeue-Light";
-  text-align: center;
-
-
-  display: inline-block;
+  font-size: xx-large;
+  font-weight: bold;
+  padding-top: 5px;
 }
 
-.bubble-wrapper {
-  position: relative;
-  margin: auto;
-  width: 95%;
-  height: 30vh;
+p.units {
+  font-family: "HelveticaNeue-Light";
+  font-weight: lighter;
+  font-size: small;
+  text-align: center;
+}
+
+p.week-label {
+  font-family: "HelveticaNeue-Light";
 }
 
 .week-buttons-wrapper {
   text-align: center;
 }
 
-div.week-label {
-
-}
-
-ion-content.chart-view {
+ion-content.BarCtrl{
   position: relative;
 }
 
-div.bubble-text {
-  position: absolute;
-  text-align: center;
-  align-content: center;
-  top: 20%;
-  left: 20%;
-}
-
-span {
-  position: absolute;
-  display: table-cell;
-  vertical-align: middle;
-  text-align: center;
-}
-
-p {
-  font-family: "HelveticaNeue-Light";
-  text-align: center;
-}
-
 button {
-  background-image: url("../img/left arrow.png");
   background-size: contain;
   background: no-repeat;
   border: none;
   height:10%;
   width: 5%;
   background-color: white;
-
 }
 
 button.button.right-button {
@@ -143,11 +101,37 @@ button.button.right-button {
   background-position: center;
   background-color: white;
 
-
 }
 
 button.button.left-button {
   background-image: url("../img/left arrow.png");
   background-position: center;
   background-color: white;
+
 }
+
+/*Slide/Picker*/
+.month-slide {
+  background-image: url("../img/Tab Background.png");
+  background: no-repeat;
+  background-size: cover;
+
+  text-align: center;
+}
+
+ion-slide.slider-slide {
+  width: 50%;
+}
+
+.slider {
+  width: 50%;
+  margin: auto;
+  text-align: center;
+}
+
+.month-slide-wrapper {
+  text-align: center;
+}
+
+
+
