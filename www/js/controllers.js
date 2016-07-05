@@ -328,13 +328,13 @@ angular.module('starter.controllers', ['starter.appServices',
     };
   })
 
-.controller('MySponsorsCtrl',function($rootScope, $scope, SponsorAPI){
-      console.log("step1");
+.controller('MySponsorsCtrl',function($rootScope, $scope, $filter, SponsorAPI){
+
       $scope.doRefresh = function() {
         SponsorAPI.getAll($rootScope.getToken(),"577525799f1f51030075a291").success(function(data, status, headers, config){
-            console.log("step 2");
             $scope.list = [];
             for (var i = 0; i < data.length; i++) {
+                data[i].end_date = $filter('date')(data[i].end_date,"MMM dd yyyy");
                 $scope.list.push(data[i]);
             };
 
@@ -345,15 +345,19 @@ angular.module('starter.controllers', ['starter.appServices',
             }
 
         }).error(function(data, status, headers, config){
-            console.log("step3");
+            console.log("Refresh Error~");
             $rootScope.notify("Oops something went wrong!! Please try again later");
         }).finally(function(){
-            console.log("step4");
+            console.log("Refresh Finally~");
             $scope.$broadcast('scroll.refreshComplete');
         });
       }
 
+      // Do the first time when page loaded
+      $scope.doRefresh();
 })
+
+
 
 .controller('MyPledgesCtrl',function($scope){
 
@@ -391,4 +395,3 @@ angular.module('starter.controllers', ['starter.appServices',
     console.log("Checked");
   }
 });
-
