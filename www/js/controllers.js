@@ -147,10 +147,70 @@ angular.module('starter.controllers', ['starter.appServices',
 
   })
 
-  .controller('RunCtrl', function($scope, $rootScope, $ionicLoading, RunAPI){
+  .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $document, RunAPI){
+
+    $scope.startControl = function(startDiv, map){
+      var startUI = document.createElement('div');
+      startUI.style.backGroundColor = 'white';
+      startUI.style.color = '#00b9be';
+      startUI.style.border  = '2px solid #00b9be';
+      startUI.style.borderRadius = '3px';
+      startUI.style.boxShadow = '0 2px 6px rgba(0, 0, 0, .3)';
+      startUI.style.cursor = 'pointer';
+      startUI.style.top = '80%';
+      startUI.style.left = '5%';
+      startUI.style.right = '5%';
+      startUI.style.width = '90%';
+      startUI.style.zIndex = '10';
+      startUI.style.marginBottom = '22px';
+      startUI.style.textAlign = 'center';
+      startUI.title = 'Start dreamrun';
+      startDiv.appendChild(startUI);
+
+      var startText = document.createElement('div');
+      startText.style.color = 'rgb(255, 255, 255)';
+      startText.style.fontFamily = 'Helvetica Neue';
+      startText.style.fontSize = '16px';
+      startText.style.lineHeight = '38px';
+      startText.style.paddingLefft = '5px';
+      startText.style.paddingRight = '5px';
+      startText.style.innerHTML = 'Start DreamRun';
+      startUI.appendChild(startText);
+
+      startUI.addEventListener('click', function(){
+        console.log("Centering");
+        if(!$scope.map){
+          return;
+        }
+
+        $scope.loading = $ionicLoading.show({
+          content: 'Getting current location',
+          showBackdrop: false
+      });
+
+        navigator.geolocation.getCurrentPosition(function(pos){
+          console.log('Got pos', pos);
+          $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+          $scope.hide();
+        }, function(error){
+          alert('Unable to get location: ' + error.message);
+        });
+      });
+
+    };
     $scope.mapCreated = function(map){
       $scope.map = map;
+      var startControlDiv =  document.createElement('div');
+      var startControl = $scope.startControl(startControlDiv, map);
+
+
+      startControlDiv.index = 1;
+      map.controls[google.maps.ControlPosition.TOP_CENTER].push(startControlDiv);
+
     };
+
+
+
 
     $scope.centerOnMe = function(){
       console.log("Centering");
@@ -166,7 +226,7 @@ angular.module('starter.controllers', ['starter.appServices',
       navigator.geolocation.getCurrentPosition(function(pos){
         console.log('Got pos', pos);
         $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-        $scope.loading.hide();
+        $scope.hide();
       }, function(error){
         alert('Unable to get location: ' + error.message);
       });

@@ -59,8 +59,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives']
       views: {
         'menuContent': {
           templateUrl: 'templates/run.html',
-          controller:'RunCtrl',
-          directive:'map'
+          controller:'RunCtrl'
         }
       }
     })
