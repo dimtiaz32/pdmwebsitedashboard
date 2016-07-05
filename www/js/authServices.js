@@ -26,15 +26,17 @@ angular.module('starter.authServices', [])
     return $window.localStorage.token = token;
   };
 
-  $rootScope.getToken = function(token){
+  $rootScope.getToken = function(){
     //TODO: TRY PASSING A JSON CALL TO GET TOKEN AND SET IT HERE. MIGHT BE A BAD IDEA SECURITY WISE?
     return $window.localStorage.token;
   };
+  
+  
 
-  $rootScope.logout = function(){
-    $rootScope.setToken("");
-    $window.location.href = '#/auth/signin';
-  };
+  // $rootScope.logout = function(){
+  //   $rootScope.setToken("");
+  //   $window.location.href = '#/auth/signin';
+  // };
 
   $rootScope.notify = function (text) {
     $rootScope.show(text);

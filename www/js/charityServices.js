@@ -35,39 +35,16 @@ angular.module('starter.charityServices', ['ionic'])
   //   }
   // }
 
-    $rootScope.charities = [
-      {
-        name: "Teens Run DC",
-        description: "This charity does a whole bunch of stuff for teens. Support it.",
-        moneyPastWeek: "$1.54",
-        moneyPastYear: "$234.56"
-      },
-      {
-        name: "Charity 2",
-        description: "This charity does a whole bunch of stuff for teens. Support it.",
-        moneyPastWeek: "$1.54",
-        moneyPastYear: "$234.56"
-      },
-      {
-        name: "Charity 3",
-        description: "This charity does a whole bunch of stuff for teens. Support it.",
-        moneyPastWeek: "$1.54",
-        moneyPastYear: "$234.56"
-      }
-    ];
 
 
   //TODO: NEED TO VERIFY TOKEN METHODOLOGY
   return{
-    getAll: function(token){
+    getAll: function(){
       return $http.get(base+'/charities', {
-        method: 'GET',
-        params: {
-          token: token
-        }
+        method: 'GET'
       });
     },
-    getOne: function(token){
+    getOne: function(id){
       return $http.get(base+'/charities/' + id, {
         method: 'GET',
         params: {
@@ -84,12 +61,9 @@ angular.module('starter.charityServices', ['ionic'])
         }
       });
     },
-    saveCharity: function(token, form){
+    saveCharity: function(form){
       return $http.post(base+'/charities', form, {
-        method: 'POST',
-        params: {
-          token: token
-        }
+        method: 'POST'
       });
     }
   }

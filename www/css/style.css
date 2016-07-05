@@ -22,3 +22,13 @@
 h1, h2, h3, p, span, button, ion-item, ion-content, .title {
   font-family: "Helvetica Neue";
 }
+
+
+map {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.scroll {
+  height:100%;
+}

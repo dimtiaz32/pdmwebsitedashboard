@@ -1,4 +1,9 @@
-angular.module('starter.controllers', ['starter.appServices', 'starter.charityServices', 'starter.authServices','starter.sponsorServices'])
+angular.module('starter.controllers', ['starter.appServices',
+  'starter.charityServices',
+  'starter.authServices',
+  'starter.sponsorServices',
+  'starter.runServices'
+])
 
 
 
@@ -31,7 +36,7 @@ angular.module('starter.controllers', ['starter.appServices', 'starter.charitySe
         match = false;
       }
 
-      $rootScope.show("Registering your dreamrun....");
+      $rootScope.show("Passwords match....");
 
 
     };
@@ -116,8 +121,119 @@ angular.module('starter.controllers', ['starter.appServices', 'starter.charitySe
 
   })
 
+  .controller('SignOutCtrl', function($scope, $rootScope, $localStorage, $timeout, AuthAPI, $window){
+    $scope.logout = function(){
+      $rootScope.notify("Logging the user out");
+      console.log("Logout function activated");
+      var token = $localStorage.getToken();
+      AuthAPI.signout({token: token})
+        .sucess(function(){
+          $rootScope.hide();
+          $scope.removeProfile();
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+          $window.location.href = ('#/auth/signin');
+          console.log("Signout successful")
+        })
+        .error(function(error){
+            $rootScope.notify("Error logging out: " + error.error);
+            console.log("Error loggin out: " + error.error);
+        });
+    }
+
+    $scope.removeProfile = function(){
+      $localStorage.removeProfile();
+
+    }
+
+  })
+
+  .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $document, RunAPI){
+
+    $scope.startControl = function(startDiv, map){
+      var startUI = document.createElement('div');
+      startUI.style.backGroundColor = 'white';
+      startUI.style.color = '#00b9be';
+      startUI.style.border  = '2px solid #00b9be';
+      startUI.style.borderRadius = '3px';
+      startUI.style.boxShadow = '0 2px 6px rgba(0, 0, 0, .3)';
+      startUI.style.cursor = 'pointer';
+      startUI.style.top = '80%';
+      startUI.style.left = '5%';
+      startUI.style.right = '5%';
+      startUI.style.width = '90%';
+      startUI.style.zIndex = '10';
+      startUI.style.marginBottom = '22px';
+      startUI.style.textAlign = 'center';
+      startUI.title = 'Start dreamrun';
+      startDiv.appendChild(startUI);
+
+      var startText = document.createElement('div');
+      startText.style.color = 'rgb(255, 255, 255)';
+      startText.style.fontFamily = 'Helvetica Neue';
+      startText.style.fontSize = '16px';
+      startText.style.lineHeight = '38px';
+      startText.style.paddingLefft = '5px';
+      startText.style.paddingRight = '5px';
+      startText.style.innerHTML = 'Start DreamRun';
+      startUI.appendChild(startText);
+
+      startUI.addEventListener('click', function(){
+        console.log("Centering");
+        if(!$scope.map){
+          return;
+        }
+
+        $scope.loading = $ionicLoading.show({
+          content: 'Getting current location',
+          showBackdrop: false
+      });
+
+        navigator.geolocation.getCurrentPosition(function(pos){
+          console.log('Got pos', pos);
+          $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+          $scope.hide();
+        }, function(error){
+          alert('Unable to get location: ' + error.message);
+        });
+      });
+
+    };
+    $scope.mapCreated = function(map){
+      $scope.map = map;
+      var startControlDiv =  document.createElement('div');
+      var startControl = $scope.startControl(startControlDiv, map);
+
+
+      startControlDiv.index = 1;
+      map.controls[google.maps.ControlPosition.TOP_CENTER].push(startControlDiv);
+
+    };
+
+
+
+
+    $scope.centerOnMe = function(){
+      console.log("Centering");
+      if(!$scope.map){
+        return;
+      }
+
+      $scope.loading = $ionicLoading.show({
+        content: 'Getting current location',
+        showBackdrop: false
+      });
+
+      navigator.geolocation.getCurrentPosition(function(pos){
+        console.log('Got pos', pos);
+        $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+        $scope.hide();
+      }, function(error){
+        alert('Unable to get location: ' + error.message);
+      });
+    };
+  })
+
+  .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -130,23 +246,34 @@ angular.module('starter.controllers', ['starter.appServices', 'starter.charitySe
 })
 
   .controller('CharitiesCtrl', function($rootScope, $timeout, $ionicModal, $window, $scope, CharityAPI){
-    $scope.isCharityDetailDisplayed = false;
 
-    $scope.chosenCharity = {
-      name: "Teens Run DC",
-      description: "This charity does a whole bunch of stuff for teens. Support it.",
-      moneyPastWeek: "$1.54",
-      moneyPastYear: "$234.56"
-    };
+    CharityAPI.getAll()
+      .success(function(data, status, headers, config){
+        $rootScope.show("Retrieving our list of charities...");
+        console.log("API call getAll succeeded");
 
-    $scope.list = [];
+        $scope.charityList = [];
+
+        for(var i = 0; i < data.length; i++){
+          $scope.list.push(data[i]);
+        }
+        $scope.select = function(){
+          //put code to select charity and pass id to user
+        };
+
+        $rootScope.hide();
+
+      })
+      .error(function(err){
+        $rootScope.hide();
+        $rootScope.notify("Something went wrong retrieving the list of charities");
+        console.log("Error retrieving charities");
+      });
 
 
 
 
-    $scope.toggleCharity = function() {
-      $scope.isCharityDetailDisplayed = !$scope.isCharityDetailDisplayed;
-    }
+
   })
 
 
@@ -192,6 +319,7 @@ angular.module('starter.controllers', ['starter.appServices', 'starter.charitySe
         .success(function(data, status, headers, config){
           $rootScope.hide();
           //$rootScope.doRefresh(1);
+          $window.location.href = ('#/app/charities');
         })
         .error(function(data, status, headers, config, err){
           $rootScope.hide();
@@ -242,5 +370,25 @@ angular.module('starter.controllers', ['starter.appServices', 'starter.charitySe
   ];
 })
 
+
+
 .controller('PlaylistCtrl', function($scope, $stateParams) {
+})
+
+.controller('SponsorsPledgeCtrl', function($scope) {
+  $scope.active = 'zero';
+  $scope.setActive = function(type) {
+    $scope.active = type;
+  };
+  $scope.isActive = function(type) {
+    return type === $scope.active;
+  };
+
+  $scope.isChecked = false;
+
+  $scope.toggleCheck = function() {
+    $scope.isChecked = !$scope.isChecked;
+    console.log("Checked");
+  }
 });
+
