@@ -149,44 +149,341 @@ angular.module('starter.controllers', ['starter.appServices',
 
   .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $document, RunAPI){
 
+     $scope.isDetailDisplayed = false;
+     $scope.isHistoryDetailDisplayed = true;
+     $scope.isRunning = false;
+     $scope.isPaused = false;
+    //
+    // $scope.toggleRun = function() {
+    //   $scope.isRunning = !$scope.isRunning;
+    // }
+    //
+    // $scope.lapBtnTapped = function() {
+    //   if ($scope.isPaused) {
+    //     resume();
+    //   } else {
+    //     lap();
+    //   }
+    // }
+    //
+    // $scope.pause = function() {
+    //   $scope.isPaused = true;
+    // }
+    //
+    // function resume() {
+    //   $scope.isPaused = false;
+    // }
+    //
+    // function lap() {
+    //   console.log("lap");
+    // }
+
+
+
+
+    $scope.lapButton = function(lapDiv, map){
+      var lapUI = document.createElement('div');
+      lapUI.style.backgroundColor = '#00b9be';
+      lapUI.style.border  = '2px solid #00b9be';
+      lapUI.style.borderRadius = '3px';
+      lapUI.style.boxShadow = '0 2px 6px rgba(0, 0, 0, .3)';
+      lapUI.style.cursor = 'pointer';
+      lapUI.style.top = '10px';
+      lapUI.style.left = '300px';
+      lapUI.style.right = '400px';
+      lapUI.style.height = '50px';
+      lapUI.style.width = '800px';
+      lapUI.style.zIndex = '10px';
+      lapUI.style.marginBottom = '100px';
+      lapUI.style.textAlign = 'center';
+      lapUI.title = 'Start dreamrun';
+      lapDiv.appendChild(lapUI);
+
+      var lapText = document.createElement('div');
+      lapText.style.color = 'rgb(255, 255, 255)';
+      lapText.style.fontFamily = 'Roboto,Arial,sans-serif';
+      lapText.style.fontSize = '50px';
+      lapText.style.lineHeight = '50px';
+      lapText.style.lineWidth = '556px'
+      lapText.style.paddingLefft = '5px';
+      lapText.style.paddingRight = '5px';
+      lapText.innerHTML = 'Lap';
+      lapUI.appendChild(lapText);
+
+      lapUI.addEventListener('click', function(){
+
+      });
+    };
+
+    $scope.pauseButton = function(pauseDiv, map){
+      var pauseUI = document.createElement('div');
+      pauseUI.style.backgroundColor = '#00b9be';
+      pauseUI.style.border  = '2px solid #00b9be';
+      pauseUI.style.borderRadius = '3px';
+      pauseUI.style.boxShadow = '0 2px 6px rgba(0, 0, 0, .3)';
+      pauseUI.style.cursor = 'pointer';
+      pauseUI.style.top = '10px';
+      pauseUI.style.left = '300px';
+      pauseUI.style.right = '400px';
+      pauseUI.style.height = '50px';
+      pauseUI.style.width = '800px';
+      pauseUI.style.zIndex = '10px';
+      pauseUI.style.marginBottom = '100px';
+      pauseUI.style.textAlign = 'center';
+      pauseUI.title = 'Start dreamrun';
+      pauseDiv.appendChild(pauseUI);
+
+      var pauseText = document.createElement('div');
+      pauseText.style.color = 'rgb(255, 255, 255)';
+      pauseText.style.fontFamily = 'Roboto,Arial,sans-serif';
+      pauseText.style.fontSize = '50px';
+      pauseText.style.lineHeight = '50px';
+      pauseText.style.lineWidth = '556px'
+      pauseText.style.paddingLefft = '5px';
+      pauseText.style.paddingRight = '5px';
+      pauseText.innerHTML = 'Lap';
+      pauseUI.appendChild(pauseText);
+
+      lapUI.addEventListener('click', function(){
+
+      });
+    };
+    $scope.runInfo = function(infoDiv, map, drop){
+      var infoUI = document.createElement('div');
+      infoUI.id = 'infoUI';
+      infoUI.style.height = '400px';
+      infoUI.style.width = '400px';
+      infoUI.style.textAlign = 'center';
+      infoUI.title = 'Info';
+      infoDiv.appendChild(infoUI);
+
+      var durationDiv = document.createElement('div');
+      durationDiv.id = 'durationDiv';
+      durationDiv.style.height = '100px';
+      durationDiv.style.width = '100px';
+      durationDiv.style.title = 'Duration';
+
+      //next two text go inside duration div
+      var durationLabelText = document.createElement('p');
+      durationLabelText.id = 'durationLabelText';
+      durationLabelText.innerHTML = 'Duration';
+      durationDiv.appendChild(durationLabelText);
+
+      var durationTimeText = document.createElement('p');
+      durationTimeText.id = 'durationTimeText';
+      durationLabelText.innerHTML = 'durationTime';
+      durationDiv.appendChild(durationTimeText);
+      //adds duration div to infoUI
+      infoUI.appendChild(durationDiv);
+
+      var distanceDiv = document.createElement('div');
+      distanceDiv.id = 'distanceDiv';
+      distanceDiv.style.height = '100px';
+      distanceDiv.style.width = '100px';
+      distanceDiv.title = 'Distance';
+
+      var distanceLabelText = document.createElement('p');
+      distanceLabelText.id = 'distanceLabelText';
+      distanceLabelText.innerHTML = 'Distance';
+      distanceDiv.appendChild(distanceLabelText);
+
+      var distanceTrackerText = document.createElement('p');
+      distanceTrackerText.id = 'distanceTrackerText';
+      distanceTrackerText.innerHTML = 'DistanceTrackerText';
+      distanceDiv.appendChild(distanceTrackerText);
+      infoUI.appendChild(distanceDiv);
+
+      var paceDiv = document.createElement('div');
+      paceDiv.id = 'paceDiv';
+      paceDiv.style.height = '100px';
+      paceDiv.style.width = '100px';
+      paceDiv.style.title = 'Pace';
+
+      var paceLabelText = document.createElement('p');
+      paceLabelText.id = 'paceLabelText';
+      paceLabelText.innerHTML = 'Pace';
+      paceDiv.appendChild(paceLabelText);
+
+      var paceTrackerText = document.createElement('p');
+      paceTrackerText.id = 'paceTrackerText';
+      paceTrackerText.innerHTML = 'paceTrackerText';
+      paceDiv.appendChild(paceTrackerText);
+      infoUI.appendChild(paceDiv);
+
+      var fundsRaisedDiv = document.createElement('div');
+      fundsRaisedDiv.id = 'fundsRaisedDiv';
+      fundsRaisedDiv.style.height = '100px';
+      fundsRaisedDiv.style.width = '100px';
+      fundsRaisedDiv.title = 'fundsRaised';
+
+      var fundsRaisedLabelText = document.createElement('p');
+      fundsRaisedLabelText.id = 'fundsRaisedLabelText';
+      fundsRaisedLabelText.innerHTML = 'Funds Raised';
+      fundsRaisedDiv.appendChild(fundsRaisedLabelText);
+
+      var fundsRaisedTrackerText = document.createElement('p');
+      fundsRaisedTrackerText.id = 'fundsRaisedTrackerText';
+      fundsRaisedTrackerText.innerHTML = 'funds Raised tracker text';
+      fundsRaisedDiv.appendChild(fundsRaisedTrackerText);
+      infoUI.appendChild(fundsRaisedDiv);
+
+
+
+    };
+
+    $scope.startRun = function(){};
+    $scope.welcomeControl = function(welcomeDiv, map, drop){
+      var control = this;
+
+      control.drop_ = drop;
+
+
+      var welcomeUI = document.createElement('div');
+      welcomeUI.id = 'welcomeUI';
+      welcomeUI.style.backgroundColor = '#ffffff';
+      welcomeUI.style.border = '2px solid #00b9be';
+      welcomeUI.style.borderRadius = '3px';
+      welcomeUI.style.boxShadow = '0 2px 6px rgba(0, 0, 0, .3)';
+      welcomeUI.style.cursor = 'pointer';
+      welcomeUI.style.height = '100px';
+      welcomeUI.style.width = '1000px';
+      welcomeUI.style.top = '100px';
+      welcomeUI.ngShow = $scope.isRunning;
+      // welcomeUI.style.left = '300px';
+      // welcomeUI.style.right = '300px';
+      welcomeUI.style.zIndex = '20px';
+      // welcomeUI.style.marginTop = '100px';
+      welcomeUI.style.textAlign = 'center';
+      welcomeUI.title = 'Welcome';
+      welcomeDiv.appendChild(welcomeUI);
+
+      var welcomeText = document.createElement('div');
+      welcomeText.id = 'welcomeUserText';
+      welcomeText.innerHTML = 'Welcome Jane Doe';
+      welcomeUI.appendChild(welcomeText);
+
+      var divider = document.createElement('hr');
+      divider.id = 'welcomeDivider';
+      welcomeUI.appendChild(divider);
+
+      var milesRaisesText = document.createElement('p');
+      milesRaisesText.id = 'milesRaises';
+      milesRaisesText.style.textAlign = 'center';
+      milesRaisesText.style.color = '#00b9be';
+      milesRaisesText.innerHTML = 'Every Mile raises 50 cents for ';
+      welcomeUI.appendChild(milesRaisesText);
+
+      var charitySelectedText = document.createElement('h');
+      charitySelectedText.id = 'charittySelectedText';
+      //charitySelectedText.style.textAlign = 'center';
+      charitySelectedText.innerHTML = 'Teens Run DC';
+      welcomeUI.appendChild(charitySelectedText);
+
+      //these elements will be added to the ui from the event listener on the drop down button
+      var detailDivider = document.createElement('hr');
+      detailDivider.id = 'detailDivider';
+
+      var thisWeekText= document.createElement('div');
+      thisWeekText.id = 'thisWeekText';
+      thisWeekText.innerHTML = 'This week';
+
+      var weekMoneyRaisedText = document.createElement('p');
+      weekMoneyRaisedText.id = 'weekMoneyRaisedText';
+      weekMoneyRaisedText.innerHTML = '$17.50 raised and';
+
+      var weekDistanceText = document.createElement('p');
+      weekDistanceText.id = 'weekDistanceText';
+      weekDistanceText.innerHTML = '34 miles for charity';
+
+      var thisMonthText = document.createElement('p');
+      thisMonthText.id = 'thisMonthText';
+      thisMonthText.innerHTML = 'This month';
+
+      var monthMoneyRaisedText = document.createElement('p');
+      monthMoneyRaisedText.id = 'moneyMoneyRaisedText';
+      monthMoneyRaisedText.innerHTML = '$50.10';
+
+      var monthDistanceText = document.createElement('p');
+      monthDistanceText.id = 'monthDistanceText';
+      monthDistanceText.innerHTML = '100 miles run for charity';
+
+      var dropButton = document.createElement('button');
+      dropButton.id = 'dropButton';
+      dropButton.style.position = 'absolute';
+      dropButton.style.width = '50px';
+      dropButton.style.marginTop = '30px';
+      dropButton.style.position = 'center';
+      dropButton.class = 'button button-slide';
+      //dropButton.ngClass = 'isDetailDisplayed ? "button-slide-down" : "button-slide-up"';
+      welcomeUI.appendChild(dropButton);
+      dropButton.addEventListener('click', function(){
+        // if($scope.isHistoryDetailDisplayed = false){
+        //   $scope.isHistoryDetailDisplayed = true;
+        //   welcomeUI.appendChild(detailDivider);
+        //   welcomeUI.appendChild(thisWeekText);
+        //   welcomeUI.appendChild(weekMoneyRaisedText);
+        //   welcomeUI.appendChild(weekDistanceText);
+        //   welcomeUI.appendChild(thisMonthText);
+        //   welcomeUI.appendChild(monthMoneyRaisedTexth);
+        //   welcomeUI.appendChild(monthDistanceText);
+        // } else {
+        //   $scope.isHistoryDetailDisplayed = false;
+        //   welcomeUI.removeChild(detailDivider);
+        //   welcomeUI.removeChild(thisWeekText);
+        //   welcomeUI.removeChild(weekMoneyRaisedText);
+        //   welcomeUI.removeChild(weekDistanceText);
+        //   welcomeUI.removeChild(thisMonthText);
+        //   welcomeUI.removeChild(monthMoneyRaisedText);
+        //   welcomeUI.removeChild(monthDistanceText);
+
+        //}
+      });
+
+
+
+
+
+    };
+
     $scope.startControl = function(startDiv, map){
       var startUI = document.createElement('div');
-      startUI.style.backGroundColor = 'white';
-      startUI.style.color = '#00b9be';
+      startUI.style.backgroundColor = '#00b9be';
       startUI.style.border  = '2px solid #00b9be';
       startUI.style.borderRadius = '3px';
       startUI.style.boxShadow = '0 2px 6px rgba(0, 0, 0, .3)';
       startUI.style.cursor = 'pointer';
-      startUI.style.top = '80%';
-      startUI.style.left = '5%';
-      startUI.style.right = '5%';
-      startUI.style.width = '90%';
-      startUI.style.zIndex = '10';
-      startUI.style.marginBottom = '22px';
+      startUI.style.top = '10px';
+      startUI.style.left = '300px';
+      startUI.style.right = '400px';
+      startUI.style.height = '50px';
+      startUI.style.width = '800px';
+      startUI.style.zIndex = '10px';
+      startUI.style.marginBottom = '100px';
       startUI.style.textAlign = 'center';
       startUI.title = 'Start dreamrun';
       startDiv.appendChild(startUI);
 
       var startText = document.createElement('div');
       startText.style.color = 'rgb(255, 255, 255)';
-      startText.style.fontFamily = 'Helvetica Neue';
-      startText.style.fontSize = '16px';
-      startText.style.lineHeight = '38px';
+      startText.style.fontFamily = 'Roboto,Arial,sans-serif';
+      startText.style.fontSize = '50px';
+      startText.style.lineHeight = '50px';
+      startText.style.lineWidth = '556px'
       startText.style.paddingLefft = '5px';
       startText.style.paddingRight = '5px';
-      startText.style.innerHTML = 'Start DreamRun';
+      startText.innerHTML = 'Start My DREAMRUN';
       startUI.appendChild(startText);
 
       startUI.addEventListener('click', function(){
-        console.log("Centering");
+        console.log("Starting run");
         if(!$scope.map){
           return;
         }
 
         $scope.loading = $ionicLoading.show({
-          content: 'Getting current location',
+          content: 'Starting your dreamrun',
           showBackdrop: false
-      });
+        });
 
         navigator.geolocation.getCurrentPosition(function(pos){
           console.log('Got pos', pos);
@@ -195,20 +492,30 @@ angular.module('starter.controllers', ['starter.appServices',
         }, function(error){
           alert('Unable to get location: ' + error.message);
         });
+
+        //$scope.startRun();
+
       });
 
     };
+
     $scope.mapCreated = function(map){
       $scope.map = map;
+
+      var welcomeControlDiv = document.createElement('div');
+      var dropControl = $scope.welcomeControl(welcomeControlDiv, map);
+
+      welcomeControlDiv.index = 1;
+      map.controls[google.maps.ControlPosition.TOP].push(welcomeControlDiv);
+
       var startControlDiv =  document.createElement('div');
       var startControl = $scope.startControl(startControlDiv, map);
 
 
-      startControlDiv.index = 1;
-      map.controls[google.maps.ControlPosition.TOP_CENTER].push(startControlDiv);
+      startControlDiv.index = 2;
+      map.controls[google.maps.ControlPosition.BOTTOM].push(startControlDiv);
 
     };
-
 
 
 
