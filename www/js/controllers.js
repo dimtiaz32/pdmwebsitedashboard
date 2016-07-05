@@ -309,3 +309,21 @@ angular.module('starter.controllers', ['starter.appServices',
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 });
+
+
+.controller('SponsorsPledgeCtrl', function($scope) {
+  $scope.active = 'zero';
+  $scope.setActive = function(type) {
+    $scope.active = type;
+  };
+  $scope.isActive = function(type) {
+    return type === $scope.active;
+  };
+
+  $scope.isChecked = false;
+
+  $scope.toggleCheck = function() {
+    $scope.isChecked = !$scope.isChecked;
+    console.log("Checked");
+  }
+});
