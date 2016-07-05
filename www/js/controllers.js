@@ -367,9 +367,10 @@ angular.module('starter.controllers', ['starter.appServices',
   ];
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
-});
 
+
+.controller('PlaylistCtrl', function($scope, $stateParams) {
+})
 
 .controller('SponsorsPledgeCtrl', function($scope) {
   $scope.active = 'zero';
@@ -387,3 +388,4 @@ angular.module('starter.controllers', ['starter.appServices',
     console.log("Checked");
   }
 });
+
