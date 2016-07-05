@@ -1,21 +1,10 @@
 <head>
-  <link rel="stylesheet" type="text/css" href="../css/app-donations.css">
+  <link rel="stylesheet" type="text/css" href="../css/inviteSponsor.css">
 </head>
 <ion-view view-title="Donations">
-  <!--
-  <ion-content>
-    <h1>Donations</h1>
-  </ion-content>
-  <ion-content>
-    <h1>My Pledges</h1>
-    <div>
-      <div class="bar bar-header bar-light">
-        <h1 class="title">Sponsors</h1>
-      </div>
-    </div>
-  -->
-    <ion-content class="has-header">
-      <ion-refresher ng-hide="noData || incomplete" on-refresh="doRefresh('2')"></ion-refresher>
+
+    <ion-content class="has-header" ng-controller="MySponsorsCtrl">
+      <ion-refresher ng-hide="noData" on-refresh="doRefresh()"></ion-refresher>
       <div class="wrapper">
 
         <div class="sponsor-header">
@@ -66,8 +55,6 @@
             No Sponsor now.
         </span>
         <button class="button button-block button-clear button-sponsor-help">Need Help Getting Sponsors?</button>
-
-
 
       </div>
 

@@ -201,9 +201,10 @@ angular.module('starter.controllers', ['starter.appServices', 'starter.charitySe
   })
 
 .controller('MySponsorsCtrl',function($rootScope, $scope, SponsorAPI){
-
-    $rootScope.$on('fetchCompleted', function(){
-        SponsorAPI.getAll($rootScope.getToken(),"userId").success(function(data, status, headers, config){
+      console.log("step1");
+      $scope.doRefresh = function() {
+        SponsorAPI.getAll($rootScope.getToken(),"577525799f1f51030075a291").success(function(data, status, headers, config){
+            console.log("step 2");
             $scope.list = [];
             for (var i = 0; i < data.length; i++) {
                 $scope.list.push(data[i]);
@@ -216,11 +217,13 @@ angular.module('starter.controllers', ['starter.appServices', 'starter.charitySe
             }
 
         }).error(function(data, status, headers, config){
+            console.log("step3");
             $rootScope.notify("Oops something went wrong!! Please try again later");
+        }).finally(function(){
+            console.log("step4");
+            $scope.$broadcast('scroll.refreshComplete');
         });
-
-    });
-
+      }
 
 })
 

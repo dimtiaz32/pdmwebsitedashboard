@@ -29,9 +29,17 @@ angular.module('starter.sponsorServices', ['ionic'])
     }, 1999);
   };
 
+  $rootScope.setToken = function(token){
+    return $window.localStorage.token = token;
+  };
+
+  $rootScope.getToken = function(token){
+    return $window.localStorage.token;
+  };
+
   return{
     getAll: function(token,userId){
-      return $http.get(base+'/donations/sponsors', {
+      return $http.get(base+'donations/sponsors', {
         method: 'GET',
         params: {
           token: token,
