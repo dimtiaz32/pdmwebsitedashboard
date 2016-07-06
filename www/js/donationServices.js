@@ -3,8 +3,8 @@
  */
 
 
-angular.module('starter.sponsorServices', ['ionic'])
-.factory('SponsorAPI', function($rootScope, $http, $ionicLoading, $window){
+angular.module('starter.donationServices', ['ionic'])
+.factory('DonationAPI', function($rootScope, $http, $ionicLoading, $window){
   var base = "http://localhost:5000/";
 
   //everything up until return should be put in a main API
@@ -38,7 +38,7 @@ angular.module('starter.sponsorServices', ['ionic'])
   };
 
   return{
-    getAll: function(token,userId){
+    getAllSponsors: function(token,userId){
       return $http.get(base+'donations/sponsors', {
         method: 'GET',
         params: {
@@ -46,6 +46,16 @@ angular.module('starter.sponsorServices', ['ionic'])
           userId:userId
         }
       });
+    },
+
+    getAllPledges: function(token,donorId){
+      return $http.get(base+'donations/pledges',{
+        method:'GET',
+        params: {
+          token: token,
+          donorId: donorId
+        }
+      })
     }
   }
 });

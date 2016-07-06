@@ -1,5 +1,6 @@
-<ion-view view-title="sponsors">
-    <ion-content>
+<ion-view view-title="pledges">
+    <ion-content ng-controller="MyPledgesCtrl">
+      <ion-refresher ng-hide="noData" pulling-text="Pull to refresh..." on-refresh="doRefresh()"></ion-refresher>
       <div class="wrapper">
         <div class="sponsor-header">
           <div class="row">
@@ -31,15 +32,18 @@
         </div>
         <hr>
         <div class="list">
-
           <!-- use this template for all the cells-->
-          <a class="item item-icon-left">
-            <span class="cell-vertical-center-text">Albert Salamander</span>
+          <a class="item item-icon-left" ng-repeat="pledge in list">
+            <span class="cell-vertical-center-text">{{ pledge.recipient.name.first }} {{pledge.recipient.name.last}}</span>
               <span class="item-note">
-                <p class="pledge">10¢/mile</p>
-                <p class="ending-date">Sept 13</p>
+                <p class="pledge">{{ pledge.per_mile_donation }}¢/mile</p>
+                <p class="ending-date">{{ pledge.end_date }}</p>
               </span>
           </a>
+        </div>
+        <span ng-show="noData">
+            No pledge now.
+        </span>
           <button class="button button-block button-clear button-sponsor-help">Need Help Getting Sponsors?</button>
         </div>
       </div>

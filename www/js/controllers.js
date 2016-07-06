@@ -1,7 +1,7 @@
 angular.module('starter.controllers', ['starter.appServices',
   'starter.charityServices',
   'starter.authServices',
-  'starter.sponsorServices',
+  'starter.donationServices',
   'starter.runServices'
 ])
 
@@ -328,10 +328,10 @@ angular.module('starter.controllers', ['starter.appServices',
     };
   })
 
-.controller('MySponsorsCtrl',function($rootScope, $scope, $filter, SponsorAPI){
+.controller('MySponsorsCtrl',function($rootScope, $scope, $filter, DonationAPI){
 
       $scope.doRefresh = function() {
-        SponsorAPI.getAll($rootScope.getToken(),"577525799f1f51030075a291").success(function(data, status, headers, config){
+        DonationAPI.getAllSponsors($rootScope.getToken(),"577525799f1f51030075a291").success(function(data, status, headers, config){
             $scope.list = [];
             for (var i = 0; i < data.length; i++) {
                 data[i].end_date = $filter('date')(data[i].end_date,"MMM dd yyyy");
@@ -359,8 +359,32 @@ angular.module('starter.controllers', ['starter.appServices',
 
 
 
-.controller('MyPledgesCtrl',function($scope){
+.controller('MyPledgesCtrl',function($rootScope, $scope, $filter, DonationAPI){
+  $scope.doRefresh = function() {
+    DonationAPI.getAllPledges($rootScope.getToken(),"577525799f1f51030075a292").success(function(data, status, headers, config){
+        $scope.list = [];
+        for (var i = 0; i < data.length; i++) {
+            data[i].end_date = $filter('date')(data[i].end_date,"MMM dd yyyy");
+            $scope.list.push(data[i]);
+        };
 
+        if(data.length == 0) {
+            $scope.noData = true;
+        } else {
+            $scope.noData = false;
+        }
+
+    }).error(function(data, status, headers, config){
+        console.log("Refresh Error~");
+        $rootScope.notify("Oops something went wrong!! Please try again later");
+    }).finally(function(){
+        console.log("Refresh Finally~");
+        $scope.$broadcast('scroll.refreshComplete');
+    });
+  }
+
+  // Do the first time when page loaded
+  $scope.doRefresh();
 })
 
 .controller('PlaylistsCtrl', function($scope) {
