@@ -182,20 +182,23 @@ angular.module('starter.controllers', ['starter.appServices',
 
 
 
-    $scope.lapButton = function(lapDiv, map){
+    $scope.lapControl = function(lapDiv, map){
       var lapUI = document.createElement('div');
       lapUI.style.backgroundColor = '#00b9be';
+      lapUI.style.align = 'center';
       lapUI.style.border  = '2px solid #00b9be';
       lapUI.style.borderRadius = '3px';
       lapUI.style.boxShadow = '0 2px 6px rgba(0, 0, 0, .3)';
       lapUI.style.cursor = 'pointer';
       lapUI.style.top = '10px';
-      lapUI.style.left = '300px';
-      lapUI.style.right = '400px';
+      // lapUI.style.left = '300px';
+      // lapUI.style.right = '400px';
       lapUI.style.height = '50px';
-      lapUI.style.width = '800px';
-      lapUI.style.zIndex = '10px';
-      lapUI.style.marginBottom = '100px';
+      lapUI.style.width = '556px';
+      lapUI.style.bottom = '150px';
+      lapUI.style.position = 'relative';
+      lapUI.style.zIndex = '10';
+      lapUI.style.marginBottom = '0px';
       lapUI.style.textAlign = 'center';
       lapUI.title = 'Start dreamrun';
       lapDiv.appendChild(lapUI);
@@ -205,50 +208,53 @@ angular.module('starter.controllers', ['starter.appServices',
       lapText.style.fontFamily = 'Roboto,Arial,sans-serif';
       lapText.style.fontSize = '50px';
       lapText.style.lineHeight = '50px';
-      lapText.style.lineWidth = '556px'
+      lapText.style.lineWidth = '556px';
       lapText.style.paddingLefft = '5px';
       lapText.style.paddingRight = '5px';
       lapText.innerHTML = 'Lap';
       lapUI.appendChild(lapText);
 
       lapUI.addEventListener('click', function(){
-
+        console.log('lap activated');
       });
     };
 
-    $scope.pauseButton = function(pauseDiv, map){
+    $scope.pauseControl = function(pauseDiv, map){
       var pauseUI = document.createElement('div');
-      pauseUI.style.backgroundColor = '#00b9be';
-      pauseUI.style.border  = '2px solid #00b9be';
+      pauseUI.style.backgroundColor = '#ffffff';
+      pauseUI.style.border  = '2px solid #ffffff';
       pauseUI.style.borderRadius = '3px';
       pauseUI.style.boxShadow = '0 2px 6px rgba(0, 0, 0, .3)';
       pauseUI.style.cursor = 'pointer';
       pauseUI.style.top = '10px';
-      pauseUI.style.left = '300px';
-      pauseUI.style.right = '400px';
+      // pauseUI.style.left = '300px';
+      // pauseUI.style.right = '400px';
       pauseUI.style.height = '50px';
-      pauseUI.style.width = '800px';
-      pauseUI.style.zIndex = '10px';
-      pauseUI.style.marginBottom = '100px';
+      pauseUI.style.width = '556px';
+
+      pauseUI.style.zIndex = '10';
+      pauseUI.style.marginBottom = '50px';
       pauseUI.style.textAlign = 'center';
       pauseUI.title = 'Start dreamrun';
       pauseDiv.appendChild(pauseUI);
 
       var pauseText = document.createElement('div');
-      pauseText.style.color = 'rgb(255, 255, 255)';
+      pauseText.style.color = '#00b9be';
       pauseText.style.fontFamily = 'Roboto,Arial,sans-serif';
       pauseText.style.fontSize = '50px';
       pauseText.style.lineHeight = '50px';
-      pauseText.style.lineWidth = '556px'
-      pauseText.style.paddingLefft = '5px';
+      pauseText.style.lineWidth = '556px';
+      pauseText.style.paddingLeft = '5px';
       pauseText.style.paddingRight = '5px';
-      pauseText.innerHTML = 'Lap';
+      pauseText.innerHTML = 'Pause';
       pauseUI.appendChild(pauseText);
 
-      lapUI.addEventListener('click', function(){
-
+      pauseUI.addEventListener('click', function(){
+          console.log('pause button activated');
       });
     };
+
+
     $scope.runInfo = function(infoDiv, map, drop){
       var infoUI = document.createElement('div');
       infoUI.id = 'infoUI';
@@ -332,7 +338,15 @@ angular.module('starter.controllers', ['starter.appServices',
 
     };
 
-    $scope.startRun = function(){};
+
+
+    $scope.startRun  = function(){
+
+    };
+
+
+
+
     $scope.welcomeControl = function(welcomeDiv, map, drop){
       var control = this;
 
@@ -469,14 +483,14 @@ angular.module('starter.controllers', ['starter.appServices',
       startText.style.fontFamily = 'Roboto,Arial,sans-serif';
       startText.style.fontSize = '50px';
       startText.style.lineHeight = '50px';
-      startText.style.lineWidth = '556px'
-      startText.style.paddingLefft = '5px';
-      startText.style.paddingRight = '5px';
-      startText.innerHTML = 'Start My DREAMRUN';
+      startText.style.lineWidth = '556px';
+      // startText.style.paddingLeft = '5px';
+      // startText.style.paddingRight = '5px';
+      startText.innerHTML = 'Start My DREAM<b>RUN</b>';
       startUI.appendChild(startText);
 
       startUI.addEventListener('click', function(){
-        console.log("Starting run");
+        console.log("Starting button clicked");
         if(!$scope.map){
           return;
         }
@@ -486,14 +500,7 @@ angular.module('starter.controllers', ['starter.appServices',
           showBackdrop: false
         });
 
-        navigator.geolocation.getCurrentPosition(function(pos){
-          console.log('Got pos', pos);
-          $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-          $scope.hide();
-        }, function(error){
-          alert('Unable to get location: ' + error.message);
-        });
-
+        $scope.isRunning  = true;
         //$scope.startRun();
 
       });
@@ -503,18 +510,33 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.mapCreated = function(map){
       $scope.map = map;
 
-      var welcomeControlDiv = document.createElement('div');
-      var dropControl = $scope.welcomeControl(welcomeControlDiv, map);
+      if($scope.isRunning  = false) {
 
-      welcomeControlDiv.index = 1;
-      map.controls[google.maps.ControlPosition.TOP].push(welcomeControlDiv);
+        var welcomeControlDiv = document.createElement('div');
+        var welcomeControl = $scope.welcomeControl(welcomeControlDiv, map);
 
-      var startControlDiv =  document.createElement('div');
-      var startControl = $scope.startControl(startControlDiv, map);
+        welcomeControlDiv.index = 1;
+        map.controls[google.maps.ControlPosition.TOP].push(welcomeControlDiv);
+
+        var startControlDiv = document.createElement('div');
+        var startControl = $scope.startControl(startControlDiv, map);
 
 
-      startControlDiv.index = 2;
-      map.controls[google.maps.ControlPosition.BOTTOM].push(startControlDiv);
+        startControlDiv.index = 2;
+        map.controls[google.maps.ControlPosition.BOTTOM].push(startControlDiv);
+      } else if($scope.isRunning = true){
+        var pauseControlDiv = document.createElement('div');
+        var pauseControl = $scope.pauseControl(pauseControlDiv, map);
+
+        pauseControlDiv.index = 1;
+        map.controls[google.maps.ControlPosition.BOTTOM].push(pauseControlDiv);
+
+        var lapControlDiv = document.createElement('div');
+        var lapControl = $scope.lapControl(lapControlDiv, map);
+
+        lapControlDiv.index = 1;
+        map.controls[google.maps.ControlPosition.CENTER].push(lapControlDiv);
+      }
 
     };
 
