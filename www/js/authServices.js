@@ -5,7 +5,7 @@
 
 angular.module('starter.authServices', [])
 
-.factory('AuthAPI', function($rootScope, $http, $window, $ionicLoading){
+.factory('AuthAPI', function($rootScope, $localStorage, $http, $window, $ionicLoading){
   var base = "https://dreamrun.herokuapp.com/authentication";
 
 
@@ -30,6 +30,9 @@ angular.module('starter.authServices', [])
     //TODO: TRY PASSING A JSON CALL TO GET TOKEN AND SET IT HERE. MIGHT BE A BAD IDEA SECURITY WISE?
     return $window.localStorage.token;
   };
+  $rootScope.removeToken = function(token){
+    $window.localStorage.token = '';
+  };
   
   
 
@@ -53,14 +56,11 @@ angular.module('starter.authServices', [])
     signup: function(form){
       return $http.post(base+'/signup', form);
     },
-    signout: function(token){
+    signout: function(){
       return $http.get(base+'/signout', {
-        method: 'GET',
-        params: {
-          token: token
-        }
+        method: 'GET'
+       
       });
     }
-
   }
 });

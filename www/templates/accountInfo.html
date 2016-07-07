@@ -7,11 +7,25 @@
         {{account.name}}
       </div>
     </div>
-    <ion-list>
-      <ion-item class="item item-text-wrap">{{account.email}}</ion-item>
-      <ion-item class="item item-text-wrap">{{account.password}}</ion-item>
-      <ion-item class="item item-text-wrap">{{account.dob}}</ion-item>
-    </ion-list>
-
+    <!-- Switch to onclick spans -->
+    <div class="list">
+      <label class="item item-input">
+      <span class="input-label"> Email </span>
+      <input type="email" ng-model="account.email">
+      </label>
+      <label class="item item-input">     
+      <span class="input-label">Password</span>
+      <input type="password" ng-model="account.password">
+      </label>
+      <label class="item item-input">
+      <span class="input-label">Date of Birth</span>
+      <input type="Date" ng-model="account.dob">
+      </label>
+    </div>
+    <ion-label class="item item-input">
+      <button class="button button-block button-positive" ng-click="logout()">
+        Logout
+      </button>
+    </ion-label>  
   </ion-content>
 </ion-view>

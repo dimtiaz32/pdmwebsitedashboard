@@ -22,8 +22,15 @@ angular.module('starter.accountServices', [])
 				// 	token : token
 				// }
 			});
+		},
+		signout: function(token){
+			return $http.get(base+'/authentication/signout', {
+				method: 'GET',
+				params: {
+					token: token
+				}
+			});
 		}
-
 	}
 
 

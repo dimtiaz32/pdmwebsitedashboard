@@ -122,31 +122,27 @@ angular.module('starter.controllers', ['starter.appServices',
 
   })
 
-  .controller('SignOutCtrl', function($scope, $rootScope, $localStorage, $timeout, AuthAPI, $window){
-    $scope.logout = function(){
-      $rootScope.notify("Logging the user out");
-      console.log("Logout function activated");
-      var token = $localStorage.getToken();
-      AuthAPI.signout({token: token})
-        .sucess(function(){
-          $rootScope.hide();
-          $scope.removeProfile();
+  // .controller('SignOutCtrl', function($scope, $rootScope, $localStorage, $timeout, AuthAPI, $window){
+  //   $scope.logout = function(){
+  //     $rootScope.notify("Logging the user out");
+  //     console.log("Logout function activated");
+  //     $rootScope.removeToken();
+  //     AuthAPI.signout({token: token})
+  //       .sucess(function(){
+  //         $rootScope.hide();
+  //         $scope.removeProfile();
 
-          $window.location.href = ('#/auth/signin');
-          console.log("Signout successful")
-        })
-        .error(function(error){
-            $rootScope.notify("Error logging out: " + error.error);
-            console.log("Error loggin out: " + error.error);
-        });
-    }
+  //         $window.location.href = ('#/auth/signin');
+  //         console.log("Signout successful")
+  //       })
+  //       .error(function(error){
+  //           $rootScope.notify("Error logging out: " + error.error);
+  //           console.log("Error loggin out: " + error.error);
+  //       });
+  //   }
+   
 
-    $scope.removeProfile = function(){
-      $localStorage.removeProfile();
-
-    }
-
-  })
+  // })
 
   .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $document, RunAPI){
 
@@ -154,30 +150,30 @@ angular.module('starter.controllers', ['starter.appServices',
      $scope.isHistoryDetailDisplayed = true;
      $scope.isRunning = false;
      $scope.isPaused = false;
-    //
-    // $scope.toggleRun = function() {
-    //   $scope.isRunning = !$scope.isRunning;
-    // }
-    //
-    // $scope.lapBtnTapped = function() {
-    //   if ($scope.isPaused) {
-    //     resume();
-    //   } else {
-    //     lap();
-    //   }
-    // }
-    //
-    // $scope.pause = function() {
-    //   $scope.isPaused = true;
-    // }
-    //
-    // function resume() {
-    //   $scope.isPaused = false;
-    // }
-    //
-    // function lap() {
-    //   console.log("lap");
-    // }
+    
+    $scope.toggleRun = function() {
+      $scope.isRunning = !$scope.isRunning;
+    }
+    
+    $scope.lapBtnTapped = function() {
+      if ($scope.isPaused) {
+        resume();
+      } else {
+        lap();
+      }
+    }
+    
+    $scope.pause = function() {
+      $scope.isPaused = true;
+    }
+    
+    function resume() {
+      $scope.isPaused = false;
+    }
+    
+    function lap() {
+      console.log("lap");
+    }
 
 
 
@@ -704,7 +700,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
   //password should redirect to new page to enter old password/ could have dropdown?
 
-  var user_id = this.user.id;
+ 
 
 
   $scope.account = {
@@ -760,5 +756,17 @@ angular.module('starter.controllers', ['starter.appServices',
   };
 
 
+  $scope.logout = function($window, AuthAPI){
+    $rootScope.notify('Logging out...');
+    console.log('Logout function started');
+    // $localStorage.removeProfile();
+    $window.localStorage.removeToken();
+    $window.localStorage.removeChild();
+    console.log('localStorage functions triggered');
+
+    AccountAPI
+
+    $window.location.href  ('#/app/signin');
+  };
 
 });
