@@ -1,9 +1,13 @@
 angular.module('starter.controllers', ['starter.appServices',
   'starter.charityServices',
   'starter.authServices',
+
   'starter.sponsorServices',
   'starter.runServices',
-  'starter.accountServices'
+  'starter.accountServices',
+  
+  'starter.donationServices',
+  'starter.runServices'
 ])
 
 
@@ -140,7 +144,7 @@ angular.module('starter.controllers', ['starter.appServices',
   //           console.log("Error loggin out: " + error.error);
   //       });
   //   }
-   
+
 
   // })
 
@@ -150,11 +154,11 @@ angular.module('starter.controllers', ['starter.appServices',
      $scope.isHistoryDetailDisplayed = true;
      $scope.isRunning = false;
      $scope.isPaused = false;
-    
+
     $scope.toggleRun = function() {
       $scope.isRunning = !$scope.isRunning;
     }
-    
+
     $scope.lapBtnTapped = function() {
       if ($scope.isPaused) {
         resume();
@@ -162,15 +166,15 @@ angular.module('starter.controllers', ['starter.appServices',
         lap();
       }
     }
-    
+
     $scope.pause = function() {
       $scope.isPaused = true;
     }
-    
+
     function resume() {
       $scope.isPaused = false;
     }
-    
+
     function lap() {
       console.log("lap");
     }
@@ -666,12 +670,13 @@ angular.module('starter.controllers', ['starter.appServices',
     };
   })
 
-.controller('MySponsorsCtrl',function($rootScope, $scope, SponsorAPI){
+.controller('MySponsorsCtrl',function($rootScope, $scope, $filter, DonationAPI){
 
-    $rootScope.$on('fetchCompleted', function(){
-        SponsorAPI.getAll($rootScope.getToken(),"userId").success(function(data, status, headers, config){
+      $scope.doRefresh = function() {
+        DonationAPI.getAllSponsors($rootScope.getToken(),"577525799f1f51030075a291").success(function(data, status, headers, config){
             $scope.list = [];
             for (var i = 0; i < data.length; i++) {
+                data[i].end_date = $filter('date')(data[i].end_date,"MMM dd yyyy");
                 $scope.list.push(data[i]);
             };
 
@@ -682,15 +687,21 @@ angular.module('starter.controllers', ['starter.appServices',
             }
 
         }).error(function(data, status, headers, config){
+            console.log("Refresh Error~");
             $rootScope.notify("Oops something went wrong!! Please try again later");
+        }).finally(function(){
+            console.log("Refresh Finally~");
+            $scope.$broadcast('scroll.refreshComplete');
         });
+      }
 
-    });
-
-
+      // Do the first time when page loaded
+      $scope.doRefresh();
 })
 
-.controller('AccountCtrl', function($rootScope, AuthAPI, AccountAPI, $window, $scope){
+
+
+.controller('AccountCtrl', function($rootScope, AuthAPI, AccountAPI, $window, $scope) {
   //refresh on page load?
   //Profile Picture - edit
   //Name- cannot edit
@@ -700,23 +711,21 @@ angular.module('starter.controllers', ['starter.appServices',
 
   //password should redirect to new page to enter old password/ could have dropdown?
 
- 
-
 
   $scope.account = {
-    firstName:"",
-    lastName:"",
+    firstName: "",
+    lastName: "",
     pofilePicture: "",
     email: "",
     password: "",
-    dob:"",
+    dob: "",
     created: "",
     updated: Date.now
   };
 
 
-  $scope.updateAccount = function(){
-    var name  = this.account.firstName + ' ' + this.account.lastName;
+  $scope.updateAccount = function () {
+    var name = this.account.firstName + ' ' + this.account.lastName;
     var proPic = this.account.profilePicture;
     var email = this.account.email;
     var password = this.account.password;
@@ -728,10 +737,10 @@ angular.module('starter.controllers', ['starter.appServices',
     //only checking for fields that can be changed
     //profile picture can be deleted since it is not necessary
 
-    if(!email){
+    if (!email) {
       $rootScope.show('Email field cannot be empty');
       console.log('Email field was empty');
-    } else if(!password){
+    } else if (!password) {
       $rootScope.show('Password field cannot be empty');
       console.log('Password field was empty');
     }
@@ -739,23 +748,50 @@ angular.module('starter.controllers', ['starter.appServices',
     console.log('Email and password fields verified, attempting to save account changes...');
     $rootScope.notify('Saving changes to your account');
     AccountAPI.saveAccount({
-      email : email,
+      email: email,
       password: password
-    }).success(function(data, headers, config, status){
+    }).success(function (data, headers, config, status) {
       $rootScope.hide();
       $window.location.href = ('#/app/account');
     })
-    .error(function(error){
-      if(error.error && error.error.code == 11000){
-        $rootScope.notify("This email is already in use");
-        console.log("could not register user: email already in use ");
-      } else {
-        $rootScope.notify("An error has occured. Please try again");
-      }
+      .error(function (error) {
+        if (error.error && error.error.code == 11000) {
+          $rootScope.notify("This email is already in use");
+          console.log("could not register user: email already in use ");
+        } else {
+          $rootScope.notify("An error has occured. Please try again");
+        }
+      });
+  }
+})
+
+.controller('MyPledgesCtrl',function($rootScope, $scope, $filter, DonationAPI){
+  $scope.doRefresh = function() {
+    DonationAPI.getAllPledges($rootScope.getToken(),"577525799f1f51030075a292").success(function(data, status, headers, config){
+        $scope.list = [];
+        for (var i = 0; i < data.length; i++) {
+            data[i].end_date = $filter('date')(data[i].end_date,"MMM dd yyyy");
+            $scope.list.push(data[i]);
+        };
+
+        if(data.length == 0) {
+            $scope.noData = true;
+        } else {
+            $scope.noData = false;
+        }
+
+    }).error(function(data, status, headers, config){
+        console.log("Refresh Error~");
+        $rootScope.notify("Oops something went wrong!! Please try again later");
+    }).finally(function(){
+        console.log("Refresh Finally~");
+        $scope.$broadcast('scroll.refreshComplete');
     });
-  };
+  }
 
-
+  // Do the first time when page loaded
+  $scope.doRefresh();
+})
   $scope.logout = function($window, AuthAPI){
     $rootScope.notify('Logging out...');
     console.log('Logout function started');
@@ -769,4 +805,24 @@ angular.module('starter.controllers', ['starter.appServices',
     $window.location.href  ('#/app/signin');
   };
 
+
+
+.controller('PlaylistCtrl', function($scope, $stateParams) {
+})
+
+.controller('SponsorsPledgeCtrl', function($scope) {
+  $scope.active = 'zero';
+  $scope.setActive = function(type) {
+    $scope.active = type;
+  };
+  $scope.isActive = function(type) {
+    return type === $scope.active;
+  };
+
+  $scope.isChecked = false;
+
+  $scope.toggleCheck = function() {
+    $scope.isChecked = !$scope.isChecked;
+    console.log("Checked");
+  }
 });
