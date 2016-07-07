@@ -22,9 +22,9 @@ angular.module('starter.accountServices', [])
 				// 	token : token
 				// }
 			});
-		},
+		}
 
 	}
 
-		
-})
+
+});

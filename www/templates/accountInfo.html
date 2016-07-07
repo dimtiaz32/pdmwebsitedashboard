@@ -1,0 +1,17 @@
+<ion-view view-title="Account Info">
+  <ion-content scroll="false">
+    <div class="background background-image">
+      <div class="user user-image">
+      <img ng-src=""></div>
+      <div class="user user-name">
+        {{account.name}}
+      </div>
+    </div>
+    <ion-list>
+      <ion-item class="item item-text-wrap">{{account.email}}</ion-item>
+      <ion-item class="item item-text-wrap">{{account.password}}</ion-item>
+      <ion-item class="item item-text-wrap">{{account.dob}}</ion-item>
+    </ion-list>
+
+  </ion-content>
+</ion-view>

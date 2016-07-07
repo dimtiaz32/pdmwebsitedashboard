@@ -596,7 +596,7 @@ angular.module('starter.controllers', ['starter.appServices',
             for (var i = 0; i < charityList.length; i++){
               var check = charityList[i];
               if(check.id == charityId){
-                //function to set status to selected, moves charity info to dropdown. 
+                //function to set status to selected, moves charity info to dropdown.
 
               }
             }
@@ -694,7 +694,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
 })
 
-.controller('AccountCtrl', function($rootScope, AuthAPI, AccountAPI, $window){
+.controller('AccountCtrl', function($rootScope, AuthAPI, AccountAPI, $window, $scope){
   //refresh on page load?
   //Profile Picture - edit
   //Name- cannot edit
@@ -702,17 +702,63 @@ angular.module('starter.controllers', ['starter.appServices',
   //Password (hashed)
   //DOB-cannot edit
 
+  //password should redirect to new page to enter old password/ could have dropdown?
+
+  var user_id = this.user.id;
+
+
   $scope.account = {
     firstName:"",
     lastName:"",
     pofilePicture: "",
     email: "",
+    password: "",
     dob:"",
     created: "",
     updated: Date.now
   };
 
-  AccountAPI.saveAccount({})
+
+  $scope.updateAccount = function(){
+    var name  = this.account.firstName + ' ' + this.account.lastName;
+    var proPic = this.account.profilePicture;
+    var email = this.account.email;
+    var password = this.account.password;
+    var dob = this.account.dob;
+    var created = this.account.created;
+    var updated = this.account.updated;
 
 
-})
+    //only checking for fields that can be changed
+    //profile picture can be deleted since it is not necessary
+
+    if(!email){
+      $rootScope.show('Email field cannot be empty');
+      console.log('Email field was empty');
+    } else if(!password){
+      $rootScope.show('Password field cannot be empty');
+      console.log('Password field was empty');
+    }
+
+    console.log('Email and password fields verified, attempting to save account changes...');
+    $rootScope.notify('Saving changes to your account');
+    AccountAPI.saveAccount({
+      email : email,
+      password: password
+    }).success(function(data, headers, config, status){
+      $rootScope.hide();
+      $window.location.href = ('#/app/account');
+    })
+    .error(function(error){
+      if(error.error && error.error.code == 11000){
+        $rootScope.notify("This email is already in use");
+        console.log("could not register user: email already in use ");
+      } else {
+        $rootScope.notify("An error has occured. Please try again");
+      }
+    });
+  };
+
+
+
+});
