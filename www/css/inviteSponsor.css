@@ -1,32 +1,61 @@
-.item.item-divider {
+.header .heading {
+  background-color: #efefef;
+  color: #000000;
+  font-weight: 200;
+  font-size: 2em;
   text-align: center;
-  font-size: x-large;
-  font-weight: normal;
+  padding: 4% 2% 2% 2%;
 }
 
-.item.item-text-wrap {
+h2{
+  padding: 3% 5% 0 5%;
+  margin: 0;
+  /*padding-top: 2%;
+  margin-left: 2pt;
+  padding-bottom: 0;
+  margin-bottom: 0;*/
+  font-weight: 300;
+  font-size: 1.25em;
+  color: black;
+  text-align: left;
+}
+
+p {
+  font-size: 1em;
+  font-weight: 300;
+  padding: 0 5% 3% 5%;
+}
+
+/*Donation Link Styling*/
+.donation-link p {
+  text-align: center;
+  background-color: #efefef;
+  padding: 2%;
+  margin: 0 5% 3% 5%;
+}
+
+
+/*Share Buttons Styling - Text and Email*/
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 3%;
+}
+
+li {
+    display: inline;
+}
+#buttons {
   text-align: center;
 }
-
-h1 {
-  font-size: x-large;
-  font-weight: normal;
+.button.button-assertive {
+    background-color: #ce1d1f;
+    width: 35%;
+    padding: 0;
+    margin-right: 7%;
+    margin-left: 7%
 }
-
-i {
-  text-align: center;
-}
-
-.card {
-  font-family: "HelveticaNeue";
-}
-
-.item.item-input-inset {
-  border: none;
-}
-
-ion-content {
-  background-image:url('../img/bg.jpg');
-  background-repeat:no-repeat;
-  background-size: 100%;
+.button.button-assertive.activated {
+    background-color: #00b9be;
 }

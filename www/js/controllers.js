@@ -2,7 +2,7 @@ angular.module('starter.controllers', ['starter.appServices',
   'starter.charityServices',
   'starter.authServices',
   'starter.donationServices',
-  'starter.runServices'
+  'starter.runServices','ionic'
 ])
 
 
@@ -328,7 +328,11 @@ angular.module('starter.controllers', ['starter.appServices',
     };
   })
 
-.controller('MySponsorsCtrl',function($rootScope, $scope, $filter, DonationAPI){
+.controller('MySponsorsCtrl',function($rootScope, $scope, $filter, $window, $ionicModal, DonationAPI){
+
+      $scope.managePledges = function() {
+        $window.location.href = "#/app/myPledges";
+      }
 
       $scope.doRefresh = function() {
         DonationAPI.getAllSponsors($rootScope.getToken(),"577525799f1f51030075a291").success(function(data, status, headers, config){
@@ -353,13 +357,53 @@ angular.module('starter.controllers', ['starter.appServices',
         });
       }
 
+      $ionicModal.fromTemplateUrl('templates/inviteSponsor.html',{
+          scope: $scope
+      }).then(function(modal){
+          $scope.modal = modal;
+      });
+
+      $scope.openModal = function($event) {
+          DonationAPI.inviteSponsor("token",{
+            charity:"5771430bdcba0f275f2a0a5e",
+            userId:"577525799f1f51030075a291"
+          }).success(function (data, status, headers, config){
+            console.log("data:" + data);
+            $scope.data = data;
+          }).error(function (data, status, headers,config){
+            console.log("Refresh Error~");
+            $rootScope.notify("Oops something went wrong!! Please try again later");
+          });
+          $scope.modal.show($event);
+      };
+
+      $scope.closeModal = function() {
+          $scope.modal.hide();
+      };
+
+      $scope.$on('$destroy', function(){
+          $scope.modal.remove();
+      });
+
+      $scope.$on('modal.hidden',function(){
+          console.log("execute modal.hidden");
+      });
+
+      $scope.$on('modal.removed', function(){
+          console.log("execute modal.removed");
+      });
       // Do the first time when page loaded
       $scope.doRefresh();
 })
 
 
 
-.controller('MyPledgesCtrl',function($rootScope, $scope, $filter, DonationAPI){
+.controller('MyPledgesCtrl',function($rootScope, $scope, $filter, $window, DonationAPI){
+
+  $scope.manageSponsors = function() {
+    $window.location.href = "#/app/mySponsors";
+  }
+
   $scope.doRefresh = function() {
     DonationAPI.getAllPledges($rootScope.getToken(),"577525799f1f51030075a292").success(function(data, status, headers, config){
         $scope.list = [];
@@ -385,6 +429,10 @@ angular.module('starter.controllers', ['starter.appServices',
 
   // Do the first time when page loaded
   $scope.doRefresh();
+})
+
+.controller('inviteSponsorCtrl', function($scope){
+
 })
 
 .controller('PlaylistsCtrl', function($scope) {

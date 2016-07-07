@@ -55,7 +55,16 @@ angular.module('starter.donationServices', ['ionic'])
           token: token,
           donorId: donorId
         }
-      })
+      });
+    },
+
+    inviteSponsor: function(token,form) {
+      return $http.post(base+'donations/sponsors',form,{
+        method:'POST',
+        params: {
+          token: token
+        }
+      });
     }
   }
 });

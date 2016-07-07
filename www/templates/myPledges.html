@@ -1,4 +1,4 @@
-<ion-view view-title="pledges">
+<ion-view view-title="Sponsors">
     <ion-content ng-controller="MyPledgesCtrl">
       <ion-refresher ng-hide="noData" pulling-text="Pull to refresh..." on-refresh="doRefresh()"></ion-refresher>
       <div class="wrapper">
@@ -14,7 +14,7 @@
               </div>
               <div class="row">
                 <div class="col">
-                  <button class="button button-small button-clear button-PDMLight">Manage my pledges</button>
+                  <button class="button button-small button-clear button-PDMLight" ng-click="manageSponsors()">Manage my sponsors</button>
                 </div>
               </div>
             </div>
@@ -44,8 +44,6 @@
         <span ng-show="noData">
             No pledge now.
         </span>
-          <button class="button button-block button-clear button-sponsor-help">Need Help Getting Sponsors?</button>
-        </div>
       </div>
       </div>
     </ion-content>

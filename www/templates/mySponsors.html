@@ -1,16 +1,15 @@
-<head>
-  <link rel="stylesheet" type="text/css" href="../css/inviteSponsor.css">
-</head>
-<ion-view view-title="Donations">
-    <ion-content class="has-header" ng-controller="MySponsorsCtrl">
+<ion-view view-title="Sponsors" ng-controller="MySponsorsCtrl">
+    <ion-nav-buttons side="right" >
+        <button class="button button-clear button-positive" ng-click="openModal($event)">
+          InviteSponsor
+        </button>
+    </ion-nav-buttons>
+    <ion-content class="has-header" >
       <ion-refresher ng-hide="noData" pulling-text="Pull to refresh..." on-refresh="doRefresh()"></ion-refresher>
       <div class="wrapper">
-
         <div class="sponsor-header">
-
           <div class="row">
             <div class="col col-50 image">
-
             </div>
             <div class="col col-50">
               <h2>Jane Doe</h2>
@@ -20,7 +19,7 @@
               </div>
               <div class="row">
                 <div class="col">
-                  <button class="button button-small button-clear button-PDMLight">Manage my sponsors</button>
+                  <button class="button button-small button-clear button-PDMLight" ng-click="managePledges()">Manage my pledges</button>
                 </div>
               </div>
             </div>
@@ -41,7 +40,7 @@
         <div class="list">
           <!-- use this template for all the cells-->
           <a class="item item-icon-left" ng-repeat="sponsor in list">
-            <span class="cell-vertical-center-text">{{ sponsor.donor.firstName }} {{sponsor.donor.lastName}}</span>
+            <span class="cell-vertical-center-text"> {{ sponsor.donor.firstName }} {{sponsor.donor.lastName}}</span>
               <span class="item-note">
                 <p class="pledge">{{ sponsor.per_mile_donation }}¢/mile</p>
                 <p class="ending-date">{{ sponsor.end_date }}</p>
