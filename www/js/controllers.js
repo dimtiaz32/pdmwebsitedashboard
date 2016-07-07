@@ -2,7 +2,8 @@ angular.module('starter.controllers', ['starter.appServices',
   'starter.charityServices',
   'starter.authServices',
   'starter.sponsorServices',
-  'starter.runServices'
+  'starter.runServices',
+  'starter.accountServices'
 ])
 
 
@@ -552,7 +553,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
 })
 
-  .controller('CharitiesCtrl', function($rootScope, $timeout, $ionicModal, $window, $scope, CharityAPI){
+  .controller('CharitiesCtrl', function($rootScope, $timeout, $ionicModal, $window, $scope, CharityAPI, AuthAPI){
 
     CharityAPI.getAll()
       .success(function(data, status, headers, config){
@@ -565,7 +566,19 @@ angular.module('starter.controllers', ['starter.appServices',
           $scope.list.push(data[i]);
         }
         $scope.select = function(){
-          //put code to select charity and pass id to user
+          User.findCharity(
+            {id: userId},
+            {charityId: charityId})
+          .sucess(function(status, data, headers, config){
+            console.log('charity select- User.findCharity triggered successfull');
+            for (var i = 0; i < charityList.length; i++){
+              var check = charityList[i];
+              if(check.id == charityId){
+                //function to set status to selected, moves charity info to dropdown. 
+
+              }
+            }
+          });
         };
 
         $rootScope.hide();
@@ -659,20 +672,25 @@ angular.module('starter.controllers', ['starter.appServices',
 
 })
 
-.controller('MyPledgesCtrl',function($scope){
+.controller('AccountCtrl', function($rootScope, AuthAPI, AccountAPI, $window){
+  //refresh on page load?
+  //Profile Picture - edit
+  //Name- cannot edit
+  //Email -edit
+  //Password (hashed)
+  //DOB-cannot edit
+
+  $scope.account = {
+    firstName:"",
+    lastName:"",
+    pofilePicture: "",
+    email: "",
+    dob:"",
+    created: "",
+    updated: Date.now
+  };
+
+  AccountAPI.saveAccount({})
+
 
 })
-
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
-})
-
-.controller('PlaylistCtrl', function($scope, $stateParams) {
-});
