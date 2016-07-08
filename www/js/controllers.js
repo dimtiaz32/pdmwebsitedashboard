@@ -5,7 +5,7 @@ angular.module('starter.controllers', ['starter.appServices',
   'starter.sponsorServices',
   'starter.runServices',
   'starter.accountServices',
-  
+
   'starter.donationServices',
   'starter.runServices'
 ])
@@ -791,7 +791,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
   // Do the first time when page loaded
   $scope.doRefresh();
-})
+
   $scope.logout = function($window, AuthAPI){
     $rootScope.notify('Logging out...');
     console.log('Logout function started');
@@ -805,7 +805,7 @@ angular.module('starter.controllers', ['starter.appServices',
     $window.location.href  ('#/app/signin');
   };
 
-
+})
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 })
