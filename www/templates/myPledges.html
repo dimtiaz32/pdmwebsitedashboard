@@ -1,6 +1,11 @@
-<ion-view view-title="Sponsors">
-    <ion-content ng-controller="MyPledgesCtrl">
-      <ion-refresher ng-hide="noData" pulling-text="Pull to refresh..." on-refresh="doRefresh()"></ion-refresher>
+<ion-view view-title="Sponsors" ng-controller="MyDonationCtrl">
+    <ion-nav-buttons side="right" >
+        <button class="button button-clear button-positive" ng-click="openModal($event)">
+          InviteSponsor
+        </button>
+    </ion-nav-buttons>
+    <ion-content>
+      <ion-refresher ng-hide="noPledge" pulling-text="Pull to refresh..." on-refresh="doRefresh('fetchMyPledges')"></ion-refresher>
       <div class="wrapper">
         <div class="sponsor-header">
           <div class="row">
@@ -33,7 +38,7 @@
         <hr>
         <div class="list">
           <!-- use this template for all the cells-->
-          <a class="item item-icon-left" ng-repeat="pledge in list">
+          <a class="item item-icon-left" ng-repeat="pledge in pledges">
             <span class="cell-vertical-center-text">{{ pledge.recipient.name.first }} {{pledge.recipient.name.last}}</span>
               <span class="item-note">
                 <p class="pledge">{{ pledge.per_mile_donation }}¢/mile</p>

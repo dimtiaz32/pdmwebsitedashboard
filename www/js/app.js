@@ -89,7 +89,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives']
     views:{
       'menuContent':{
         templateUrl:'templates/mySponsors.html',
-        controller: 'MySponsorsCtrl'
+        controller: 'MyDonationCtrl'
       }
     }
   })
@@ -99,7 +99,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives']
     views:{
       'menuContent':{
         templateUrl:'templates/myPledges.html',
-        controller: 'MyPledgesCtrl'
+        controller: 'MyDonationCtrl'
       }
     }
   })

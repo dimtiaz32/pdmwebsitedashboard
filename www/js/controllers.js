@@ -233,17 +233,63 @@ angular.module('starter.controllers', ['starter.appServices',
     };
   })
 
-  .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+  .controller('AppCtrl', function($rootScope, $scope, $filter, $ionicModal, $timeout,DonationAPI) {
 
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
+      $scope.fetchMyPledges = function() {
+          $rootScope.$broadcast("fetchMyPledges");
+      }
 
+      $scope.fetchMySponsors = function() {
+          $rootScope.$broadcast("fetchMySponsors");
+      }
 
-})
+      $rootScope.$on('fetchMySponsors', function() {
+        DonationAPI.getAllSponsors($rootScope.getToken(),"577525799f1f51030075a291").success(function(data, status, headers, config){
+            $scope.sponsors = [];
+            for (var i = 0; i < data.length; i++) {
+                data[i].end_date = $filter('date')(data[i].end_date,"MMM dd yyyy");
+                $scope.sponsors.push(data[i]);
+            };
+
+            if(data.length == 0) {
+                $scope.noSponsor = true;
+            } else {
+                $scope.noSponsor = false;
+            }
+
+        }).error(function(data, status, headers, config){
+            console.log("Refresh Error~");
+            $rootScope.notify("Oops something went wrong!! Please try again later");
+        }).finally(function(){
+            console.log("Refresh Finally~");
+            $scope.$broadcast('scroll.refreshComplete');
+        });
+      });
+
+      $rootScope.$on('fetchMyPledges',function(){
+        DonationAPI.getAllPledges($rootScope.getToken(),"577525799f1f51030075a292").success(function(data, status, headers, config){
+            $scope.pledges = [];
+            for (var i = 0; i < data.length; i++) {
+                data[i].end_date = $filter('date')(data[i].end_date,"MMM dd yyyy");
+                $scope.pledges.push(data[i]);
+            };
+
+            if(data.length == 0) {
+                $scope.noPledge = true;
+            } else {
+                $scope.noPledge = false;
+            }
+
+        }).error(function(data, status, headers, config){
+            console.log("Refresh Error~");
+            $rootScope.notify("Oops something went wrong!! Please try again later");
+        }).finally(function(){
+            console.log("Refresh Finally~");
+            $scope.$broadcast('scroll.refreshComplete');
+        });
+      });
+
+  })
 
   .controller('CharitiesCtrl', function($rootScope, $timeout, $ionicModal, $window, $scope, CharityAPI){
 
@@ -269,11 +315,6 @@ angular.module('starter.controllers', ['starter.appServices',
         $rootScope.notify("Something went wrong retrieving the list of charities");
         console.log("Error retrieving charities");
       });
-
-
-
-
-
   })
 
 
@@ -328,33 +369,21 @@ angular.module('starter.controllers', ['starter.appServices',
     };
   })
 
-.controller('MySponsorsCtrl',function($rootScope, $scope, $filter, $window, $ionicModal, DonationAPI){
+.controller('MyDonationCtrl',function($rootScope, $scope, $filter, $window, $ionicModal, DonationAPI){
 
       $scope.managePledges = function() {
+        $rootScope.$broadcast('fetchMyPledges');
         $window.location.href = "#/app/myPledges";
       }
 
-      $scope.doRefresh = function() {
-        DonationAPI.getAllSponsors($rootScope.getToken(),"577525799f1f51030075a291").success(function(data, status, headers, config){
-            $scope.list = [];
-            for (var i = 0; i < data.length; i++) {
-                data[i].end_date = $filter('date')(data[i].end_date,"MMM dd yyyy");
-                $scope.list.push(data[i]);
-            };
+      $scope.manageSponsors = function() {
+        $rootScope.$broadcast('fetchMySponsors');
+        $window.location.href = "#/app/mySponsors";
+      }
 
-            if(data.length == 0) {
-                $scope.noData = true;
-            } else {
-                $scope.noData = false;
-            }
-
-        }).error(function(data, status, headers, config){
-            console.log("Refresh Error~");
-            $rootScope.notify("Oops something went wrong!! Please try again later");
-        }).finally(function(){
-            console.log("Refresh Finally~");
-            $scope.$broadcast('scroll.refreshComplete');
-        });
+      $scope.doRefresh = function(fetchType) {
+          console.log("fetchType:" + fetchType);
+          $rootScope.$broadcast(fetchType);
       }
 
       $ionicModal.fromTemplateUrl('templates/inviteSponsor.html',{
@@ -364,11 +393,11 @@ angular.module('starter.controllers', ['starter.appServices',
       });
 
       $scope.openModal = function($event) {
+          console.log("try open the modal");
           DonationAPI.inviteSponsor("token",{
             charity:"5771430bdcba0f275f2a0a5e",
             userId:"577525799f1f51030075a291"
           }).success(function (data, status, headers, config){
-            console.log("data:" + data);
             $scope.data = data;
           }).error(function (data, status, headers,config){
             console.log("Refresh Error~");
@@ -392,43 +421,14 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.$on('modal.removed', function(){
           console.log("execute modal.removed");
       });
-      // Do the first time when page loaded
-      $scope.doRefresh();
+
 })
 
 
 
 .controller('MyPledgesCtrl',function($rootScope, $scope, $filter, $window, DonationAPI){
 
-  $scope.manageSponsors = function() {
-    $window.location.href = "#/app/mySponsors";
-  }
 
-  $scope.doRefresh = function() {
-    DonationAPI.getAllPledges($rootScope.getToken(),"577525799f1f51030075a292").success(function(data, status, headers, config){
-        $scope.list = [];
-        for (var i = 0; i < data.length; i++) {
-            data[i].end_date = $filter('date')(data[i].end_date,"MMM dd yyyy");
-            $scope.list.push(data[i]);
-        };
-
-        if(data.length == 0) {
-            $scope.noData = true;
-        } else {
-            $scope.noData = false;
-        }
-
-    }).error(function(data, status, headers, config){
-        console.log("Refresh Error~");
-        $rootScope.notify("Oops something went wrong!! Please try again later");
-    }).finally(function(){
-        console.log("Refresh Finally~");
-        $scope.$broadcast('scroll.refreshComplete');
-    });
-  }
-
-  // Do the first time when page loaded
-  $scope.doRefresh();
 })
 
 .controller('inviteSponsorCtrl', function($scope){
