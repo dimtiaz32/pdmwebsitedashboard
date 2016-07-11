@@ -1,0 +1,32 @@
+.item.item-divider {
+  text-align: center;
+  font-size: x-large;
+  font-weight: normal;
+}
+
+.item.item-text-wrap {
+  text-align: center;
+}
+
+h1 {
+  font-size: x-large;
+  font-weight: normal;
+}
+
+i {
+  text-align: center;
+}
+
+.card {
+  font-family: "HelveticaNeue";
+}
+
+.item.item-input-inset {
+  border: none;
+}
+
+ion-content {
+  background-image:url('../img/bg.jpg');
+  background-repeat:no-repeat;
+  background-size: 100%;
+}

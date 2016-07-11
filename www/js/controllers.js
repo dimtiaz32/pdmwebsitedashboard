@@ -431,8 +431,130 @@ angular.module('starter.controllers', ['starter.appServices',
 
 })
 
-.controller('inviteSponsorCtrl', function($scope){
+.controller('InviteSponsorStartCtrl', function($scope){
 
+})
+
+.controller('InviteSponsorInfoCtrl', function($rootScope, $scope, $http, store, $window){
+    $scope.user = {
+        firstname: "",
+        lastname: ""
+    };
+    $scope.saveName = function() {
+
+      var firstname = this.user.firstname;
+      var lastname = this.user.lastname;
+
+      if(!firstname || !lastname) {
+        //$rootScope.notify("Please enter valid data");
+        return false;
+      }
+
+      store.set('user.firstname',firstname);
+      store.set('user.lastname', lastname);
+      $window.location.href = ('#/app/sponsors/amount');
+    }
+})
+
+.controller('InviteSponsorAmountCtrl', function($scope, $http, store, $window){
+      $scope.active = 'zero';
+
+      $scope.setActive = function(type) {
+        $scope.active = type;
+      };
+      $scope.isActive = function(type) {
+        return type === $scope.active;
+      };
+
+      $scope.donor = {
+          amount: ""
+      };
+
+      $scope.saveMoney = function() {
+
+        var amount = this.donor.amount;
+
+        if(!amount && $scope.active == 'zero') {
+          return false;
+        }
+        if (amount != '') {
+            store.set('donor.amount', amount);
+        }
+        $window.location.href = ('#/app/sponsors/pledge');
+      }
+
+      $scope.saveMoneyWithAmount = function(amount) {
+         store.set('donor.amount', amount);
+      }
+})
+
+.controller('InviteSponsorPledgeCtrl', function($scope, $http, store, $window){
+
+      $scope.active = 'zero';
+      $scope.setActive = function(type) {
+        $scope.active = type;
+      };
+      $scope.isActive = function(type) {
+        return type === $scope.active;
+      };
+
+      $scope.donor = {
+        months: ""
+      };
+
+      $scope.saveMonths = function() {
+
+      var months = this.donor.months;
+
+      if(!months && $scope.active == 'zero') {
+        return false;
+      }
+      if(months != '') {
+        store.set('donor.months', months);
+      }
+        $window.location.href = ('#/app/sponsors/payment');
+      }
+
+      $scope.saveMonthsWithMonths = function(months) {
+        store.set('donor.months',months);
+      }
+})
+
+.controller('InviteSponsorPaymentCtrl', function($rootScope, $scope, $http, store, API, $window){
+      $scope.user = {
+          email: ""
+      };
+      $scope.updateDonation = function(status, response) {
+
+          var email = this.user.email;
+          if(!email) {
+              return false;
+          }
+
+          if (response.error) {
+              console.log('token:' + response.error.message);
+          } else {
+              console.log("amount:" + store.get('donor.amount'));
+              API.createDonation({
+                  firstName: store.get('user.firstname'),
+                  lastName: store.get('user.lastname'),
+                  email: email,
+                  amount: store.get('donor.amount'),
+                  months: store.get('donor.months'),
+                  stripeToken: response.id,
+                  userId: '576d5555765c85f11c7f0ca1'
+            }).success(function (data){
+                $window.location.href = ('#/app/sponsors/con');
+            }).error(function (err){
+                console.log("error: " + err.message);
+            });
+          }
+      };
+})
+
+.controller('InviteSponsorEndCtrl',function($scope, $http, store){
+      $scope.months = store.get('donor.months');
+      $scope.amount = store.get('donor.amount');
 })
 
 .controller('PlaylistsCtrl', function($scope) {

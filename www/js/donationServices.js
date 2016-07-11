@@ -39,7 +39,7 @@ angular.module('starter.donationServices', ['ionic'])
 
   return{
     getAllSponsors: function(token,userId){
-      return $http.get(base+'donations/sponsors', {
+      return $http.get(base + 'donations/sponsors', {
         method: 'GET',
         params: {
           token: token,
@@ -49,7 +49,7 @@ angular.module('starter.donationServices', ['ionic'])
     },
 
     getAllPledges: function(token,donorId){
-      return $http.get(base+'donations/pledges',{
+      return $http.get(base + 'donations/pledges',{
         method:'GET',
         params: {
           token: token,
@@ -59,12 +59,21 @@ angular.module('starter.donationServices', ['ionic'])
     },
 
     inviteSponsor: function(token,form) {
-      return $http.post(base+'donations/sponsors',form,{
+      return $http.post(base + 'donations/sponsors',form,{
         method:'POST',
         params: {
           token: token
         }
       });
+    },
+
+    completeSponsor: function(token,form) {
+      return $http.post(base + 'donations/myDonations',form,{
+        method:'POST',
+        params: {
+          token: token
+        }
+      })
     }
   }
 });

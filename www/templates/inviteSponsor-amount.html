@@ -1,0 +1,95 @@
+<!--
+<ion-view view-title="sponsors">
+  <ion-header-bar class="bar-positive">
+     <h1 class="title">Become a Sponsor</h1>
+  </ion-header-bar>
+  <ion-content class="has-header padding" ng-controller="SponsorsAmountCtrl">
+     <div class="row">
+      <button class="button button-outline button-positive" value="10" ng-click="saveMoneyWithAmount(10)">
+          10C/mile
+      </button>
+      <button class="button button-outline button-positive" value="30" ng-click="saveMoneyWithAmount(30)">
+          30C/mile
+      </button>
+      <button class="button button-outline button-positive" value="50" ng-click="saveMoneyWithAmount(50)">
+          50C/mile
+      </button>
+    </div>
+    <div class="row">
+      <button class="button button-outline button-positive" value="100" ng-click="saveMoneyWithAmount(100)">
+          1$/mile
+      </button>
+      <button class="button button-outline button-positive" value="200" ng-click="saveMoneyWithAmount(200)">
+          2$/mile
+      </button>
+      <label class="button button-outline button-positive">
+          $<input type="text" placeholder="amount" ng-model="donor.amount" size="4"/>
+      </label>
+    </div>
+      <a href="#/app/sponsors/pledge" ng-click='saveMoney()'>next!</a>
+  </ion-content>
+</ion-view>
+-->
+
+
+<ion-content ng-controller="InviteSponsorAmountCtrl">
+
+  <div class="card">
+
+    <div class="item item-divider">
+      Sponsor Yesh!
+      <i class="icon icon-left ion-home"></i>
+    </div>
+
+    <div class="item item-text-wrap">
+      Pledge Amount
+      <div class="row">
+        <div class="col col-33">
+          <button class="button"
+                  ng-class="{'active' : isActive('one')}"
+                  ng-click="saveMoneyWithAmount(10); setActive('one')">
+            10¢<span style="font-size: smaller">/mile</span>
+          </button>
+        </div>
+        <div class="col col-33">
+          <button class="button"
+                  ng-class="{'active' : isActive('two')}"
+                  ng-click="saveMoneyWithAmount(30); setActive('two')">
+            30¢<span style="font-size: smaller">/mile</span>
+          </button>
+        </div>
+        <div class="col col-33">
+          <button class="button"
+                  ng-class="{'active' : isActive('three')}"
+                  ng-click="saveMoneyWithAmount(50); setActive('three')">
+            50¢<span style="font-size: smaller">/mile</span>
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-33">
+          <button class="button"
+                  ng-class="{'active' : isActive('four')}"
+                  ng-click="saveMoneyWithAmount(100); setActive('four')">
+            $1<span style="font-size: smaller">/mile</span>
+          </button>
+        </div>
+        <div class="col col-33">
+          <button class="button"
+                  ng-class="{'active' : isActive('five')}"
+                  ng-click="saveMoneyWithAmount(200); setActive('five')">
+            $2<span style="font-size: smaller">/mile</span>
+          </button>
+        </div>
+        <div class="col col-33">
+          <input type="text" placeholder="$00.00" ng-model="donor.amount" size="6"/>
+        </div>
+      </div>
+      <p style="color: #808080">The average runner runs 80 - 100 miles/month</p>
+    </div>
+
+    <div class="item item-divider">
+      <button class="button button-full button-assertive" style="color: white; font-size: x-large; font-weight: normal;" ng-click="saveMoney()">Next</button>
+    </div>
+
+  </div>
