@@ -1,7 +1,4 @@
 <ion-modal-view view-title="Browse">
-  <head>
-    <link rel="stylesheet" type="text/css" href="../css/inviteSponsor.css">
-  </head>
   <ion-content>
     <div class="header">
       <h1 class="heading">Invite Sponsors</h1>
@@ -14,12 +11,12 @@
       <h2>Share<h2>
         <ul id="buttons">
           <li>
-            <button class="button button-assertive">
+            <button class="button button-assertive" ng-click="shareBySMS()">
               Text
             </button>
           </li>
           <li>
-            <button class="button button-assertive">
+            <button class="button button-assertive" ng-click="shareByMail()">
               Email
             </button>
           </li>

@@ -2,7 +2,7 @@ angular.module('starter.controllers', ['starter.appServices',
   'starter.charityServices',
   'starter.authServices',
   'starter.donationServices',
-  'starter.runServices','ionic'
+  'starter.runServices','ionic','ngCordova'
 ])
 
 
@@ -369,7 +369,7 @@ angular.module('starter.controllers', ['starter.appServices',
     };
   })
 
-.controller('MyDonationCtrl',function($rootScope, $scope, $filter, $window, $ionicModal, DonationAPI){
+.controller('MyDonationCtrl',function($rootScope, $scope, $filter, $window, $ionicModal, $cordovaSms, $cordovaSocialSharing,DonationAPI){
 
       $scope.managePledges = function() {
         $rootScope.$broadcast('fetchMyPledges');
@@ -399,6 +399,44 @@ angular.module('starter.controllers', ['starter.appServices',
             userId:"577525799f1f51030075a291"
           }).success(function (data, status, headers, config){
             $scope.data = data;
+            // $scope.shareBySMS = function() {
+            //   console.log("sms share begin")
+            //   $cordovaSocialSharing.shareViaSMS("aaaaa", "0612345678,0687654321").then(function(result) {
+            //       console.log("sms share success");
+            //     }, function(err) {
+            //       console.log("sms share failure");
+            //   });
+            // }
+            $scope.shareByMail = function() {
+              console.log("email share begin")
+              $cordovaSocialSharing.shareViaEmail("aaa", "bbb", "", "", "", "").then(function(result) {
+                  console.log("email share success");
+                }, function(err) {
+                  console.log("email share failure");
+                });
+            }
+
+            $scope.shareBySMS = function(){
+                console.log("begin share by sms");
+                $cordovaSms.send("", "Pledge link: " + data)
+                      .then(function() {
+                          console.log('share sms success');
+                      }, function(error) {
+                          console.log('share sms failure');
+                          console.log(error);
+                });
+            }
+
+            $scope.shareByFB = function() {
+                console.log("begin share by facebook");
+                $cordovaSocialSharing.shareViaFacebook(data, null, null).then(function(result) {
+                      console.log('share facebook success');
+                    }, function(err) {
+                      console.log('share facebook failure');
+                    });
+            }
+
+
           }).error(function (data, status, headers,config){
             console.log("Refresh Error~");
             $rootScope.notify("Oops something went wrong!! Please try again later");
