@@ -95,14 +95,13 @@ p.pledge {
   font-weight: bold;
   color: black;
   text-align: right;
-
+  overflow: visible;
 }
 p.ending-date {
   font-family: "HelveticaNeue-Light";
   font-weight: thin;
   font-size: .9em;
-  text-align: right;
-
+  overflow: visible;
 }
 
 a.item.item-icon-left {

@@ -26,7 +26,6 @@
 
           </div>
         </div>
-
         <div class="row row-center">
           <div class="col">
             <h3>My Sponsors</h3>
@@ -42,8 +41,8 @@
           <a class="item item-icon-left" ng-repeat="sponsor in sponsors">
             <span class="cell-vertical-center-text"> {{ sponsor.donor.firstName }} {{sponsor.donor.lastName}}</span>
               <span class="item-note">
-                <p class="pledge">{{ sponsor.per_mile_donation }}¢/mile</p>
-                <p class="ending-date">{{ sponsor.end_date }}</p>
+                <p class="pledge">{{ formateCurreny(sponsor.per_mile_donation) }}/mile</p>
+                <p class="ending-date">{{ formateDate(sponsor.end_date) }}</p>
               </span>
           </a>
         </div>

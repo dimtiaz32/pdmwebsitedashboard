@@ -247,7 +247,6 @@ angular.module('starter.controllers', ['starter.appServices',
         DonationAPI.getAllSponsors($rootScope.getToken(),"577525799f1f51030075a291").success(function(data, status, headers, config){
             $scope.sponsors = [];
             for (var i = 0; i < data.length; i++) {
-                data[i].end_date = $filter('date')(data[i].end_date,"MMM dd yyyy");
                 $scope.sponsors.push(data[i]);
             };
 
@@ -270,7 +269,6 @@ angular.module('starter.controllers', ['starter.appServices',
         DonationAPI.getAllPledges($rootScope.getToken(),"577525799f1f51030075a292").success(function(data, status, headers, config){
             $scope.pledges = [];
             for (var i = 0; i < data.length; i++) {
-                data[i].end_date = $filter('date')(data[i].end_date,"MMM dd yyyy");
                 $scope.pledges.push(data[i]);
             };
 
@@ -386,6 +384,21 @@ angular.module('starter.controllers', ['starter.appServices',
           $rootScope.$broadcast(fetchType);
       }
 
+      $scope.formateDate = function(date) {
+        return $filter('date')(date,"MMM dd yyyy");
+      }
+
+      $scope.formateCurreny = function(amount) {
+         var realAmount = parseInt(amount);
+
+         if(realAmount < 100) {
+           return amount + " ¢";
+         } else {
+           return realAmount / 100 + " $";
+         }
+
+      }
+
       $ionicModal.fromTemplateUrl('templates/inviteSponsor.html',{
           scope: $scope
       }).then(function(modal){
@@ -429,10 +442,11 @@ angular.module('starter.controllers', ['starter.appServices',
 
             $scope.shareByFB = function() {
                 console.log("begin share by facebook");
-                $cordovaSocialSharing.shareViaFacebook(data, null, null).then(function(result) {
+                $cordovaSocialSharing.shareViaFacebook(data, null, data).then(function(result) {
                       console.log('share facebook success');
                     }, function(err) {
                       console.log('share facebook failure');
+                      console.log(err);
                     });
             }
 

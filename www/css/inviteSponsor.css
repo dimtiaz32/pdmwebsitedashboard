@@ -59,3 +59,10 @@ li {
 .button.button-assertive.activated {
     background-color: #00b9be;
 }
+.fb-logo {
+  position: relative;
+  top: 10px;
+  left: 5%;
+  width: 5%;
+  height: auto;
+}

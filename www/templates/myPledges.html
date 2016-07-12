@@ -41,8 +41,8 @@
           <a class="item item-icon-left" ng-repeat="pledge in pledges">
             <span class="cell-vertical-center-text">{{ pledge.recipient.name.first }} {{pledge.recipient.name.last}}</span>
               <span class="item-note">
-                <p class="pledge">{{ pledge.per_mile_donation }}¢/mile</p>
-                <p class="ending-date">{{ pledge.end_date }}</p>
+                <p class="pledge">{{ formateCurreny(pledge.per_mile_donation) }}/mile</p>
+                <p class="ending-date">{{ formateDate(pledge.end_date) }}</p>
               </span>
           </a>
         </div>
