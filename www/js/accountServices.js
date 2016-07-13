@@ -17,7 +17,7 @@ angular.module('starter.accountServices', [])
 		},
 		saveAccount: function(form, id){
 			return $http.post(base+'/account/'+id, form, {
-				method: 'POST',
+				method: 'POST'
 				// params: {
 				// 	token : token
 				// }
