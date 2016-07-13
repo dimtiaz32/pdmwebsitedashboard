@@ -5,8 +5,8 @@
 
 angular.module('starter.authServices', [])
 
-.factory('AuthAPI', function($rootScope, $localStorage, $http, $window, $ionicLoading){
-  var base = "https://dreamrun.herokuapp.com/authentication";
+.factory('AuthAPI', function($rootScope, $http, $window, $ionicLoading){
+  var base = "https://dreamrun.herokuapp.com";
 
 
   $rootScope.show = function (text) {
@@ -33,8 +33,8 @@ angular.module('starter.authServices', [])
   $rootScope.removeToken = function(token){
     $window.localStorage.token = '';
   };
-  
-  
+
+
 
   // $rootScope.logout = function(){
   //   $rootScope.setToken("");
@@ -51,15 +51,15 @@ angular.module('starter.authServices', [])
 
   return {
     signin: function(form){
-      return $http.post(base+'/signin', form);
+      return $http.post(base+'/authentication/signin', form);
     },
     signup: function(form){
-      return $http.post(base+'/signup', form);
+      return $http.post(base+'/authentication/signup', form);
     },
     signout: function(){
-      return $http.get(base+'/signout', {
+      return $http.get(base+'/authentication/signout', {
         method: 'GET'
-       
+
       });
     }
   }

@@ -5,7 +5,7 @@ angular.module('starter.userServices', [])
 
 	return {
 		//actual account related activities should be handled by auth
-			
+
 			//functions to find other users
 		findOne: function(id){
 			return $http.get(base+'/findUser/'+id, {
@@ -19,12 +19,12 @@ angular.module('starter.userServices', [])
 			return $http.get(base+'/users/search' + email, {
 				method: 'GET',
 				params: {
-					token: token 
+					token: token
 				}
 			});
 		},
 		findByName: function(fName, lName){
-			return $http.get(base+'/users/search/:name', +name{
+			return $http.get(base+'/users/search/:name', +name, {
 				method:'GET',
 				params: {
 					token: token

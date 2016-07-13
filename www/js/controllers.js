@@ -1,11 +1,9 @@
 angular.module('starter.controllers', ['starter.appServices',
   'starter.charityServices',
   'starter.authServices',
-
-  'starter.sponsorServices',
   'starter.runServices',
   'starter.accountServices',
-
+  'starter.accountServices',
   'starter.donationServices',
   'starter.runServices'
 ])
@@ -122,7 +120,7 @@ angular.module('starter.controllers', ['starter.appServices',
           $rootScope.hide();
           $rootScope.notify("Invalid username or password");
         });
-    }
+    };
 
   })
 
