@@ -1166,7 +1166,7 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.isActive = function (type) {
       return type === $scope.active;
     };
-}
+})
 .controller('AccountCtrl', function($rootScope, AuthAPI, AccountAPI, $window, $scope) {
   //refresh on page load?
   //Profile Picture - edit
@@ -1231,39 +1231,40 @@ angular.module('starter.controllers', ['starter.appServices',
   }
 })
 
-.controller('MyPledgesCtrl',function($rootScope, $scope, $filter, DonationAPI) {
+.controller('MyPledgesCtrl', function($rootScope, $scope, $filter, DonationAPI) {
   // $scope.doRefresh = function() {
-  DonationAPI.getAllPledges($rootScope.getToken(), "577525799f1f51030075a292").success(function (data, status, headers, config) {
-    $scope.list = [];
-    for (var i = 0; i < data.length; i++) {
-      data[i].end_date = $filter('date')(data[i].end_date, "MMM dd yyyy");
-      $scope.list.push(data[i]);
-    }
-    ;
+  DonationAPI.getAllPledges($rootScope.getToken(), "577525799f1f51030075a292")
+    .success(function (data, status, headers, config) {
+      $scope.list = [];
+      for (var i = 0; i < data.length; i++) {
+        data[i].end_date = $filter('date')(data[i].end_date, "MMM dd yyyy");
+        $scope.list.push(data[i]);
+      };
 
-    $scope.donor = {
-      amount: ""
-    };
+      $scope.donor = {
+        amount: ""
+      };
 
 
-    $scope.saveMoney = function () {
+      $scope.saveMoney = function () {
 
-      var amount = this.donor.amount;
+        var amount = this.donor.amount;
 
-      if (!amount && $scope.active == 'zero') {
-        return false;
+        if (!amount && $scope.active == 'zero') {
+          return false;
+        }
+        if (amount != '') {
+          store.set('donor.amount', amount);
+        }
+        $window.location.href = ('#/app/sponsors/pledge');
       }
-      if (amount != '') {
+
+      $scope.saveMoneyWithAmount = function (amount) {
         store.set('donor.amount', amount);
       }
-      $window.location.href = ('#/app/sponsors/pledge');
-    }
-
-    $scope.saveMoneyWithAmount = function (amount) {
-      store.set('donor.amount', amount);
-    }
 
 
+    })
 })
 
 .controller('InviteSponsorPledgeCtrl', function($scope, $http, store, $window){
@@ -1280,18 +1281,18 @@ angular.module('starter.controllers', ['starter.appServices',
         months: ""
       };
 
-      $scope.saveMonths = function() {
+    $scope.saveMonths = function() {
 
       var months = this.donor.months;
 
-      if(!months && $scope.active == 'zero') {
+      if (!months && $scope.active == 'zero') {
         return false;
       }
-      if(months != '') {
+      if (months != '') {
         store.set('donor.months', months);
       }
-        $window.location.href = ('#/app/sponsors/payment');
-      }
+      $window.location.href = ('#/app/sponsors/payment');
+    }
 
       $scope.saveMonthsWithMonths = function(months) {
         store.set('donor.months',months);
@@ -1332,14 +1333,14 @@ angular.module('starter.controllers', ['starter.appServices',
                 console.log("error: " + err.message);
             });
           }
-      };
+      }
 })
 
 
   // Do the first time when page loaded
   // $scope.doRefresh();
 
-.controller('InviteSponsorEndCtrl',function($scope, $http, store){
+.controller('InviteSponsorEndCtrl', function($scope, $http, store){
       $scope.months = store.get('donor.months');
       $scope.amount = store.get('donor.amount');
 })
