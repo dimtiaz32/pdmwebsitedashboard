@@ -54,7 +54,7 @@ angular.module('starter.charityServices', ['ionic'])
     },
 
     putItem: function(token, form, id){
-      return $http.get(base+'/charities/' + id, form, {
+      return $http.put(base+'/charities/' + id, form, {
         method: 'PUT',
         params: {
           token: token

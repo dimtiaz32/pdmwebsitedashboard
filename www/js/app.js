@@ -54,12 +54,24 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
     templateUrl: 'templates/menu.html',
     controller: 'AppCtrl'
   })
+
+
     .state('app.run', {
       url:'/run',
       views: {
         'menuContent': {
           templateUrl: 'templates/run.html',
           controller:'RunCtrl'
+        }
+      }
+    })
+
+    .state('app.accountInfo', {
+      url: '/accountInfo',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/accountInfo.html',
+          controller: 'AccountCtrl'
         }
       }
     })

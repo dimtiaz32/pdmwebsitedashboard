@@ -1,0 +1,31 @@
+<ion-view view-title="Account Info">
+  <ion-content scroll="false">
+    <div class="background background-image">
+      <div class="user user-image">
+      <img ng-src=""></div>
+      <div class="user user-name">
+        {{account.name}}
+      </div>
+    </div>
+    <!-- Switch to onclick spans -->
+    <div class="list">
+      <label class="item item-input">
+      <span class="input-label"> Email </span>
+      <input type="email" ng-model="account.email">
+      </label>
+      <label class="item item-input">     
+      <span class="input-label">Password</span>
+      <input type="password" ng-model="account.password">
+      </label>
+      <label class="item item-input">
+      <span class="input-label">Date of Birth</span>
+      <input type="Date" ng-model="account.dob">
+      </label>
+    </div>
+    <ion-label class="item item-input">
+      <button class="button button-block button-positive" ng-click="logout()">
+        Logout
+      </button>
+    </ion-label>  
+  </ion-content>
+</ion-view>
