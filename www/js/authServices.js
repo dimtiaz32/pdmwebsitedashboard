@@ -6,7 +6,7 @@
 angular.module('starter.authServices', [])
 
 .factory('AuthAPI', function($rootScope, $http, $window, $ionicLoading){
-  var base = "https://dreamrun.herokuapp.com";
+  var base = "http://localhost:5000/";
 
 
   $rootScope.show = function (text) {
@@ -51,7 +51,7 @@ angular.module('starter.authServices', [])
 
   return {
     signin: function(form){
-      return $http.post(base+'/authentication/signin', form);
+      return $http.post(base+'authentication/signin', form);
     },
     signup: function(form){
       return $http.post(base+'/authentication/signup', form);

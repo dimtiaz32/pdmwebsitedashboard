@@ -146,60 +146,29 @@ angular.module('starter.controllers', ['starter.appServices',
 
   // })
 
-  .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $document, RunAPI){
+  .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI){
 
-     $scope.isDetailDisplayed = false;
-     $scope.isHistoryDetailDisplayed = true;
-     $scope.isRunning = false;
-     $scope.isPaused = false;
+    //DOM elements for google maps overlay
 
-    $scope.toggleRun = function() {
-      $scope.isRunning = !$scope.isRunning;
-    }
-
-    $scope.lapBtnTapped = function() {
-      if ($scope.isPaused) {
-        resume();
-      } else {
-        lap();
-      }
-    }
-
-    $scope.pause = function() {
-      $scope.isPaused = true;
-    }
-
-    function resume() {
-      $scope.isPaused = false;
-    }
-
-    function lap() {
-      console.log("lap");
-    }
-
-
-
-
-    $scope.lapControl = function(lapDiv, map){
+    //lap, pause DOM elements
+    $scope.runButtonControl = function(buttonDiv, map){
       var lapUI = document.createElement('div');
       lapUI.style.backgroundColor = '#00b9be';
       lapUI.style.align = 'center';
-      lapUI.style.border  = '2px solid #00b9be';
+      lapUI.style.border = '2px solid #00b9be';
       lapUI.style.borderRadius = '3px';
       lapUI.style.boxShadow = '0 2px 6px rgba(0, 0, 0, .3)';
       lapUI.style.cursor = 'pointer';
       lapUI.style.top = '10px';
-      // lapUI.style.left = '300px';
-      // lapUI.style.right = '400px';
       lapUI.style.height = '50px';
       lapUI.style.width = '556px';
       lapUI.style.bottom = '150px';
       lapUI.style.position = 'relative';
       lapUI.style.zIndex = '10';
-      lapUI.style.marginBottom = '0px';
+      lapUI.style.marginBottom = '100px';
       lapUI.style.textAlign = 'center';
-      lapUI.title = 'Start dreamrun';
-      lapDiv.appendChild(lapUI);
+      lapUI.title = 'Lap';
+      buttonDiv.appendChild(lapUI);
 
       var lapText = document.createElement('div');
       lapText.style.color = 'rgb(255, 255, 255)';
@@ -212,12 +181,19 @@ angular.module('starter.controllers', ['starter.appServices',
       lapText.innerHTML = 'Lap';
       lapUI.appendChild(lapText);
 
-      lapUI.addEventListener('click', function(){
+      lapUI.addEventListener('click', function () {
         console.log('lap activated');
       });
-    };
 
-    $scope.pauseControl = function(pauseDiv, map){
+      $scope.removeLap = function(){
+        buttonDiv.removeChild(lapUI);
+      };
+
+      $scope.addLap = function(){
+        buttonDiv.appendChild(lapUI);
+      }
+
+
       var pauseUI = document.createElement('div');
       pauseUI.style.backgroundColor = '#ffffff';
       pauseUI.style.border  = '2px solid #ffffff';
@@ -225,16 +201,15 @@ angular.module('starter.controllers', ['starter.appServices',
       pauseUI.style.boxShadow = '0 2px 6px rgba(0, 0, 0, .3)';
       pauseUI.style.cursor = 'pointer';
       pauseUI.style.top = '10px';
-      // pauseUI.style.left = '300px';
-      // pauseUI.style.right = '400px';
+
       pauseUI.style.height = '50px';
       pauseUI.style.width = '556px';
 
       pauseUI.style.zIndex = '10';
       pauseUI.style.marginBottom = '50px';
       pauseUI.style.textAlign = 'center';
-      pauseUI.title = 'Start dreamrun';
-      pauseDiv.appendChild(pauseUI);
+      pauseUI.title = 'Pause';
+      buttonDiv.appendChild(pauseUI);
 
       var pauseText = document.createElement('div');
       pauseText.style.color = '#00b9be';
@@ -247,17 +222,126 @@ angular.module('starter.controllers', ['starter.appServices',
       pauseText.innerHTML = 'Pause';
       pauseUI.appendChild(pauseText);
 
+      $scope.removePause = function(){
+        buttonDiv.removeChild(pauseUI);
+        console.log("remove pause button function called");
+      }
+
+      $scope.addPause = function(){
+        buttonDiv.appendChild(pauseUI);
+        console.log('added pause button function called');
+      }
+
       pauseUI.addEventListener('click', function(){
-          console.log('pause button activated');
+        console.log('pause button activated');
+        $scope.pauseRun();
       });
-    };
 
 
-    $scope.runInfo = function(infoDiv, map, drop){
+    }
+
+    //resume, stop DOM elements
+    $scope.pausedControl = function(pausedDiv, map){
+      var resumeUI = document.createElement('div');
+      resumeUI.style.backgroundColor = '#00b9be';
+      resumeUI.style.align = 'center';
+      resumeUI.style.border = '2px solid #00b9be';
+      resumeUI.style.borderRadius = '3px';
+      resumeUI.style.boxShadow = '0 2px 6px rgba(0, 0, 0, .3)';
+      resumeUI.style.cursor = 'pointer';
+      resumeUI.style.top = '10px';
+      resumeUI.style.height = '50px';
+      resumeUI.style.width = '556px';
+      resumeUI.style.bottom = '150px';
+      resumeUI.style.position = 'relative';
+      resumeUI.style.zIndex = '10';
+      resumeUI.style.marginBottom = '100px';
+      resumeUI.style.textAlign = 'center';
+      resumeUI.title = 'Lap';
+      pausedDiv.appendChild(resumeUI);
+
+      var resumeText = document.createElement('div');
+      resumeText.style.color = 'rgb(255, 255, 255)';
+      resumeText.style.fontFamily = 'Roboto,Arial,sans-serif';
+      resumeText.style.fontSize = '50px';
+      resumeText.style.lineHeight = '50px';
+      resumeText.style.lineWidth = '556px';
+      resumeText.style.paddingLefft = '5px';
+      resumeText.style.paddingRight = '5px';
+      resumeText.innerHTML = 'Resume';
+      resumeUI.appendChild(resumeText);
+
+      resumeUI.addEventListener('click', function () {
+        console.log('resume activated');
+        $scope.resumeRun();
+
+      });
+
+      $scope.removeResume = function(){
+        pausedDiv.removeChild(resumeUI);
+      }
+
+      $scope.addResume = function(){
+        pausedDiv.appendChild(resumeUI);
+      }
+
+      var stopUI = document.createElement('div');
+      stopUI.style.backgroundColor = '#00b9be';
+      stopUI.style.align = 'center';
+      stopUI.style.border = '2px solid #00b9be';
+      stopUI.style.borderRadius = '3px';
+      stopUI.style.boxShadow = '0 2px 6px rgba(0, 0, 0, .3)';
+      stopUI.style.cursor = 'pointer';
+      stopUI.style.top = '10px';
+      stopUI.style.height = '50px';
+      stopUI.style.width = '556px';
+      stopUI.style.bottom = '150px';
+      stopUI.style.position = 'relative';
+      stopUI.style.zIndex = '10';
+      stopUI.style.marginBottom = '100px';
+      stopUI.style.textAlign = 'center';
+      stopUI.title = 'Lap';
+      pausedDiv.appendChild(stopUI);
+
+      var stopText = document.createElement('div');
+      stopText.style.color = 'rgb(255, 255, 255)';
+      stopText.style.fontFamily = 'Roboto,Arial,sans-serif';
+      stopText.style.fontSize = '50px';
+      stopText.style.lineHeight = '50px';
+      stopText.style.lineWidth = '556px';
+      stopText.style.paddingLefft = '5px';
+      stopText.style.paddingRight = '5px';
+      stopText.innerHTML = 'Stop';
+      stopUI.appendChild(stopText);
+
+      stopUI.addEventListener('click', function () {
+        console.log('stop activated');
+        $scope.stopRun();
+      });
+
+      $scope.removeStop = function(){
+        pausedDiv.removeChild(stopUI);
+      }
+
+      $scope.addStop = function(){
+        pausedDiv.appendChild(stopUI);
+      }
+
+
+
+    }
+
+    //actual run information 'drop down'
+    $scope.runInfoControl = function(infoDiv, map, drop){
       var infoUI = document.createElement('div');
-      infoUI.id = 'infoUI';
+      infoUI.style.backgroundColor = '#ffffff';
+      infoUI.style.border = '2px solid #00b9be';
+      infoUI.style.borderRadius = '3px';
+      infoUI.style.boxShadow = '0 2px 6px rgba(0, 0, 0, .3)';
+      infoUI.style.cursor = 'pointer';
       infoUI.style.height = '400px';
-      infoUI.style.width = '400px';
+      infoUI.style.width = '1000px';
+      infoUI.style.top = '100px';
       infoUI.style.textAlign = 'center';
       infoUI.title = 'Info';
       infoDiv.appendChild(infoUI);
@@ -265,27 +349,30 @@ angular.module('starter.controllers', ['starter.appServices',
       var durationDiv = document.createElement('div');
       durationDiv.id = 'durationDiv';
       durationDiv.style.height = '100px';
-      durationDiv.style.width = '100px';
+      durationDiv.style.width = '1000px';
       durationDiv.style.title = 'Duration';
+      infoUI.appendChild(durationDiv);
 
-      //next two text go inside duration div
       var durationLabelText = document.createElement('p');
       durationLabelText.id = 'durationLabelText';
-      durationLabelText.innerHTML = 'Duration';
+       durationLabelText.innerHTML = $scope.minutes + ' ' + $scope.seconds;
       durationDiv.appendChild(durationLabelText);
 
       var durationTimeText = document.createElement('p');
       durationTimeText.id = 'durationTimeText';
       durationLabelText.innerHTML = 'durationTime';
       durationDiv.appendChild(durationTimeText);
-      //adds duration div to infoUI
-      infoUI.appendChild(durationDiv);
+
+      var divider1 = document.createElement('hr');
+      divider1.id = 'divider1';
+      infoUI.appendChild(divider1);
 
       var distanceDiv = document.createElement('div');
       distanceDiv.id = 'distanceDiv';
       distanceDiv.style.height = '100px';
-      distanceDiv.style.width = '100px';
+      distanceDiv.style.width = '1000px';
       distanceDiv.title = 'Distance';
+      infoUI.appendChild(distanceDiv);
 
       var distanceLabelText = document.createElement('p');
       distanceLabelText.id = 'distanceLabelText';
@@ -296,13 +383,17 @@ angular.module('starter.controllers', ['starter.appServices',
       distanceTrackerText.id = 'distanceTrackerText';
       distanceTrackerText.innerHTML = 'DistanceTrackerText';
       distanceDiv.appendChild(distanceTrackerText);
-      infoUI.appendChild(distanceDiv);
+
+      var divider2 = document.createElement('hr');
+      divider2.id = 'divider2';
+      infoUI.appendChild(divider2);
 
       var paceDiv = document.createElement('div');
       paceDiv.id = 'paceDiv';
       paceDiv.style.height = '100px';
-      paceDiv.style.width = '100px';
+      paceDiv.style.width = '1000px';
       paceDiv.style.title = 'Pace';
+      infoUI.appendChild(paceDiv);
 
       var paceLabelText = document.createElement('p');
       paceLabelText.id = 'paceLabelText';
@@ -313,13 +404,17 @@ angular.module('starter.controllers', ['starter.appServices',
       paceTrackerText.id = 'paceTrackerText';
       paceTrackerText.innerHTML = 'paceTrackerText';
       paceDiv.appendChild(paceTrackerText);
-      infoUI.appendChild(paceDiv);
+
+      var divider3 = document.createElement('hr');
+      divider3.id = 'divider3';
+      infoUI.appendChild(divider3);
 
       var fundsRaisedDiv = document.createElement('div');
       fundsRaisedDiv.id = 'fundsRaisedDiv';
       fundsRaisedDiv.style.height = '100px';
-      fundsRaisedDiv.style.width = '100px';
+      fundsRaisedDiv.style.width = '1000px';
       fundsRaisedDiv.title = 'fundsRaised';
+      infoUI.appendChild(fundsRaisedDiv);
 
       var fundsRaisedLabelText = document.createElement('p');
       fundsRaisedLabelText.id = 'fundsRaisedLabelText';
@@ -330,26 +425,14 @@ angular.module('starter.controllers', ['starter.appServices',
       fundsRaisedTrackerText.id = 'fundsRaisedTrackerText';
       fundsRaisedTrackerText.innerHTML = 'funds Raised tracker text';
       fundsRaisedDiv.appendChild(fundsRaisedTrackerText);
-      infoUI.appendChild(fundsRaisedDiv);
+
 
 
 
     };
 
-
-
-    $scope.startRun  = function(){
-
-    };
-
-
-
-
-    $scope.welcomeControl = function(welcomeDiv, map, drop){
-      var control = this;
-
-      control.drop_ = drop;
-
+    //home screen 'drop down' stuff
+    $scope.welcomeControl = function(welcomeDiv, map){
 
       var welcomeUI = document.createElement('div');
       welcomeUI.id = 'welcomeUI';
@@ -361,7 +444,7 @@ angular.module('starter.controllers', ['starter.appServices',
       welcomeUI.style.height = '100px';
       welcomeUI.style.width = '1000px';
       welcomeUI.style.top = '100px';
-      welcomeUI.ngShow = $scope.isRunning;
+      //welcomeUI.ngShow = $scope.isRunning;
       // welcomeUI.style.left = '300px';
       // welcomeUI.style.right = '300px';
       welcomeUI.style.zIndex = '20px';
@@ -387,7 +470,7 @@ angular.module('starter.controllers', ['starter.appServices',
       welcomeUI.appendChild(milesRaisesText);
 
       var charitySelectedText = document.createElement('h');
-      charitySelectedText.id = 'charittySelectedText';
+      charitySelectedText.id = 'charitySelectedText';
       //charitySelectedText.style.textAlign = 'center';
       charitySelectedText.innerHTML = 'Teens Run DC';
       welcomeUI.appendChild(charitySelectedText);
@@ -452,14 +535,21 @@ angular.module('starter.controllers', ['starter.appServices',
         //}
       });
 
+      $scope.removeWelcomeUI = function(){
+        welcomeDiv.removeChild(welcomeUI);
+      }
+
 
 
 
 
     };
 
+    //start dreamrun button DOM shit
     $scope.startControl = function(startDiv, map){
+
       var startUI = document.createElement('div');
+
       startUI.style.backgroundColor = '#00b9be';
       startUI.style.border  = '2px solid #00b9be';
       startUI.style.borderRadius = '3px';
@@ -487,6 +577,10 @@ angular.module('starter.controllers', ['starter.appServices',
       startText.innerHTML = 'Start My DREAM<b>RUN</b>';
       startUI.appendChild(startText);
 
+      $scope.removeStartUI = function(){
+        startDiv.removeChild(startUI);
+      }
+
       startUI.addEventListener('click', function(){
         console.log("Starting button clicked");
         if(!$scope.map){
@@ -498,46 +592,259 @@ angular.module('starter.controllers', ['starter.appServices',
           showBackdrop: false
         });
 
-        $scope.isRunning  = true;
-        //$scope.startRun();
+        $rootScope.hide();
+        $scope.startRun();
 
       });
 
     };
 
+    //if you want to view your run summary, ya gotta click this thing
+    $scope.summaryButtonControl = function(summaryButtonDiv, map){
+      var summaryButtonUI = document.createElement('div');
+      summaryButtonUI.style.backgroundColor = '#ffffff';
+      summaryButtonUI.style.border  = '2px solid #ffffff';
+      summaryButtonUI.style.borderRadius = '3px';
+      summaryButtonUI.style.boxShadow = '0 2px 6px rgba(0, 0, 0, .3)';
+      summaryButtonUI.style.cursor = 'pointer';
+      summaryButtonUI.style.top = '10px';
+
+      summaryButtonUI.style.height = '50px';
+      summaryButtonUI.style.width = '556px';
+
+      summaryButtonUI.style.zIndex = '10';
+      summaryButtonUI.style.marginBottom = '50px';
+      summaryButtonUI.style.textAlign = 'center';
+      summaryButtonUI.title = 'Pause';
+      summaryButtonDiv.appendChild(summaryButtonUI);
+
+      var summaryButtonText = document.createElement('div');
+      summaryButtonText.style.color = '#00b9be';
+      summaryButtonText.style.fontFamily = 'Roboto,Arial,sans-serif';
+      summaryButtonText.style.fontSize = '50px';
+      summaryButtonText.style.lineHeight = '50px';
+      summaryButtonText.style.lineWidth = '556px';
+      summaryButtonText.style.paddingLeft = '5px';
+      summaryButtonText.style.paddingRight = '5px';
+      summaryButtonText.innerHTML = 'RunSummary';
+      summaryButtonUI.appendChild(summaryButtonText);
+
+      $scope.removeRunSummaryButton = function(){
+        summaryButtonDiv.removeChild(summaryButtonUI);
+        console.log("Removed Run Summary button");
+      }
+
+      summaryButtonUI.addEventListener('click', function(){
+        console.log('run summary button clicked');
+      });
+    }
+
+    //run functions
+
+    $scope.getCurrentCoords = function(){
+      console.log('getCurrentCoords function activated');
+
+      navigator.geolocation.getCurrentPosition(function(pos){
+        console.log('inside navigator...getCurrentPosition');
+        $scope.myLatLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+        console.log('myLatLng coords assigned');
+        console.log($scope.myLatLng);
+
+        console.log('Current coordinates added to routeCoords array');
+      });
+      console.log('Interval mark, refreshing coords');
+    }
+
+    var polyDrawer;
+    $scope.runPolyline = function(){
+      console.log('runPolyline function activated');
+
+      $scope.routeCoords = [];
+      console.log('empty route coords array initialized');
+      var drawerTestCoords = {lat: 38.9042049, lng: -77.0473209};
+      $scope.routeCoords.push(drawerTestCoords);
+      polyDrawer = $interval(function(){
+        $scope.routeCoords.push($scope.myLatLng);
+        console.log($scope.routeCoords);
+        $scope.runPath = new google.maps.Polyline({
+          path: $scope.routeCoords,
+          strokeColor: '#FF0000',
+          strokeOpacity: 1.0,
+          strokeWeight: 2
+        });
+        $scope.runPath.setMap($scope.map);
+        console.log('runPath.setMap completed');
+        console.log('exiting Polyline at interval mark');
+      }, 10000);
+
+    }
+
+    $scope.pausePolylineDrawer = function(){
+      console.log('coordinate retrieval refresher paused');
+      $interval.cancel(polyDrawer);
+      polyDrawer = undefined;
+    }
+
+    $scope.resumePolylineDrawer = function(){
+      console.log('resumePolylineDrawer function activated');
+      $scope.runPolyline();
+    }
+
+    $scope.run = function(){
+      // $scope.runPathCoordinates= [];
+      // $scope.runPath = new google.maps.Polyline({
+      //   path: $scope.runPathCoordinates,
+      //   geodesic: true,
+      //   strokeColor: '#FF0000',
+      //   strokeOpacity: 1.0,
+      //   strokeWeight: 2
+      // });
+
+      // console.log('add marker function called');
+      // $scope.addMarker();
+      // $scope.runPath.setMap($scope.map);
+      $scope.format = 'mm:ss';
+      $scope.minutes = 0;
+      $scope.seconds = 0;
+      $scope.startTimer();
+      $scope.runPolyline();
+      console.log('runPolyline called');
+    }
+
+    var start;
+    $scope.startTimer = function(){
+     start = $interval(function(){
+        console.log('start timer function activated');
+        if($scope.seconds < 60) {
+          console.log('seconds checked, incrementd');
+          $scope.seconds++;
+          console.log('seconds: ' + $scope.seconds);
+          if ($scope.seconds > 59) {
+            console.log('seconds reached 60, reset to 0');
+            $scope.seconds = 0;
+            console.log('seconds: ' + $scope.seconds);
+            $scope.minutes++;
+            console.log('minutes: ' + $scope.minutes);
+            console.log('minutes incremented');
+          }
+        }
+        console.log('Interval mark');
+      }, 1000);
+    }
+
+    $scope.pauseTimer = function(){
+      $interval.cancel(start);
+      start = undefined;
+    }
+    $scope.resumeTimer = function(){
+      console.log('resume timer function activated');
+      $scope.startTimer();
+    }
+    $scope.stopTimer = function(){
+      console.log('stop timer function activated');
+      $interval.cancel(start);
+      start = undefined;
+      $scope.minutes = 0;
+      $scope.seconds = 0;
+    }
+
+
+    //map states
     $scope.mapCreated = function(map){
       $scope.map = map;
 
-      if($scope.isRunning  = false) {
+      var welcomeControlDiv = document.createElement('div');
+      var welcomeControl = $scope.welcomeControl(welcomeControlDiv, map);
 
-        var welcomeControlDiv = document.createElement('div');
-        var welcomeControl = $scope.welcomeControl(welcomeControlDiv, map);
+      welcomeControlDiv.index = 1;
+      map.controls[google.maps.ControlPosition.TOP].push(welcomeControlDiv);
 
-        welcomeControlDiv.index = 1;
-        map.controls[google.maps.ControlPosition.TOP].push(welcomeControlDiv);
-
-        var startControlDiv = document.createElement('div');
-        var startControl = $scope.startControl(startControlDiv, map);
+      var startControlDiv = document.createElement('div');
+      var startControl = $scope.startControl(startControlDiv, map);
 
 
-        startControlDiv.index = 2;
-        map.controls[google.maps.ControlPosition.BOTTOM].push(startControlDiv);
-      } else if($scope.isRunning = true){
-        var pauseControlDiv = document.createElement('div');
-        var pauseControl = $scope.pauseControl(pauseControlDiv, map);
-
-        pauseControlDiv.index = 1;
-        map.controls[google.maps.ControlPosition.BOTTOM].push(pauseControlDiv);
-
-        var lapControlDiv = document.createElement('div');
-        var lapControl = $scope.lapControl(lapControlDiv, map);
-
-        lapControlDiv.index = 1;
-        map.controls[google.maps.ControlPosition.CENTER].push(lapControlDiv);
-      }
+      startControlDiv.index = 2;
+      map.controls[google.maps.ControlPosition.BOTTOM].push(startControlDiv);
 
     };
 
+    $scope.startRun  = function(){
+      console.log('Start run function started ');
+      console.log($scope.getCurrentCoords());
+
+      console.log("Attempting to remove dropdown info");
+      $scope.removeWelcomeUI();
+
+
+      console.log("Attempting to remove start button...");
+      $scope.removeStartUI();
+
+      console.log('Attempting to add new marker');
+
+      // $scope.marker = new google.maps.Marker({
+      //   position: $scope.myLatLng,
+      //   map: $scope.map,
+      //   title: 'My marker'
+      // });
+      // console.log('passed $scope.marker');
+
+
+
+      var buttonControlDiv = document.createElement('div');
+      var buttonControl = $scope.runButtonControl(buttonControlDiv, $scope.map);
+
+      buttonControlDiv.index = 1;
+      $scope.map.controls[google.maps.ControlPosition.BOTTOM].push(buttonControlDiv);
+
+      // var runInfoControlDiv = document.createElement('div');
+      // var runInfoControl = $scope.runInfoControl(runInfoControlDiv, $scope.map);
+      //
+      // runInfoControlDiv.index = 1;
+      // $scope.map.controls[google.maps.ControlPosition.TOP].push(runInfoControlDiv);
+
+      $scope.run();
+
+
+    };
+
+    $scope.pauseRun = function(){
+        $scope.removeLap();
+        $scope.removePause();
+        $scope.pauseTimer();
+        $scope.pausePolylineDrawer();
+        var pausedControlDiv = document.createElement('div');
+        var pausedControl = $scope.pausedControl(pausedControlDiv, $scope.map);
+
+        pausedControlDiv.index = 1;
+        $scope.map.controls[google.maps.ControlPosition.BOTTOM].push(pausedControlDiv);
+    };
+
+    $scope.resumeRun = function(){
+      $scope.removeStop();
+      $scope.removeResume();
+
+      //add lap and pause back in, resume counters.
+      $scope.addLap();
+      $scope.addPause();
+      console.log('$scope.resumeTimer() called');
+      $scope.resumeTimer();
+      $scope.resumePolylineDrawer();
+
+
+    }
+
+    $scope.stopRun = function(){
+      $scope.removeResume();
+      $scope.removeStop();
+      console.log('$scope.stopTimer() called');
+      $scope.stopTimer();
+
+      var runSummaryButtonControlDiv = document.createElement('div');
+      var runSummaryButtonControl = $scope.summaryButtonControl(runSummaryButtonControlDiv, $scope.map);
+
+      runSummaryButtonControlDiv.index = 1;
+      $scope.map.controls[google.maps.ControlPosition.BOTTOM].push(runSummaryButtonControlDiv);
+    }
 
 
     $scope.centerOnMe = function(){
@@ -553,7 +860,9 @@ angular.module('starter.controllers', ['starter.appServices',
 
       navigator.geolocation.getCurrentPosition(function(pos){
         console.log('Got pos', pos);
+
         $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+        // $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
         $scope.hide();
       }, function(error){
         alert('Unable to get location: ' + error.message);
