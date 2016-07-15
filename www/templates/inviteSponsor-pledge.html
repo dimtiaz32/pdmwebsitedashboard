@@ -1,0 +1,97 @@
+<ion-view view-title="sponsors">
+  <!--
+   <ion-header-bar class="bar-positive">
+     <h1 class="title">Become a Sponsor</h1>
+   </ion-header-bar>
+   <ion-content class="has-header padding" ng-controller="SponsorsPledgeCtrl">
+     <div class="row">
+       <button class="button button-outline button-positive" value="1" ng-click="saveMonthsWithMonths(1)">
+         1 month
+       </button>
+       <button class="button button-outline button-positive" value="3" ng-click="saveMonthsWithMonths(3)">
+         3 month
+       </button>
+       <button class="button button-outline button-positive" value="6" ng-click="saveMonthsWithMonths(6)">
+         6 month
+       </button>
+     </div>
+     <div class="row">
+       <button class="button button-outline button-positive" value="12" ng-click="saveMonthsWithMonths(12)">
+         1 year
+       </button>
+       <button class="button button-outline button-positive" value="24" ng-click="saveMonthsWithMonths(24)">
+         2 years
+       </button>
+       <label class="button button-outline button-positive">
+         <input type="text" placeholder="0" size="4" ng-model="donor.months"/> months
+       </label>
+     </div>
+     <a href="#/app/sponsors/payment" ng-click='saveMonths()'>next!</a>
+   </ion-content>
+   -->
+
+  <ion-content class="bg" ng-controller="InviteSponsorPledgeCtrl">
+
+    <div class="card">
+
+      <div class="item item-divider">
+        Sponsor Yesh!
+        <i class="icon icon-left ion-home"></i>
+      </div>
+
+      <div class="item item-text-wrap">
+        <h1>Pledge Duration</h1>
+        <div class="row">
+          <div class="col col-33">
+            <button class="button"
+                    ng-class="{'active': isActive('one')}"
+                    ng-click="saveMonthsWithMonths(1); setActive('one')">
+              1<span style="font-size: smaller"> months</span>
+            </button>
+          </div>
+          <div class="col col-33">
+            <button class="button"
+                    ng-class="{'active': isActive('two')}"
+                    ng-click="saveMonthsWithMonths(3); setActive('two')">
+              3<span style="font-size: smaller"> months</span>
+            </button>
+          </div>
+          <div class="col col-33">
+            <button class="button"
+                    ng-class="{'active': isActive('three')}"
+                    ng-click="saveMonthsWithMonths(6); setActive('three')">
+              6<span style="font-size: smaller"> months</span>
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-33">
+            <button class="button"
+                    ng-class="{'active': isActive('four')}"
+                    ng-click="saveMonthsWithMonths(12); setActive('four')">
+              1<span style="font-size: smaller"> year</span>
+            </button>
+          </div>
+          <div class="col col-33">
+            <button class="button"
+                    ng-class="{'active': isActive('five')}"
+                    ng-click="saveMonthsWithMonths(24); setActive('five')">
+              2<span style="font-size: smaller"> years</span>
+            </button>
+          </div>
+          <div class="col col-33">
+            <input type="text" placeholder="0 months" ng-model="donor.months" size="8"/>
+          </div>
+        </div>
+        <p style="color: #808080">The average runner runs 80 - 100 miles/month</p>
+      </div>
+
+      <div class="item item-divider">
+        <button class="button button-full button-assertive" style="color: white; font-size: x-large; font-weight: normal;" ng-click="saveMonths()">Next</button>
+      </div>
+
+    </div>
+
+  </ion-content>
+
+</ion-view>

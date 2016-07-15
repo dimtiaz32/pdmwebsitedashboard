@@ -16,7 +16,7 @@
     <ion-header-bar class="bar-stable">
       <h1 class="title">Left</h1>
     </ion-header-bar>
-    <ion-content>
+    <ion-content ng-controller="AppCtrl">
       <ion-list>
         <ion-item menu-close href="#/auth/signin">
           Login
@@ -39,10 +39,10 @@
         <ion-item menu-close href="#/app/createCharity">
           Add Charity
         </ion-item>
-        <ion-item menu-close href="#/app/mySponsors">
+        <ion-item menu-close href="#/app/mySponsors" ng-click="fetchMySponsors()">
           My Sponsors
         </ion-item>
-        <ion-item menu-close href="#/app/myPledges">
+        <ion-item menu-close href="#/app/myPledges" ng-click="fetchMyPledges()">
           My Pledges
         </ion-item>
         <ion-item menu-close href="#/app/search">

@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives', 'stripe'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -101,7 +101,67 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives']
     views:{
       'menuContent':{
         templateUrl:'templates/mySponsors.html',
-        controller: 'MySponsorsCtrl'
+        controller: 'MyDonationCtrl'
+      }
+    }
+  })
+
+  .state('app.inviteSponsor-start',{
+    url:'/inviteSponsor/start',
+    views: {
+      'menuContent': {
+          templateUrl:'templates/inviteSponsor-start.html',
+          controller:'InviteSponsorStartCtrl'
+      }
+    }
+  })
+
+  .state('app.inviteSponsor-info',{
+    url:'/inviteSponsor/info',
+    views: {
+      'menuContent': {
+          templateUrl:'templates/inviteSponsor-info.html',
+          controller:'InviteSponsorInfoCtrl'
+      }
+    }
+  })
+
+  .state('app.inviteSponsor-amount',{
+    url:'/inviteSponsor/amount',
+    views: {
+      'menuContent': {
+          templateUrl:'templates/inviteSponsor-amount.html',
+          controller:'InviteSponsorAmountCtrl'
+      }
+    }
+  })
+
+  .state('app.inviteSponsor-pledge', {
+    url:'/inviteSponsor/pledge',
+    view: {
+      'menuContent': {
+          templateUrl:'templates/inviteSponsor-pledge.html',
+          controller:'InviteSponsorPledgeCtrl'
+      }
+    }
+  })
+
+  .state('app.inviteSponsor-payment',{
+    url:'/inviteSponsor/payment',
+    view: {
+      'menuContent': {
+          templateUrl:'templates/inviteSponsor-payment.html',
+          controller:'InviteSponsorPaymentCtrl'
+      }
+    }
+  })
+
+  .state('app.inviteSponsor-end',{
+    url:'/inviteSponsor/end',
+    view:{
+      'menuContent': {
+          templateUrl:'templates/inviteSponsor-end.html',
+          controller:'InviteSponsorEndCtrl'
       }
     }
   })
@@ -111,7 +171,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives']
     views:{
       'menuContent':{
         templateUrl:'templates/myPledges.html',
-        controller: 'MyPledgesCtrl'
+        controller: 'MyDonationCtrl'
       }
     }
   })
@@ -154,4 +214,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives']
   });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/run');
+
+  Stripe.setPublishableKey('pk_test_AcHwMgfwhswjYGUhawRw0her');
 });

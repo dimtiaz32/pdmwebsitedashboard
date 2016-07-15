@@ -1,6 +1,11 @@
-<ion-view view-title="pledges">
-    <ion-content ng-controller="MyPledgesCtrl">
-      <ion-refresher ng-hide="noData" pulling-text="Pull to refresh..." on-refresh="doRefresh()"></ion-refresher>
+<ion-view view-title="Sponsors" ng-controller="MyDonationCtrl">
+    <ion-nav-buttons side="right" >
+        <button class="button button-clear button-positive" ng-click="openModal($event)">
+          InviteSponsor
+        </button>
+    </ion-nav-buttons>
+    <ion-content>
+      <ion-refresher ng-hide="noPledge" pulling-text="Pull to refresh..." on-refresh="doRefresh('fetchMyPledges')"></ion-refresher>
       <div class="wrapper">
         <div class="sponsor-header">
           <div class="row">
@@ -14,7 +19,7 @@
               </div>
               <div class="row">
                 <div class="col">
-                  <button class="button button-small button-clear button-PDMLight">Manage my pledges</button>
+                  <button class="button button-small button-clear button-PDMLight" ng-click="manageSponsors()">Manage my sponsors</button>
                 </div>
               </div>
             </div>
@@ -33,19 +38,17 @@
         <hr>
         <div class="list">
           <!-- use this template for all the cells-->
-          <a class="item item-icon-left" ng-repeat="pledge in list">
+          <a class="item item-icon-left" ng-repeat="pledge in pledges">
             <span class="cell-vertical-center-text">{{ pledge.recipient.name.first }} {{pledge.recipient.name.last}}</span>
               <span class="item-note">
-                <p class="pledge">{{ pledge.per_mile_donation }}¢/mile</p>
-                <p class="ending-date">{{ pledge.end_date }}</p>
+                <p class="pledge">{{ formateCurreny(pledge.per_mile_donation) }}/mile</p>
+                <p class="ending-date">{{ formateDate(pledge.end_date) }}</p>
               </span>
           </a>
         </div>
         <span ng-show="noData">
             No pledge now.
         </span>
-          <button class="button button-block button-clear button-sponsor-help">Need Help Getting Sponsors?</button>
-        </div>
       </div>
       </div>
     </ion-content>
