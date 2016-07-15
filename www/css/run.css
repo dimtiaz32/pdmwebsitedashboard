@@ -91,3 +91,15 @@ button.button-large.button-pause-red{
 
   z-index: 10;
 }
+
+/*Overlay Stuff*/
+.overlay {
+  position: absolute;
+  top: 10%;
+
+  width: 100%;
+
+  background-color: white;
+
+  z-index: 10;
+}
