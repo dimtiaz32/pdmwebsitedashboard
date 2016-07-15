@@ -65,7 +65,8 @@ angular.module('starter.controllers', ['starter.appServices',
         firstName: firstName,
         lastName: lastName,
         email: email,
-        password: password
+        password: password,
+        provider: 'local'
       }).success(function (data, status, headers, config){
         //TODO: FIND OUT HOW TO SEPARATE THE TOKEN FROM THE RETURNED OBJECT AND SET AS TOKEN
 
