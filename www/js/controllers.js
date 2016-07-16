@@ -214,18 +214,19 @@ angular.module('starter.controllers', ['starter.appServices',
       lapText.innerHTML = 'Lap';
       lapUI.appendChild(lapText);
 
-      lapUI.addEventListener('click', function () {
-        $scope.lap();
-        console.log('lap activated');
-      });
-
       $scope.removeLap = function(){
         buttonDiv.removeChild(lapUI);
-      };
+        console.log('removed lap from buttonDiv');
+      }
 
       $scope.addLap = function(){
         buttonDiv.appendChild(lapUI);
       }
+
+      lapUI.addEventListener('click', function () {
+        $scope.lap();
+        console.log('lap activated');
+      });
 
 
       var pauseUI = document.createElement('div');
@@ -676,12 +677,12 @@ angular.module('starter.controllers', ['starter.appServices',
 
     //run functions
 
-    //run coord array
+    //not really an array updater, more of a distance checker
     var coordinateArrayUpdater;
     $scope.coordsArrayUpdater = function(){
       console.log('getCoords array function activated');
 
-      $rootScope.routeCoords  = [];
+      $scope.routeCoords  = [];
       console.log('Empty route coords array initialized');
 
       coordinateArrayUpdater = $interval(function(){
@@ -691,11 +692,11 @@ angular.module('starter.controllers', ['starter.appServices',
           console.log('myLatLng: ' + $scope.myLatLng)
         });
         console.log('myLatLng update check: ' + $scope.myLatLng);
-        $rootScope.routeCoords.push($scope.myLatLng);
+        $scope.routeCoords.push($scope.myLatLng);
 
-        console.log('routeCoords array: ' + $rootScope.routeCoords);
+        console.log('routeCoords array: ' +  $scope.routeCoords);
         $scope.distance =  google.maps.geometry.spherical.computeLength({
-          path: $rootScope.routeCoords
+          path:  $scope.routeCoords
         });
         console.log('Distance: ' + $scope.distance);
         console.log('exiting coordsArrayUpdater at interval');
@@ -703,9 +704,29 @@ angular.module('starter.controllers', ['starter.appServices',
     }
 
     $scope.pauseCoordsArrayUpdater = function(){
+      console.log('pauseCoordsArrayUpdater entered');
       $interval.cancel(coordinateArrayUpdater);
       coordinateArrayUpdater = undefined;
     }
+
+    $scope.resumeCoordsArrayUpdater = function(){
+      console.log('coordsArrayUpdater resumed');
+      $scope.coordsArrayUpdater();
+    }
+
+    $scope.stopCoordsArrayUpdater = function(){
+      console.log('stopping coords array updater....');
+      $interval.cancel(coordinateArrayUpdater);
+      coordinateArrayUpdater = undefined;
+
+      //setting distance = 1 since is currently 0 as im not moving
+      $scope.distance = 1;
+      console.log('distance reset: ' + $scope.distance);
+
+      $scope.routeCoords = [];
+    }
+
+
 
     $scope.getCurrentCoords = function(){
       console.log('getCurrentCoords function activated');
@@ -721,7 +742,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
     //polyline functions
 
-    //try switching it to $scope.myLatLng?
+
     var polyDrawer;
     $scope.runPolyline = function(){
       console.log('runPolyline function activated');
@@ -732,6 +753,9 @@ angular.module('starter.controllers', ['starter.appServices',
       // $scope.polyCoords.push(drawerTestCoords);
       polyDrawer = $interval(function(){
         console.log('polyLatLng : ' + $scope.polyLatLng);
+
+        $scope.getCurrentCoords();
+        console.log('getCurrentCoords called from inside interval in polyDrawer');
 
 
         $scope.polyCoords.push($scope.polyLatLng);
@@ -762,18 +786,7 @@ angular.module('starter.controllers', ['starter.appServices',
     }
 
     $scope.run = function(){
-      // $scope.runPathCoordinates= [];
-      // $scope.runPath = new google.maps.Polyline({
-      //   path: $scope.runPathCoordinates,
-      //   geodesic: true,
-      //   strokeColor: '#FF0000',
-      //   strokeOpacity: 1.0,
-      //   strokeWeight: 2
-      // });
 
-      // console.log('add marker function called');
-      // $scope.addMarker();
-      // $scope.runPath.setMap($scope.map);
       $scope.format = 'mm:ss';
       $scope.minutes = 0;
       $scope.seconds = 0;
@@ -923,7 +936,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
       // $scope.coordsArrayUpdater();
 
-      // need to change to get coords so that startLatLng doesnt change on state change
+
 
 
 
@@ -993,6 +1006,7 @@ angular.module('starter.controllers', ['starter.appServices',
       console.log('$scope.stopTimer() called');
       $scope.stopTimer();
       $scope.stopLapTimer();
+      $scope.stopCoordsArrayUpdater();
 
       var runSummaryButtonControlDiv = document.createElement('div');
       var runSummaryButtonControl = $scope.summaryButtonControl(runSummaryButtonControlDiv, $scope.map);
