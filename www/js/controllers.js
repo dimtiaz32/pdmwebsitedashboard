@@ -1,12 +1,12 @@
 angular.module('starter.controllers', ['starter.appServices',
-  'starter.charityServices',
-  'starter.authServices',
-  'starter.runServices',
-  'starter.accountServices',
-  'starter.accountServices',
-  'starter.donationServices',
-  'starter.runServices','ionic','ngCordova'
-])
+    'starter.charityServices',
+    'starter.authServices',
+    'starter.runServices',
+    'starter.accountServices',
+    'starter.accountServices',
+    'starter.donationServices',
+    'starter.runServices','ionic','ngCordova'
+  ])
 
 
 
@@ -71,11 +71,11 @@ angular.module('starter.controllers', ['starter.appServices',
         password: password,
         provider: 'local'
       }).success(function (data, status, headers, config){
-        //TODO: FIND OUT HOW TO SEPARATE THE TOKEN FROM THE RETURNED OBJECT AND SET AS TOKEN
+          //TODO: FIND OUT HOW TO SEPARATE THE TOKEN FROM THE RETURNED OBJECT AND SET AS TOKEN
 
-        $rootScope.hide();
-        $window.location.href  = ('#/app/charities');
-      })
+          $rootScope.hide();
+          $window.location.href  = ('#/app/charities');
+        })
         .error(function(error){
           $rootScope.hide();
           if(error.error && error.error.code == 11000){
@@ -110,9 +110,9 @@ angular.module('starter.controllers', ['starter.appServices',
       }
 
       AuthAPI.signin({
-        email: email,
-        password: password
-      })
+          email: email,
+          password: password
+        })
         .success(function(data, status, headers, config){
           $rootScope.hide();
           $window.location.href=('#/app/run');
@@ -173,7 +173,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
       var lapText = document.createElement('div');
       lapText.style.color = 'rgb(255, 255, 255)';
-      lapText.style.fontFamily = 'Roboto,Arial,sans-serif';
+      lapText.style.fontFamily = 'HelveticaNeue-Light';
       lapText.style.fontSize = '50px';
       lapText.style.lineHeight = '50px';
       lapText.style.lineWidth = '556px';
@@ -358,7 +358,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
       var durationLabelText = document.createElement('p');
       durationLabelText.id = 'durationLabelText';
-       durationLabelText.innerHTML = $scope.minutes + ' ' + $scope.seconds;
+      durationLabelText.innerHTML = $scope.minutes + ' ' + $scope.seconds;
       durationDiv.appendChild(durationLabelText);
 
       var durationTimeText = document.createElement('p');
@@ -719,7 +719,7 @@ angular.module('starter.controllers', ['starter.appServices',
     //timer functions
     var start;
     $scope.startTimer = function(){
-     start = $interval(function(){
+      start = $interval(function(){
         console.log('start timer function activated');
         if($scope.seconds < 60) {
           console.log('seconds checked, incrementd');
@@ -848,17 +848,28 @@ angular.module('starter.controllers', ['starter.appServices',
     };
 
     $scope.pauseRun = function(){
-        $scope.removeLap();
-        $scope.removePause();
-        $scope.pauseTimer();
-        $scope.pausePolylineDrawer();
-        $scope.pauseLapTimer();
 
-        var pausedControlDiv = document.createElement('div');
-        var pausedControl = $scope.pausedControl(pausedControlDiv, $scope.map);
+      $scope.removeLap();
+      $scope.removePause();
+      $scope.pauseTimer();
+      $scope.pausePolylineDrawer();
+      $scope.pauseLapTimer();
 
-        pausedControlDiv.index = 1;
-        $scope.map.controls[google.maps.ControlPosition.BOTTOM].push(pausedControlDiv);
+      var pausedControlDiv = document.createElement('div');
+      var pausedControl = $scope.pausedControl(pausedControlDiv, $scope.map);
+
+      pausedControlDiv.index = 1;
+      $scope.map.controls[google.maps.ControlPosition.BOTTOM].push(pausedControlDiv);
+      $scope.removeLap();
+      $scope.removePause();
+      $scope.pauseTimer();
+      $scope.pausePolylineDrawer();
+      var pausedControlDiv = document.createElement('div');
+      var pausedControl = $scope.pausedControl(pausedControlDiv, $scope.map);
+
+      pausedControlDiv.index = 1;
+      $scope.map.controls[google.maps.ControlPosition.BOTTOM].push(pausedControlDiv);
+
     }
 
     $scope.resumeRun = function(){
@@ -916,56 +927,56 @@ angular.module('starter.controllers', ['starter.appServices',
 
   .controller('AppCtrl', function($rootScope, $scope, $filter, $ionicModal, $timeout,DonationAPI) {
 
-      $scope.fetchMyPledges = function() {
-          $rootScope.$broadcast("fetchMyPledges");
-      }
+    $scope.fetchMyPledges = function() {
+      $rootScope.$broadcast("fetchMyPledges");
+    }
 
-      $scope.fetchMySponsors = function() {
-          $rootScope.$broadcast("fetchMySponsors");
-      }
+    $scope.fetchMySponsors = function() {
+      $rootScope.$broadcast("fetchMySponsors");
+    }
 
-      $rootScope.$on('fetchMySponsors', function() {
-        DonationAPI.getAllSponsors($rootScope.getToken(),"577525799f1f51030075a291").success(function(data, status, headers, config){
-            $scope.sponsors = [];
-            for (var i = 0; i < data.length; i++) {
-                $scope.sponsors.push(data[i]);
-            }
-          if(data.length == 0) {
-                $scope.noSponsor = true;
-            } else {
-                $scope.noSponsor = false;
-            }
+    $rootScope.$on('fetchMySponsors', function() {
+      DonationAPI.getAllSponsors($rootScope.getToken(),"577525799f1f51030075a291").success(function(data, status, headers, config){
+        $scope.sponsors = [];
+        for (var i = 0; i < data.length; i++) {
+          $scope.sponsors.push(data[i]);
+        }
+        if(data.length == 0) {
+          $scope.noSponsor = true;
+        } else {
+          $scope.noSponsor = false;
+        }
 
-        }).error(function(data, status, headers, config){
-            console.log("Refresh Error~");
-            $rootScope.notify("Oops something went wrong!! Please try again later");
-        }).finally(function(){
-            console.log("Refresh Finally~");
-            $scope.$broadcast('scroll.refreshComplete');
-        });
+      }).error(function(data, status, headers, config){
+        console.log("Refresh Error~");
+        $rootScope.notify("Oops something went wrong!! Please try again later");
+      }).finally(function(){
+        console.log("Refresh Finally~");
+        $scope.$broadcast('scroll.refreshComplete');
       });
+    });
 
-      $rootScope.$on('fetchMyPledges',function(){
-        DonationAPI.getAllPledges($rootScope.getToken(),"577525799f1f51030075a292").success(function(data, status, headers, config){
-            $scope.pledges = [];
-            for (var i = 0; i < data.length; i++) {
-                $scope.pledges.push(data[i]);
-            };
+    $rootScope.$on('fetchMyPledges',function(){
+      DonationAPI.getAllPledges($rootScope.getToken(),"577525799f1f51030075a292").success(function(data, status, headers, config){
+        $scope.pledges = [];
+        for (var i = 0; i < data.length; i++) {
+          $scope.pledges.push(data[i]);
+        };
 
-            if(data.length == 0) {
-                $scope.noPledge = true;
-            } else {
-                $scope.noPledge = false;
-            }
+        if(data.length == 0) {
+          $scope.noPledge = true;
+        } else {
+          $scope.noPledge = false;
+        }
 
-        }).error(function(data, status, headers, config){
-            console.log("Refresh Error~");
-            $rootScope.notify("Oops something went wrong!! Please try again later");
-        }).finally(function(){
-            console.log("Refresh Finally~");
-            $scope.$broadcast('scroll.refreshComplete');
-        });
+      }).error(function(data, status, headers, config){
+        console.log("Refresh Error~");
+        $rootScope.notify("Oops something went wrong!! Please try again later");
+      }).finally(function(){
+        console.log("Refresh Finally~");
+        $scope.$broadcast('scroll.refreshComplete');
       });
+    });
 
   })
 
@@ -985,16 +996,16 @@ angular.module('starter.controllers', ['starter.appServices',
           User.findCharity(
             {id: userId},
             {charityId: charityId})
-          .sucess(function(status, data, headers, config){
-            console.log('charity select- User.findCharity triggered successfull');
-            for (var i = 0; i < charityList.length; i++){
-              var check = charityList[i];
-              if(check.id == charityId){
-                //function to set status to selected, moves charity info to dropdown.
+            .sucess(function(status, data, headers, config){
+              console.log('charity select- User.findCharity triggered successfull');
+              for (var i = 0; i < charityList.length; i++){
+                var check = charityList[i];
+                if(check.id == charityId){
+                  //function to set status to selected, moves charity info to dropdown.
 
+                }
               }
-            }
-          });
+            });
         };
 
         $rootScope.hide();
@@ -1059,130 +1070,130 @@ angular.module('starter.controllers', ['starter.appServices',
     };
   })
 
-.controller('MyDonationCtrl',function($rootScope, $scope, $filter, $window, $ionicModal, $cordovaSms, $cordovaSocialSharing,DonationAPI){
+  .controller('MyDonationCtrl',function($rootScope, $scope, $filter, $window, $ionicModal, $cordovaSms, $cordovaSocialSharing,DonationAPI){
 
-      $scope.managePledges = function() {
-        $rootScope.$broadcast('fetchMyPledges');
-        $window.location.href = "#/app/myPledges";
+    $scope.managePledges = function() {
+      $rootScope.$broadcast('fetchMyPledges');
+      $window.location.href = "#/app/myPledges";
+    }
+
+    $scope.manageSponsors = function() {
+      $rootScope.$broadcast('fetchMySponsors');
+      $window.location.href = "#/app/mySponsors";
+    }
+
+    $scope.doRefresh = function(fetchType) {
+      console.log("fetchType:" + fetchType);
+      $rootScope.$broadcast(fetchType);
+    }
+
+    $scope.formateDate = function(date) {
+      return $filter('date')(date,"MMM dd yyyy");
+    }
+
+    $scope.formateCurreny = function(amount) {
+      var realAmount = parseInt(amount);
+
+      if(realAmount < 100) {
+        return amount + " ¢";
+      } else {
+        return realAmount / 100 + " $";
       }
 
-      $scope.manageSponsors = function() {
-        $rootScope.$broadcast('fetchMySponsors');
-        $window.location.href = "#/app/mySponsors";
-      }
+    }
 
-      $scope.doRefresh = function(fetchType) {
-          console.log("fetchType:" + fetchType);
-          $rootScope.$broadcast(fetchType);
-      }
+    $ionicModal.fromTemplateUrl('templates/inviteSponsor.html',{
+      scope: $scope
+    }).then(function(modal){
+      $scope.modal = modal;
+    });
 
-      $scope.formateDate = function(date) {
-        return $filter('date')(date,"MMM dd yyyy");
-      }
-
-      $scope.formateCurreny = function(amount) {
-         var realAmount = parseInt(amount);
-
-         if(realAmount < 100) {
-           return amount + " ¢";
-         } else {
-           return realAmount / 100 + " $";
-         }
-
-      }
-
-      $ionicModal.fromTemplateUrl('templates/inviteSponsor.html',{
-          scope: $scope
-      }).then(function(modal){
-          $scope.modal = modal;
-      });
-
-      $scope.openModal = function($event) {
-          console.log("try open the modal");
-          DonationAPI.inviteSponsor("token",{
-            charity:"5771430bdcba0f275f2a0a5e",
-            userId:"577525799f1f51030075a291"
-          }).success(function (data, status, headers, config){
-            $scope.data = data;
-            // $scope.shareBySMS = function() {
-            //   console.log("sms share begin")
-            //   $cordovaSocialSharing.shareViaSMS("aaaaa", "0612345678,0687654321").then(function(result) {
-            //       console.log("sms share success");
-            //     }, function(err) {
-            //       console.log("sms share failure");
-            //   });
-            // }
-            $scope.shareByMail = function() {
-              console.log("email share begin")
-              $cordovaSocialSharing.shareViaEmail("aaa", "bbb", "", "", "", "").then(function(result) {
-                  console.log("email share success");
-                }, function(err) {
-                  console.log("email share failure");
-                });
-            }
-
-            $scope.shareBySMS = function(){
-                console.log("begin share by sms");
-                $cordovaSms.send("", "Pledge link: " + data)
-                      .then(function() {
-                          console.log('share sms success');
-                      }, function(error) {
-                          console.log('share sms failure');
-                          console.log(error);
-                });
-            }
-
-            $scope.shareByFB = function() {
-                console.log("begin share by facebook");
-                $cordovaSocialSharing.shareViaFacebook(data, null, data).then(function(result) {
-                      console.log('share facebook success');
-                    }, function(err) {
-                      console.log('share facebook failure');
-                      console.log(err);
-                    });
-            }
-
-
-          }).error(function (data, status, headers,config){
-            console.log("Refresh Error~");
-            $rootScope.notify("Oops something went wrong!! Please try again later");
+    $scope.openModal = function($event) {
+      console.log("try open the modal");
+      DonationAPI.inviteSponsor("token",{
+        charity:"5771430bdcba0f275f2a0a5e",
+        userId:"577525799f1f51030075a291"
+      }).success(function (data, status, headers, config){
+        $scope.data = data;
+        // $scope.shareBySMS = function() {
+        //   console.log("sms share begin")
+        //   $cordovaSocialSharing.shareViaSMS("aaaaa", "0612345678,0687654321").then(function(result) {
+        //       console.log("sms share success");
+        //     }, function(err) {
+        //       console.log("sms share failure");
+        //   });
+        // }
+        $scope.shareByMail = function() {
+          console.log("email share begin")
+          $cordovaSocialSharing.shareViaEmail("aaa", "bbb", "", "", "", "").then(function(result) {
+            console.log("email share success");
+          }, function(err) {
+            console.log("email share failure");
           });
-          $scope.modal.show($event);
-      };
+        }
 
-      $scope.closeModal = function() {
-          $scope.modal.hide();
-      };
+        $scope.shareBySMS = function(){
+          console.log("begin share by sms");
+          $cordovaSms.send("", "Pledge link: " + data)
+            .then(function() {
+              console.log('share sms success');
+            }, function(error) {
+              console.log('share sms failure');
+              console.log(error);
+            });
+        }
 
-      $scope.$on('$destroy', function(){
-          $scope.modal.remove();
+        $scope.shareByFB = function() {
+          console.log("begin share by facebook");
+          $cordovaSocialSharing.shareViaFacebook(data, null, data).then(function(result) {
+            console.log('share facebook success');
+          }, function(err) {
+            console.log('share facebook failure');
+            console.log(err);
+          });
+        }
+
+
+      }).error(function (data, status, headers,config){
+        console.log("Refresh Error~");
+        $rootScope.notify("Oops something went wrong!! Please try again later");
       });
+      $scope.modal.show($event);
+    };
 
-      $scope.$on('modal.hidden',function(){
-          console.log("execute modal.hidden");
-      });
+    $scope.closeModal = function() {
+      $scope.modal.hide();
+    };
 
-      $scope.$on('modal.removed', function(){
-          console.log("execute modal.removed");
-      });
+    $scope.$on('$destroy', function(){
+      $scope.modal.remove();
+    });
 
-})
+    $scope.$on('modal.hidden',function(){
+      console.log("execute modal.hidden");
+    });
+
+    $scope.$on('modal.removed', function(){
+      console.log("execute modal.removed");
+    });
+
+  })
 
 
 
-.controller('MyPledgesCtrl',function($rootScope, $scope, $filter, $window, DonationAPI){
+  .controller('MyPledgesCtrl',function($rootScope, $scope, $filter, $window, DonationAPI){
 
 
-})
+  })
 
-.controller('InviteSponsorStartCtrl', function($scope){
+  .controller('InviteSponsorStartCtrl', function($scope){
 
-})
+  })
 
-.controller('InviteSponsorInfoCtrl', function($rootScope, $scope, $http, store, $window){
+  .controller('InviteSponsorInfoCtrl', function($rootScope, $scope, $http, store, $window){
     $scope.user = {
-        firstname: "",
-        lastname: ""
+      firstname: "",
+      lastname: ""
     };
     $scope.saveName = function() {
 
@@ -1198,9 +1209,9 @@ angular.module('starter.controllers', ['starter.appServices',
       store.set('user.lastname', lastname);
       $window.location.href = ('#/app/sponsors/amount');
     }
-})
+  })
 
-.controller('InviteSponsorAmountCtrl', function($scope, $http, store, $window) {
+  .controller('InviteSponsorAmountCtrl', function($scope, $http, store, $window) {
     $scope.active = 'zero';
 
     $scope.setActive = function (type) {
@@ -1209,120 +1220,120 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.isActive = function (type) {
       return type === $scope.active;
     };
-})
-.controller('AccountCtrl', function($rootScope, AuthAPI, AccountAPI, $window, $scope) {
-  //refresh on page load?
-  //Profile Picture - edit
-  //Name- cannot edit
-  //Email -edit
-  //Password (hashed)
-  //DOB-cannot edit
+  })
+  .controller('AccountCtrl', function($rootScope, AuthAPI, AccountAPI, $window, $scope) {
+    //refresh on page load?
+    //Profile Picture - edit
+    //Name- cannot edit
+    //Email -edit
+    //Password (hashed)
+    //DOB-cannot edit
 
-  //password should redirect to new page to enter old password/ could have dropdown?
-
-
-  $scope.account = {
-    firstName: "",
-    lastName: "",
-    pofilePicture: "",
-    email: "",
-    password: "",
-    dob: "",
-    created: "",
-    updated: Date.now
-  };
+    //password should redirect to new page to enter old password/ could have dropdown?
 
 
-  $scope.updateAccount = function () {
-    var name = this.account.firstName + ' ' + this.account.lastName;
-    var proPic = this.account.profilePicture;
-    var email = this.account.email;
-    var password = this.account.password;
-    var dob = this.account.dob;
-    var created = this.account.created;
-    var updated = this.account.updated;
+    $scope.account = {
+      firstName: "",
+      lastName: "",
+      pofilePicture: "",
+      email: "",
+      password: "",
+      dob: "",
+      created: "",
+      updated: Date.now
+    };
 
 
-    //only checking for fields that can be changed
-    //profile picture can be deleted since it is not necessary
+    $scope.updateAccount = function () {
+      var name = this.account.firstName + ' ' + this.account.lastName;
+      var proPic = this.account.profilePicture;
+      var email = this.account.email;
+      var password = this.account.password;
+      var dob = this.account.dob;
+      var created = this.account.created;
+      var updated = this.account.updated;
 
-    if (!email) {
-      $rootScope.show('Email field cannot be empty');
-      console.log('Email field was empty');
-    } else if (!password) {
-      $rootScope.show('Password field cannot be empty');
-      console.log('Password field was empty');
+
+      //only checking for fields that can be changed
+      //profile picture can be deleted since it is not necessary
+
+      if (!email) {
+        $rootScope.show('Email field cannot be empty');
+        console.log('Email field was empty');
+      } else if (!password) {
+        $rootScope.show('Password field cannot be empty');
+        console.log('Password field was empty');
+      }
+
+      console.log('Email and password fields verified, attempting to save account changes...');
+      $rootScope.notify('Saving changes to your account');
+      AccountAPI.saveAccount({
+        email: email,
+        password: password
+      }).success(function (data, headers, config, status) {
+          $rootScope.hide();
+          $window.location.href = ('#/app/account');
+        })
+        .error(function (error) {
+          if (error.error && error.error.code == 11000) {
+            $rootScope.notify("This email is already in use");
+            console.log("could not register user: email already in use ");
+          } else {
+            $rootScope.notify("An error has occured. Please try again");
+          }
+        });
     }
+  })
 
-    console.log('Email and password fields verified, attempting to save account changes...');
-    $rootScope.notify('Saving changes to your account');
-    AccountAPI.saveAccount({
-      email: email,
-      password: password
-    }).success(function (data, headers, config, status) {
-      $rootScope.hide();
-      $window.location.href = ('#/app/account');
-    })
-      .error(function (error) {
-        if (error.error && error.error.code == 11000) {
-          $rootScope.notify("This email is already in use");
-          console.log("could not register user: email already in use ");
-        } else {
-          $rootScope.notify("An error has occured. Please try again");
+  .controller('MyPledgesCtrl', function($rootScope, $scope, $filter, DonationAPI) {
+    // $scope.doRefresh = function() {
+    DonationAPI.getAllPledges($rootScope.getToken(), "577525799f1f51030075a292")
+      .success(function (data, status, headers, config) {
+        $scope.list = [];
+        for (var i = 0; i < data.length; i++) {
+          data[i].end_date = $filter('date')(data[i].end_date, "MMM dd yyyy");
+          $scope.list.push(data[i]);
+        };
+
+        $scope.donor = {
+          amount: ""
+        };
+
+
+        $scope.saveMoney = function () {
+
+          var amount = this.donor.amount;
+
+          if (!amount && $scope.active == 'zero') {
+            return false;
+          }
+          if (amount != '') {
+            store.set('donor.amount', amount);
+          }
+          $window.location.href = ('#/app/sponsors/pledge');
         }
-      });
-  }
-})
 
-.controller('MyPledgesCtrl', function($rootScope, $scope, $filter, DonationAPI) {
-  // $scope.doRefresh = function() {
-  DonationAPI.getAllPledges($rootScope.getToken(), "577525799f1f51030075a292")
-    .success(function (data, status, headers, config) {
-      $scope.list = [];
-      for (var i = 0; i < data.length; i++) {
-        data[i].end_date = $filter('date')(data[i].end_date, "MMM dd yyyy");
-        $scope.list.push(data[i]);
-      };
-
-      $scope.donor = {
-        amount: ""
-      };
-
-
-      $scope.saveMoney = function () {
-
-        var amount = this.donor.amount;
-
-        if (!amount && $scope.active == 'zero') {
-          return false;
-        }
-        if (amount != '') {
+        $scope.saveMoneyWithAmount = function (amount) {
           store.set('donor.amount', amount);
         }
-        $window.location.href = ('#/app/sponsors/pledge');
-      }
-
-      $scope.saveMoneyWithAmount = function (amount) {
-        store.set('donor.amount', amount);
-      }
 
 
-    })
-})
+      })
+  })
 
-.controller('InviteSponsorPledgeCtrl', function($scope, $http, store, $window){
+  .controller('InviteSponsorPledgeCtrl', function($scope, $http, store, $window){
 
-      $scope.active = 'zero';
-      $scope.setActive = function(type) {
-        $scope.active = type;
-      };
-      $scope.isActive = function(type) {
-        return type === $scope.active;
-      };
+    $scope.active = 'zero';
+    $scope.setActive = function(type) {
+      $scope.active = type;
+    };
+    $scope.isActive = function(type) {
+      return type === $scope.active;
+    };
 
-      $scope.donor = {
-        months: ""
-      };
+    $scope.donor = {
+      months: ""
+    };
 
     $scope.saveMonths = function() {
 
@@ -1337,80 +1348,114 @@ angular.module('starter.controllers', ['starter.appServices',
       $window.location.href = ('#/app/sponsors/payment');
     }
 
-      $scope.saveMonthsWithMonths = function(months) {
-        store.set('donor.months',months);
+    $scope.saveMonthsWithMonths = function(months) {
+      store.set('donor.months',months);
+    }
+
+
+  })
+  .controller('InviteSponsorStartCtrl', function($scope){
+
+  })
+
+  .controller('InviteSponsorPaymentCtrl', function($rootScope, $scope, $http, store, API, $window){
+    $scope.user = {
+      email: ""
+    };
+    $scope.updateDonation = function(status, response) {
+
+      var email = this.user.email;
+      if(!email) {
+        return false;
       }
 
-
-})
-.controller('InviteSponsorStartCtrl', function($scope){
-
-})
-
-.controller('InviteSponsorPaymentCtrl', function($rootScope, $scope, $http, store, API, $window){
-      $scope.user = {
-          email: ""
-      };
-      $scope.updateDonation = function(status, response) {
-
-          var email = this.user.email;
-          if(!email) {
-              return false;
-          }
-
-          if (response.error) {
-              console.log('token:' + response.error.message);
-          } else {
-              console.log("amount:" + store.get('donor.amount'));
-              API.createDonation({
-                  firstName: store.get('user.firstname'),
-                  lastName: store.get('user.lastname'),
-                  email: email,
-                  amount: store.get('donor.amount'),
-                  months: store.get('donor.months'),
-                  stripeToken: response.id,
-                  userId: '576d5555765c85f11c7f0ca1'
-            }).success(function (data){
-                $window.location.href = ('#/app/sponsors/con');
-            }).error(function (err){
-                console.log("error: " + err.message);
-            });
-          }
+      if (response.error) {
+        console.log('token:' + response.error.message);
+      } else {
+        console.log("amount:" + store.get('donor.amount'));
+        API.createDonation({
+          firstName: store.get('user.firstname'),
+          lastName: store.get('user.lastname'),
+          email: email,
+          amount: store.get('donor.amount'),
+          months: store.get('donor.months'),
+          stripeToken: response.id,
+          userId: '576d5555765c85f11c7f0ca1'
+        }).success(function (data){
+          $window.location.href = ('#/app/sponsors/con');
+        }).error(function (err){
+          console.log("error: " + err.message);
+        });
       }
-})
+    }
+  })
 
 
   // Do the first time when page loaded
   // $scope.doRefresh();
 
-.controller('InviteSponsorEndCtrl', function($scope, $http, store){
-      $scope.months = store.get('donor.months');
-      $scope.amount = store.get('donor.amount');
-})
+  .controller('InviteSponsorEndCtrl', function($scope, $http, store){
+    $scope.months = store.get('donor.months');
+    $scope.amount = store.get('donor.amount');
+  })
 
 
 
 
 
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
-})
+  .controller('PlaylistCtrl', function($scope, $stateParams) {
+  })
 
-.controller('SponsorsPledgeCtrl', function($scope) {
-  $scope.active = 'zero';
-  $scope.setActive = function (type) {
-    $scope.active = type;
+  .controller('SponsorsPledgeCtrl', function($scope) {
+    $scope.active = 'zero';
+    $scope.setActive = function (type) {
+      $scope.active = type;
+    };
+    $scope.isActive = function (type) {
+      return type === $scope.active;
+    };
+
+    $scope.isChecked = false;
+
+    $scope.toggleCheck = function () {
+      $scope.isChecked = !$scope.isChecked;
+      console.log("Checked");
+    }
+
+
+  })
+
+
+.controller('HistoryCtrl', function($scope) {
+
+  $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
+  $scope.series = ['Series A', 'Series B'];
+  $scope.data = [
+    [65, 59, 80, 81, 56, 55, 40],
+    [28, 48, 40, 19, 86, 27, 90]
+  ];
+  $scope.onClick = function (points, evt) {
+    console.log(points, evt);
   };
-  $scope.isActive = function (type) {
-    return type === $scope.active;
+  $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
+  $scope.options = {
+    scales: {
+      yAxes: [
+        {
+          id: 'y-axis-1',
+          type: 'linear',
+          display: true,
+          position: 'left'
+        },
+        {
+          id: 'y-axis-2',
+          type: 'linear',
+          display: true,
+          position: 'right'
+        }
+      ]
+    }
   };
-
-  $scope.isChecked = false;
-
-  $scope.toggleCheck = function () {
-    $scope.isChecked = !$scope.isChecked;
-    console.log("Checked");
-  }
-
 
 });
