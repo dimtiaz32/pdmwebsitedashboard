@@ -183,6 +183,7 @@ angular.module('starter.controllers', ['starter.appServices',
       lapUI.appendChild(lapText);
 
       lapUI.addEventListener('click', function () {
+        $scope.lap();
         console.log('lap activated');
       });
 
@@ -236,6 +237,7 @@ angular.module('starter.controllers', ['starter.appServices',
       pauseUI.addEventListener('click', function(){
         console.log('pause button activated');
         $scope.pauseRun();
+
       });
 
 
@@ -656,6 +658,7 @@ angular.module('starter.controllers', ['starter.appServices',
       console.log('Interval mark, refreshing coords');
     }
 
+    //polyline functions
     var polyDrawer;
     $scope.runPolyline = function(){
       console.log('runPolyline function activated');
@@ -708,10 +711,12 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.minutes = 0;
       $scope.seconds = 0;
       $scope.startTimer();
+      $scope.startLapTimer();
       $scope.runPolyline();
       console.log('runPolyline called');
     }
 
+    //timer functions
     var start;
     $scope.startTimer = function(){
      start = $interval(function(){
@@ -732,7 +737,6 @@ angular.module('starter.controllers', ['starter.appServices',
         console.log('Timer Interval mark');
       }, 1000);
     }
-
     $scope.pauseTimer = function(){
       $interval.cancel(start);
       start = undefined;
@@ -749,6 +753,51 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.seconds = 0;
     }
 
+    var startLapTimer;
+    $scope.startLapTimer = function(){
+      startLapTimer = $interval(function(){
+        console.log('lap timer started');
+        if($scope.lapSeconds < 60) {
+          console.log('lap seconds checked, incrementd');
+          $scope.lapSeconds++;
+          console.log('lap seconds: ' + $scope.lapSeconds);
+          if ($scope.lapSeconds > 59) {
+            console.log('lap seconds reached 60, reset to 0');
+            $scope.lapSeconds = 0;
+            console.log('lap seconds: ' + $scope.lapSeconds);
+            $scope.lapMinutes++;
+            console.log('lap minutes: ' + $scope.lapMinutes);
+            console.log('lap minutes incremented');
+          }
+        }
+        console.log('Lap Timer interval mark');
+      }, 2000);
+    }
+
+    $scope.pauseLapTimer = function(){
+      $interval.cancel(startLapTimer);
+      startLapTimer = undefined;
+    }
+    $scope.resumeLapTimer = function(){
+      console.log('Lap timer resumed');
+      $scope.startLapTimer();
+    }
+    $scope.stopLapTimer = function(){
+      console.log('lap timer stopped');
+      $interval.cancel(startLapTimer);
+      startLapTimer = undefined;
+      $scope.lapSeconds = 0;
+      $scope.lapMinutes = 0;
+    }
+    $scope.laps = [];
+    $scope.lap = function(){
+      $scope.lapSeconds = 0;
+      $scope.lapMinutes = 0;
+      $scope.lapNumber++;
+      $scope.startLapTimer();
+
+
+    };
 
     //map states
     $scope.mapCreated = function(map){
@@ -803,6 +852,8 @@ angular.module('starter.controllers', ['starter.appServices',
         $scope.removePause();
         $scope.pauseTimer();
         $scope.pausePolylineDrawer();
+        $scope.pauseLapTimer();
+
         var pausedControlDiv = document.createElement('div');
         var pausedControl = $scope.pausedControl(pausedControlDiv, $scope.map);
 
@@ -820,6 +871,7 @@ angular.module('starter.controllers', ['starter.appServices',
       console.log('$scope.resumeTimer() called');
       $scope.resumeTimer();
       $scope.resumePolylineDrawer();
+      $scope.resumeLapTimer();
 
 
     }
@@ -829,6 +881,7 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.removeStop();
       console.log('$scope.stopTimer() called');
       $scope.stopTimer();
+      $scope.stopLapTimer();
 
       var runSummaryButtonControlDiv = document.createElement('div');
       var runSummaryButtonControl = $scope.summaryButtonControl(runSummaryButtonControlDiv, $scope.map);
