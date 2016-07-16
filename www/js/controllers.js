@@ -737,14 +737,17 @@ angular.module('starter.controllers', ['starter.appServices',
         console.log('Timer Interval mark');
       }, 1000);
     }
+
     $scope.pauseTimer = function(){
       $interval.cancel(start);
       start = undefined;
     }
+
     $scope.resumeTimer = function(){
       console.log('resume timer function activated');
       $scope.startTimer();
     }
+
     $scope.stopTimer = function(){
       console.log('stop timer function activated');
       $interval.cancel(start);
@@ -778,10 +781,12 @@ angular.module('starter.controllers', ['starter.appServices',
       $interval.cancel(startLapTimer);
       startLapTimer = undefined;
     }
+
     $scope.resumeLapTimer = function(){
       console.log('Lap timer resumed');
       $scope.startLapTimer();
     }
+
     $scope.stopLapTimer = function(){
       console.log('lap timer stopped');
       $interval.cancel(startLapTimer);
@@ -789,7 +794,9 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.lapSeconds = 0;
       $scope.lapMinutes = 0;
     }
+
     $scope.laps = [];
+
     $scope.lap = function(){
       $scope.lapSeconds = 0;
       $scope.lapMinutes = 0;
@@ -799,6 +806,13 @@ angular.module('starter.controllers', ['starter.appServices',
 
     };
 
+    //distance functions
+
+    $scope.getDistance = function(){
+      console.log('getDistance function activated');
+
+      $scope.distance = new google.maps.geomety.spherical.computeDistanceBetween($scope.startLatLng, $scope.myLatLng);
+    }
     //map states
     $scope.mapCreated = function(map){
       $scope.map = map;
@@ -828,6 +842,9 @@ angular.module('starter.controllers', ['starter.appServices',
 
       console.log("Attempting to remove start button...");
       $scope.removeStartUI();
+
+      // need to change to get coords so that startLatLng doesnt change on state change
+      $scope.startLatLng = $scope.myLatLng;
 
 
       var buttonControlDiv = document.createElement('div');
@@ -923,6 +940,8 @@ angular.module('starter.controllers', ['starter.appServices',
         alert('Unable to get location: ' + error.message);
       });
     };
+
+
   })
 
   .controller('AppCtrl', function($rootScope, $scope, $filter, $ionicModal, $timeout,DonationAPI) {
