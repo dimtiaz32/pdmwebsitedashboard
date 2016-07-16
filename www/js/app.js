@@ -166,6 +166,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
     }
   })
 
+    .state('app.history', {
+      url: '/history',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/history.html',
+          controller: 'HistoryCtrl'
+        }
+      }
+    })
+
   .state('app.myPledges',{
     url:'/myPledges',
     views:{
