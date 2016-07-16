@@ -676,7 +676,7 @@ angular.module('starter.controllers', ['starter.appServices',
         $scope.runPath.setMap($scope.map);
         console.log('runPath.setMap completed');
         console.log('exiting Polyline at interval mark');
-      }, 10000);
+      }, 3000);
 
     }
 
@@ -729,7 +729,7 @@ angular.module('starter.controllers', ['starter.appServices',
             console.log('minutes incremented');
           }
         }
-        console.log('Interval mark');
+        console.log('Timer Interval mark');
       }, 1000);
     }
 
@@ -779,16 +779,6 @@ angular.module('starter.controllers', ['starter.appServices',
 
       console.log("Attempting to remove start button...");
       $scope.removeStartUI();
-
-      console.log('Attempting to add new marker');
-
-      // $scope.marker = new google.maps.Marker({
-      //   position: $scope.myLatLng,
-      //   map: $scope.map,
-      //   title: 'My marker'
-      // });
-      // console.log('passed $scope.marker');
-
 
 
       var buttonControlDiv = document.createElement('div');
