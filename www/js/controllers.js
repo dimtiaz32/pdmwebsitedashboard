@@ -149,6 +149,40 @@ angular.module('starter.controllers', ['starter.appServices',
 
   .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI){
 
+
+
+    $scope.isDetailDisplayed = false;
+    $scope.isHistoryDetailDisplayed = true;
+    $scope.isRunning = false;
+    $scope.isPaused = false;
+
+    $scope.toggleRun = function() {
+      $scope.isRunning = !$scope.isRunning;
+      $scope.startRun();
+    }
+
+    $scope.lapBtnTapped = function() {
+      if ($scope.isPaused) {
+        resume();
+      } else {
+        lap();
+      }
+    }
+
+    $scope.pause = function() {
+      $scope.isPaused = true;
+    }
+
+    function resume() {
+      $scope.isPaused = false;
+    }
+
+    function lap() {
+      console.log("lap");
+    }
+
+
+
     //DOM elements for google maps overlay
 
     //lap, pause DOM elements
@@ -556,7 +590,7 @@ angular.module('starter.controllers', ['starter.appServices',
       startUI.style.borderRadius = '3px';
       startUI.style.boxShadow = '0 2px 6px rgba(0, 0, 0, .3)';
       startUI.style.cursor = 'pointer';
-      startUI.style.top = '10px';
+     // startUI.style.top = '10px';
       startUI.style.left = '300px';
       startUI.style.right = '400px';
       startUI.style.height = '50px';
@@ -594,7 +628,7 @@ angular.module('starter.controllers', ['starter.appServices',
         });
 
         $rootScope.hide();
-        $scope.startRun();
+        //$scope.startRun();
 
       });
 
@@ -1362,7 +1396,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
   })
 
-
+/*
 .controller('HistoryCtrl', function($scope) {
 
   $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
@@ -1395,3 +1429,4 @@ angular.module('starter.controllers', ['starter.appServices',
   };
 
 });
+*/
