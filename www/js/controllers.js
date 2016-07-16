@@ -713,25 +713,24 @@ angular.module('starter.controllers', ['starter.appServices',
       navigator.geolocation.getCurrentPosition(function(pos){
         console.log('inside navigator...getCurrentPosition');
         $scope.polyLatLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-        console.log('myLatLng coords assigned');
-        console.log($scope.polyLatLng);
+        console.log('polyLatLng coords: ' + $scope.polyLatLng);
 
-        console.log('Current coordinates added to polyCoords array');
       });
       console.log('Interval mark, refreshing coords');
     }
 
     //polyline functions
+
+    //try switching it to $scope.myLatLng?
     var polyDrawer;
     $scope.runPolyline = function(){
       console.log('runPolyline function activated');
 
       $scope.polyCoords = [];
       console.log('empty poly coords array initialized');
-      var drawerTestCoords = {lat: 38.9042049, lng: -77.0473209};
-      $scope.polyCoords.push(drawerTestCoords);
+      // var drawerTestCoords = {lat: 38.9042049, lng: -77.0473209};
+      // $scope.polyCoords.push(drawerTestCoords);
       polyDrawer = $interval(function(){
-        $scope.getCurrentCoords();
         console.log('polyLatLng : ' + $scope.polyLatLng);
 
 
@@ -747,7 +746,7 @@ angular.module('starter.controllers', ['starter.appServices',
         $scope.runPath.setMap($scope.map);
         console.log('runPath.setMap completed');
         console.log('exiting Polyline at interval mark');
-      }, 4000);
+      }, 5000);
 
     }
 
@@ -780,6 +779,7 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.seconds = 0;
       $scope.startTimer();
       $scope.startLapTimer();
+      $scope.getCurrentCoords();
 
       $scope.runPolyline();
       console.log('runPolyline called');
