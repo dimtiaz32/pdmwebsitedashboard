@@ -149,6 +149,38 @@ angular.module('starter.controllers', ['starter.appServices',
 
   .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI){
 
+
+    $scope.isDetailDisplayed = false;
+    $scope.isHistoryDetailDisplayed = true;
+    $scope.isRunning = false;
+    $scope.isPaused = false;
+
+    $scope.toggleRun = function() {
+      $scope.isRunning = !$scope.isRunning;
+      $scope.startRun();
+    }
+
+    $scope.lapBtnTapped = function() {
+      if ($scope.isPaused) {
+        resume();
+      } else {
+        lap();
+      }
+    }
+
+    $scope.pause = function() {
+      $scope.isPaused = true;
+    }
+
+    function resume() {
+      $scope.isPaused = false;
+    }
+
+    function lap() {
+      console.log("lap");
+    }
+
+
     //DOM elements for google maps overlay
 
     //lap, pause DOM elements
@@ -596,7 +628,7 @@ angular.module('starter.controllers', ['starter.appServices',
         });
 
         $rootScope.hide();
-        $scope.startRun();
+        //$scope.startRun(); Doing this in the toggleRun() function in line 160
 
       });
 
@@ -1446,35 +1478,35 @@ angular.module('starter.controllers', ['starter.appServices',
   })
 
 
-.controller('HistoryCtrl', function($scope) {
+  .controller('HistoryCtrl', function($scope) {
 
-  $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-  $scope.series = ['Series A', 'Series B'];
-  $scope.data = [
-    [65, 59, 80, 81, 56, 55, 40],
-    [28, 48, 40, 19, 86, 27, 90]
-  ];
-  $scope.onClick = function (points, evt) {
-    console.log(points, evt);
-  };
-  $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
-  $scope.options = {
-    scales: {
-      yAxes: [
-        {
-          id: 'y-axis-1',
-          type: 'linear',
-          display: true,
-          position: 'left'
-        },
-        {
-          id: 'y-axis-2',
-          type: 'linear',
-          display: true,
-          position: 'right'
-        }
-      ]
-    }
-  };
+    $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
+    $scope.series = ['Series A', 'Series B'];
+    $scope.data = [
+      [65, 59, 80, 81, 56, 55, 40],
+      [28, 48, 40, 19, 86, 27, 90]
+    ];
+    $scope.onClick = function (points, evt) {
+      console.log(points, evt);
+    };
+    $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
+    $scope.options = {
+      scales: {
+        yAxes: [
+          {
+            id: 'y-axis-1',
+            type: 'linear',
+            display: true,
+            position: 'left'
+          },
+          {
+            id: 'y-axis-2',
+            type: 'linear',
+            display: true,
+            position: 'right'
+          }
+        ]
+      }
+    };
 
-});
+  });
