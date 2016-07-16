@@ -676,7 +676,7 @@ angular.module('starter.controllers', ['starter.appServices',
         $scope.runPath.setMap($scope.map);
         console.log('runPath.setMap completed');
         console.log('exiting Polyline at interval mark');
-      }, 3000);
+      }, 2000);
 
     }
 
