@@ -149,40 +149,6 @@ angular.module('starter.controllers', ['starter.appServices',
 
   .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI){
 
-
-
-    $scope.isDetailDisplayed = false;
-    $scope.isHistoryDetailDisplayed = true;
-    $scope.isRunning = false;
-    $scope.isPaused = false;
-
-    $scope.toggleRun = function() {
-      $scope.isRunning = !$scope.isRunning;
-      $scope.startRun();
-    }
-
-    $scope.lapBtnTapped = function() {
-      if ($scope.isPaused) {
-        resume();
-      } else {
-        lap();
-      }
-    }
-
-    $scope.pause = function() {
-      $scope.isPaused = true;
-    }
-
-    function resume() {
-      $scope.isPaused = false;
-    }
-
-    function lap() {
-      console.log("lap");
-    }
-
-
-
     //DOM elements for google maps overlay
 
     //lap, pause DOM elements
@@ -217,6 +183,7 @@ angular.module('starter.controllers', ['starter.appServices',
       lapUI.appendChild(lapText);
 
       lapUI.addEventListener('click', function () {
+        $scope.lap();
         console.log('lap activated');
       });
 
@@ -270,6 +237,7 @@ angular.module('starter.controllers', ['starter.appServices',
       pauseUI.addEventListener('click', function(){
         console.log('pause button activated');
         $scope.pauseRun();
+
       });
 
 
@@ -590,7 +558,7 @@ angular.module('starter.controllers', ['starter.appServices',
       startUI.style.borderRadius = '3px';
       startUI.style.boxShadow = '0 2px 6px rgba(0, 0, 0, .3)';
       startUI.style.cursor = 'pointer';
-     // startUI.style.top = '10px';
+      startUI.style.top = '10px';
       startUI.style.left = '300px';
       startUI.style.right = '400px';
       startUI.style.height = '50px';
@@ -628,7 +596,7 @@ angular.module('starter.controllers', ['starter.appServices',
         });
 
         $rootScope.hide();
-        //$scope.startRun();
+        $scope.startRun();
 
       });
 
@@ -690,6 +658,7 @@ angular.module('starter.controllers', ['starter.appServices',
       console.log('Interval mark, refreshing coords');
     }
 
+    //polyline functions
     var polyDrawer;
     $scope.runPolyline = function(){
       console.log('runPolyline function activated');
@@ -742,10 +711,12 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.minutes = 0;
       $scope.seconds = 0;
       $scope.startTimer();
+      $scope.startLapTimer();
       $scope.runPolyline();
       console.log('runPolyline called');
     }
 
+    //timer functions
     var start;
     $scope.startTimer = function(){
       start = $interval(function(){
@@ -766,7 +737,6 @@ angular.module('starter.controllers', ['starter.appServices',
         console.log('Timer Interval mark');
       }, 1000);
     }
-
     $scope.pauseTimer = function(){
       $interval.cancel(start);
       start = undefined;
@@ -783,6 +753,51 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.seconds = 0;
     }
 
+    var startLapTimer;
+    $scope.startLapTimer = function(){
+      startLapTimer = $interval(function(){
+        console.log('lap timer started');
+        if($scope.lapSeconds < 60) {
+          console.log('lap seconds checked, incrementd');
+          $scope.lapSeconds++;
+          console.log('lap seconds: ' + $scope.lapSeconds);
+          if ($scope.lapSeconds > 59) {
+            console.log('lap seconds reached 60, reset to 0');
+            $scope.lapSeconds = 0;
+            console.log('lap seconds: ' + $scope.lapSeconds);
+            $scope.lapMinutes++;
+            console.log('lap minutes: ' + $scope.lapMinutes);
+            console.log('lap minutes incremented');
+          }
+        }
+        console.log('Lap Timer interval mark');
+      }, 2000);
+    }
+
+    $scope.pauseLapTimer = function(){
+      $interval.cancel(startLapTimer);
+      startLapTimer = undefined;
+    }
+    $scope.resumeLapTimer = function(){
+      console.log('Lap timer resumed');
+      $scope.startLapTimer();
+    }
+    $scope.stopLapTimer = function(){
+      console.log('lap timer stopped');
+      $interval.cancel(startLapTimer);
+      startLapTimer = undefined;
+      $scope.lapSeconds = 0;
+      $scope.lapMinutes = 0;
+    }
+    $scope.laps = [];
+    $scope.lap = function(){
+      $scope.lapSeconds = 0;
+      $scope.lapMinutes = 0;
+      $scope.lapNumber++;
+      $scope.startLapTimer();
+
+
+    };
 
     //map states
     $scope.mapCreated = function(map){
@@ -833,6 +848,18 @@ angular.module('starter.controllers', ['starter.appServices',
     };
 
     $scope.pauseRun = function(){
+
+      $scope.removeLap();
+      $scope.removePause();
+      $scope.pauseTimer();
+      $scope.pausePolylineDrawer();
+      $scope.pauseLapTimer();
+
+      var pausedControlDiv = document.createElement('div');
+      var pausedControl = $scope.pausedControl(pausedControlDiv, $scope.map);
+
+      pausedControlDiv.index = 1;
+      $scope.map.controls[google.maps.ControlPosition.BOTTOM].push(pausedControlDiv);
       $scope.removeLap();
       $scope.removePause();
       $scope.pauseTimer();
@@ -842,6 +869,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
       pausedControlDiv.index = 1;
       $scope.map.controls[google.maps.ControlPosition.BOTTOM].push(pausedControlDiv);
+
     }
 
     $scope.resumeRun = function(){
@@ -854,6 +882,7 @@ angular.module('starter.controllers', ['starter.appServices',
       console.log('$scope.resumeTimer() called');
       $scope.resumeTimer();
       $scope.resumePolylineDrawer();
+      $scope.resumeLapTimer();
 
 
     }
@@ -863,6 +892,7 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.removeStop();
       console.log('$scope.stopTimer() called');
       $scope.stopTimer();
+      $scope.stopLapTimer();
 
       var runSummaryButtonControlDiv = document.createElement('div');
       var runSummaryButtonControl = $scope.summaryButtonControl(runSummaryButtonControlDiv, $scope.map);
@@ -1396,37 +1426,36 @@ angular.module('starter.controllers', ['starter.appServices',
 
   })
 
-/*
-.controller('HistoryCtrl', function($scope) {
 
-  $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-  $scope.series = ['Series A', 'Series B'];
-  $scope.data = [
-    [65, 59, 80, 81, 56, 55, 40],
-    [28, 48, 40, 19, 86, 27, 90]
-  ];
-  $scope.onClick = function (points, evt) {
-    console.log(points, evt);
-  };
-  $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
-  $scope.options = {
-    scales: {
-      yAxes: [
-        {
-          id: 'y-axis-1',
-          type: 'linear',
-          display: true,
-          position: 'left'
-        },
-        {
-          id: 'y-axis-2',
-          type: 'linear',
-          display: true,
-          position: 'right'
-        }
-      ]
-    }
-  };
+  .controller('HistoryCtrl', function($scope) {
 
-});
-*/
+    $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
+    $scope.series = ['Series A', 'Series B'];
+    $scope.data = [
+      [65, 59, 80, 81, 56, 55, 40],
+      [28, 48, 40, 19, 86, 27, 90]
+    ];
+    $scope.onClick = function (points, evt) {
+      console.log(points, evt);
+    };
+    $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
+    $scope.options = {
+      scales: {
+        yAxes: [
+          {
+            id: 'y-axis-1',
+            type: 'linear',
+            display: true,
+            position: 'left'
+          },
+          {
+            id: 'y-axis-2',
+            type: 'linear',
+            display: true,
+            position: 'right'
+          }
+        ]
+      }
+    };
+
+  });
