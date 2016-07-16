@@ -680,16 +680,16 @@ angular.module('starter.controllers', ['starter.appServices',
     //not really an array updater, more of a distance checker
     var coordinateArrayUpdater;
     $scope.coordsArrayUpdater = function(){
-      console.log('getCoords array function activated');
+      // console.log('getCoords array function activated');
 
       $scope.routeCoords  = [];
-      console.log('Empty route coords array initialized');
+      // console.log('Empty route coords array initialized');
 
       coordinateArrayUpdater = $interval(function(){
         navigator.geolocation.getCurrentPosition(function(pos){
           console.log('setting my latLng in getCoordsArray');
           $scope.myLatLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-          console.log('myLatLng: ' + $scope.myLatLng)
+          // console.log('myLatLng: ' + $scope.myLatLng)
         });
         console.log('myLatLng update check: ' + $scope.myLatLng);
         $scope.routeCoords.push($scope.myLatLng);
@@ -703,16 +703,18 @@ angular.module('starter.controllers', ['starter.appServices',
       }, 2000);
     }
 
-    $scope.pauseCoordsArrayUpdater = function(){
-      console.log('pauseCoordsArrayUpdater entered');
-      $interval.cancel(coordinateArrayUpdater);
-      coordinateArrayUpdater = undefined;
-    }
+    // doesnt really matter if the updater runs when paused- better than having it reset the coord array which this does
+    // $scope.pauseCoordsArrayUpdater = function(){
+    //   console.log('pauseCoordsArrayUpdater entered');
+    //   $interval.cancel(coordinateArrayUpdater);
+    //   $interval.
+    //   // coordinateArrayUpdater = undefined;
+    // }
 
-    $scope.resumeCoordsArrayUpdater = function(){
-      console.log('coordsArrayUpdater resumed');
-      $scope.coordsArrayUpdater();
-    }
+    // $scope.resumeCoordsArrayUpdater = function(){
+    //   console.log('coordsArrayUpdater resumed');
+    //   $scope.coordsArrayUpdater();
+    // }
 
     $scope.stopCoordsArrayUpdater = function(){
       console.log('stopping coords array updater....');
@@ -727,7 +729,7 @@ angular.module('starter.controllers', ['starter.appServices',
     }
 
 
-
+    //polyline functions
     $scope.getCurrentCoords = function(){
       console.log('getCurrentCoords function activated');
 
@@ -739,9 +741,6 @@ angular.module('starter.controllers', ['starter.appServices',
       });
       console.log('Interval mark, refreshing coords');
     }
-
-    //polyline functions
-
 
     var polyDrawer;
     $scope.runPolyline = function(){
@@ -770,7 +769,7 @@ angular.module('starter.controllers', ['starter.appServices',
         $scope.runPath.setMap($scope.map);
         console.log('runPath.setMap completed');
         console.log('exiting Polyline at interval mark');
-      }, 5000);
+      }, 3000);
 
     }
 
@@ -785,29 +784,15 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.runPolyline();
     }
 
-    $scope.run = function(){
 
-      $scope.format = 'mm:ss';
-      $scope.minutes = 0;
-      $scope.seconds = 0;
-      $scope.startTimer();
-      $scope.startLapTimer();
-      $scope.getCurrentCoords();
-
-      $scope.runPolyline();
-      console.log('runPolyline called');
-
-      $scope.coordsArrayUpdater();
-      console.log('getDistance called');
-    }
 
     //timer functions
-    var start;
+    var startTimer;
     $scope.startTimer = function(){
-      start = $interval(function(){
+      startTimer = $interval(function(){
         console.log('start timer function activated');
         if($scope.seconds < 60) {
-          console.log('seconds checked, incrementd');
+          console.log('seconds checked, incremented');
           $scope.seconds++;
           console.log('seconds: ' + $scope.seconds);
           if ($scope.seconds > 59) {
@@ -824,8 +809,8 @@ angular.module('starter.controllers', ['starter.appServices',
     }
 
     $scope.pauseTimer = function(){
-      $interval.cancel(start);
-      start = undefined;
+      $interval.cancel(startTimer);
+      startTimer = undefined;
     }
 
     $scope.resumeTimer = function(){
@@ -835,12 +820,14 @@ angular.module('starter.controllers', ['starter.appServices',
 
     $scope.stopTimer = function(){
       console.log('stop timer function activated');
-      $interval.cancel(start);
-      start = undefined;
+      $interval.cancel(startTimer);
+      startTimer = undefined;
       $scope.minutes = 0;
       $scope.seconds = 0;
     }
 
+
+    //lap functions
     var startLapTimer;
     $scope.startLapTimer = function(){
       startLapTimer = $interval(function(){
@@ -882,16 +869,55 @@ angular.module('starter.controllers', ['starter.appServices',
 
     $scope.laps = [];
 
+    var lapDistanceInitializer;
+    $scope.getLapDistance = function(){
+      console.log('lap distance function activated');
+
+      $scope.lapCoords = [];
+      console.log('empty lap coords array initialized: ' + $scope.lapCoords);
+
+      lapDistanceInitializer = $interval(function(){
+        $scope.getCurrentCoords();
+        console.log('get current coords called from lap distance');
+
+        $scope.lapCoords.push($scope.polyLatLng);
+        console.log('lap coords array' + $scope.lapCoords);
+
+        $scope.lapDistance = google.maps.geometry.spherical.computeLength({
+          path: $scope.lapCoords
+        });
+        console.log('lap distance: ' + $scope.lapDistance);
+      }, 2000);
+    }
+
+    $scope.stopLapDistance = function(){
+      console.log('stopping lap distance...');
+      $interval.cancel(lapDistanceInitializer);
+      lapDistanceInitializer = undefined;
+    }
+
     $scope.lap = function(){
-      $scope.lapSeconds = 0;
-      $scope.lapMinutes = 0;
-      $scope.lapNumber++;
+
+      //pace functions for everything
+      //log lap values
+
+      console.log('lapNumber: ' + $scope.lapNumber);
+      console.log('lap Seconds: ' + $scope.lapSeconds);
+      console.log('lap minutes: ' + $scope.lapMinutes);
+      console.log('lap distance: ' + $scope.lapDistance);
+
+      $scope.laps.push({lapNumber: $scope.lapNumber, seconds: $scope.lapSeconds, minutes: $scope.lapMinutes, distance: $scope.lapDistance});
+      console.log('laps array: ' + $scope.laps);
+
+      $scope.stopLapTimer();
+      $scope.stopLapDistance();
+
       $scope.startLapTimer();
-
-
+      $scope.getLapDistance();
+      $scope.lapNumber++;
     };
 
-    //distance functions
+
 
 
 
@@ -934,7 +960,7 @@ angular.module('starter.controllers', ['starter.appServices',
       console.log("Attempting to remove start button...");
       $scope.removeStartUI();
 
-      // $scope.coordsArrayUpdater();
+
 
 
 
@@ -957,6 +983,28 @@ angular.module('starter.controllers', ['starter.appServices',
 
     };
 
+    $scope.run = function(){
+
+      $scope.format = 'mm:ss';
+      // $scope.minutes = 0;
+      // $scope.seconds = 0;
+      // $scope.lapMinutes = 0;
+      // $scope.lapSeconds = 0;
+      $scope.lapNumber = 0;
+      $scope.startTimer();
+      $scope.startLapTimer();
+
+      $scope.getCurrentCoords();
+
+      $scope.runPolyline();
+      console.log('runPolyline called');
+
+      $scope.lap();
+
+      $scope.coordsArrayUpdater();
+      console.log('getDistance called');
+    }
+
     $scope.pauseRun = function(){
 
       $scope.removeLap();
@@ -966,7 +1014,7 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.pauseTimer();
       $scope.pausePolylineDrawer();
       $scope.pauseLapTimer();
-      $scope.pauseCoordsArrayUpdater();
+      // $scope.pauseCoordsArrayUpdater();
 
       var pausedControlDiv = document.createElement('div');
       var pausedControl = $scope.pausedControl(pausedControlDiv, $scope.map);
@@ -996,6 +1044,7 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.resumeTimer();
       $scope.resumePolylineDrawer();
       $scope.resumeLapTimer();
+      // $scope.resumeCoordsArrayUpdater();
 
 
     }
@@ -1007,6 +1056,7 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.stopTimer();
       $scope.stopLapTimer();
       $scope.stopCoordsArrayUpdater();
+      $scope.stopLapDistance();
 
       var runSummaryButtonControlDiv = document.createElement('div');
       var runSummaryButtonControl = $scope.summaryButtonControl(runSummaryButtonControlDiv, $scope.map);
