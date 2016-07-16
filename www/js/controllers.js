@@ -149,6 +149,38 @@ angular.module('starter.controllers', ['starter.appServices',
 
   .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI){
 
+
+    $scope.isDetailDisplayed = false;
+    $scope.isHistoryDetailDisplayed = true;
+    $scope.isRunning = false;
+    $scope.isPaused = false;
+
+    $scope.toggleRun = function() {
+      $scope.isRunning = !$scope.isRunning;
+      $scope.startRun();
+    }
+
+    $scope.lapBtnTapped = function() {
+      if ($scope.isPaused) {
+        resume();
+      } else {
+        lap();
+      }
+    }
+
+    $scope.pause = function() {
+      $scope.isPaused = true;
+    }
+
+    function resume() {
+      $scope.isPaused = false;
+    }
+
+    function lap() {
+      console.log("lap");
+    }
+
+
     //DOM elements for google maps overlay
 
     //lap, pause DOM elements
@@ -596,7 +628,7 @@ angular.module('starter.controllers', ['starter.appServices',
         });
 
         $rootScope.hide();
-        $scope.startRun();
+        //$scope.startRun(); Doing this in the toggleRun() function in line 160
 
       });
 
