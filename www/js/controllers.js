@@ -150,35 +150,35 @@ angular.module('starter.controllers', ['starter.appServices',
   .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI){
 
 
-    $scope.isDetailDisplayed = false;
-    $scope.isHistoryDetailDisplayed = true;
-    $scope.isRunning = false;
-    $scope.isPaused = false;
-
-    $scope.toggleRun = function() {
-      $scope.isRunning = !$scope.isRunning;
-      $scope.startRun();
-    }
-
-    $scope.lapBtnTapped = function() {
-      if ($scope.isPaused) {
-        resume();
-      } else {
-        lap();
-      }
-    }
-
-    $scope.pause = function() {
-      $scope.isPaused = true;
-    }
-
-    function resume() {
-      $scope.isPaused = false;
-    }
-
-    function lap() {
-      console.log("lap");
-    }
+    // $scope.isDetailDisplayed = false;
+    // $scope.isHistoryDetailDisplayed = true;
+    // $scope.isRunning = false;
+    // $scope.isPaused = false;
+    //
+    // $scope.toggleRun = function() {
+    //   $scope.isRunning = !$scope.isRunning;
+    //   $scope.startRun();
+    // }
+    //
+    // $scope.lapBtnTapped = function() {
+    //   if ($scope.isPaused) {
+    //     resume();
+    //   } else {
+    //     lap();
+    //   }
+    // }
+    //
+    // $scope.pause = function() {
+    //   $scope.isPaused = true;
+    // }
+    //
+    // function resume() {
+    //   $scope.isPaused = false;
+    // }
+    //
+    // function lap() {
+    //   console.log("lap");
+    // }
 
 
     //DOM elements for google maps overlay
@@ -467,125 +467,125 @@ angular.module('starter.controllers', ['starter.appServices',
     };
 
     //home screen 'drop down' stuff
-    $scope.welcomeControl = function(welcomeDiv, map){
-
-      var welcomeUI = document.createElement('div');
-      welcomeUI.id = 'welcomeUI';
-      welcomeUI.style.backgroundColor = '#ffffff';
-      welcomeUI.style.border = '2px solid #00b9be';
-      welcomeUI.style.borderRadius = '3px';
-      welcomeUI.style.boxShadow = '0 2px 6px rgba(0, 0, 0, .3)';
-      welcomeUI.style.cursor = 'pointer';
-      welcomeUI.style.height = '100px';
-      welcomeUI.style.width = '1000px';
-      welcomeUI.style.top = '100px';
-      //welcomeUI.ngShow = $scope.isRunning;
-      // welcomeUI.style.left = '300px';
-      // welcomeUI.style.right = '300px';
-      welcomeUI.style.zIndex = '20px';
-      // welcomeUI.style.marginTop = '100px';
-      welcomeUI.style.textAlign = 'center';
-      welcomeUI.title = 'Welcome';
-      welcomeDiv.appendChild(welcomeUI);
-
-      var welcomeText = document.createElement('div');
-      welcomeText.id = 'welcomeUserText';
-      welcomeText.innerHTML = 'Welcome Jane Doe';
-      welcomeUI.appendChild(welcomeText);
-
-      var divider = document.createElement('hr');
-      divider.id = 'welcomeDivider';
-      welcomeUI.appendChild(divider);
-
-      var milesRaisesText = document.createElement('p');
-      milesRaisesText.id = 'milesRaises';
-      milesRaisesText.style.textAlign = 'center';
-      milesRaisesText.style.color = '#00b9be';
-      milesRaisesText.innerHTML = 'Every Mile raises 50 cents for ';
-      welcomeUI.appendChild(milesRaisesText);
-
-      var charitySelectedText = document.createElement('h');
-      charitySelectedText.id = 'charitySelectedText';
-      //charitySelectedText.style.textAlign = 'center';
-      charitySelectedText.innerHTML = 'Teens Run DC';
-      welcomeUI.appendChild(charitySelectedText);
-
-      //these elements will be added to the ui from the event listener on the drop down button
-      var detailDivider = document.createElement('hr');
-      detailDivider.id = 'detailDivider';
-
-      var thisWeekText= document.createElement('div');
-      thisWeekText.id = 'thisWeekText';
-      thisWeekText.innerHTML = 'This week';
-
-      var weekMoneyRaisedText = document.createElement('p');
-      weekMoneyRaisedText.id = 'weekMoneyRaisedText';
-      weekMoneyRaisedText.innerHTML = '$17.50 raised and';
-
-      var weekDistanceText = document.createElement('p');
-      weekDistanceText.id = 'weekDistanceText';
-      weekDistanceText.innerHTML = '34 miles for charity';
-
-      var thisMonthText = document.createElement('p');
-      thisMonthText.id = 'thisMonthText';
-      thisMonthText.innerHTML = 'This month';
-
-      var monthMoneyRaisedText = document.createElement('p');
-      monthMoneyRaisedText.id = 'moneyMoneyRaisedText';
-      monthMoneyRaisedText.innerHTML = '$50.10';
-
-      var monthDistanceText = document.createElement('p');
-      monthDistanceText.id = 'monthDistanceText';
-      monthDistanceText.innerHTML = '100 miles run for charity';
-
-      var dropButton = document.createElement('button');
-      dropButton.id = 'dropButton';
-      dropButton.style.position = 'absolute';
-      dropButton.style.width = '50px';
-      dropButton.style.marginTop = '30px';
-      dropButton.style.position = 'center';
-      dropButton.class = 'button button-slide';
-      //dropButton.ngClass = 'isDetailDisplayed ? "button-slide-down" : "button-slide-up"';
-      welcomeUI.appendChild(dropButton);
-      dropButton.addEventListener('click', function(){
-        // if($scope.isHistoryDetailDisplayed = false){
-        //   $scope.isHistoryDetailDisplayed = true;
-        //   welcomeUI.appendChild(detailDivider);
-        //   welcomeUI.appendChild(thisWeekText);
-        //   welcomeUI.appendChild(weekMoneyRaisedText);
-        //   welcomeUI.appendChild(weekDistanceText);
-        //   welcomeUI.appendChild(thisMonthText);
-        //   welcomeUI.appendChild(monthMoneyRaisedTexth);
-        //   welcomeUI.appendChild(monthDistanceText);
-        // } else {
-        //   $scope.isHistoryDetailDisplayed = false;
-        //   welcomeUI.removeChild(detailDivider);
-        //   welcomeUI.removeChild(thisWeekText);
-        //   welcomeUI.removeChild(weekMoneyRaisedText);
-        //   welcomeUI.removeChild(weekDistanceText);
-        //   welcomeUI.removeChild(thisMonthText);
-        //   welcomeUI.removeChild(monthMoneyRaisedText);
-        //   welcomeUI.removeChild(monthDistanceText);
-
-        //}
-      });
-
-      $scope.removeWelcomeUI = function(){
-        welcomeDiv.removeChild(welcomeUI);
-      }
-
-
-
-
-
-    };
+    // $scope.welcomeControl = function(welcomeDiv, map){
+    //
+    //   var welcomeUI = document.createElement('div');
+    //   welcomeUI.id = 'welcomeUI';
+    //   welcomeUI.style.backgroundColor = '#ffffff';
+    //   welcomeUI.style.border = '2px solid #00b9be';
+    //   welcomeUI.style.borderRadius = '3px';
+    //   welcomeUI.style.boxShadow = '0 2px 6px rgba(0, 0, 0, .3)';
+    //   welcomeUI.style.cursor = 'pointer';
+    //   welcomeUI.style.height = '100px';
+    //   welcomeUI.style.width = '1000px';
+    //   welcomeUI.style.top = '100px';
+    //   //welcomeUI.ngShow = $scope.isRunning;
+    //   // welcomeUI.style.left = '300px';
+    //   // welcomeUI.style.right = '300px';
+    //   welcomeUI.style.zIndex = '20px';
+    //   // welcomeUI.style.marginTop = '100px';
+    //   welcomeUI.style.textAlign = 'center';
+    //   welcomeUI.title = 'Welcome';
+    //   welcomeDiv.appendChild(welcomeUI);
+    //
+    //   var welcomeText = document.createElement('div');
+    //   welcomeText.id = 'welcomeUserText';
+    //   welcomeText.innerHTML = 'Welcome Jane Doe';
+    //   welcomeUI.appendChild(welcomeText);
+    //
+    //   var divider = document.createElement('hr');
+    //   divider.id = 'welcomeDivider';
+    //   welcomeUI.appendChild(divider);
+    //
+    //   var milesRaisesText = document.createElement('p');
+    //   milesRaisesText.id = 'milesRaises';
+    //   milesRaisesText.style.textAlign = 'center';
+    //   milesRaisesText.style.color = '#00b9be';
+    //   milesRaisesText.innerHTML = 'Every Mile raises 50 cents for ';
+    //   welcomeUI.appendChild(milesRaisesText);
+    //
+    //   var charitySelectedText = document.createElement('h');
+    //   charitySelectedText.id = 'charitySelectedText';
+    //   //charitySelectedText.style.textAlign = 'center';
+    //   charitySelectedText.innerHTML = 'Teens Run DC';
+    //   welcomeUI.appendChild(charitySelectedText);
+    //
+    //   //these elements will be added to the ui from the event listener on the drop down button
+    //   var detailDivider = document.createElement('hr');
+    //   detailDivider.id = 'detailDivider';
+    //
+    //   var thisWeekText= document.createElement('div');
+    //   thisWeekText.id = 'thisWeekText';
+    //   thisWeekText.innerHTML = 'This week';
+    //
+    //   var weekMoneyRaisedText = document.createElement('p');
+    //   weekMoneyRaisedText.id = 'weekMoneyRaisedText';
+    //   weekMoneyRaisedText.innerHTML = '$17.50 raised and';
+    //
+    //   var weekDistanceText = document.createElement('p');
+    //   weekDistanceText.id = 'weekDistanceText';
+    //   weekDistanceText.innerHTML = '34 miles for charity';
+    //
+    //   var thisMonthText = document.createElement('p');
+    //   thisMonthText.id = 'thisMonthText';
+    //   thisMonthText.innerHTML = 'This month';
+    //
+    //   var monthMoneyRaisedText = document.createElement('p');
+    //   monthMoneyRaisedText.id = 'moneyMoneyRaisedText';
+    //   monthMoneyRaisedText.innerHTML = '$50.10';
+    //
+    //   var monthDistanceText = document.createElement('p');
+    //   monthDistanceText.id = 'monthDistanceText';
+    //   monthDistanceText.innerHTML = '100 miles run for charity';
+    //
+    //   var dropButton = document.createElement('button');
+    //   dropButton.id = 'dropButton';
+    //   dropButton.style.position = 'absolute';
+    //   dropButton.style.width = '50px';
+    //   dropButton.style.marginTop = '30px';
+    //   dropButton.style.position = 'center';
+    //   dropButton.class = 'button button-slide';
+    //   //dropButton.ngClass = 'isDetailDisplayed ? "button-slide-down" : "button-slide-up"';
+    //   welcomeUI.appendChild(dropButton);
+    //   dropButton.addEventListener('click', function(){
+    //     // if($scope.isHistoryDetailDisplayed = false){
+    //     //   $scope.isHistoryDetailDisplayed = true;
+    //     //   welcomeUI.appendChild(detailDivider);
+    //     //   welcomeUI.appendChild(thisWeekText);
+    //     //   welcomeUI.appendChild(weekMoneyRaisedText);
+    //     //   welcomeUI.appendChild(weekDistanceText);
+    //     //   welcomeUI.appendChild(thisMonthText);
+    //     //   welcomeUI.appendChild(monthMoneyRaisedTexth);
+    //     //   welcomeUI.appendChild(monthDistanceText);
+    //     // } else {
+    //     //   $scope.isHistoryDetailDisplayed = false;
+    //     //   welcomeUI.removeChild(detailDivider);
+    //     //   welcomeUI.removeChild(thisWeekText);
+    //     //   welcomeUI.removeChild(weekMoneyRaisedText);
+    //     //   welcomeUI.removeChild(weekDistanceText);
+    //     //   welcomeUI.removeChild(thisMonthText);
+    //     //   welcomeUI.removeChild(monthMoneyRaisedText);
+    //     //   welcomeUI.removeChild(monthDistanceText);
+    //
+    //     //}
+    //   });
+    //
+    //   $scope.removeWelcomeUI = function(){
+    //     welcomeDiv.removeChild(welcomeUI);
+    //   }
+    //
+    //
+    //
+    //
+    //
+    // };
 
     //start dreamrun button DOM shit
     $scope.startControl = function(startDiv, map){
 
       var startUI = document.createElement('div');
-
       startUI.style.backgroundColor = '#00b9be';
+      //startUI.style.position = 'relative';
       startUI.style.border  = '2px solid #00b9be';
       startUI.style.borderRadius = '3px';
       startUI.style.boxShadow = '0 2px 6px rgba(0, 0, 0, .3)';
@@ -595,8 +595,8 @@ angular.module('starter.controllers', ['starter.appServices',
       startUI.style.right = '400px';
       startUI.style.height = '50px';
       startUI.style.width = '800px';
-      startUI.style.zIndex = '10px';
-      startUI.style.marginBottom = '100px';
+      startUI.style.zIndex = '10';
+      startUI.style.marginBottom = '50px';
       startUI.style.textAlign = 'center';
       startUI.title = 'Start dreamrun';
       startDiv.appendChild(startUI);
@@ -628,7 +628,7 @@ angular.module('starter.controllers', ['starter.appServices',
         });
 
         $rootScope.hide();
-        //$scope.startRun(); Doing this in the toggleRun() function in line 160
+        $scope.startRun(); //Doing this in the toggleRun() function in line 160
 
       });
 
@@ -676,16 +676,47 @@ angular.module('starter.controllers', ['starter.appServices',
 
     //run functions
 
+    //run coord array
+    var coordinateArrayUpdater;
+    $scope.coordsArrayUpdater = function(){
+      console.log('getCoords array function activated');
+
+      $rootScope.routeCoords  = [];
+      console.log('Empty route coords array initialized');
+
+      coordinateArrayUpdater = $interval(function(){
+        navigator.geolocation.getCurrentPosition(function(pos){
+          console.log('setting my latLng in getCoordsArray');
+          $scope.myLatLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+          console.log('myLatLng: ' + $scope.myLatLng)
+        });
+        console.log('myLatLng update check: ' + $scope.myLatLng);
+        $rootScope.routeCoords.push($scope.myLatLng);
+
+        console.log('routeCoords array: ' + $rootScope.routeCoords);
+        $scope.distance =  google.maps.geometry.spherical.computeLength({
+          path: $rootScope.routeCoords
+        });
+        console.log('Distance: ' + $scope.distance);
+        console.log('exiting coordsArrayUpdater at interval');
+      }, 2000);
+    }
+
+    $scope.pauseCoordsArrayUpdater = function(){
+      $interval.cancel(coordinateArrayUpdater);
+      coordinateArrayUpdater = undefined;
+    }
+
     $scope.getCurrentCoords = function(){
       console.log('getCurrentCoords function activated');
 
       navigator.geolocation.getCurrentPosition(function(pos){
         console.log('inside navigator...getCurrentPosition');
-        $scope.myLatLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+        $scope.polyLatLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
         console.log('myLatLng coords assigned');
-        console.log($scope.myLatLng);
+        console.log($scope.polyLatLng);
 
-        console.log('Current coordinates added to routeCoords array');
+        console.log('Current coordinates added to polyCoords array');
       });
       console.log('Interval mark, refreshing coords');
     }
@@ -695,15 +726,20 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.runPolyline = function(){
       console.log('runPolyline function activated');
 
-      $scope.routeCoords = [];
-      console.log('empty route coords array initialized');
+      $scope.polyCoords = [];
+      console.log('empty poly coords array initialized');
       var drawerTestCoords = {lat: 38.9042049, lng: -77.0473209};
-      $scope.routeCoords.push(drawerTestCoords);
+      $scope.polyCoords.push(drawerTestCoords);
       polyDrawer = $interval(function(){
-        $scope.routeCoords.push($scope.myLatLng);
-        console.log($scope.routeCoords);
+        $scope.getCurrentCoords();
+        console.log('polyLatLng : ' + $scope.polyLatLng);
+
+
+        $scope.polyCoords.push($scope.polyLatLng);
+        console.log('poly coords array:' + $scope.polyCoords);
+
         $scope.runPath = new google.maps.Polyline({
-          path: $scope.routeCoords,
+          path: $scope.polyCoords,
           strokeColor: '#FF0000',
           strokeOpacity: 1.0,
           strokeWeight: 2
@@ -711,7 +747,7 @@ angular.module('starter.controllers', ['starter.appServices',
         $scope.runPath.setMap($scope.map);
         console.log('runPath.setMap completed');
         console.log('exiting Polyline at interval mark');
-      }, 2000);
+      }, 4000);
 
     }
 
@@ -744,8 +780,12 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.seconds = 0;
       $scope.startTimer();
       $scope.startLapTimer();
+
       $scope.runPolyline();
       console.log('runPolyline called');
+
+      $scope.coordsArrayUpdater();
+      console.log('getDistance called');
     }
 
     //timer functions
@@ -840,43 +880,51 @@ angular.module('starter.controllers', ['starter.appServices',
 
     //distance functions
 
-    $scope.getDistance = function(){
-      console.log('getDistance function activated');
 
-      $scope.distance = new google.maps.geomety.spherical.computeDistanceBetween($scope.startLatLng, $scope.myLatLng);
+
+    $scope.setStartingLatLng = function(){
+      console.log('setting start coords');
+      $scope.startLatLng = $scope.getCurrentCoords();
+      console.log('starting coordinates are: ' + $scope.startLatLng);
     }
+
+
+
+
     //map states
     $scope.mapCreated = function(map){
       $scope.map = map;
 
-      var welcomeControlDiv = document.createElement('div');
-      var welcomeControl = $scope.welcomeControl(welcomeControlDiv, map);
-
-      welcomeControlDiv.index = 1;
-      map.controls[google.maps.ControlPosition.TOP].push(welcomeControlDiv);
+      // var welcomeControlDiv = document.createElement('div');
+      // var welcomeControl = $scope.welcomeControl(welcomeControlDiv, map);
+      //
+      // welcomeControlDiv.index = 1;
+      // map.controls[google.maps.ControlPosition.TOP].push(welcomeControlDiv);
 
       var startControlDiv = document.createElement('div');
       var startControl = $scope.startControl(startControlDiv, map);
 
 
-      startControlDiv.index = 2;
-      map.controls[google.maps.ControlPosition.BOTTOM].push(startControlDiv);
+      startControlDiv.index = 1;
+      map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(startControlDiv);
 
     };
 
     $scope.startRun  = function(){
       console.log('Start run function started ');
-      console.log($scope.getCurrentCoords());
 
-      console.log("Attempting to remove dropdown info");
-      $scope.removeWelcomeUI();
+
+      // console.log("Attempting to remove dropdown info");
+      // $scope.removeWelcomeUI();
 
 
       console.log("Attempting to remove start button...");
       $scope.removeStartUI();
 
+      // $scope.coordsArrayUpdater();
+
       // need to change to get coords so that startLatLng doesnt change on state change
-      $scope.startLatLng = $scope.myLatLng;
+
 
 
       var buttonControlDiv = document.createElement('div');
@@ -900,9 +948,12 @@ angular.module('starter.controllers', ['starter.appServices',
 
       $scope.removeLap();
       $scope.removePause();
+
+
       $scope.pauseTimer();
       $scope.pausePolylineDrawer();
       $scope.pauseLapTimer();
+      $scope.pauseCoordsArrayUpdater();
 
       var pausedControlDiv = document.createElement('div');
       var pausedControl = $scope.pausedControl(pausedControlDiv, $scope.map);
