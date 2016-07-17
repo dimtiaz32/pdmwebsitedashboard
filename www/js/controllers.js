@@ -162,35 +162,35 @@ angular.module('starter.controllers', ['starter.appServices',
       //(L)DISTANCE: MEDIUMPURPLE
       //(L)PACE: PALEGOLDENROD
 
-    // $scope.isDetailDisplayed = false;
-    // $scope.isHistoryDetailDisplayed = true;
-    // $scope.isRunning = false;
-    // $scope.isPaused = false;
-    //
-    // $scope.toggleRun = function() {
-    //   $scope.isRunning = !$scope.isRunning;
-    //   $scope.startRun();
-    // }
-    //
-    // $scope.lapBtnTapped = function() {
-    //   if ($scope.isPaused) {
-    //     resume();
-    //   } else {
-    //     lap();
-    //   }
-    // }
-    //
-    // $scope.pause = function() {
-    //   $scope.isPaused = true;
-    // }
-    //
-    // function resume() {
-    //   $scope.isPaused = false;
-    // }
-    //
-    // function lap() {
-    //   console.log("lap");
-    // }
+     $scope.isDetailDisplayed = false;
+     $scope.isHistoryDetailDisplayed = true;
+     $scope.isRunning = false;
+     $scope.isPaused = false;
+
+     $scope.toggleRun = function() {
+        $scope.isRunning = !$scope.isRunning;
+        $scope.startRun();
+     }
+
+     $scope.lapBtnTapped = function() {
+       if ($scope.isPaused) {
+         resume();
+       } else {
+         lap();
+       }
+     }
+
+     $scope.pause = function() {
+       $scope.isPaused = true;
+     }
+
+     function resume() {
+       $scope.isPaused = false;
+     }
+
+     function lap() {
+       console.log("lap");
+     }
 
 
     //DOM elements for google maps overlay
@@ -1659,33 +1659,12 @@ angular.module('starter.controllers', ['starter.appServices',
 
   .controller('HistoryCtrl', function($scope) {
 
-    $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
+    $scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
     $scope.series = ['Series A', 'Series B'];
+
     $scope.data = [
       [65, 59, 80, 81, 56, 55, 40],
       [28, 48, 40, 19, 86, 27, 90]
     ];
-    $scope.onClick = function (points, evt) {
-      console.log(points, evt);
-    };
-    $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
-    $scope.options = {
-      scales: {
-        yAxes: [
-          {
-            id: 'y-axis-1',
-            type: 'linear',
-            display: true,
-            position: 'left'
-          },
-          {
-            id: 'y-axis-2',
-            type: 'linear',
-            display: true,
-            position: 'right'
-          }
-        ]
-      }
-    };
 
   });

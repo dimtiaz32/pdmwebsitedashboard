@@ -1,4 +1,4 @@
-<ion-content class="BarCtrl">
+<ion-content class="HistoryCtrl">
 
   <div class="month-slide-wrapper">
     <ion-slide-box on-slide-changed="slideHasChanged($index)">
@@ -76,26 +76,12 @@
     </div>
   </div>
 
-
   <div class="card">
 
-    <canvas id="line" class="chart chart-line" chart-data="data"
-            chart-labels="labels" chart-series="series" chart-options="options"
-            chart-dataset-override="datasetOverride" chart-click="onClick">
-    </canvas>
+    <canvas id="bar" class="chart chart-bar" chart-data="{{data}}" chart-labels="{{labels}}" chart-series="{{series}}"></canvas>
 
   </div>
 
 
-  <!--
-      <ion-content class="chart-view">
-        <div class="card">
-
-          <canvas id="bar" class="chart chart-bar" data="data" labels="labels" legend="true" series="series" options="{showTooltips: false}"></canvas>
-
-        </div>
-      </ion-content>
-
-  -->
 
 </ion-content>
