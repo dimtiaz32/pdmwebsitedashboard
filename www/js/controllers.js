@@ -149,17 +149,18 @@ angular.module('starter.controllers', ['starter.appServices',
 
   .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI){
     //CONSOLE LOGGING COLORS:
-    //UI-INTERACTIONS: TEAL
-    //UI-CHANGES: GREEN
-    //RUN STATE CHANGE: HOTPINK
-    //TIMER:ROYALBLUE
-    //DISTANCE: PURPLE
-    //POLYLINE: LIME
-    //PACE: GOLD
-    //LAP: AQUA
-    //(L)TIMER: BLUE
-    //(L)DISTANCE: MEDIUMPURPLE
-    //(L)PACE: PALEGOLDENROD
+      //UI-INTERACTIONS: TEAL
+      //UI-CHANGES: GREEN
+      //RUN STATE CHANGE: HOTPINK
+      //TIMER:ROYALBLUE
+      //DISTANCE: PURPLE
+      //POLYLINE: LIME
+      //PACE: GOLD
+      //LAP: AQUA
+      //MONEYRAISED: GREY
+      //(L)TIMER: BLUE
+      //(L)DISTANCE: MEDIUMPURPLE
+      //(L)PACE: PALEGOLDENROD
 
     // $scope.isDetailDisplayed = false;
     // $scope.isHistoryDetailDisplayed = true;
@@ -738,7 +739,6 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.routeCoords = [];
     }
 
-
     //polyline functions
     $scope.getCurrentCoords = function(){
       console.log('%cgetCurrentCoords function activated', 'color: Lime');
@@ -833,49 +833,6 @@ angular.module('starter.controllers', ['starter.appServices',
       startTimer = undefined;
       $scope.minutes = 0;
       $scope.seconds = 0;
-    }
-
-    //pace functions
-    var paceInitializer;
-    $scope.paceCalculator = function(){
-      console.log('%cpace calculator called', 'color: Gold');
-
-      //check by hard coding distance
-
-      //var metersPerMile = 1609.34;
-      var milesPerMeter = 0.000621371;
-
-      $scope.minutes;
-      $scope.seconds;
-      $scope.distance;
-
-
-      console.log('%cPace calculator seconds time check- minutes: ' + $scope.minutes + ';  seconds: ' + $scope.seconds, 'color: Gold');
-
-
-
-      paceInitializer = $interval(function(){
-
-        var toSeconds = $scope.minutes * 60;
-        var time = $scope.seconds + toSeconds;
-        console.log('%cTime in seconds: ' + time, 'color: Gold');
-
-        var distanceInMiles = $scope.distance * milesPerMeter;
-        console.log('%cDistance in miles: ' + distanceInMiles, 'color: Gold');
-
-        milesPerSecond = 10 / time;
-        console.log('%cMiles per second: ' + milesPerSecond, 'color: Gold');
-
-        $scope.pace = milesPerSecond * 60;
-        console.log('%cMiles per minute (Pace): ' + $scope.pace, 'color: Gold');
-
-      }, 2100);
-    }
-
-    $scope.stopPaceCalculator = function(){
-      console.log('%cStopping pace calculator... ', 'color: Gold');
-      $interval.cancel(paceInitializer);
-      paceInitializer = undefined;
     }
 
     //lap functions
@@ -975,6 +932,57 @@ angular.module('starter.controllers', ['starter.appServices',
       console.log('starting coordinates are: ' + $scope.startLatLng);
     }
 
+
+    //pace functions
+    var paceInitializer;
+    $scope.paceCalculator = function(){
+      console.log('%cpace calculator called', 'color: Gold');
+
+      //check by hard coding distance
+
+      //var metersPerMile = 1609.34;
+      var milesPerMeter = 0.000621371;
+
+      $scope.minutes;
+      $scope.seconds;
+      $scope.distance;
+
+
+      console.log('%cPace calculator seconds time check- minutes: ' + $scope.minutes + ';  seconds: ' + $scope.seconds, 'color: Gold');
+
+
+
+      paceInitializer = $interval(function(){
+
+        var toSeconds = $scope.minutes * 60;
+        var time = $scope.seconds + toSeconds;
+        console.log('%cTime in seconds: ' + time, 'color: Gold');
+
+        var distanceInMiles = $scope.distance * milesPerMeter;
+        console.log('%cDistance in miles: ' + distanceInMiles, 'color: Gold');
+
+        milesPerSecond = 10 / time;
+        console.log('%cMiles per second: ' + milesPerSecond, 'color: Gold');
+
+        $scope.pace = milesPerSecond * 60;
+        console.log('%cMiles per minute (Pace): ' + $scope.pace, 'color: Gold');
+
+      }, 2100);
+    }
+
+    $scope.stopPaceCalculator = function(){
+      console.log('%cStopping pace calculator... ', 'color: Gold');
+      $interval.cancel(paceInitializer);
+      paceInitializer = undefined;
+    }
+
+    //money raised calculator
+
+    $scope.moneyRaisedCalculator = function(){
+      console.log('%cMoney raised calculator active', 'color: Grey');
+
+
+    }
 
     //map states
     $scope.mapCreated = function(map){
