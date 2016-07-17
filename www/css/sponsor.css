@@ -25,7 +25,7 @@ i {
   border: none;
 }
 
-ion-content {
+ion-content.payment {
   background-image:url('../img/bg.jpg');
   background-repeat:no-repeat;
   background-size: 100%;
