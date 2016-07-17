@@ -148,7 +148,18 @@ angular.module('starter.controllers', ['starter.appServices',
   // })
 
   .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI){
-
+    //CONSOLE LOGGING COLORS:
+    //UI-INTERACTIONS: TEAL
+    //UI-CHANGES: GREEN
+    //RUN STATE CHANGE: HOTPINK
+    //TIMER:ROYALBLUE
+    //DISTANCE: PURPLE
+    //POLYLINE: LIME
+    //PACE: GOLD
+    //LAP: AQUA
+    //(L)TIMER: BLUE
+    //(L)DISTANCE: MEDIUMPURPLE
+    //(L)PACE: PALEGOLDENROD
 
     // $scope.isDetailDisplayed = false;
     // $scope.isHistoryDetailDisplayed = true;
@@ -216,7 +227,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
       $scope.removeLap = function(){
         buttonDiv.removeChild(lapUI);
-        console.log('removed lap from buttonDiv');
+        console.log('%cremoved lap from buttonDiv' , 'color: Aqua');
       }
 
       $scope.addLap = function(){
@@ -225,7 +236,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
       lapUI.addEventListener('click', function () {
         $scope.lap();
-        console.log('lap activated');
+        console.log('%clap activated', 'color: Teal');
       });
 
 
@@ -259,16 +270,16 @@ angular.module('starter.controllers', ['starter.appServices',
 
       $scope.removePause = function(){
         buttonDiv.removeChild(pauseUI);
-        console.log("remove pause button function called");
+        console.log("%cremoved pause button", 'color: Green');
       }
 
       $scope.addPause = function(){
         buttonDiv.appendChild(pauseUI);
-        console.log('added pause button function called');
+        console.log('%cadded pause button', 'color: Green');
       }
 
       pauseUI.addEventListener('click', function(){
-        console.log('pause button activated');
+        console.log('%cPause button activated', 'color: Teal');
         $scope.pauseRun();
 
       });
@@ -308,7 +319,7 @@ angular.module('starter.controllers', ['starter.appServices',
       resumeUI.appendChild(resumeText);
 
       resumeUI.addEventListener('click', function () {
-        console.log('resume activated');
+        console.log('%cresume activated', 'color: Teal');
         $scope.resumeRun();
 
       });
@@ -351,7 +362,7 @@ angular.module('starter.controllers', ['starter.appServices',
       stopUI.appendChild(stopText);
 
       stopUI.addEventListener('click', function () {
-        console.log('stop activated');
+        console.log('%cstop activated', 'color: Teal');
         $scope.stopRun();
       });
 
@@ -618,7 +629,7 @@ angular.module('starter.controllers', ['starter.appServices',
       }
 
       startUI.addEventListener('click', function(){
-        console.log("Starting button clicked");
+        console.log('%cStart DreamRun button clicked', 'color: red');
         if(!$scope.map){
           return;
         }
@@ -686,19 +697,19 @@ angular.module('starter.controllers', ['starter.appServices',
 
       coordinateArrayUpdater = $interval(function(){
         navigator.geolocation.getCurrentPosition(function(pos){
-          console.log('setting my latLng in getCoordsArray');
+          console.log('%cSetting my latLng in getCoordsArray', 'color: Purple');
           $scope.myLatLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
           // console.log('myLatLng: ' + $scope.myLatLng)
         });
-        console.log('myLatLng update check: ' + $scope.myLatLng);
+        console.log('%cmyLatLng update check: ' + $scope.myLatLng, 'color: Purple');
         $scope.routeCoords.push($scope.myLatLng);
 
-        console.log('routeCoords array: ' +  $scope.routeCoords);
+        console.log('%crouteCoords array: ' +  $scope.routeCoords, 'color: Purple');
         $scope.distance =  google.maps.geometry.spherical.computeLength({
           path:  $scope.routeCoords
         });
-        console.log('Distance: ' + $scope.distance);
-        console.log('exiting coordsArrayUpdater at interval');
+        console.log('%cDistance: ' + $scope.distance, 'color: Purple');
+        console.log('%cExiting coordsArrayUpdater at interval', 'color: Purple');
       }, 2000);
     }
 
@@ -716,13 +727,13 @@ angular.module('starter.controllers', ['starter.appServices',
     // }
 
     $scope.stopCoordsArrayUpdater = function(){
-      console.log('stopping coords array updater....');
+      console.log('%cStopping coords array updater....', 'color: Purple');
       $interval.cancel(coordinateArrayUpdater);
       coordinateArrayUpdater = undefined;
 
       //setting distance = 1 since is currently 0 as im not moving
       $scope.distance = 1;
-      console.log('distance reset: ' + $scope.distance);
+      console.log('%cDistance reset: ' + $scope.distance, 'color: Purple');
 
       $scope.routeCoords = [];
     }
@@ -730,34 +741,34 @@ angular.module('starter.controllers', ['starter.appServices',
 
     //polyline functions
     $scope.getCurrentCoords = function(){
-      console.log('getCurrentCoords function activated');
+      console.log('%cgetCurrentCoords function activated', 'color: Lime');
 
       navigator.geolocation.getCurrentPosition(function(pos){
-        console.log('inside navigator...getCurrentPosition');
+        console.log('%cGetting current position for polyline...', 'color: Lime');
         $scope.polyLatLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-        console.log('polyLatLng coords: ' + $scope.polyLatLng);
+        console.log('%cpolyLatLng coords: ' + $scope.polyLatLng, 'color: Lime');
 
       });
-      console.log('Interval mark, refreshing coords');
+      console.log('%cInterval mark, refreshing coords', 'color: Lime');
     }
 
     var polyDrawer;
     $scope.runPolyline = function(){
-      console.log('runPolyline function activated');
+      console.log('%crunPolyline function activated', 'color: Lime');
 
       $scope.polyCoords = [];
-      console.log('empty poly coords array initialized');
+      console.log('%cempty poly coords array initialized', 'color: Lime');
       // var drawerTestCoords = {lat: 38.9042049, lng: -77.0473209};
       // $scope.polyCoords.push(drawerTestCoords);
       polyDrawer = $interval(function(){
-        console.log('polyLatLng : ' + $scope.polyLatLng);
+        console.log('%cpolyLatLng : ' + $scope.polyLatLng, 'color: Lime');
 
         $scope.getCurrentCoords();
-        console.log('getCurrentCoords called from inside interval in polyDrawer');
+        console.log('%cgetCurrentCoords called from inside interval in polyDrawer', 'color: Lime');
 
 
         $scope.polyCoords.push($scope.polyLatLng);
-        console.log('poly coords array:' + $scope.polyCoords);
+        console.log('%cpoly coords array:' + $scope.polyCoords, 'color: Lime');
 
         $scope.runPath = new google.maps.Polyline({
           path: $scope.polyCoords,
@@ -766,20 +777,20 @@ angular.module('starter.controllers', ['starter.appServices',
           strokeWeight: 2
         });
         $scope.runPath.setMap($scope.map);
-        console.log('runPath.setMap completed');
-        console.log('exiting Polyline at interval mark');
+        console.log('%crunPath.setMap completed', 'color: Lime');
+        console.log('%cexiting Polyline at interval mark', 'color: Lime');
       }, 3000);
 
     }
 
     $scope.pausePolylineDrawer = function(){
-      console.log('coordinate retrieval refresher paused');
+      console.log('%ccoordinate retrieval refresher paused', 'color: Lime');
       $interval.cancel(polyDrawer);
       polyDrawer = undefined;
     }
 
     $scope.resumePolylineDrawer = function(){
-      console.log('resumePolylineDrawer function activated');
+      console.log('%cresumePolylineDrawer function activated', 'color: Lime');
       $scope.runPolyline();
     }
 
@@ -788,21 +799,21 @@ angular.module('starter.controllers', ['starter.appServices',
     var startTimer;
     $scope.startTimer = function(){
       startTimer = $interval(function(){
-        console.log('start timer function activated');
+        console.log('%cstart timer function activated', 'color: RoyalBlue');
         if($scope.seconds < 60) {
-          console.log('seconds checked, incremented');
+          console.log('%cseconds checked, incremented', 'color: RoyalBlue');
           $scope.seconds++;
-          console.log('seconds: ' + $scope.seconds);
+          console.log('%cseconds: ' + $scope.seconds, 'color: RoyalBlue');
           if ($scope.seconds > 59) {
-            console.log('seconds reached 60, reset to 0');
+            console.log('%cseconds reached 60, reset to 0', 'color: RoyalBlue');
             $scope.seconds = 0;
-            console.log('seconds: ' + $scope.seconds);
+            console.log('%cseconds: ' + $scope.seconds, 'color: RoyalBlue');
             $scope.minutes++;
-            console.log('minutes: ' + $scope.minutes);
+            console.log('%cminutes: ' + $scope.minutes, 'color: RoyalBlue');
             console.log('minutes incremented');
           }
         }
-        console.log('Timer Interval mark');
+        console.log('%cTimer Interval mark', 'color: RoyalBlue');
       }, 1000);
     }
 
@@ -812,12 +823,12 @@ angular.module('starter.controllers', ['starter.appServices',
     }
 
     $scope.resumeTimer = function(){
-      console.log('resume timer function activated');
+      console.log('%cresume timer function activated', 'color: RoyalBlue');
       $scope.startTimer();
     }
 
     $scope.stopTimer = function(){
-      console.log('stop timer function activated');
+      console.log('%cstop timer function activated', 'color: RoyalBlue');
       $interval.cancel(startTimer);
       startTimer = undefined;
       $scope.minutes = 0;
@@ -827,7 +838,7 @@ angular.module('starter.controllers', ['starter.appServices',
     //pace functions
     var paceInitializer;
     $scope.paceCalculator = function(){
-      console.log('pace calculator called');
+      console.log('%cpace calculator called', 'color: Gold');
 
       //check by hard coding distance
 
@@ -839,7 +850,7 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.distance;
 
 
-      console.log('pace calculator seconds time check- minutes: ' + $scope.minutes + ';  seconds: ' + $scope.seconds);
+      console.log('%cPace calculator seconds time check- minutes: ' + $scope.minutes + ';  seconds: ' + $scope.seconds, 'color: Gold');
 
 
 
@@ -847,22 +858,22 @@ angular.module('starter.controllers', ['starter.appServices',
 
         var toSeconds = $scope.minutes * 60;
         var time = $scope.seconds + toSeconds;
-        console.log('Time in seconds: ' + time);
+        console.log('%cTime in seconds: ' + time, 'color: Gold');
 
         var distanceInMiles = $scope.distance * milesPerMeter;
-        console.log('Distance in miles: ' + distanceInMiles);
+        console.log('%cDistance in miles: ' + distanceInMiles, 'color: Gold');
 
         milesPerSecond = 10 / time;
-        console.log('miles per second: ' + milesPerSecond);
+        console.log('%cMiles per second: ' + milesPerSecond, 'color: Gold');
 
         $scope.pace = milesPerSecond * 60;
-        console.log('Miles per minute (Pace): ' + $scope.pace);
+        console.log('%cMiles per minute (Pace): ' + $scope.pace, 'color: Gold');
 
       }, 2100);
     }
 
     $scope.stopPaceCalculator = function(){
-      console.log('Stopping pace calculator... ');
+      console.log('%cStopping pace calculator... ', 'color: Gold');
       $interval.cancel(paceInitializer);
       paceInitializer = undefined;
     }
@@ -871,21 +882,21 @@ angular.module('starter.controllers', ['starter.appServices',
     var startLapTimer;
     $scope.startLapTimer = function(){
       startLapTimer = $interval(function(){
-        console.log('lap timer started');
+        console.log('%cLap timer started', 'color: Blue');
         if($scope.lapSeconds < 60) {
-          console.log('lap seconds checked, incrementd');
+          console.log('%cLap seconds checked, incremented', 'color: Blue');
           $scope.lapSeconds++;
-          console.log('lap seconds: ' + $scope.lapSeconds);
+          console.log('%cLap seconds: ' + $scope.lapSeconds, 'color: Blue');
           if ($scope.lapSeconds > 59) {
-            console.log('lap seconds reached 60, reset to 0');
+            console.log('%cLap seconds reached 60, reset to 0', 'color: Blue');
             $scope.lapSeconds = 0;
-            console.log('lap seconds: ' + $scope.lapSeconds);
+            console.log('%cLap seconds: ' + $scope.lapSeconds, 'color: Blue');
             $scope.lapMinutes++;
-            console.log('lap minutes: ' + $scope.lapMinutes);
-            console.log('lap minutes incremented');
+            console.log('%cLap minutes: ' + $scope.lapMinutes, 'color: Blue');
+            console.log('%cLap minutes incremented', 'color: Blue');
           }
         }
-        console.log('Lap Timer interval mark');
+        console.log('%cLap Timer interval mark', 'color: Blue');
       }, 2000);
     }
 
@@ -895,12 +906,12 @@ angular.module('starter.controllers', ['starter.appServices',
     }
 
     $scope.resumeLapTimer = function(){
-      console.log('Lap timer resumed');
+      console.log('%cLap timer resumed', 'color: Blue');
       $scope.startLapTimer();
     }
 
     $scope.stopLapTimer = function(){
-      console.log('lap timer stopped');
+      console.log('%cLap timer stopped', 'color: Blue');
       $interval.cancel(startLapTimer);
       startLapTimer = undefined;
       $scope.lapSeconds = 0;
@@ -912,27 +923,27 @@ angular.module('starter.controllers', ['starter.appServices',
 
     var lapDistanceInitializer;
     $scope.getLapDistance = function(){
-      console.log('lap distance function activated');
+      console.log('%cLap distance function activated', 'color: MediumPurple');
 
       $scope.lapCoords = [];
-      console.log('empty lap coords array initialized: ' + $scope.lapCoords);
+      console.log('%cEmpty lap coords array initialized: ' + $scope.lapCoords, 'color: MediumPurple');
 
       lapDistanceInitializer = $interval(function(){
         $scope.getCurrentCoords();
-        console.log('get current coords called from lap distance');
+        console.log('%cGet current coords called from lap distance', 'color: MediumPurple');
 
         $scope.lapCoords.push($scope.polyLatLng);
-        console.log('lap coords array' + $scope.lapCoords);
+        console.log('%cLap coords array' + $scope.lapCoords, 'color: MediumPurple');
 
         $scope.lapDistance = google.maps.geometry.spherical.computeLength({
           path: $scope.lapCoords
         });
-        console.log('lap distance: ' + $scope.lapDistance);
+        console.log('%cLap distance: ' + $scope.lapDistance, 'color: MediumPurple');
       }, 2000);
     }
 
     $scope.stopLapDistance = function(){
-      console.log('stopping lap distance...');
+      console.log('%cStopping lap distance...', 'color: MediumPurple');
       $interval.cancel(lapDistanceInitializer);
       lapDistanceInitializer = undefined;
     }
@@ -942,13 +953,13 @@ angular.module('starter.controllers', ['starter.appServices',
       //pace functions for everything
       //log lap values
 
-      console.log('lapNumber: ' + $scope.lapNumber);
-      console.log('lap Seconds: ' + $scope.lapSeconds);
-      console.log('lap minutes: ' + $scope.lapMinutes);
-      console.log('lap distance: ' + $scope.lapDistance);
+      console.log('%cLap Number: ' + $scope.lapNumber, 'color: Aqua');
+      console.log('%cLap Seconds: ' + $scope.lapSeconds, 'color: Aqua');
+      console.log('%cLap minutes: ' + $scope.lapMinutes, 'color: Aqua');
+      console.log('%cLap distance: ' + $scope.lapDistance, 'color: Aqua');
 
       $scope.laps.push({lapNumber: $scope.lapNumber, seconds: $scope.lapSeconds, minutes: $scope.lapMinutes, distance: $scope.lapDistance});
-      console.log('laps array: ' + $scope.laps);
+      console.log('%cLaps array: ' + $scope.laps, 'color: Aqua');
 
       $scope.stopLapTimer();
       $scope.stopLapDistance();
@@ -985,14 +996,14 @@ angular.module('starter.controllers', ['starter.appServices',
     };
 
     $scope.startRun  = function(){
-      console.log('Start run function started ');
+      console.log('%cStarting run...', 'color: HotPink');
 
 
       // console.log("Attempting to remove dropdown info");
       // $scope.removeWelcomeUI();
 
 
-      console.log("Attempting to remove start button...");
+      console.log("%cAttempting to remove start button...", 'color: HotPink');
       $scope.removeStartUI();
 
 
@@ -1034,12 +1045,12 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.getCurrentCoords();
 
       $scope.runPolyline();
-      console.log('runPolyline called');
+      console.log('%crunPolyline called', 'color: Lime');
 
       $scope.lap();
 
       $scope.coordsArrayUpdater();
-      console.log('getDistance called');
+      console.log('%cgetDistance called', 'color: Purple');
 
       $scope.pace = 0;
       $scope.paceCalculator();
@@ -1080,7 +1091,7 @@ angular.module('starter.controllers', ['starter.appServices',
       //add lap and pause back in, resume counters.
       $scope.addLap();
       $scope.addPause();
-      console.log('$scope.resumeTimer() called');
+      console.log('%c$scope.resumeTimer() called', 'color: RoyalBlue');
       $scope.resumeTimer();
       $scope.resumePolylineDrawer();
       $scope.resumeLapTimer();
@@ -1092,7 +1103,7 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.stopRun = function(){
       $scope.removeResume();
       $scope.removeStop();
-      console.log('$scope.stopTimer() called');
+      console.log('%c$scope.stopTimer() called', 'color: RoyalBlue');
       $scope.stopTimer();
       $scope.stopLapTimer();
       $scope.stopCoordsArrayUpdater();
@@ -1107,7 +1118,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
 
     $scope.centerOnMe = function(){
-      console.log("Centering");
+      console.log("%cCentering", 'color: Green');
       if(!$scope.map){
         return;
       }
