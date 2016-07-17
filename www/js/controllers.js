@@ -740,16 +740,19 @@ angular.module('starter.controllers', ['starter.appServices',
     }
 
     //polyline functions
-    $scope.getCurrentCoords = function(){
-      console.log('%cgetCurrentCoords function activated', 'color: Lime');
+    $scope.userCoords = function(){
+      console.log('%c userCoords function activated', 'color: Purple');
 
       navigator.geolocation.getCurrentPosition(function(pos){
-        console.log('%cGetting current position for polyline...', 'color: Lime');
-        $scope.polyLatLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-        console.log('%cpolyLatLng coords: ' + $scope.polyLatLng, 'color: Lime');
+        console.log('%cGetting current position for user coords...', 'color: Purple');
+        $scope.myLatLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+        console.log('%c user coords: ' + $scope.userCoords, 'color: Purple');
 
       });
-      console.log('%cInterval mark, refreshing coords', 'color: Lime');
+      $scope.getUserCoords = function(){
+        return $scope.myLatLng;
+      }
+      console.log('%c user Coords Interval mark, refreshing coords', 'color: Purple');
     }
 
     var polyDrawer;
@@ -763,9 +766,11 @@ angular.module('starter.controllers', ['starter.appServices',
       polyDrawer = $interval(function(){
         console.log('%cpolyLatLng : ' + $scope.polyLatLng, 'color: Lime');
 
-        $scope.getCurrentCoords();
-        console.log('%cgetCurrentCoords called from inside interval in polyDrawer', 'color: Lime');
+        $scope.userCoords();
+        console.log('%c userCoords called from inside interval in polyDrawer', 'color: Lime');
 
+        var currentCoords = $scope.getUserCoords();
+        console.log('%c current coords: ' + currentCoords, 'color: Lime');
 
         $scope.polyCoords.push($scope.polyLatLng);
         console.log('%cpoly coords array:' + $scope.polyCoords, 'color: Lime');
