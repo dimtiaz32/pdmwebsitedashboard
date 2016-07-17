@@ -676,9 +676,8 @@ angular.module('starter.controllers', ['starter.appServices',
     }
 
     //run functions
-
-    //not really an array updater, more of a distance checker
     var coordinateArrayUpdater;
+    //not really an array updater, more of a distance checker
     $scope.coordsArrayUpdater = function(){
       // console.log('getCoords array function activated');
 
@@ -785,7 +784,6 @@ angular.module('starter.controllers', ['starter.appServices',
     }
 
 
-
     //timer functions
     var startTimer;
     $scope.startTimer = function(){
@@ -826,6 +824,48 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.seconds = 0;
     }
 
+    //pace functions
+    var paceInitializer;
+    $scope.paceCalculator = function(){
+      console.log('pace calculator called');
+
+      //check by hard coding distance
+
+      //var metersPerMile = 1609.34;
+      var milesPerMeter = 0.000621371;
+
+      $scope.minutes;
+      $scope.seconds;
+      $scope.distance;
+
+
+      console.log('pace calculator seconds time check- minutes: ' + $scope.minutes + ';  seconds: ' + $scope.seconds);
+
+
+
+      paceInitializer = $interval(function(){
+
+        var toSeconds = $scope.minutes * 60;
+        var time = $scope.seconds + toSeconds;
+        console.log('Time in seconds: ' + time);
+
+        var distanceInMiles = $scope.distance * milesPerMeter;
+        console.log('Distance in miles: ' + distanceInMiles);
+
+        milesPerSecond = 10 / time;
+        console.log('miles per second: ' + milesPerSecond);
+
+        $scope.pace = milesPerSecond * 60;
+        console.log('Miles per minute (Pace): ' + $scope.pace);
+
+      }, 2100);
+    }
+
+    $scope.stopPaceCalculator = function(){
+      console.log('Stopping pace calculator... ');
+      $interval.cancel(paceInitializer);
+      paceInitializer = undefined;
+    }
 
     //lap functions
     var startLapTimer;
@@ -868,6 +908,7 @@ angular.module('starter.controllers', ['starter.appServices',
     }
 
     $scope.laps = [];
+
 
     var lapDistanceInitializer;
     $scope.getLapDistance = function(){
@@ -917,17 +958,11 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.lapNumber++;
     };
 
-
-
-
-
     $scope.setStartingLatLng = function(){
       console.log('setting start coords');
       $scope.startLatLng = $scope.getCurrentCoords();
       console.log('starting coordinates are: ' + $scope.startLatLng);
     }
-
-
 
 
     //map states
@@ -986,11 +1021,13 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.run = function(){
 
       $scope.format = 'mm:ss';
-      // $scope.minutes = 0;
-      // $scope.seconds = 0;
-      // $scope.lapMinutes = 0;
-      // $scope.lapSeconds = 0;
       $scope.lapNumber = 0;
+      $scope.minutes;
+      $scope.seconds;
+      $scope.distance;
+
+
+
       $scope.startTimer();
       $scope.startLapTimer();
 
@@ -1003,6 +1040,9 @@ angular.module('starter.controllers', ['starter.appServices',
 
       $scope.coordsArrayUpdater();
       console.log('getDistance called');
+
+      $scope.pace = 0;
+      $scope.paceCalculator();
     }
 
     $scope.pauseRun = function(){
@@ -1057,7 +1097,7 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.stopLapTimer();
       $scope.stopCoordsArrayUpdater();
       $scope.stopLapDistance();
-
+      $scope.stopPaceCalculator();
       var runSummaryButtonControlDiv = document.createElement('div');
       var runSummaryButtonControl = $scope.summaryButtonControl(runSummaryButtonControlDiv, $scope.map);
 
