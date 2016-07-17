@@ -14,101 +14,10 @@
   background-color: white;
 }
 
-/*p.head {*/
-  /*font-family: "HelveticaNeue-Light";*/
-  /*font-size: 1em;*/
-  /*font-weight: lighter;*/
-
-  /*text-align: left;*/
-
-  /*line-height: 1;*/
-/*}*/
-
-/*p.label {*/
-  /*text-align: center;*/
-  /*font-family: "HelveticaNeue-Light";*/
-  /*font-size: 2em;*/
-
-  /*line-height: 0.5;*/
-/*}*/
-
-/*p.detail-head {*/
-  /*text-align: center;*/
-  /*font-family: "HelveticaNeue-Light";*/
-  /*font-size: large;*/
-
-  /*line-height: 0.5;*/
-/*}*/
-
-/*span.units {*/
-  /*font-size: 0.5em;*/
-/*}*/
-
-/*span.head {*/
-  /*font-family: "HelveticaNeue-Light";*/
-  /*font-size: small;*/
-/*}*/
-
-/*button.button-large.button-lap {*/
-
-  /*position: absolute;*/
-  /*top: 65%;*/
-  /*left: 5%;*/
-  /*right: 5%;*/
-
-  /*width: 90%;*/
-
-  /*background-color: #00b9be;*/
-  /*color: white;*/
-
-  /*z-index: 10;*/
-/*}*/
-
-/*button.button-large.button-pause {*/
-  /*position: absolute;*/
-  /*top: 80%;*/
-  /*left: 5%;*/
-  /*right: 5%;*/
-
-  /*width: 90%;*/
-
-  /*background-color: white;*/
-  /*color: #00b9be;*/
-
-  /*z-index: 10;*/
-/*}*/
-
-/*button.button-large.button-pause-red{*/
-  /*position: absolute;*/
-  /*top: 80%;*/
-  /*left: 5%;*/
-  /*right: 5%;*/
-
-  /*width: 90%;*/
-
-  /*background-color: red;*/
-  /*color: white;*/
-
-  /*z-index: 10;*/
-/*}*/
-
-/*!*Overlay Stuff*!*/
-/*.overlay {*/
-  /*position: absolute;*/
-  /*top: 30%;*/
-
-  /*width: 100%;*/
-
-  /*background-color: white;*/
-
-  /*z-index: 10;*/
-/*}*/
-
-
 p.head {
   font-family: "HelveticaNeue-Light";
   font-size: 1em;
-  font-weight: thin;
+  font-weight: lighter;
 
   text-align: left;
 
@@ -128,7 +37,10 @@ p.detail-head {
   font-family: "HelveticaNeue-Light";
   font-size: large;
 
-  line-height: 0.5;
+  padding-bottom: 0;
+  padding-top: 5px;
+
+  /*line-height: 0.5;*/
 }
 
 span.units {
@@ -199,7 +111,8 @@ button.button-large.button-start {
 }
 
 hr {
-  width: 85%;
+  height: 1px;
+  background-color: black;
 }
 
 .verticalLine {
@@ -238,9 +151,12 @@ button.button-slide-down {
 }
 
 h2 {
+  /*Check to remove this later*/
   font-family: "HelveticaNeue-Light";
   font-size: x-large;
   text-align: center;
+
+  padding-top: 0;
 }
 
 .detail {
@@ -255,5 +171,12 @@ h2 {
   background-color: white;
 
   z-index: 10;
+}
+
+p.header {
+  font-family: "HelveticaNeue-Light";
+  font-size: x-large;
+  text-align: center;
+
 }
 
