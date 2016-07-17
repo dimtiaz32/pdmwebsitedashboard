@@ -160,7 +160,7 @@ angular.module('starter.controllers', ['starter.appServices',
       //MONEYRAISED: GREY
       //(L)TIMER: BLUE
       //(L)DISTANCE: MEDIUMPURPLE
-      //(L)PACE: PALEGOLDENROD
+      //(L)PACE: DarkGoldenRod
 
      $scope.isDetailDisplayed = false;
      $scope.isHistoryDetailDisplayed = true;
@@ -957,9 +957,11 @@ angular.module('starter.controllers', ['starter.appServices',
 
       $scope.stopLapTimer();
       $scope.stopLapDistance();
+      $scope.stopLapPaceCalculator();
 
       $scope.startLapTimer();
       $scope.getLapDistance();
+      $scope.lapPaceCalculator();
       $scope.lapNumber++;
     }
 
@@ -1010,6 +1012,44 @@ angular.module('starter.controllers', ['starter.appServices',
       console.log('%cStopping pace calculator... ', 'color: Gold');
       $interval.cancel(paceInitializer);
       paceInitializer = undefined;
+    }
+
+    var lapPaceInitializer;
+    $scope.lapPaceCalculator = function(){
+      console.log('%cLap Pace Calculator Called', 'color: DarkGoldenRod ');
+
+      //var metersPerMile = 1609.34;
+      var milesPerMeter = 0.000621371;
+
+      lapPaceInitializer = $interval(function(){
+        var lapPaceSeconds = $scope.lapSeconds;
+        console.log('%cLap Pace Seconds: ' + lapPaceSeconds, 'color: DarkGoldenRod ');
+        var lapPaceMinutes = $scope.lapMinutes;
+        console.log('%cLap Pace Minutes: ' + lapPaceMinutes, 'color: DarkGoldenRod ');
+        var lapPaceDistance = $scope.lapDistance;
+        console.log('%cLap Pace Distance: ' + lapPaceDistance, 'color: DarkGoldenRod ');
+
+
+        var toSeconds = lapPaceMinutes * 60;
+        var time = lapPaceSeconds + toSeconds;
+        console.log('%cLapTime in seconds: ' + time, 'color: DarkGoldenRod ');
+
+        var distanceInMiles = lapPaceDistance * milesPerMeter;
+        console.log('%cDistance in miles: ' + distanceInMiles, 'color: DarkGoldenRod ');
+
+        milesPerSecond = 10 / time;
+        console.log('%cMiles per second: ' + milesPerSecond, 'color: DarkGoldenRod ');
+
+        $scope.lapPace = milesPerSecond * 60;
+        console.log('%cMiles per minute (Pace): ' + $scope.lapPace, 'color: DarkGoldenRod ');
+
+      }, 2100);
+    }
+    $scope.stopLapPaceCalculator = function(){
+      console.log('%cStopping pace calculator... ', 'color: DarkGoldenRod ');
+      $interval.cancel(lapPaceInitializer);
+      lapPaceInitializer = undefined;
+      $scope.lapPace = 0;
     }
 
     //money raised calculator
@@ -1142,6 +1182,7 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.stopRunDistance();
       $scope.stopLapDistance();
       $scope.stopPaceCalculator();
+      $scope.stopLapPaceCalculator();
       var runSummaryButtonControlDiv = document.createElement('div');
       var runSummaryButtonControl = $scope.summaryButtonControl(runSummaryButtonControlDiv, $scope.map);
 
