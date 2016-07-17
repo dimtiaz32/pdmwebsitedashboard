@@ -770,9 +770,6 @@ angular.module('starter.controllers', ['starter.appServices',
           path: $scope.distanceCoords
         });
         console.log('%cDistance: ' +$scope.distance, 'color: Purple');
-
-
-        console.log('$scope.seconds: ' + $scope.seconds);
         console.log('%cExiting runDistance at interval', 'color: Purple');
       }, 2000);
     }
@@ -983,17 +980,21 @@ angular.module('starter.controllers', ['starter.appServices',
       //var metersPerMile = 1609.34;
       var milesPerMeter = 0.000621371;
 
-      console.log('%cPace calculator seconds time check- minutes: ' + $scope.minutes + ';  seconds: ' + $scope.seconds, 'color: Gold');
-
-
+      //console.log('%cPace calculator seconds time check- minutes: ' + $scope.minutes + ';  seconds: ' + $scope.seconds, 'color: Gold');
 
       paceInitializer = $interval(function(){
+        var paceSeconds = $scope.seconds;
+        console.log('%cPace Seconds: ' + paceSeconds, 'color:Gold');
+        var paceMinutes = $scope.minutes;
+        console.log('%cPace Minutes: ' + paceMinutes, 'color:Gold');
+        var paceDistance = $scope.distance;
+        console.log('%cPace Distance: ' + paceDistance, 'color:Gold');
 
-        var toSeconds = $scope.minutes * 60;
-        var time = $scope.seconds + toSeconds;
+        var toSeconds = paceMinutes * 60;
+        var time = paceSeconds + toSeconds;
         console.log('%cTime in seconds: ' + time, 'color: Gold');
 
-        var distanceInMiles = $scope.distance * milesPerMeter;
+        var distanceInMiles = paceDistance * milesPerMeter;
         console.log('%cDistance in miles: ' + distanceInMiles, 'color: Gold');
 
         milesPerSecond = 10 / time;
@@ -1070,6 +1071,7 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.run = function(){
       //$scope.stopTimer() destroys timer. nothing registers if not destroyed
       $scope.stopTimer();
+      $scope.stopPaceCalculator();
       $scope.userCoords();
 
 
@@ -1083,7 +1085,7 @@ angular.module('starter.controllers', ['starter.appServices',
       console.log('%crunDistance called', 'color: Purple');
 
 
-      // $scope.paceCalculator();
+      $scope.paceCalculator();
 
     }
 
