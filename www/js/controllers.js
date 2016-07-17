@@ -741,18 +741,17 @@ angular.module('starter.controllers', ['starter.appServices',
 
     //polyline functions
     $scope.userCoords = function(){
-      console.log('%c userCoords function activated', 'color: Purple');
+      console.log('%cuserCoords function activated', 'color: Purple');
 
       navigator.geolocation.getCurrentPosition(function(pos){
         console.log('%cGetting current position for user coords...', 'color: Purple');
         $scope.myLatLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-        console.log('%c user coords: ' + $scope.userCoords, 'color: Purple');
+        console.log('%cuser coords: ' + $scope.myLatLng, 'color: Purple');
 
       });
-      $scope.getUserCoords = function(){
-        return $scope.myLatLng;
-      }
-      console.log('%c user Coords Interval mark, refreshing coords', 'color: Purple');
+      return $scope.myLatLng;
+      console.log('%cReturning myLatLng from userCoords: ' + $scope.myLatLng, 'color: Purple');
+      console.log('%cuser Coords Interval mark, refreshing coords', 'color: Purple');
     }
 
     var polyDrawer;
@@ -764,15 +763,14 @@ angular.module('starter.controllers', ['starter.appServices',
       // var drawerTestCoords = {lat: 38.9042049, lng: -77.0473209};
       // $scope.polyCoords.push(drawerTestCoords);
       polyDrawer = $interval(function(){
-        console.log('%cpolyLatLng : ' + $scope.polyLatLng, 'color: Lime');
 
-        $scope.userCoords();
+        var currentCoords = $scope.userCoords();
         console.log('%c userCoords called from inside interval in polyDrawer', 'color: Lime');
 
-        var currentCoords = $scope.getUserCoords();
-        console.log('%c current coords: ' + currentCoords, 'color: Lime');
+        // var currentCoords = $scope.getUserCoords();
+        // console.log('%c current coords: ' + currentCoords, 'color: Lime');
 
-        $scope.polyCoords.push($scope.polyLatLng);
+        $scope.polyCoords.push(currentCoords);
         console.log('%cpoly coords array:' + $scope.polyCoords, 'color: Lime');
 
         $scope.runPath = new google.maps.Polyline({
@@ -891,11 +889,13 @@ angular.module('starter.controllers', ['starter.appServices',
       console.log('%cEmpty lap coords array initialized: ' + $scope.lapCoords, 'color: MediumPurple');
 
       lapDistanceInitializer = $interval(function(){
-        $scope.getCurrentCoords();
+        $scope.userCoords();
         console.log('%cGet current coords called from lap distance', 'color: MediumPurple');
 
-        $scope.lapCoords.push($scope.polyLatLng);
-        console.log('%cLap coords array' + $scope.lapCoords, 'color: MediumPurple');
+        var currentCoords = $scope.userCoords();
+
+        $scope.lapCoords.push(currentCoords);
+        console.log('%cLap coords array' + currentCoords, 'color: MediumPurple');
 
         $scope.lapDistance = google.maps.geometry.spherical.computeLength({
           path: $scope.lapCoords
@@ -1050,12 +1050,12 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.seconds;
       $scope.distance;
 
-
+      $scope.userCoords();
 
       $scope.startTimer();
       $scope.startLapTimer();
 
-      $scope.getCurrentCoords();
+
 
       $scope.runPolyline();
       console.log('%crunPolyline called', 'color: Lime');
