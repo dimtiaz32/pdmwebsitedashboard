@@ -687,32 +687,32 @@ angular.module('starter.controllers', ['starter.appServices',
       });
     }
 
-    //run functions
-    var coordinateArrayUpdater;
-    //not really an array updater, more of a distance checker
-    $scope.coordsArrayUpdater = function(){
-      // console.log('getCoords array function activated');
-
-      $scope.routeCoords  = [];
-      // console.log('Empty route coords array initialized');
-
-      coordinateArrayUpdater = $interval(function(){
-        navigator.geolocation.getCurrentPosition(function(pos){
-          console.log('%cSetting my latLng in getCoordsArray', 'color: Purple');
-          $scope.myLatLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-          // console.log('myLatLng: ' + $scope.myLatLng)
-        });
-        console.log('%cmyLatLng update check: ' + $scope.myLatLng, 'color: Purple');
-        $scope.routeCoords.push($scope.myLatLng);
-
-        console.log('%crouteCoords array: ' +  $scope.routeCoords, 'color: Purple');
-        $scope.distance =  google.maps.geometry.spherical.computeLength({
-          path:  $scope.routeCoords
-        });
-        console.log('%cDistance: ' + $scope.distance, 'color: Purple');
-        console.log('%cExiting coordsArrayUpdater at interval', 'color: Purple');
-      }, 2000);
-    }
+    // //run functions
+    // var coordinateArrayUpdater;
+    // //not really an array updater, more of a distance checker
+    // $scope.coordsArrayUpdater = function(){
+    //   // console.log('getCoords array function activated');
+    //
+    //   $scope.routeCoords  = [];
+    //   // console.log('Empty route coords array initialized');
+    //
+    //   coordinateArrayUpdater = $interval(function(){
+    //     navigator.geolocation.getCurrentPosition(function(pos){
+    //       console.log('%cSetting my latLng in getCoordsArray', 'color: Purple');
+    //       $scope.myLatLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+    //       // console.log('myLatLng: ' + $scope.myLatLng)
+    //     });
+    //     console.log('%cmyLatLng update check: ' + $scope.myLatLng, 'color: Purple');
+    //     $scope.routeCoords.push($scope.myLatLng);
+    //
+    //     console.log('%crouteCoords array: ' +  $scope.routeCoords, 'color: Purple');
+    //     $scope.distance =  google.maps.geometry.spherical.computeLength({
+    //       path:  $scope.routeCoords
+    //     });
+    //     console.log('%cDistance: ' + $scope.distance, 'color: Purple');
+    //     console.log('%cExiting coordsArrayUpdater at interval', 'color: Purple');
+    //   }, 2000);
+    // }
 
     // doesnt really matter if the updater runs when paused- better than having it reset the coord array which this does
     // $scope.pauseCoordsArrayUpdater = function(){
@@ -727,17 +727,17 @@ angular.module('starter.controllers', ['starter.appServices',
     //   $scope.coordsArrayUpdater();
     // }
 
-    $scope.stopCoordsArrayUpdater = function(){
-      console.log('%cStopping coords array updater....', 'color: Purple');
-      $interval.cancel(coordinateArrayUpdater);
-      coordinateArrayUpdater = undefined;
-
-      //setting distance = 1 since is currently 0 as im not moving
-      $scope.distance = 1;
-      console.log('%cDistance reset: ' + $scope.distance, 'color: Purple');
-
-      $scope.routeCoords = [];
-    }
+    // $scope.stopCoordsArrayUpdater = function(){
+    //   console.log('%cStopping coords array updater....', 'color: Purple');
+    //   $interval.cancel(coordinateArrayUpdater);
+    //   coordinateArrayUpdater = undefined;
+    //
+    //   //setting distance = 1 since is currently 0 as im not moving
+    //   $scope.distance = 1;
+    //   console.log('%cDistance reset: ' + $scope.distance, 'color: Purple');
+    //
+    //   $scope.routeCoords = [];
+    // }
 
     //polyline functions
     $scope.userCoords = function(){
@@ -747,11 +747,46 @@ angular.module('starter.controllers', ['starter.appServices',
         console.log('%cGetting current position for user coords...', 'color: Purple');
         $scope.myLatLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
         console.log('%cuser coords: ' + $scope.myLatLng, 'color: Purple');
-
       });
       return $scope.myLatLng;
       console.log('%cReturning myLatLng from userCoords: ' + $scope.myLatLng, 'color: Purple');
       console.log('%cuser Coords Interval mark, refreshing coords', 'color: Purple');
+    }
+
+    //distance functions
+    var distanceInitializer;
+    $scope.runDistance = function(){
+        $scope.distanceCoords = [];
+        console.log('%cEmpty coorindate arry for distance function initialized' + $scope.distanceCoords, 'color: Purple');
+
+      distanceInitializer = $interval(function(){
+        var currentCoords = $scope.userCoords();
+        console.log('%cuser Coords called from within distance initializers: ' + currentCoords, 'color: Purple');
+
+        $scope.distanceCoords.push(currentCoords);
+        console.log('%cCurrent coords pushed to distance array. distanceCoords values: ' + $scope.distanceCoords, 'color: Purple');
+
+        $scope.distance = google.maps.geometry.spherical.computeLength({
+          path: $scope.distanceCoords
+        });
+        console.log('%cDistance: ' +$scope.distance, 'color: Purple');
+
+
+        console.log('$scope.seconds: ' + $scope.seconds);
+        console.log('%cExiting runDistance at interval', 'color: Purple');
+      }, 2000);
+    }
+
+    $scope.stopRunDistance = function(){
+      console.log('%cStopping runDistance ....', 'color: Purple');
+      $interval.cancel(distanceInitializer);
+      distanceInitializer = undefined;
+
+      //setting distance = 1 since is currently 0 as im not moving
+      $scope.distance = 1;
+      console.log('%cDistance reset: ' + $scope.distance, 'color: Purple');
+
+      $scope.distanceCoords = [];
     }
 
     var polyDrawer;
@@ -802,19 +837,19 @@ angular.module('starter.controllers', ['starter.appServices',
     var startTimer;
     $scope.startTimer = function(){
       startTimer = $interval(function(){
-        console.log('%cstart timer function activated', 'color: RoyalBlue');
+        console.log('%cTimer activated', 'color: RoyalBlue');
         if($scope.seconds < 60) {
           console.log('%cseconds checked, incremented', 'color: RoyalBlue');
           $scope.seconds++;
           console.log('%cseconds: ' + $scope.seconds, 'color: RoyalBlue');
-          if ($scope.seconds > 59) {
-            console.log('%cseconds reached 60, reset to 0', 'color: RoyalBlue');
-            $scope.seconds = 0;
-            console.log('%cseconds: ' + $scope.seconds, 'color: RoyalBlue');
-            $scope.minutes++;
-            console.log('%cminutes: ' + $scope.minutes, 'color: RoyalBlue');
-            console.log('minutes incremented');
-          }
+          console.log('%cminutes: ' + $scope.minutes, 'color: RoyalBlue');
+        } else  if ($scope.seconds > 59) {
+          console.log('%cseconds reached 60, reset to 0', 'color: RoyalBlue');
+          $scope.seconds = 0;
+          console.log('%cseconds: ' + $scope.seconds, 'color: RoyalBlue');
+          $scope.minutes++;
+          console.log('%cminutes: ' + $scope.minutes, 'color: RoyalBlue');
+          console.log('minutes incremented');
         }
         console.log('%cTimer Interval mark', 'color: RoyalBlue');
       }, 1000);
@@ -857,7 +892,7 @@ angular.module('starter.controllers', ['starter.appServices',
           }
         }
         console.log('%cLap Timer interval mark', 'color: Blue');
-      }, 2000);
+      }, 1000);
     }
 
     $scope.pauseLapTimer = function(){
@@ -929,7 +964,7 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.startLapTimer();
       $scope.getLapDistance();
       $scope.lapNumber++;
-    };
+    }
 
     $scope.setStartingLatLng = function(){
       console.log('setting start coords');
@@ -947,11 +982,6 @@ angular.module('starter.controllers', ['starter.appServices',
 
       //var metersPerMile = 1609.34;
       var milesPerMeter = 0.000621371;
-
-      $scope.minutes;
-      $scope.seconds;
-      $scope.distance;
-
 
       console.log('%cPace calculator seconds time check- minutes: ' + $scope.minutes + ';  seconds: ' + $scope.seconds, 'color: Gold');
 
@@ -1020,11 +1050,6 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.removeStartUI();
 
 
-
-
-
-
-
       var buttonControlDiv = document.createElement('div');
       var buttonControl = $scope.runButtonControl(buttonControlDiv, $scope.map);
 
@@ -1043,30 +1068,23 @@ angular.module('starter.controllers', ['starter.appServices',
     };
 
     $scope.run = function(){
-
-      $scope.format = 'mm:ss';
-      $scope.lapNumber = 0;
-      $scope.minutes;
-      $scope.seconds;
-      $scope.distance;
-
+      //$scope.stopTimer() destroys timer. nothing registers if not destroyed
+      $scope.stopTimer();
       $scope.userCoords();
-
-      $scope.startTimer();
-      $scope.startLapTimer();
-
 
 
       $scope.runPolyline();
       console.log('%crunPolyline called', 'color: Lime');
 
+      $scope.startTimer();
       $scope.lap();
 
-      $scope.coordsArrayUpdater();
-      console.log('%cgetDistance called', 'color: Purple');
+      $scope.runDistance();
+      console.log('%crunDistance called', 'color: Purple');
 
-      $scope.pace = 0;
-      $scope.paceCalculator();
+
+      // $scope.paceCalculator();
+
     }
 
     $scope.pauseRun = function(){
@@ -1119,7 +1137,7 @@ angular.module('starter.controllers', ['starter.appServices',
       console.log('%c$scope.stopTimer() called', 'color: RoyalBlue');
       $scope.stopTimer();
       $scope.stopLapTimer();
-      $scope.stopCoordsArrayUpdater();
+      $scope.stopRunDistance();
       $scope.stopLapDistance();
       $scope.stopPaceCalculator();
       var runSummaryButtonControlDiv = document.createElement('div');
