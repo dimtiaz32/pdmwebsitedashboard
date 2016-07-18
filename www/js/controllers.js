@@ -631,6 +631,9 @@ angular.module('starter.controllers', ['starter.appServices',
 
       startUI.addEventListener('click', function(){
         console.log('%cStart DreamRun button clicked', 'color: red');
+
+        $scope.toggleRun;
+
         if(!$scope.map){
           return;
         }
