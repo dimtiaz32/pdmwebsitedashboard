@@ -631,7 +631,7 @@ angular.module('starter.controllers', ['starter.appServices',
       startUI.addEventListener('click', function(){
 
         $scope.isRunning = !$scope.isRunning;
-        
+
         console.log('%cStart DreamRun button clicked', 'color: red');
 
 
