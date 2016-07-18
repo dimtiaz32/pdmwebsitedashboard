@@ -39,6 +39,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
           }
         }
       })
+
       .state('auth.signup', {
         url: '/signup',
         views: {
@@ -48,6 +49,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
           }
         }
       })
+
       .state('app', {
         url: '/app',
         abstract: true,
@@ -223,7 +225,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
         }
       });
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/app/run');
+    $urlRouterProvider.otherwise('/auth/signin');
 
     Stripe.setPublishableKey('pk_test_AcHwMgfwhswjYGUhawRw0her');
   });

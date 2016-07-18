@@ -71,9 +71,8 @@ angular.module('starter.controllers', ['starter.appServices',
         password: password,
         provider: 'local'
       }).success(function (data, status, headers, config){
-          //TODO: FIND OUT HOW TO SEPARATE THE TOKEN FROM THE RETURNED OBJECT AND SET AS TOKEN
-
           $rootScope.hide();
+          $rootScope.setEmail(email);
           $window.location.href  = ('#/app/charities');
         })
         .error(function(error){
@@ -115,6 +114,7 @@ angular.module('starter.controllers', ['starter.appServices',
         })
         .success(function(data, status, headers, config){
           $rootScope.hide();
+          $rootScope.setEmail(email);
           $window.location.href=('#/app/run');
         })
         .error(function(error){
@@ -1273,40 +1273,51 @@ angular.module('starter.controllers', ['starter.appServices',
 
   .controller('CharitiesCtrl', function($rootScope, $timeout, $ionicModal, $window, $scope, CharityAPI, AuthAPI){
 
+    // $rootScope.$on('fetchSelectedCharity', function(){
+    //   //TODO: FETCH, SERVER FOR USER SELECTED CHARITY, UI FOR ID PARAMS
+    //   CharityAPI.getSelectedCharity()
+    // });
+
     CharityAPI.getAll()
       .success(function(data, status, headers, config){
         $rootScope.show("Retrieving our list of charities...");
         console.log("API call getAll succeeded");
 
-        $scope.charityList = [];
+        $scope.charities = [];
 
         for(var i = 0; i < data.length; i++){
-          $scope.list.push(data[i]);
+          $scope.charities.push(data[i]);
         }
-        $scope.select = function(){
-          User.findCharity(
-            {id: userId},
-            {charityId: charityId})
-            .sucess(function(status, data, headers, config){
-              console.log('charity select- User.findCharity triggered successfull');
-              for (var i = 0; i < charityList.length; i++){
-                var check = charityList[i];
-                if(check.id == charityId){
-                  //function to set status to selected, moves charity info to dropdown.
-
-                }
-              }
-            });
-        };
 
         $rootScope.hide();
-
       })
       .error(function(err){
         $rootScope.hide();
         $rootScope.notify("Something went wrong retrieving the list of charities");
         console.log("Error retrieving charities");
       });
+
+    $scope.selectCharity = function(id){
+      console.log('attempting to update user\'s selected charity');
+
+
+      var email = $rootScope.getEmail();
+      console.log('email set as ' + email);
+      CharityAPI.selectCharity(id, email, $rootScope.getToken())
+        .success(function(data, status, headers, config){
+          console.log('inside select charityAPI success');
+          $rootScope.hide();
+
+          $window.location.href=('#/app/run');
+          console.log('charity API succeeded in selecting charity');
+        })
+        .error(function(err){
+          console.log(err);
+          console.log('inside select charityAPI failure');
+          $rootScope.hide();
+          $rootScope.notify('Error selecting charity');
+        });
+    }
   })
 
 

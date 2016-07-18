@@ -11,10 +11,13 @@
       <span class="input-label">Password</span>
       <input type="password" ng-model="user.password">
       </label>
-      <ion-label class="item item-input">
-        <button class="button button-block button-positive" ng-click="login()">
-          Sign in
-        </button>
-      </ion-label>
+
+      <button class="button button-block button-positive" ng-click="login()">
+        Sign in
+      </button>
+      <button class="button button-block button-positive" onclick="window.location.href = '#/auth/signup'">
+        Register
+      </button>
+
    </div>
 </ion-content>

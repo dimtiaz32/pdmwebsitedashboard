@@ -73,7 +73,7 @@ angular.module('starter.donationServices', ['ionic'])
         params: {
           token: token
         }
-      })
+      });
     }
   }
 });

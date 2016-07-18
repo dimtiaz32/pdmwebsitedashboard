@@ -1,19 +1,20 @@
 
 <ion-view view-title="Charities">
-  <head>
-    <link rel="stylesheet" type="text/css" href="../css/charities.css">
-  </head>
-  <ion-content class="has-header"> <!--on-refresh="onRefresh()"-->
+  <!--<head>-->
+    <!--<link rel="stylesheet" type="text/css" href="../css/charities.css">-->
+  <!--</head>-->
+  <ion-content> <!--on-refresh="onRefresh()"-->
       <!-- Option to add refresher to charities. Not sure its necessary-->
       <!--<ion-refresher on-refresh="doRefresh(1)"></ion-refresher>-->
     <ion-list>
-      <div ng-repeat="item in charityList">
-        <div class="item item-text-wrap">
-          <span>
-            {{item.charity}}
-          </span>
+      <div class="list" ng-repeat="charity in charities">
+        <div class="item item-text-wrap" ng-click="selectCharity('{{charity._id}}')">
+          <a class="item item-icon-left">
+            <span class="cell-vertical-center-text"> {{ charity.name }} </span>
+          </a>
         </div>
       </div>
+
     </ion-list>
 
 

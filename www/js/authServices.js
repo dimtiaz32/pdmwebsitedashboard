@@ -38,7 +38,13 @@ angular.module('starter.authServices', [])
     $window.localStorage.token = '';
   };
 
+  $rootScope.setEmail = function(email){
+   return  $window.localStorage.email = email;
+  };
 
+  $rootScope.getEmail = function(){
+    return $window.localStorage.email;
+  }
 
   // $rootScope.logout = function(){
   //   $rootScope.setToken("");
@@ -58,7 +64,7 @@ angular.module('starter.authServices', [])
       return $http.post(base+'authentication/signin', form);
     },
     signup: function(form){
-      return $http.post(base+'/authentication/signup', form);
+      return $http.post(base+'authentication/signup', form);
     },
     signout: function(){
       return $http.get(base+'/authentication/signout', {
