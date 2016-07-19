@@ -14,7 +14,7 @@
     <div class="overlay">
 
       <div class="detail" ng-show="!isRunning">
-        <p class="header" style="padding-top: 5px">Welcome, Jane Doe</p>
+        <p class="header" style="padding-top: 5px"> Welcome {{user.name}}</p>
         <hr>
         <p style="color: #00b9be" class="detail-head">Every mile raises $0.50 for</p>
         <p class="header">Teens Run DC</p>
@@ -37,12 +37,12 @@
         <div class="row">
           <div class="col col-50">
             <p class="head">Duration</p>
-            <p class="label">23:24<span class="units">min:sec</span></p>
+            <p class="label">{{minutes}}:{{seconds}}<span class="units">min:sec</span></p>
           </div>
           <div class="verticalLine"></div>
           <div class="col col-50">
             <p class="head">Distance</p>
-            <p class="label">2.86<span class="units">mi</span></p>
+            <p class="label">{{distance}}<span class="units">mi</span></p>
           </div>
         </div>
 
@@ -51,7 +51,7 @@
         <div class="row">
           <div class="col col-50">
             <p class="head">Pace</p>
-            <p class="label">8:11<span class="units">min/mi</span></p>
+            <p class="label">{{pace}}<span class="units">min/mi</span></p>
           </div>
           <div class="verticalLine"></div>
           <div class="col col-50">
@@ -65,13 +65,13 @@
           <hr>
           <div class="row">
             <div class="col col-50">
-              <p class="head">Lap 2 Duration</p>
-              <p class="label">2:45<span class="units">min:sec</span></p>
+              <p class="head">Lap {{lapNumber}} Duration</p>
+              <p class="label">{{lapMinutes}}:{{lapSeconds}}<span class="units">min:sec</span></p>
             </div>
             <div class="verticalLine"></div>
             <div class="col col-50">
-              <p class="head">Lap 2 Distance</p>
-              <p class="label">1.23<span class="units">mi</span></p>
+              <p class="head">Lap {{lapNumber}} Distance</p>
+              <p class="label">{{lapDistance}}<span class="units">mi</span></p>
             </div>
           </div>
         </div>
