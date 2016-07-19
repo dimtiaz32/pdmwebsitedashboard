@@ -137,9 +137,13 @@ angular.module('starter.controllers', ['starter.appServices',
           $rootScope.setName($scope.user.name);
           console.log('user name localStorage set to: ' + $rootScope.getName());
 
+          $scope.user.password = data.password;
+          console.log('$scope.user.password set as: ' + $scope.user.password);
+          $rootScope.setPassword($scope.user.password);
+
           $scope.user.email = data.email;
           console.log('$scope.user.email set to: ' + $scope.user.email);
-          $rootScope.setEmail(email);
+          $rootScope.setEmail($scope.user.email);
           console.log('Email set as: ' + $rootScope.getEmail());
 
           $scope.user.created = data.created;
@@ -1618,69 +1622,7 @@ angular.module('starter.controllers', ['starter.appServices',
       return type === $scope.active;
     };
   })
-  .controller('AccountCtrl', function($rootScope, AuthAPI, AccountAPI, $window, $scope) {
-    //refresh on page load?
-    //Profile Picture - edit
-    //Name- cannot edit
-    //Email -edit
-    //Password (hashed)
-    //DOB-cannot edit
 
-    //password should redirect to new page to enter old password/ could have dropdown?
-
-
-    $scope.account = {
-      firstName: "",
-      lastName: "",
-      pofilePicture: "",
-      email: "",
-      password: "",
-      dob: "",
-      created: "",
-      updated: Date.now
-    };
-
-
-    $scope.updateAccount = function () {
-      var name = this.account.firstName + ' ' + this.account.lastName;
-      var proPic = this.account.profilePicture;
-      var email = this.account.email;
-      var password = this.account.password;
-      var dob = this.account.dob;
-      var created = this.account.created;
-      var updated = this.account.updated;
-
-
-      //only checking for fields that can be changed
-      //profile picture can be deleted since it is not necessary
-
-      if (!email) {
-        $rootScope.show('Email field cannot be empty');
-        console.log('Email field was empty');
-      } else if (!password) {
-        $rootScope.show('Password field cannot be empty');
-        console.log('Password field was empty');
-      }
-
-      console.log('Email and password fields verified, attempting to save account changes...');
-      $rootScope.notify('Saving changes to your account');
-      AccountAPI.saveAccount({
-        email: email,
-        password: password
-      }).success(function (data, headers, config, status) {
-          $rootScope.hide();
-          $window.location.href = ('#/app/account');
-        })
-        .error(function (error) {
-          if (error.error && error.error.code == 11000) {
-            $rootScope.notify("This email is already in use");
-            console.log("could not register user: email already in use ");
-          } else {
-            $rootScope.notify("An error has occured. Please try again");
-          }
-        });
-    }
-  })
 
   .controller('MyPledgesCtrl', function($rootScope, $scope, $filter, DonationAPI) {
     // $scope.doRefresh = function() {
@@ -1796,7 +1738,82 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.amount = store.get('donor.amount');
   })
 
+  .controller('AccountCtrl', function($rootScope, AuthAPI, AccountAPI, $window, $scope) {
+    //refresh on page load?
+    //Profile Picture - edit
+    //Name- cannot edit
+    //Email -edit
+    //Password (hashed)
+    //DOB-cannot edit
 
+    //password should redirect to new page to enter old password/ could have dropdown?
+
+
+    $scope.user = {
+      email: "",
+      name: "",
+      password: "",
+      charity: {},
+      history: [],
+      provider: "",
+      past_donations_from: [],
+      past_donations_to: [],
+      donations_to: [],
+      donations_from: [],
+      past_charities: [],
+      created: Date,
+      updated: Date
+
+    };
+
+    $scope.user.name = $rootScope.getName();
+    console.log('user name set as: ' + $scope.user.name);
+    $scope.user.email = $rootScope.getEmail();
+    console.log('user email set as: '+ $scope.user.email);
+    $scope.user.password = $rootScope.getPassword();
+    console.log('user password set as: ' + $scope.user.password);
+
+    $scope.updateAccount = function () {
+      var name = this.account.firstName + ' ' + this.account.lastName;
+      var proPic = this.account.profilePicture;
+      var email = this.account.email;
+      var password = this.account.password;
+      var dob = this.account.dob;
+      var created = this.account.created;
+      var updated = this.account.updated;
+
+
+      //only checking for fields that can be changed
+      //profile picture can be deleted since it is not necessary
+
+
+      if (!email) {
+        $rootScope.show('Email field cannot be empty');
+        console.log('Email field was empty');
+      } else if (!password) {
+        $rootScope.show('Password field cannot be empty');
+        console.log('Password field was empty');
+      }
+
+      console.log('Email and password fields verified, attempting to save account changes...');
+      $rootScope.notify('Saving changes to your account');
+      AccountAPI.saveAccount({
+        email: email,
+        password: password
+      }).success(function (data, headers, config, status) {
+        $rootScope.hide();
+        $window.location.href = ('#/app/account');
+      })
+        .error(function (error) {
+          if (error.error && error.error.code == 11000) {
+            $rootScope.notify("This email is already in use");
+            console.log("could not register user: email already in use ");
+          } else {
+            $rootScope.notify("An error has occured. Please try again");
+          }
+        });
+    }
+  })
 
 
 

@@ -55,13 +55,18 @@ angular.module('starter.authServices', [])
     return $window.localStorage.name;
   };
 
-
+  $rootScope.setPassword = function(password){
+    return $window.localStorage.password = password;
+  };
+  $rootScope.getPassword = function(){
+    return $window.localStorage.password;
+  };
 
   $rootScope.setName = function(name){
     return $window.localStorage.name  = name;
   };
 
-  $rootScope.getName = function(name){
+  $rootScope.getName = function(){
     return $window.localStorage.name;
   };
 
