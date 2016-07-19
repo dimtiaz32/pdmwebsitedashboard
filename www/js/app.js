@@ -21,7 +21,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
       }
     });
   })
-
   .config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('auth', {
@@ -35,7 +34,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
         views: {
           'auth-signin':{
             templateUrl: 'templates/auth-signin.html',
-            controller: 'LoginCtrl'
+            controller: 'LoginCtrl',
           }
         }
       })
@@ -50,15 +49,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
         }
       })
 
-      .state('auth.forgotPassword', {
-        url:'/forgotPassword',
-        views: {
-          'auth-forgotPassword':{
-            controller: 'ForgotPasswordCtrl',
-            templateUrl: 'templates/auth-forgotPassword.html'
-          }
-        }
-      })
+
       .state('app', {
         url: '/app',
         abstract: true,

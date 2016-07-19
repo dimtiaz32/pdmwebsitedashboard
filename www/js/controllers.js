@@ -6,7 +6,7 @@ angular.module('starter.controllers', ['starter.appServices',
     'starter.accountServices',
     'starter.donationServices',
     'starter.userServices',
-    'starter.runServices','ionic','ngCordova'
+    'starter.runServices','ionic','ngCordova',
   ])
 
 
@@ -102,7 +102,7 @@ angular.module('starter.controllers', ['starter.appServices',
         });
     }
   })
-  .controller('LoginCtrl', function($scope, $rootScope, $timeout, AuthAPI, $window){
+  .controller('LoginCtrl', function($scope, $rootScope, $timeout, AuthAPI, $ionicPopup, $window){
 
     $scope.user = {
       email: "",
@@ -178,6 +178,34 @@ angular.module('starter.controllers', ['starter.appServices',
         });
     };
 
+    $scope.popup = {
+      email: ""
+    }
+
+    $scope.showForgotPassword = function(){
+      var forgotPassword = $ionicPopup.show({
+      template: '<input type="email" ng-model="popup.email">',
+        title: 'Enter Email for Password Reset',
+        //subTitle: 'Whatever you want',
+        scope: $scope,
+        buttons: [
+        { text: 'Cancel' },
+        {
+          text: '<b>submit</b>',
+          type: 'button-positive',
+          onTap: function(e) {
+            if (!$scope.popup.email) {
+              //don't allow the user to close unless he enters wifi password
+              e.preventDefault();
+            } else {
+              return $scope.popup.email;
+            }
+          }
+        }
+      ]
+      })
+    }
+
   })
 
   // .controller('SignOutCtrl', function($scope, $rootScope, $localStorage, $timeout, AuthAPI, $window){
@@ -204,6 +232,20 @@ angular.module('starter.controllers', ['starter.appServices',
 
   .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI, AuthAPI){
     //CONSOLE LOGGING COLORS:
+
+    //UI-INTERACTIONS: TEAL
+    //UI-CHANGES: GREEN
+    //RUN STATE CHANGE: HOTPINK
+    //TIMER:ROYALBLUE
+    //DISTANCE: PURPLE
+    //POLYLINE: LIME
+    //PACE: GOLD
+    //LAP: AQUA
+    //MONEYRAISED: GREY
+    //(L)TIMER: BLUE
+    //(L)DISTANCE: MEDIUMPURPLE
+    //(L)PACE: DarkGoldenRod
+
       //UI-INTERACTIONS: TEAL
       //UI-CHANGES: GREEN
       //RUN STATE CHANGE: HOTPINK
@@ -217,16 +259,17 @@ angular.module('starter.controllers', ['starter.appServices',
       //(L)DISTANCE: MEDIUMPURPLE
       //(L)PACE: DarkGoldenRod
 
+
     $scope.user =  {
       name: ""
     };
 
     $scope.user.name = $rootScope.getName();
 
-     $scope.isDetailDisplayed = false;
-     $scope.isHistoryDetailDisplayed = true;
-     $scope.isRunning = false;
-     $scope.isPaused = false;
+    $scope.isDetailDisplayed = false;
+    $scope.isHistoryDetailDisplayed = true;
+    $scope.isRunning = false;
+    $scope.isPaused = false;
 
      $scope.toggleRun = function() {
         $scope.isRunning = !$scope.isRunning;
@@ -719,8 +762,8 @@ angular.module('starter.controllers', ['starter.appServices',
     //distance functions
     var distanceInitializer;
     $scope.runDistance = function(){
-        $scope.distanceCoords = [];
-        console.log('%cEmpty coorindate arry for distance function initialized' + $scope.distanceCoords, 'color: Purple');
+      $scope.distanceCoords = [];
+      console.log('%cEmpty coorindate arry for distance function initialized' + $scope.distanceCoords, 'color: Purple');
 
       distanceInitializer = $interval(function(){
         var currentCoords = $scope.userCoords();
@@ -1370,6 +1413,8 @@ angular.module('starter.controllers', ['starter.appServices',
       console.log('charity: ' + $rootScope.getSelectedCharity());
       console.log('attempting to update user\'s selected charity');
 
+      console.log('attempting to update user\'s selected charity');
+
       CharityAPI.selectCharity({
        charity: charity},{
       email:email})
@@ -1717,6 +1762,7 @@ angular.module('starter.controllers', ['starter.appServices',
     //password should redirect to new page to enter old password/ could have dropdown?
 
 
+
     $scope.user = {
       email: "",
       name: "",
@@ -1769,9 +1815,11 @@ angular.module('starter.controllers', ['starter.appServices',
         email: email,
         password: password
       }).success(function (data, headers, config, status) {
+
         $rootScope.hide();
         $window.location.href = ('#/app/account');
       })
+
         .error(function (error) {
           if (error.error && error.error.code == 11000) {
             $rootScope.notify("This email is already in use");
@@ -1807,18 +1855,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
 
   })
-  .controller('ForgotPasswordCtrl', function($ionicModal, $rootScope, $scope, $window, $stateParams){
-    $ionicModal.fromTemplateUrl('templates/auth-forgotPassword.html', {
-      scope: $scope
-    }).then(function(modal){
-      $scope.modal = modal;
-    });
 
-    $scope.openModal = function($event){
-      console.log('Opening forgot password modal... ');
-      $scope.modal.show($event);
-    }
-  })
 
   .controller('HistoryCtrl', function($scope) {
 

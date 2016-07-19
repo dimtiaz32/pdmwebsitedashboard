@@ -1,31 +1,29 @@
 <ion-view view-title="Account Info">
   <ion-content scroll="false">
-    <div class="background background-image">
-      <div class="user user-image">
-      <img ng-src=""></div>
-      <div class="user user-name">
-        {{account.name}}
+    <div class="account background background-image">
+      <div class="account user user-image">
+        <img ng-src="../img/adam.jpg"></div>
+      <div class="account user user-name">
+        {{user.name}}
       </div>
     </div>
     <!-- Switch to onclick spans -->
     <div class="list">
       <label class="item item-input">
-      <span class="input-label"> Email </span>
-      <input type="email" ng-model="account.email" placeholder="{{user.email}}">
+        <span class="input-label"> Email </span>
+        <input type="email" ng-model="account.email" placeholder="{{user.email}}">
       </label>
       <label class="item item-input">
-      <span class="input-label">Password</span>
-      <input type="password" ng-model="account.password" placeholder="{{user.password}}">
+        <span class="input-label">Password</span>
+        <input type="password" ng-model="account.password" placeholder="{{user.password}}">
       </label>
       <label class="item item-input">
-      <span class="input-label">Date of Birth</span>
-      <input type="Date" ng-model="account.dob">
+        <span class="input-label">Date of Birth</span>
+        <input type="Date" ng-model="account.dob">
       </label>
     </div>
-    <ion-label class="item item-input">
-      <button class="button button-block button-positive" ng-click="logout()">
-        Logout
-      </button>
-    </ion-label>
+    <button class="account button button-full button-positive" ng-click="logout()">
+      Logout
+    </button>
   </ion-content>
 </ion-view>
