@@ -186,7 +186,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
   .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI, AuthAPI){
     //CONSOLE LOGGING COLORS:
-<<<<<<< HEAD
+
     //UI-INTERACTIONS: TEAL
     //UI-CHANGES: GREEN
     //RUN STATE CHANGE: HOTPINK
@@ -199,7 +199,7 @@ angular.module('starter.controllers', ['starter.appServices',
     //(L)TIMER: BLUE
     //(L)DISTANCE: MEDIUMPURPLE
     //(L)PACE: DarkGoldenRod
-=======
+
       //UI-INTERACTIONS: TEAL
       //UI-CHANGES: GREEN
       //RUN STATE CHANGE: HOTPINK
@@ -212,25 +212,11 @@ angular.module('starter.controllers', ['starter.appServices',
       //(L)TIMER: BLUE
       //(L)DISTANCE: MEDIUMPURPLE
       //(L)PACE: DarkGoldenRod
->>>>>>> a33ad4000990f4158dbeec3fddaf38678ae608e2
+
 
     $scope.user =  {
       name: ""
     };
-<<<<<<< HEAD
-=======
-
-    $scope.user.name = $rootScope.getName();
-
-     $scope.isDetailDisplayed = false;
-     $scope.isHistoryDetailDisplayed = true;
-     $scope.isRunning = false;
-     $scope.isPaused = false;
-
-     $scope.toggleRun = function() {
-        $scope.isRunning = !$scope.isRunning;
-     }
->>>>>>> a33ad4000990f4158dbeec3fddaf38678ae608e2
 
     $scope.user.name = $rootScope.getName();
 
@@ -1426,28 +1412,18 @@ angular.module('starter.controllers', ['starter.appServices',
         console.log("Error retrieving charities");
       });
 
-<<<<<<< HEAD
-=======
-
-    $scope.selectCharity = function(charity){
->>>>>>> a33ad4000990f4158dbeec3fddaf38678ae608e2
 
     $scope.selectCharity = function(charity){
 
 
       console.log('attempting to update user\'s selected charity');
 
-<<<<<<< HEAD
-      CharityAPI.selectCharity({
-          charity: charity,
-        }, {charity: $rootScope.getCharity()})
-=======
       console.log('attempting to update user\'s selected charity');
 
       CharityAPI.selectCharity({
         charity: charity,
       }, {charity: $rootScope.getCharity()})
->>>>>>> a33ad4000990f4158dbeec3fddaf38678ae608e2
+
         .success(function(data, status, headers, config){
 
           console.log('inside select charityAPI success');
@@ -1791,7 +1767,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
     //password should redirect to new page to enter old password/ could have dropdown?
 
-<<<<<<< HEAD
+
 
     $scope.user = {
       email: "",
@@ -1810,26 +1786,6 @@ angular.module('starter.controllers', ['starter.appServices',
 
     };
 
-=======
-
-    $scope.user = {
-      email: "",
-      name: "",
-      password: "",
-      charity: {},
-      history: [],
-      provider: "",
-      past_donations_from: [],
-      past_donations_to: [],
-      donations_to: [],
-      donations_from: [],
-      past_charities: [],
-      created: Date,
-      updated: Date
-
-    };
-
->>>>>>> a33ad4000990f4158dbeec3fddaf38678ae608e2
     $scope.user.name = $rootScope.getName();
     console.log('user name set as: ' + $scope.user.name);
     $scope.user.email = $rootScope.getEmail();
@@ -1865,12 +1821,11 @@ angular.module('starter.controllers', ['starter.appServices',
         email: email,
         password: password
       }).success(function (data, headers, config, status) {
-<<<<<<< HEAD
-=======
+
         $rootScope.hide();
         $window.location.href = ('#/app/account');
       })
->>>>>>> a33ad4000990f4158dbeec3fddaf38678ae608e2
+
         .error(function (error) {
           if (error.error && error.error.code == 11000) {
             $rootScope.notify("This email is already in use");

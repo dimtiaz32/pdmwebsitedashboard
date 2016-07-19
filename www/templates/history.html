@@ -1,6 +1,4 @@
-<script src="node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
-<script src="node_modules/chart.js/Chart.min.js"></script>
-<script src="node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
+
 <ion-content class="HistoryCtrl">
 
   <div class="month-slide-wrapper">
@@ -81,8 +79,8 @@
 
 
   <div class="card">
-    <canvas id="bar" class="chart chart-bar"
-            chart-data="{{data}}" chart-labels="{{labels}}" chart-series="{{series}}">
+    <canvas id="bar" length="400" width="400" class="chart chart-bar"
+            chart-data="data" chart-labels="labels" chart-series="series">
     </canvas>
 
   </div>
