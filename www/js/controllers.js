@@ -279,6 +279,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
       lapUI.addEventListener('click', function () {
         $scope.lap();
+        //$scope.lapNumber;
         console.log('%clap activated', 'color: Teal');
       });
 
@@ -1168,6 +1169,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
       $scope.startTimer();
       $scope.lap();
+      $scope.lapNumber = 1;
 
       $scope.runDistance();
       console.log('%crunDistance called', 'color: Purple');
@@ -1403,8 +1405,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
       CharityAPI.selectCharity({
         charity: charity,
-        email: $rootScope.getEmail()
-      })
+      }, {charity: $rootScope.getCharity()})
         .success(function(data, status, headers, config){
 
           console.log('inside select charityAPI success');
