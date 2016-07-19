@@ -4,6 +4,7 @@
   /*margin: auto;*/
   width: 100vw;
   height: 45vw;
+
 }
 
 .left-bubble-box {
@@ -112,7 +113,7 @@ button.button.left-button {
 
 /*Slide/Picker*/
 .month-slide {
-  background-image: url("../img/Tab Background.png");
+  /*background-image: url("../img/Tab Background.png");*/
   background: no-repeat;
   background-size: cover;
 
