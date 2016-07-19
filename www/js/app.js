@@ -50,6 +50,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
         }
       })
 
+      .state('auth.forgotPassword', {
+        url:'/forgotPassword',
+        views: {
+          'auth-forgotPassword':{
+            controller: 'ForgotPasswordCtrl',
+            templateUrl: 'templates/auth-forgotPassword.html'
+          }
+        }
+      })
       .state('app', {
         url: '/app',
         abstract: true,

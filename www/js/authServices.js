@@ -94,6 +94,15 @@ angular.module('starter.authServices', [])
     return $window.localStorage.created;
   };
 
+  $rootScope.setSelectedCharity = function(charity){
+    return $window.localStorage.selectedCharity = charity;
+  };
+
+  $rootScope.getSelectedCharity = function(){
+    return $window.localStorage.selectedCharity;
+  };
+
+
   // $rootScope.setCharity = function(charity){
   //   return $window.localStorage.selectedCharity = charity;
   // };

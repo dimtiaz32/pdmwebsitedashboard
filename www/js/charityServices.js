@@ -63,8 +63,8 @@ angular.module('starter.charityServices', ['ionic'])
       });
     },
     selectCharity: function(charity, email){
-      return $http.post(base+'user/selectedCharity', charity, {
-        method: 'POST',
+      return $http.put(base+'user/selectedCharity', charity, {
+        method: 'PUT',
         params: {
           email: email
         }
