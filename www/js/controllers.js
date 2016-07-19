@@ -6,7 +6,7 @@ angular.module('starter.controllers', ['starter.appServices',
     'starter.accountServices',
     'starter.donationServices',
     'starter.userServices',
-    'starter.runServices','ionic','ngCordova'
+    'starter.runServices','ionic','ngCordova',
   ])
 
 
@@ -186,6 +186,20 @@ angular.module('starter.controllers', ['starter.appServices',
 
   .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI, AuthAPI){
     //CONSOLE LOGGING COLORS:
+
+    //UI-INTERACTIONS: TEAL
+    //UI-CHANGES: GREEN
+    //RUN STATE CHANGE: HOTPINK
+    //TIMER:ROYALBLUE
+    //DISTANCE: PURPLE
+    //POLYLINE: LIME
+    //PACE: GOLD
+    //LAP: AQUA
+    //MONEYRAISED: GREY
+    //(L)TIMER: BLUE
+    //(L)DISTANCE: MEDIUMPURPLE
+    //(L)PACE: DarkGoldenRod
+
       //UI-INTERACTIONS: TEAL
       //UI-CHANGES: GREEN
       //RUN STATE CHANGE: HOTPINK
@@ -199,40 +213,41 @@ angular.module('starter.controllers', ['starter.appServices',
       //(L)DISTANCE: MEDIUMPURPLE
       //(L)PACE: DarkGoldenRod
 
+
     $scope.user =  {
       name: ""
     };
 
     $scope.user.name = $rootScope.getName();
 
-     $scope.isDetailDisplayed = false;
-     $scope.isHistoryDetailDisplayed = true;
-     $scope.isRunning = false;
-     $scope.isPaused = false;
+    $scope.isDetailDisplayed = false;
+    $scope.isHistoryDetailDisplayed = true;
+    $scope.isRunning = false;
+    $scope.isPaused = false;
 
-     $scope.toggleRun = function() {
-        $scope.isRunning = !$scope.isRunning;
-     }
+    $scope.toggleRun = function() {
+      $scope.isRunning = !$scope.isRunning;
+    }
 
-     $scope.lapBtnTapped = function() {
-       if ($scope.isPaused) {
-         resume();
-       } else {
-         lap();
-       }
-     }
+    $scope.lapBtnTapped = function() {
+      if ($scope.isPaused) {
+        resume();
+      } else {
+        lap();
+      }
+    }
 
-     $scope.pause = function() {
-       $scope.isPaused = true;
-     }
+    $scope.pause = function() {
+      $scope.isPaused = true;
+    }
 
-     function resume() {
-       $scope.isPaused = false;
-     }
+    function resume() {
+      $scope.isPaused = false;
+    }
 
-     function lap() {
-       console.log("lap");
-     }
+    function lap() {
+      console.log("lap");
+    }
 
 
     //DOM elements for google maps overlay
@@ -279,6 +294,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
       lapUI.addEventListener('click', function () {
         $scope.lap();
+        //$scope.lapNumber;
         console.log('%clap activated', 'color: Teal');
       });
 
@@ -804,8 +820,8 @@ angular.module('starter.controllers', ['starter.appServices',
     //distance functions
     var distanceInitializer;
     $scope.runDistance = function(){
-        $scope.distanceCoords = [];
-        console.log('%cEmpty coorindate arry for distance function initialized' + $scope.distanceCoords, 'color: Purple');
+      $scope.distanceCoords = [];
+      console.log('%cEmpty coorindate arry for distance function initialized' + $scope.distanceCoords, 'color: Purple');
 
       distanceInitializer = $interval(function(){
         var currentCoords = $scope.userCoords();
@@ -1168,6 +1184,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
       $scope.startTimer();
       $scope.lap();
+      $scope.lapNumber = 1;
 
       $scope.runDistance();
       console.log('%crunDistance called', 'color: Purple');
@@ -1401,10 +1418,12 @@ angular.module('starter.controllers', ['starter.appServices',
 
       console.log('attempting to update user\'s selected charity');
 
+      console.log('attempting to update user\'s selected charity');
+
       CharityAPI.selectCharity({
         charity: charity,
-        email: $rootScope.getEmail()
-      })
+      }, {charity: $rootScope.getCharity()})
+
         .success(function(data, status, headers, config){
 
           console.log('inside select charityAPI success');
@@ -1749,6 +1768,7 @@ angular.module('starter.controllers', ['starter.appServices',
     //password should redirect to new page to enter old password/ could have dropdown?
 
 
+
     $scope.user = {
       email: "",
       name: "",
@@ -1801,9 +1821,11 @@ angular.module('starter.controllers', ['starter.appServices',
         email: email,
         password: password
       }).success(function (data, headers, config, status) {
+
         $rootScope.hide();
         $window.location.href = ('#/app/account');
       })
+
         .error(function (error) {
           if (error.error && error.error.code == 11000) {
             $rootScope.notify("This email is already in use");
