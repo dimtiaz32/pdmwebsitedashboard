@@ -208,7 +208,6 @@ angular.module('starter.controllers', ['starter.appServices',
 
      $scope.toggleRun = function() {
         $scope.isRunning = !$scope.isRunning;
-        $scope.startRun();
      }
 
      $scope.lapBtnTapped = function() {
@@ -669,7 +668,13 @@ angular.module('starter.controllers', ['starter.appServices',
       }
 
       startUI.addEventListener('click', function(){
+
+        $scope.isRunning = !$scope.isRunning;
+
         console.log('%cStart DreamRun button clicked', 'color: red');
+
+
+
         if(!$scope.map){
           return;
         }
@@ -680,7 +685,7 @@ angular.module('starter.controllers', ['starter.appServices',
         });
 
         $rootScope.hide();
-        $scope.startRun(); //Doing this in the toggleRun() function in line 160
+        $scope.startRun();
 
       });
 
