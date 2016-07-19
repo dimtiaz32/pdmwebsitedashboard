@@ -5,7 +5,7 @@ angular.module('starter.controllers', ['starter.appServices',
     'starter.accountServices',
     'starter.accountServices',
     'starter.donationServices',
-    'starter.runServices','ionic','ngCordova'
+    'starter.runServices','ionic','ngCordova',
   ])
 
 
