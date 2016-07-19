@@ -38,13 +38,64 @@ angular.module('starter.authServices', [])
     $window.localStorage.token = '';
   };
 
+
   $rootScope.setEmail = function(email){
-   return  $window.localStorage.email = email;
+    return  $window.localStorage.email = email;
   };
 
   $rootScope.getEmail = function(){
     return $window.localStorage.email;
-  }
+  };
+
+  $rootScope.setName = function(firstName, lastName){
+    return $window.localStorage.name = firstName + ' ' + lastName;
+  };
+
+  $rootScope.getName = function(){
+    return $window.localStorage.name;
+  };
+
+
+
+  $rootScope.setName = function(name){
+    return $window.localStorage.name  = name;
+  };
+
+  $rootScope.getName = function(name){
+    return $window.localStorage.name;
+  };
+
+  $rootScope.setHistory = function(history){
+    return $window.localStorage.history = history;
+  };
+
+  $rootScope.getHistory  = function(){
+    return $window.localStorage.history;
+  };
+
+  $rootScope.setUpdatedAt = function(updatedAt){
+    return $window.localStorage.updatedAt = updatedAt;
+  };
+
+  $rootScope.getUpdatedAt = function() {
+    return $window.localStorage.updatedAt;
+  };
+
+  $rootScope.setCreatedAt = function(created){
+    return $window.localStorage.created = created;
+  };
+
+  $rootScope.getCreatedAt = function(){
+    return $window.localStorage.created;
+  };
+
+  // $rootScope.setCharity = function(charity){
+  //   return $window.localStorage.selectedCharity = charity;
+  // };
+  //
+  // $rootScope.getCharity = function(){
+  //   return $window.localStorage.charity;
+  // };
 
   // $rootScope.logout = function(){
   //   $rootScope.setToken("");
