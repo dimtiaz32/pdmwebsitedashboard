@@ -5,7 +5,7 @@ angular.module('starter.controllers', ['starter.appServices',
     'starter.accountServices',
     'starter.accountServices',
     'starter.donationServices',
-    'starter.runServices','ionic','ngCordova'
+    'starter.runServices','ionic','ngCordova','ngOpenFB'
   ])
 
 
@@ -87,7 +87,7 @@ angular.module('starter.controllers', ['starter.appServices',
     }
   })
 
-  .controller('LoginCtrl', function($scope, $rootScope, $timeout, AuthAPI, $window){
+  .controller('SigninCtrl', function($scope, $rootScope, $timeout, AuthAPI, $window, ngFB){
 
     $scope.user = {
       email: "",
@@ -121,6 +121,21 @@ angular.module('starter.controllers', ['starter.appServices',
           $rootScope.hide();
           $rootScope.notify("Invalid username or password");
         });
+    };
+
+    $scope.loginByFB = function() {
+
+        console.log("begin login by FB");
+        ngFB.login({scope:'email'}).then(function (response){
+            if (response.status == 'connected') {
+                console.log('facebook login success');
+                //$scope.closeLogin();
+            } else {
+                console.log('facebook login failed');
+            }
+        });
+        console.log("end login by FB");
+
     };
 
   })
@@ -1660,7 +1675,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
   })
 
-  .controller('InviteSponsorPaymentCtrl', function($rootScope, $scope, $http, store, API, $window){
+  .controller('InviteSponsorPaymentCtrl', function($rootScope, $scope, $http, store, DonationAPI, $window){
     $scope.user = {
       email: ""
     };
@@ -1675,7 +1690,7 @@ angular.module('starter.controllers', ['starter.appServices',
         console.log('token:' + response.error.message);
       } else {
         console.log("amount:" + store.get('donor.amount'));
-        API.createDonation({
+        DonationAPI.completeSponsor({
           firstName: store.get('user.firstname'),
           lastName: store.get('user.lastname'),
           email: email,

@@ -4,9 +4,12 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives', 'stripe'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives', 'stripe', 'ngOpenFB'])
 
-  .run(function($ionicPlatform) {
+  .run(function($ionicPlatform, ngFB) {
+
+    ngFB.init({appId: '1079958642070604'});
+
     $ionicPlatform.ready(function() {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
@@ -35,7 +38,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
         views: {
           'auth-signin':{
             templateUrl: 'templates/auth-signin.html',
-            controller: 'LoginCtrl'
+            controller: 'SigninCtrl'
           }
         }
       })
@@ -228,4 +231,5 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
     $urlRouterProvider.otherwise('/auth/signin');
 
     Stripe.setPublishableKey('pk_test_AcHwMgfwhswjYGUhawRw0her');
+
   });
