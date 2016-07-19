@@ -1,0 +1,37 @@
+.sign-in .logo-image {
+  display: block;
+  margin: auto auto 10% auto;
+  width: 20%;
+  height: auto;
+}
+
+.sign-in .logo-title {
+  color: #fff;
+  text-align: center;
+  font-size: 2em;
+  font-weight: 200;
+  margin-bottom: 10%;
+  padding: 0;
+
+}
+
+  .sign-in .logo-title span{
+    font-weight: 500;
+  }
+
+.sign-up.has-header {
+  background-color: #00b9be;
+  padding: 0;
+  padding-top: 10%;
+}
+
+  .sign-up.has-header button {
+    margin-top: 10%;
+    background-color: #01999d;
+    color: #fff;
+  }
+
+
+.sign-up .input-label {
+  color: #a1a1a1;
+}
