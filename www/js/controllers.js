@@ -6,8 +6,7 @@ angular.module('starter.controllers', ['starter.appServices',
     'starter.accountServices',
     'starter.donationServices',
     'starter.userServices',
-    'starter.runServices','ionic','ngCordova',
-  ])
+    'starter.runServices','ionic','ngCordova','ngOpenFB'])
 
 
 
@@ -102,7 +101,7 @@ angular.module('starter.controllers', ['starter.appServices',
         });
     }
   })
-  .controller('LoginCtrl', function($scope, $rootScope, $timeout, AuthAPI, $ionicPopup, $window){
+  .controller('SigninCtrl', function($scope, $rootScope, $timeout, AuthAPI, $ionicPopup, $window, ngFB){
 
     $scope.user = {
       email: "",
@@ -176,6 +175,32 @@ angular.module('starter.controllers', ['starter.appServices',
           $rootScope.hide();
           $rootScope.notify("Invalid username or password");
         });
+    };
+
+    $scope.loginByFB = function() {
+
+        console.log("begin login by FB");
+        ngFB.login({scope:'email'}).then(function (response){
+            if (response.status == 'connected') {
+
+                AuthAPI.signinByFB({
+                  access_token: response.authResponse.accessToken
+                }).success(function(data, status, headers, config){
+                  $rootScope.hide();
+                  $window.location.href=('#/app/run');
+                }).error(function(error){
+                  console.log("AuthAPI.signinByFB failed:" + error);
+                  $rootScope.hide();
+                  $rootScope.notify("Login with facebook failed")
+                });
+            } else if (response.status == 'not_authorized') {
+                console.log('facebook login not authorized')
+            } else {
+                console.log('facebook login failed');
+            }
+        });
+        console.log("end login by FB");
+
     };
 
     $scope.popup = {
@@ -1710,7 +1735,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
   })
 
-  .controller('InviteSponsorPaymentCtrl', function($rootScope, $scope, $http, store, API, $window){
+  .controller('InviteSponsorPaymentCtrl', function($rootScope, $scope, $http, store, DonationAPI, $window){
     $scope.user = {
       email: ""
     };
@@ -1725,7 +1750,7 @@ angular.module('starter.controllers', ['starter.appServices',
         console.log('token:' + response.error.message);
       } else {
         console.log("amount:" + store.get('donor.amount'));
-        API.createDonation({
+        DonationAPI.completeSponsor({
           firstName: store.get('user.firstname'),
           lastName: store.get('user.lastname'),
           email: email,
