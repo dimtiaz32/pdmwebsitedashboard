@@ -18,6 +18,14 @@
   text-align: center !important;
 }
 
+.side-menu.title {
+  font-weight: 300 !important;
+}
+
+  .side-menu.title span {
+    font-weight: 500 !important;
+  }
+
 .toggle input:checked + .track {
   border-color: #00b9be !important;
   background-color: #00b9be !important;
