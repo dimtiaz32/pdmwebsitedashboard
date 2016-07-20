@@ -4,6 +4,7 @@
   /*margin: auto;*/
   width: 100vw;
   height: 45vw;
+
 }
 
 .left-bubble-box {
@@ -14,7 +15,7 @@
   top: 10vw;
   left: 4vw;
 
-  background-image: url('../img/BackgroundCircleDark.png');
+  background-image: url("../img/BackgroundCircleDark.png");
   background-size: contain;
   background-repeat: no-repeat;
   /* padding-top: 33vw;*/
@@ -97,14 +98,14 @@ button {
 }
 
 button.button.right-button {
-  background-image: url("../img/right%20arrow.png");
+  background-image: url("../img/right arrow.png");
   background-position: center;
   background-color: white;
 
 }
 
 button.button.left-button {
-  background-image: url("../img/left%20arrow.png");
+  background-image: url("../img/left arrow.png");
   background-position: center;
   background-color: white;
 
@@ -112,7 +113,7 @@ button.button.left-button {
 
 /*Slide/Picker*/
 .month-slide {
-  /*background-image: url("Tab Background.png");*/
+  /*background-image: url("../img/Tab Background.png");*/
   background: no-repeat;
   background-size: cover;
 
@@ -131,10 +132,4 @@ ion-slide.slider-slide {
 
 .month-slide-wrapper {
   text-align: center;
-}
-
-/*Bar Chart*/
-canvas {
-  width: 100%;
-  height:100%;
 }

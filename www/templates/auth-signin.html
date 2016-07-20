@@ -1,27 +1,33 @@
 <ion-header-bar class="bar-positive">
-   <h1 class="title">Sign In</h1>
 </ion-header-bar>
-<ion-content class="has-header">
-   <div class="list">
-      <label class="item item-input">
-      <span class="input-label">Email</span>
+<ion-content class="sign-in has-header">
+  <div class="sign-in logo">
+    <img class="sign-in logo-image" src="../img/PDM logo.png">
+    <h1 class="sign-in logo-title">DREAM<span>RUN</span></h1>
+    <h2 class="sign-in logo-subtitle">by Project Dream Miles</h2>
+  </div>
+  <div class="sign-in list">
+    <label class="sign-in item item-input">
+      <span class="sign-in input-label">Email</span>
       <input type="text" ng-model="user.email">
-      </label>
-      <label class="item item-input">
-      <span class="input-label">Password</span>
+    </label>
+    <label class="sign-in item item-input">
+      <span class="sign-in input-label">Password</span>
       <input type="password" ng-model="user.password">
-      </label>
-
-      <button class="button button-block button-positive" ng-click="login()">
-        Sign in
-      </button>
-      <button class="button button-block button-positive" onclick="window.location.href = '#/auth/signup'">
-        Register
-      </button>
-      <label class="item">
-          <button class="button button-block button-positive" ng-click="loginByFB()">
-          Login with Facebook
-          </button>
-      </label>
-   </div>
+    </label>
+    <button class="sign-in login button button-full button-positive" ng-click="login()">
+      Sign in
+    </button>
+    <button class="sign-in register button button-full button-positive" onclick="window.location.href = '#/auth/signup'">
+      Create Account
+    </button>
+    <button class="sign-in forgot-password button button-full button-positive" ng-click="showForgotPassword()">
+      Forgot Password
+    </button>
+    <label class="item">
+        <button class="button button-block button-positive" ng-click="loginByFB()">
+        Login with Facebook
+        </button>
+    </label>
+  </div>
 </ion-content>

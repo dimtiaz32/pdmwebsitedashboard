@@ -3,7 +3,7 @@
  */
 angular.module('starter.runServices', ['ionic'])
 .factory('RunAPI', function($rootScope, $http, $ionicLoading, $window){
-  var base = "https://dreamrun.herokuapp.com";
+  var base = "http:localhost:5000/";
 
   $rootScope.show = function(text){
     $rootScope.loading = $ionicLoading.show({
@@ -26,8 +26,37 @@ angular.module('starter.runServices', ['ionic'])
     }, 1999);
   };
 
+  $rootScope.setRunDistance = function(distance){
+    return $window.localStorage.distance = distance;
+  };
+
+  $rootScope.getRunDistance = function(){
+    return $window.localStorage.distance;
+  };
+  $rootScope.setRunTime = function(time){
+    return $window.localStorage.time =  time;
+  };
+  $rootScope.getRunTime = function(){
+    return $window.localStorage.time;
+  }
+
+  $rootScope.setRunPace = function(pace){
+    return $window.localStorage.pace = pace;
+  };
+
+  $rootScope.getRunPace = function(){
+    return $window.localStorage.pace;
+  };
 
   return{
 
+    saveRun: function(runInfo){
+      return $http.post(base+'user/history', runInfo, {
+        method: 'POST',
+        params: {
+          email: email
+        }
+      });
+    }
   }
 });

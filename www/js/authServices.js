@@ -38,13 +38,78 @@ angular.module('starter.authServices', [])
     $window.localStorage.token = '';
   };
 
+
   $rootScope.setEmail = function(email){
-   return  $window.localStorage.email = email;
+    return  $window.localStorage.email = email;
   };
 
   $rootScope.getEmail = function(){
     return $window.localStorage.email;
-  }
+  };
+
+  $rootScope.setName = function(firstName, lastName){
+    return $window.localStorage.name = firstName + ' ' + lastName;
+  };
+
+  $rootScope.getName = function(){
+    return $window.localStorage.name;
+  };
+
+  $rootScope.setPassword = function(password){
+    return $window.localStorage.password = password;
+  };
+  $rootScope.getPassword = function(){
+    return $window.localStorage.password;
+  };
+
+  $rootScope.setName = function(name){
+    return $window.localStorage.name  = name;
+  };
+
+  $rootScope.getName = function(){
+    return $window.localStorage.name;
+  };
+
+  $rootScope.setHistory = function(history){
+    return $window.localStorage.history = history;
+  };
+
+  $rootScope.getHistory  = function(){
+    return $window.localStorage.history;
+  };
+
+  $rootScope.setUpdatedAt = function(updatedAt){
+    return $window.localStorage.updatedAt = updatedAt;
+  };
+
+  $rootScope.getUpdatedAt = function() {
+    return $window.localStorage.updatedAt;
+  };
+
+  $rootScope.setCreatedAt = function(created){
+    return $window.localStorage.created = created;
+  };
+
+  $rootScope.getCreatedAt = function(){
+    return $window.localStorage.created;
+  };
+
+  $rootScope.setSelectedCharity = function(charity){
+    return $window.localStorage.selectedCharity = charity;
+  };
+
+  $rootScope.getSelectedCharity = function(){
+    return $window.localStorage.selectedCharity;
+  };
+
+
+  // $rootScope.setCharity = function(charity){
+  //   return $window.localStorage.selectedCharity = charity;
+  // };
+  //
+  // $rootScope.getCharity = function(){
+  //   return $window.localStorage.charity;
+  // };
 
   // $rootScope.logout = function(){
   //   $rootScope.setToken("");
@@ -69,8 +134,10 @@ angular.module('starter.authServices', [])
     signout: function(){
       return $http.get(base+'/authentication/signout', {
         method: 'GET'
-
       });
+    },
+    signinByFB: function(form) {
+      return $http.post(base + 'authentication/facebook',form);
     }
   }
 });

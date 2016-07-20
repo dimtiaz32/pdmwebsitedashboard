@@ -24,7 +24,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
       }
     });
   })
-
   .config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('auth', {
@@ -52,6 +51,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
           }
         }
       })
+
 
       .state('app', {
         url: '/app',

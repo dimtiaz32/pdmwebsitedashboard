@@ -5,19 +5,29 @@ angular.module('starter.controllers', ['starter.appServices',
     'starter.accountServices',
     'starter.accountServices',
     'starter.donationServices',
-    'starter.runServices','ionic','ngCordova','ngOpenFB'
-  ])
+    'starter.userServices',
+    'starter.runServices','ionic','ngCordova','ngOpenFB'])
 
 
 
 
-  .controller('SignUpCtrl', function($scope, $rootScope, $ionicModal, $timeout, AuthAPI, $window){
+  .controller('SignUpCtrl', function($scope, $rootScope, $ionicModal, $timeout, AuthAPI, $window, UserAPI){
     $scope.user = {
       firstName: "",
       lastName: "",
       email: "",
-      password: ""
-    };
+      password: "",
+      charityId: undefined,
+      history: [],
+      provider: "",
+      past_donations_from: [],
+      past_donations_to: [],
+      donations_to: [],
+      donations_from: [],
+      past_charities: [],
+      created: Date,
+      updated: Date
+    }
 
     $scope.secondPassword = {
       password:""
@@ -49,6 +59,7 @@ angular.module('starter.controllers', ['starter.appServices',
       var email  =  this.user.email;
       var password = this.user.password;
 
+
       if(!firstName){
         $rootScope.notify("Please enter a valid first name");
         console.log("createUser failed: invalid first name");
@@ -72,7 +83,11 @@ angular.module('starter.controllers', ['starter.appServices',
         provider: 'local'
       }).success(function (data, status, headers, config){
           $rootScope.hide();
+          //$rootScope.setCharity(charity);
           $rootScope.setEmail(email);
+          var name = firstName + ' ' + lastName;
+          $rootScope.setName(name);
+          console.log('name set as: ' + $rootScope.getName());
           $window.location.href  = ('#/app/charities');
         })
         .error(function(error){
@@ -86,12 +101,23 @@ angular.module('starter.controllers', ['starter.appServices',
         });
     }
   })
-
-  .controller('SigninCtrl', function($scope, $rootScope, $timeout, AuthAPI, $window, ngFB){
+  .controller('SigninCtrl', function($scope, $rootScope, $timeout, AuthAPI, $ionicPopup, $window, ngFB){
 
     $scope.user = {
       email: "",
-      password: ""
+      name: "",
+      password: "",
+      charity: undefined,
+      history: [],
+      provider: "",
+      past_donations_from: [],
+      past_donations_to: [],
+      donations_to: [],
+      donations_from: [],
+      past_charities: [],
+      created: Date,
+      updated: Date
+
     };
 
 
@@ -113,8 +139,36 @@ angular.module('starter.controllers', ['starter.appServices',
           password: password
         })
         .success(function(data, status, headers, config){
+          var firstName = data.name.first;
+          var lastName = data.name.last;
+
+          $scope.user.name = firstName + ' ' + lastName;
+          console.log('$scope.name set as: ' + $scope.user.name);
+          $rootScope.setName($scope.user.name);
+          console.log('user name localStorage set to: ' + $rootScope.getName());
+
+          $scope.user.password = data.password;
+          console.log('$scope.user.password set as: ' + $scope.user.password);
+          $rootScope.setPassword($scope.user.password);
+
+          $scope.user.email = data.email;
+          console.log('$scope.user.email set to: ' + $scope.user.email);
+          $rootScope.setEmail($scope.user.email);
+          console.log('Email set as: ' + $rootScope.getEmail());
+
+          $scope.user.created = data.created;
+          console.log('$scope.user.created set as: ' + $scope.user.created);
+          $rootScope.setCreatedAt($scope.user.created);
+          console.log('createdAt local storage set: ' + $rootScope.getCreatedAt());
+
+          console.log('Charity: ' + $scope.user.charityId);
+          // $scope.user.charityId = data.charityId;
+          // console.log('$scope.user.charityId set as: ' + $scope.user.charityId);
+          // $rootScope.setSelectedCharity($scope.user.charityId);
+          // console.log('selectedCharity local storage set: ' + $rootScope.getSelectedCharity());
+
           $rootScope.hide();
-          $rootScope.setEmail(email);
+
           $window.location.href=('#/app/run');
         })
         .error(function(error){
@@ -128,8 +182,19 @@ angular.module('starter.controllers', ['starter.appServices',
         console.log("begin login by FB");
         ngFB.login({scope:'email'}).then(function (response){
             if (response.status == 'connected') {
-                console.log('facebook login success');
-                //$scope.closeLogin();
+
+                AuthAPI.signinByFB({
+                  access_token: response.authResponse.accessToken
+                }).success(function(data, status, headers, config){
+                  $rootScope.hide();
+                  $window.location.href=('#/app/run');
+                }).error(function(error){
+                  console.log("AuthAPI.signinByFB failed:" + error);
+                  $rootScope.hide();
+                  $rootScope.notify("Login with facebook failed")
+                });
+            } else if (response.status == 'not_authorized') {
+                console.log('facebook login not authorized')
             } else {
                 console.log('facebook login failed');
             }
@@ -137,6 +202,34 @@ angular.module('starter.controllers', ['starter.appServices',
         console.log("end login by FB");
 
     };
+
+    $scope.popup = {
+      email: ""
+    }
+
+    $scope.showForgotPassword = function(){
+      var forgotPassword = $ionicPopup.show({
+      template: '<input type="email" ng-model="popup.email">',
+        title: 'Enter Email for Password Reset',
+        //subTitle: 'Whatever you want',
+        scope: $scope,
+        buttons: [
+        { text: 'Cancel' },
+        {
+          text: '<b>submit</b>',
+          type: 'button-positive',
+          onTap: function(e) {
+            if (!$scope.popup.email) {
+              //don't allow the user to close unless he enters wifi password
+              e.preventDefault();
+            } else {
+              return $scope.popup.email;
+            }
+          }
+        }
+      ]
+      })
+    }
 
   })
 
@@ -162,8 +255,22 @@ angular.module('starter.controllers', ['starter.appServices',
 
   // })
 
-  .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI){
+  .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI, AuthAPI){
     //CONSOLE LOGGING COLORS:
+
+    //UI-INTERACTIONS: TEAL
+    //UI-CHANGES: GREEN
+    //RUN STATE CHANGE: HOTPINK
+    //TIMER:ROYALBLUE
+    //DISTANCE: PURPLE
+    //POLYLINE: LIME
+    //PACE: GOLD
+    //LAP: AQUA
+    //MONEYRAISED: GREY
+    //(L)TIMER: BLUE
+    //(L)DISTANCE: MEDIUMPURPLE
+    //(L)PACE: DarkGoldenRod
+
       //UI-INTERACTIONS: TEAL
       //UI-CHANGES: GREEN
       //RUN STATE CHANGE: HOTPINK
@@ -177,38 +284,54 @@ angular.module('starter.controllers', ['starter.appServices',
       //(L)DISTANCE: MEDIUMPURPLE
       //(L)PACE: DarkGoldenRod
 
-     $scope.isDetailDisplayed = false;
-     $scope.isHistoryDetailDisplayed = true;
-     $scope.isRunning = false;
-     $scope.isPaused = false;
+
+    $scope.user =  {
+      name: ""
+    };
+
+    $scope.user.name = $rootScope.getName();
+
+    $scope.isDetailDisplayed = false;
+    $scope.isHistoryDetailDisplayed = true;
+    $scope.isRunning = false;
+    $scope.isPaused = false;
 
      $scope.toggleRun = function() {
         $scope.isRunning = !$scope.isRunning;
-        $scope.startRun();
      }
+     //
+     // $scope.lapBtnTapped = function() {
+     //   if ($scope.isPaused) {
+     //     resume();
+     //   } else {
+     //     $scope.lap();
+     //   }
+     // }
 
-     $scope.lapBtnTapped = function() {
-       if ($scope.isPaused) {
-         resume();
-       } else {
-         lap();
-       }
-     }
+     // $scope.pause = function() {
+     //   $scope.isPaused = true;
+     // }
 
-     $scope.pause = function() {
-       $scope.isPaused = true;
-     }
+     // function resume() {
+     //   $scope.isPaused = false;
+     // }
 
-     function resume() {
-       $scope.isPaused = false;
-     }
-
-     function lap() {
-       console.log("lap");
-     }
+     // function lap() {
+     //   console.log("lap");
+     // }
 
 
     //DOM elements for google maps overlay
+
+    $scope.runInfo = {
+      duration: Number,
+      distance: Number,
+      pace: Number,
+      fundsRaised:"",
+      laps: [],
+      created: Date
+    }
+
 
     //lap, pause DOM elements
     $scope.runButtonControl = function(buttonDiv, map){
@@ -252,6 +375,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
       lapUI.addEventListener('click', function () {
         $scope.lap();
+        //$scope.lapNumber;
         console.log('%clap activated', 'color: Teal');
       });
 
@@ -494,120 +618,6 @@ angular.module('starter.controllers', ['starter.appServices',
 
     };
 
-    //home screen 'drop down' stuff
-    // $scope.welcomeControl = function(welcomeDiv, map){
-    //
-    //   var welcomeUI = document.createElement('div');
-    //   welcomeUI.id = 'welcomeUI';
-    //   welcomeUI.style.backgroundColor = '#ffffff';
-    //   welcomeUI.style.border = '2px solid #00b9be';
-    //   welcomeUI.style.borderRadius = '3px';
-    //   welcomeUI.style.boxShadow = '0 2px 6px rgba(0, 0, 0, .3)';
-    //   welcomeUI.style.cursor = 'pointer';
-    //   welcomeUI.style.height = '100px';
-    //   welcomeUI.style.width = '1000px';
-    //   welcomeUI.style.top = '100px';
-    //   //welcomeUI.ngShow = $scope.isRunning;
-    //   // welcomeUI.style.left = '300px';
-    //   // welcomeUI.style.right = '300px';
-    //   welcomeUI.style.zIndex = '20px';
-    //   // welcomeUI.style.marginTop = '100px';
-    //   welcomeUI.style.textAlign = 'center';
-    //   welcomeUI.title = 'Welcome';
-    //   welcomeDiv.appendChild(welcomeUI);
-    //
-    //   var welcomeText = document.createElement('div');
-    //   welcomeText.id = 'welcomeUserText';
-    //   welcomeText.innerHTML = 'Welcome Jane Doe';
-    //   welcomeUI.appendChild(welcomeText);
-    //
-    //   var divider = document.createElement('hr');
-    //   divider.id = 'welcomeDivider';
-    //   welcomeUI.appendChild(divider);
-    //
-    //   var milesRaisesText = document.createElement('p');
-    //   milesRaisesText.id = 'milesRaises';
-    //   milesRaisesText.style.textAlign = 'center';
-    //   milesRaisesText.style.color = '#00b9be';
-    //   milesRaisesText.innerHTML = 'Every Mile raises 50 cents for ';
-    //   welcomeUI.appendChild(milesRaisesText);
-    //
-    //   var charitySelectedText = document.createElement('h');
-    //   charitySelectedText.id = 'charitySelectedText';
-    //   //charitySelectedText.style.textAlign = 'center';
-    //   charitySelectedText.innerHTML = 'Teens Run DC';
-    //   welcomeUI.appendChild(charitySelectedText);
-    //
-    //   //these elements will be added to the ui from the event listener on the drop down button
-    //   var detailDivider = document.createElement('hr');
-    //   detailDivider.id = 'detailDivider';
-    //
-    //   var thisWeekText= document.createElement('div');
-    //   thisWeekText.id = 'thisWeekText';
-    //   thisWeekText.innerHTML = 'This week';
-    //
-    //   var weekMoneyRaisedText = document.createElement('p');
-    //   weekMoneyRaisedText.id = 'weekMoneyRaisedText';
-    //   weekMoneyRaisedText.innerHTML = '$17.50 raised and';
-    //
-    //   var weekDistanceText = document.createElement('p');
-    //   weekDistanceText.id = 'weekDistanceText';
-    //   weekDistanceText.innerHTML = '34 miles for charity';
-    //
-    //   var thisMonthText = document.createElement('p');
-    //   thisMonthText.id = 'thisMonthText';
-    //   thisMonthText.innerHTML = 'This month';
-    //
-    //   var monthMoneyRaisedText = document.createElement('p');
-    //   monthMoneyRaisedText.id = 'moneyMoneyRaisedText';
-    //   monthMoneyRaisedText.innerHTML = '$50.10';
-    //
-    //   var monthDistanceText = document.createElement('p');
-    //   monthDistanceText.id = 'monthDistanceText';
-    //   monthDistanceText.innerHTML = '100 miles run for charity';
-    //
-    //   var dropButton = document.createElement('button');
-    //   dropButton.id = 'dropButton';
-    //   dropButton.style.position = 'absolute';
-    //   dropButton.style.width = '50px';
-    //   dropButton.style.marginTop = '30px';
-    //   dropButton.style.position = 'center';
-    //   dropButton.class = 'button button-slide';
-    //   //dropButton.ngClass = 'isDetailDisplayed ? "button-slide-down" : "button-slide-up"';
-    //   welcomeUI.appendChild(dropButton);
-    //   dropButton.addEventListener('click', function(){
-    //     // if($scope.isHistoryDetailDisplayed = false){
-    //     //   $scope.isHistoryDetailDisplayed = true;
-    //     //   welcomeUI.appendChild(detailDivider);
-    //     //   welcomeUI.appendChild(thisWeekText);
-    //     //   welcomeUI.appendChild(weekMoneyRaisedText);
-    //     //   welcomeUI.appendChild(weekDistanceText);
-    //     //   welcomeUI.appendChild(thisMonthText);
-    //     //   welcomeUI.appendChild(monthMoneyRaisedTexth);
-    //     //   welcomeUI.appendChild(monthDistanceText);
-    //     // } else {
-    //     //   $scope.isHistoryDetailDisplayed = false;
-    //     //   welcomeUI.removeChild(detailDivider);
-    //     //   welcomeUI.removeChild(thisWeekText);
-    //     //   welcomeUI.removeChild(weekMoneyRaisedText);
-    //     //   welcomeUI.removeChild(weekDistanceText);
-    //     //   welcomeUI.removeChild(thisMonthText);
-    //     //   welcomeUI.removeChild(monthMoneyRaisedText);
-    //     //   welcomeUI.removeChild(monthDistanceText);
-    //
-    //     //}
-    //   });
-    //
-    //   $scope.removeWelcomeUI = function(){
-    //     welcomeDiv.removeChild(welcomeUI);
-    //   }
-    //
-    //
-    //
-    //
-    //
-    // };
-
     //start dreamrun button DOM shit
     $scope.startControl = function(startDiv, map){
 
@@ -645,7 +655,13 @@ angular.module('starter.controllers', ['starter.appServices',
       }
 
       startUI.addEventListener('click', function(){
+
+        $scope.isRunning = !$scope.isRunning;
+
         console.log('%cStart DreamRun button clicked', 'color: red');
+
+
+
         if(!$scope.map){
           return;
         }
@@ -656,7 +672,7 @@ angular.module('starter.controllers', ['starter.appServices',
         });
 
         $rootScope.hide();
-        $scope.startRun(); //Doing this in the toggleRun() function in line 160
+        $scope.startRun();
 
       });
 
@@ -771,8 +787,8 @@ angular.module('starter.controllers', ['starter.appServices',
     //distance functions
     var distanceInitializer;
     $scope.runDistance = function(){
-        $scope.distanceCoords = [];
-        console.log('%cEmpty coorindate arry for distance function initialized' + $scope.distanceCoords, 'color: Purple');
+      $scope.distanceCoords = [];
+      console.log('%cEmpty coorindate arry for distance function initialized' + $scope.distanceCoords, 'color: Purple');
 
       distanceInitializer = $interval(function(){
         var currentCoords = $scope.userCoords();
@@ -785,6 +801,8 @@ angular.module('starter.controllers', ['starter.appServices',
           path: $scope.distanceCoords
         });
         console.log('%cDistance: ' +$scope.distance, 'color: Purple');
+        $rootScope.setRunDistance($scope.distance);
+        console.log('%cRun Distance (global) set as: ' + $rootScope.getRunDistance(), 'color: Purple');
         console.log('%cExiting runDistance at interval', 'color: Purple');
       }, 2000);
     }
@@ -853,16 +871,23 @@ angular.module('starter.controllers', ['starter.appServices',
         if($scope.seconds < 60) {
           console.log('%cseconds checked, incremented', 'color: RoyalBlue');
           $scope.seconds++;
+          if($scope.seconds < 10){
+            $scope.seconds = '0' + $scope.seconds;
+          }
           console.log('%cseconds: ' + $scope.seconds, 'color: RoyalBlue');
           console.log('%cminutes: ' + $scope.minutes, 'color: RoyalBlue');
         } else  if ($scope.seconds > 59) {
           console.log('%cseconds reached 60, reset to 0', 'color: RoyalBlue');
-          $scope.seconds = 0;
+          $scope.seconds = 00;
           console.log('%cseconds: ' + $scope.seconds, 'color: RoyalBlue');
           $scope.minutes++;
           console.log('%cminutes: ' + $scope.minutes, 'color: RoyalBlue');
           console.log('minutes incremented');
         }
+        var time = $scope.minutes + ':'+ $scope.seconds;
+        $rootScope.setRunTime(time);
+        console.log('%cRun time (global) set as: ' + $rootScope.getRunTime(), 'color: RoyalBlue');
+
         console.log('%cTimer Interval mark', 'color: RoyalBlue');
       }, 1000);
     }
@@ -967,8 +992,9 @@ angular.module('starter.controllers', ['starter.appServices',
       console.log('%cLap minutes: ' + $scope.lapMinutes, 'color: Aqua');
       console.log('%cLap distance: ' + $scope.lapDistance, 'color: Aqua');
 
-      $scope.laps.push({lapNumber: $scope.lapNumber, seconds: $scope.lapSeconds, minutes: $scope.lapMinutes, distance: $scope.lapDistance});
-      console.log('%cLaps array: ' + $scope.laps, 'color: Aqua');
+      var time = $scope.lapMinutes + ':' +$scope.lapSeconds;
+
+      $scope.lapInfo = ['time', $scope.distance, $scope.number];
 
       $scope.stopLapTimer();
       $scope.stopLapDistance();
@@ -1019,6 +1045,10 @@ angular.module('starter.controllers', ['starter.appServices',
 
         $scope.pace = milesPerSecond * 60;
         console.log('%cMiles per minute (Pace): ' + $scope.pace, 'color: Gold');
+
+        $rootScope.setRunPace($scope.pace);
+        console.log('Pace (global var) set as: ' + $rootScope.getRunPace());
+
 
       }, 2100);
     }
@@ -1135,6 +1165,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
       $scope.startTimer();
       $scope.lap();
+      $scope.lapNumber = 1;
 
       $scope.runDistance();
       console.log('%crunDistance called', 'color: Purple');
@@ -1189,6 +1220,11 @@ angular.module('starter.controllers', ['starter.appServices',
     }
 
     $scope.stopRun = function(){
+
+      $scope.pushRunInfo = function(){
+        $rootScope.$broadcast("PushRunInfo");
+      }
+
       $scope.removeResume();
       $scope.removeStop();
       console.log('%c$scope.stopTimer() called', 'color: RoyalBlue');
@@ -1204,6 +1240,36 @@ angular.module('starter.controllers', ['starter.appServices',
       runSummaryButtonControlDiv.index = 1;
       $scope.map.controls[google.maps.ControlPosition.BOTTOM].push(runSummaryButtonControlDiv);
     }
+
+    $rootScope.$on("PushRunInfo", function(){
+      var distance = $rootScope.getRunDistance();
+      console.log('Push run- Distance: '+ distance);
+
+      var time = $rootScope.getRunTime();
+      console.log('Push run- Time: ' + time);
+
+      var pace = $rootScope.getRunPace();
+      console.log('Push run-  Pace: ' + pace);
+
+      $scope.runInfo.distance = distance;
+      $scope.runInfo.time = time;
+      $scope.runInfo.pace = pace;
+
+      RunAPI.saveRun(
+        {email: $rootScope.getEmail()},
+        {runInfo: $scope.runInfo})
+        .success(function(data, status, headers, config){
+          //just status header for now
+          console.log('saveRun API call returned success');
+          console.log('Run info: ' + $scope.runInfo);
+        })
+        .error(function(err){
+          console.log(err);
+          console.log('Save run API call failed');
+        });
+
+
+    })
 
 
     $scope.centerOnMe = function(){
@@ -1231,7 +1297,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
   })
 
-  .controller('AppCtrl', function($rootScope, $scope, $filter, $ionicModal, $timeout,DonationAPI) {
+  .controller('AppCtrl', function($rootScope, $scope, $filter, $ionicModal, $timeout, DonationAPI) {
 
     $scope.fetchMyPledges = function() {
       $rootScope.$broadcast("fetchMyPledges");
@@ -1284,7 +1350,58 @@ angular.module('starter.controllers', ['starter.appServices',
       });
     });
 
+
+    //move fetches to Services
+    // $rootScope.$on('fetchAccountInfo', function(){
+    //   $scope.user = {
+    //     email: $rootScope.getEmail(),
+    //     selectedCharity: "",
+    //     firstName: "",
+    //     lastName: "",
+    //     dob: ""
+    //   };
+    //
+    //   var email  =  $rootScope.getEmail();
+    //   console.log('fetching account information with email: ' + email);
+    //   var token = $rootScope.getToken();
+    //   console.log('fetching account information with token: ' + token);
+    //
+    //   UserAPI.getOne(email, token)
+    //     .success(function(data, status, headers, config){
+    //       console.log('entered User.getOne success call');
+    //
+    //       $scope.user.selectedCharity = data.selectedCharity;
+    //       console.log('UserAPI call returned selected charity value of : ' + $scope.user.selectedCharity);
+    //
+    //       $scope.user.firstName = data.firstName;
+    //       console.log('User firstname set: ' + $scope.user.firstName );
+    //
+    //       $scope.user.lastName = data.lastName;
+    //       console.log('User last name set: ' + $scope.user.lastName);
+    //
+    //       $scope.user.dob = data.dob;
+    //       console.log('User dob set as: ' + $scope.user.dob);
+    //
+    //       //rootScope for account info global variables. what do we need here?
+    //       //set selectedCharityId
+    //
+    //
+    //     })
+    // })
+    //
+    // $rootScope.$on('fetchCharityInformation', function(){
+    //   $scope.charity = {
+    //     name: "",
+    //     description: "",
+    //     avatar: ""
+    //   };
+    //
+    //
+    // })
+
   })
+
+
 
   .controller('CharitiesCtrl', function($rootScope, $timeout, $ionicModal, $window, $scope, CharityAPI, AuthAPI){
 
@@ -1295,7 +1412,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
     CharityAPI.getAll()
       .success(function(data, status, headers, config){
-        $rootScope.show("Retrieving our list of charities...");
+
         console.log("API call getAll succeeded");
 
         $scope.charities = [];
@@ -1304,7 +1421,6 @@ angular.module('starter.controllers', ['starter.appServices',
           $scope.charities.push(data[i]);
         }
 
-        $rootScope.hide();
       })
       .error(function(err){
         $rootScope.hide();
@@ -1312,24 +1428,30 @@ angular.module('starter.controllers', ['starter.appServices',
         console.log("Error retrieving charities");
       });
 
-    $scope.selectCharity = function(id){
-      console.log('attempting to update user\'s selected charity');
 
+    $scope.selectCharity = function(charity){
 
       var email = $rootScope.getEmail();
-      console.log('email set as ' + email);
-      CharityAPI.selectCharity(id, email, $rootScope.getToken())
-        .success(function(data, status, headers, config){
-          console.log('inside select charityAPI success');
-          $rootScope.hide();
+      console.log('email: ' + email);
+      $rootScope.setSelectedCharity(charity);
+     charity = $rootScope.getSelectedCharity();
+      console.log('charity: ' + $rootScope.getSelectedCharity());
+      console.log('attempting to update user\'s selected charity');
 
-          $window.location.href=('#/app/run');
+      console.log('attempting to update user\'s selected charity');
+
+      CharityAPI.selectCharity({
+       charity: charity},{
+      email:email})
+        .success(function(data, status, headers, config){
+
+          console.log('inside select charityAPI success');
+          //$window.location.href=('#/app/run');
           console.log('charity API succeeded in selecting charity');
         })
         .error(function(err){
           console.log(err);
           console.log('inside select charityAPI failure');
-          $rootScope.hide();
           $rootScope.notify('Error selecting charity');
         });
     }
@@ -1538,69 +1660,7 @@ angular.module('starter.controllers', ['starter.appServices',
       return type === $scope.active;
     };
   })
-  .controller('AccountCtrl', function($rootScope, AuthAPI, AccountAPI, $window, $scope) {
-    //refresh on page load?
-    //Profile Picture - edit
-    //Name- cannot edit
-    //Email -edit
-    //Password (hashed)
-    //DOB-cannot edit
 
-    //password should redirect to new page to enter old password/ could have dropdown?
-
-
-    $scope.account = {
-      firstName: "",
-      lastName: "",
-      pofilePicture: "",
-      email: "",
-      password: "",
-      dob: "",
-      created: "",
-      updated: Date.now
-    };
-
-
-    $scope.updateAccount = function () {
-      var name = this.account.firstName + ' ' + this.account.lastName;
-      var proPic = this.account.profilePicture;
-      var email = this.account.email;
-      var password = this.account.password;
-      var dob = this.account.dob;
-      var created = this.account.created;
-      var updated = this.account.updated;
-
-
-      //only checking for fields that can be changed
-      //profile picture can be deleted since it is not necessary
-
-      if (!email) {
-        $rootScope.show('Email field cannot be empty');
-        console.log('Email field was empty');
-      } else if (!password) {
-        $rootScope.show('Password field cannot be empty');
-        console.log('Password field was empty');
-      }
-
-      console.log('Email and password fields verified, attempting to save account changes...');
-      $rootScope.notify('Saving changes to your account');
-      AccountAPI.saveAccount({
-        email: email,
-        password: password
-      }).success(function (data, headers, config, status) {
-          $rootScope.hide();
-          $window.location.href = ('#/app/account');
-        })
-        .error(function (error) {
-          if (error.error && error.error.code == 11000) {
-            $rootScope.notify("This email is already in use");
-            console.log("could not register user: email already in use ");
-          } else {
-            $rootScope.notify("An error has occured. Please try again");
-          }
-        });
-    }
-  })
 
   .controller('MyPledgesCtrl', function($rootScope, $scope, $filter, DonationAPI) {
     // $scope.doRefresh = function() {
@@ -1716,7 +1776,85 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.amount = store.get('donor.amount');
   })
 
+  .controller('AccountCtrl', function($rootScope, AuthAPI, AccountAPI, $window, $scope) {
+    //refresh on page load?
+    //Profile Picture - edit
+    //Name- cannot edit
+    //Email -edit
+    //Password (hashed)
+    //DOB-cannot edit
 
+    //password should redirect to new page to enter old password/ could have dropdown?
+
+
+
+    $scope.user = {
+      email: "",
+      name: "",
+      password: "",
+      charity: {},
+      history: [],
+      provider: "",
+      past_donations_from: [],
+      past_donations_to: [],
+      donations_to: [],
+      donations_from: [],
+      past_charities: [],
+      created: Date,
+      updated: Date
+
+    };
+
+    $scope.user.name = $rootScope.getName();
+    console.log('user name set as: ' + $scope.user.name);
+    $scope.user.email = $rootScope.getEmail();
+    console.log('user email set as: '+ $scope.user.email);
+    $scope.user.password = $rootScope.getPassword();
+    console.log('user password set as: ' + $scope.user.password);
+
+    $scope.updateAccount = function () {
+      var name = this.account.firstName + ' ' + this.account.lastName;
+      var proPic = this.account.profilePicture;
+      var email = this.account.email;
+      var password = this.account.password;
+      var dob = this.account.dob;
+      var created = this.account.created;
+      var updated = this.account.updated;
+
+
+      //only checking for fields that can be changed
+      //profile picture can be deleted since it is not necessary
+
+
+      if (!email) {
+        $rootScope.show('Email field cannot be empty');
+        console.log('Email field was empty');
+      } else if (!password) {
+        $rootScope.show('Password field cannot be empty');
+        console.log('Password field was empty');
+      }
+
+      console.log('Email and password fields verified, attempting to save account changes...');
+      $rootScope.notify('Saving changes to your account');
+      AccountAPI.saveAccount({
+        email: email,
+        password: password
+      }).success(function (data, headers, config, status) {
+
+        $rootScope.hide();
+        $window.location.href = ('#/app/account');
+      })
+
+        .error(function (error) {
+          if (error.error && error.error.code == 11000) {
+            $rootScope.notify("This email is already in use");
+            console.log("could not register user: email already in use ");
+          } else {
+            $rootScope.notify("An error has occured. Please try again");
+          }
+        });
+    }
+  })
 
 
 

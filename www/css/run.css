@@ -112,11 +112,13 @@ button.button-large.button-start {
 
 hr {
   height: 1px;
-  background-color: black;
+
+  background-color: lightgrey;
+
 }
 
 .verticalLine {
-  border-left: thin solid black;
+  border-left: thin solid lightgrey;
   transition: 1s all linear;
 }
 
