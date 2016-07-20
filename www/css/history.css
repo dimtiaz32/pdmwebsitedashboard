@@ -59,12 +59,12 @@
 p.label {
   font-family: "HelveticaNeue-Light";
   padding-top: 30%;
-  font-size: x-large;
+  font-size: 3vw;
 }
 
 p.value {
   font-family: "HelveticaNeue-Light";
-  font-size: xx-large;
+  font-size: 5vw;
   font-weight: bold;
   padding-top: 5px;
 }
@@ -72,7 +72,7 @@ p.value {
 p.units {
   font-family: "HelveticaNeue-Light";
   font-weight: lighter;
-  font-size: small;
+  font-size: 2vw;
   text-align: center;
 }
 
