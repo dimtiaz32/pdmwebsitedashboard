@@ -1,3 +1,12 @@
+<head>
+  <link rel="stylesheet" type="text/css" href="css/history.css">
+  <!--
+  <script src="node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
+  <script src="node_modules/chart.js/Chart.min.js"></script>
+  <script src="node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
+-->
+</head>
+
 <ion-content class="history-page BarCtrl">
   <div class="history-page month-slide-wrapper">
     <ion-slide-box on-slide-changed="history-page slideHasChanged($index)">
@@ -81,8 +90,11 @@
 
 
   <div class="history-page card">
-    <canvas id="bar" class="history-page chart chart-bar"
-            chart-data="{{data}}" chart-labels="{{labels}}" chart-series="{{series}}">
+    <canvas id="bar"
+            class="chart chart-bar"
+            chart-data="data"
+            chart-labels="labels"
+            chart-series="series">
     </canvas>
   </div>
 
