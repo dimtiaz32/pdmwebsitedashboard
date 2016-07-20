@@ -15,7 +15,6 @@
       <span class="sign-in input-label">Password</span>
       <input type="password" ng-model="user.password">
     </label>
-
     <button class="sign-in login button button-full button-positive" ng-click="login()">
       Sign in
     </button>
@@ -25,5 +24,10 @@
     <button class="sign-in forgot-password button button-full button-positive" ng-click="showForgotPassword()">
       Forgot Password
     </button>
+    <label class="item">
+        <button class="button button-block button-positive" ng-click="loginByFB()">
+        Login with Facebook
+        </button>
+    </label>
   </div>
 </ion-content>

@@ -1,13 +1,13 @@
 /*Three bubbles*/
 
-.bubble-wrapper {
+.history-page.bubble-wrapper {
   /*margin: auto;*/
   width: 100vw;
   height: 45vw;
 
 }
 
-.left-bubble-box {
+.history-page.left-bubble-box {
   width: 33vw;
   height: 33vw;
 
@@ -23,7 +23,7 @@
   text-align: center;
 }
 
-.center-bubble-box {
+.history-page.center-bubble-box {
   width: 33vw;
   height: 33vw;
 
@@ -40,7 +40,7 @@
   z-index: 10;
 }
 
-.right-bubble-box {
+.history-page.right-bubble-box {
   width: 33vw;
   height: 33vw;
 
@@ -56,31 +56,31 @@
   text-align: center;
 }
 
-p.label {
+.history-page p.label {
   font-family: "HelveticaNeue-Light";
   padding-top: 30%;
   font-size: 3vw;
 }
 
-p.value {
+.history-page p.value {
   font-family: "HelveticaNeue-Light";
   font-size: 5vw;
   font-weight: bold;
   padding-top: 5px;
 }
 
-p.units {
+.history-page p.units {
   font-family: "HelveticaNeue-Light";
   font-weight: lighter;
   font-size: 2vw;
   text-align: center;
 }
 
-p.week-label {
+.history-page p.week-label {
   font-family: "HelveticaNeue-Light";
 }
 
-.week-buttons-wrapper {
+.history-page .week-buttons-wrapper {
   text-align: center;
 }
 
@@ -88,7 +88,7 @@ ion-content.BarCtrl{
   position: relative;
 }
 
-button {
+.history-page button {
   background-size: contain;
   background: no-repeat;
   border: none;
@@ -97,14 +97,14 @@ button {
   background-color: white;
 }
 
-button.button.right-button {
+.history-page button.button.right-button {
   background-image: url("../img/right arrow.png");
   background-position: center;
   background-color: white;
 
 }
 
-button.button.left-button {
+.history-page button.button.left-button {
   background-image: url("../img/left arrow.png");
   background-position: center;
   background-color: white;
@@ -112,7 +112,7 @@ button.button.left-button {
 }
 
 /*Slide/Picker*/
-.month-slide {
+.history-page.month-slide {
   /*background-image: url("../img/Tab Background.png");*/
   background: no-repeat;
   background-size: cover;
@@ -120,16 +120,16 @@ button.button.left-button {
   text-align: center;
 }
 
-ion-slide.slider-slide {
+ion-slide.slider-slide.history-page {
   width: 50%;
 }
 
-.slider {
+.history-page .slider {
   width: 50%;
   margin: auto;
   text-align: center;
 }
 
-.month-slide-wrapper {
+.history-page .month-slide-wrapper {
   text-align: center;
 }

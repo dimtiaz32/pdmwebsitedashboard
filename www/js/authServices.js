@@ -134,8 +134,10 @@ angular.module('starter.authServices', [])
     signout: function(){
       return $http.get(base+'/authentication/signout', {
         method: 'GET'
-
       });
+    },
+    signinByFB: function(form) {
+      return $http.post(base + 'authentication/facebook',form);
     }
   }
 });

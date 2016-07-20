@@ -1,78 +1,11 @@
-
 <ion-view view-title="Charities">
-  <!--<head>-->
-    <!--<link rel="stylesheet" type="text/css" href="../css/charities.css">-->
-  <!--</head>-->
-  <ion-content> <!--on-refresh="onRefresh()"-->
-      <!-- Option to add refresher to charities. Not sure its necessary-->
-      <!--<ion-refresher on-refresh="doRefresh(1)"></ion-refresher>-->
-    <ion-list>
-      <div class="list" ng-repeat="charity in charities">
-        <div class="item item-text-wrap" ng-click="selectCharity('{{charity._id}}')">
-          <a class="item item-icon-left">
-            <span class="cell-vertical-center-text"> {{ charity.name }} </span>
-          </a>
-        </div>
-      </div>
-
+  <ion-content>
+    <ion-list class="charity-list" show-delete="shouldShowDelete" show-reorder="shouldShowReorder" can-swipe="listCanSwipe">
+      <ion-item ng-repeat="charity in charities" class="item-thumbnail-left" ng-click="selectCharity('{{charity._id}}')">
+        <img ng-src="{{charity.logo}}">
+        <h2>{{charity.name}}</h2>
+        <p>{{charity.description}} dsklaj dsfjkldsaajfklds jkladsjklsad kldsaj kldsaf  dsklaj dsfjkldsaajfklds jkladsjklsad kldsaj kldsaf dsklaj dsfjkldsaajfklds jkladsjklsad kldsaj kldsaf dsklaj dsfjkldsaajfklds jkladsjklsad kldsaj kldsaf dsklaj dsfjkldsaajfklds jkladsjklsad kldsaj kldsaf dsklaj dsfjkldsaajfklds jkladsjklsad kldsaj kldsaf dsklaj dsfjkldsaajfklds jkladsjklsad kldsaj kldsaf dsklaj dsfjkldsaajfklds jkladsjklsad kldsaj kldsaf</p>
+      </ion-item>
     </ion-list>
-
-
-
-    <!--<div class="row row-center">-->
-      <!--<div class="col top">-->
-        <!--Every mile raises {{user.perMileDonation}} for-->
-      <!--</div>-->
-    <!--</div>-->
-    <!--<hr>-->
-
-    <!--<ion-list>-->
-
-      <!--<ion-item class="item-stable" ng-click="toggleCharity()">-->
-        <!--{{chosenCharity.name}}-->
-      <!--</ion-item>-->
-
-      <!--<ion-item class="item-accordion item-text-wrap" ng-show="isCharityDetailDisplayed">-->
-
-
-        <!--<div class="row">-->
-          <!--<div class="col col-33">-->
-            <!--<div class="charity-image"></div>-->
-          <!--</div>-->
-          <!--<div class="col col-66">-->
-            <!--<p>-->
-              <!--{{user.selectedCharity.description}}-->
-            <!--</p>-->
-          <!--</div>-->
-        <!--</div>-->
-        <!--<hr>-->
-        <!--<div class="row">-->
-          <!--<div class="col col-50">-->
-            <!--<p class="small">Funds raised in the past <b>30 days</b></p>-->
-            <!--<p class="money">{{chosenCharity.moneyPastWeek}}</p>-->
-          <!--</div>-->
-          <!--<div class="col col-50">-->
-            <!--<p class="small">Total funds raised in <b>past year</b></p>-->
-            <!--<p class="money">{{chosenCharity.moneyPastYear}}</p>-->
-          <!--</div>-->
-        <!--</div>-->
-
-
-      <!--</ion-item>-->
-
-    <!--</ion-list>-->
-
-    <!--<button class="button-slide"-->
-            <!--ng-class="isCharityDetailDisplayed ? 'button-slide-down' : 'button-slide-up'"-->
-            <!--ng-click="isCharityDetailDisplayed  = !isCharityDetailDisplayed ">-->
-    <!--</button>-->
-
-    <!--<ion-list>-->
-      <!--<ion-item>-->
-        <!--{{charity.name}}-->
-      <!--</ion-item>-->
-    <!--</ion-list>-->
-
   </ion-content>
-
 </ion-view>
