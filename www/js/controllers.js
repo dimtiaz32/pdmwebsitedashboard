@@ -1717,117 +1717,117 @@ angular.module('starter.controllers', ['starter.appServices',
     };
 
   })
-    .controller('MyPledgesCtrl', function($rootScope, $scope, $filter, DonationAPI) {
-      // $scope.doRefresh = function() {
-      DonationAPI.getAllPledges($rootScope.getToken(), "577525799f1f51030075a292")
-        .success(function (data, status, headers, config) {
-          $scope.list = [];
-          for (var i = 0; i < data.length; i++) {
-            data[i].end_date = $filter('date')(data[i].end_date, "MMM dd yyyy");
-            $scope.list.push(data[i]);
+  .controller('MyPledgesCtrl', function($rootScope, $scope, $filter, DonationAPI) {
+    // $scope.doRefresh = function() {
+    DonationAPI.getAllPledges($rootScope.getToken(), "577525799f1f51030075a292")
+      .success(function (data, status, headers, config) {
+        $scope.list = [];
+        for (var i = 0; i < data.length; i++) {
+          data[i].end_date = $filter('date')(data[i].end_date, "MMM dd yyyy");
+          $scope.list.push(data[i]);
+        }
+        ;
+
+        $scope.donor = {
+          amount: ""
+        };
+
+        $scope.saveMoney = function () {
+
+          var amount = this.donor.amount;
+
+          if (!amount && $scope.active == 'zero') {
+            return false;
           }
-          ;
-
-          $scope.donor = {
-            amount: ""
-          };
-
-          $scope.saveMoney = function () {
-
-            var amount = this.donor.amount;
-
-            if (!amount && $scope.active == 'zero') {
-              return false;
-            }
-            if (amount != '') {
-              store.set('donor.amount', amount);
-            }
-            $window.location.href = ('#/app/inviteSponsor/pledge');
-          }
-
-          $scope.saveMoneyWithAmount = function (amount) {
+          if (amount != '') {
             store.set('donor.amount', amount);
           }
-
-        })
-    })
-
-    .controller('MyPledgesCtrl', function($rootScope, $scope, $filter, DonationAPI) {
-
-    })
-
-    .controller('InviteSponsorPledgeCtrl', function($scope, $http, store, $window){
-
-      $scope.active = 'zero';
-      $scope.setActive = function(type) {
-        $scope.active = type;
-      };
-      $scope.isActive = function(type) {
-        return type === $scope.active;
-      };
-
-      $scope.donor = {
-        months: ""
-      };
-
-      $scope.saveMonths = function() {
-
-        var months = this.donor.months;
-
-        if (!months && $scope.active == 'zero') {
-          return false;
+          $window.location.href = ('#/app/inviteSponsor/pledge');
         }
-        if (months != '') {
-          store.set('donor.months', months);
+
+        $scope.saveMoneyWithAmount = function (amount) {
+          store.set('donor.amount', amount);
         }
-        $window.location.href = ('#/app/inviteSponsor/payment');
+
+      })
+  })
+
+  .controller('MyPledgesCtrl', function($rootScope, $scope, $filter, DonationAPI) {
+
+  })
+
+  .controller('InviteSponsorPledgeCtrl', function($scope, $http, store, $window){
+
+    $scope.active = 'zero';
+    $scope.setActive = function(type) {
+      $scope.active = type;
+    };
+    $scope.isActive = function(type) {
+      return type === $scope.active;
+    };
+
+    $scope.donor = {
+      months: ""
+    };
+
+    $scope.saveMonths = function() {
+
+      var months = this.donor.months;
+
+      if (!months && $scope.active == 'zero') {
+        return false;
+      }
+      if (months != '') {
+        store.set('donor.months', months);
+      }
+      $window.location.href = ('#/app/inviteSponsor/payment');
+    }
+
+    $scope.saveMonthsWithMonths = function(months) {
+      store.set('donor.months',months);
+    }
+
+  })
+
+  .controller('InviteSponsorStartCtrl', function($scope){
+
+  })
+
+  .controller('InviteSponsorPaymentCtrl', function($rootScope, $scope, $http, store, DonationAPI, $window){
+    $scope.user = {
+      email: ""
+    };
+    $scope.updateDonation = function(status, response) {
+
+      var email = this.user.email;
+      if(!email) {
+        return false;
       }
 
-      $scope.saveMonthsWithMonths = function(months) {
-        store.set('donor.months',months);
+      if (response.error) {
+        console.log('token:' + response.error.message);
+      } else {
+        console.log("amount:" + store.get('donor.amount'));
+        DonationAPI.completeSponsor({
+          firstName: store.get('user.firstname'),
+          lastName: store.get('user.lastname'),
+          email: email,
+          amount: store.get('donor.amount'),
+          months: store.get('donor.months'),
+          stripeToken: response.id,
+          userId: '576d5555765c85f11c7f0ca1'
+        }).success(function (data){
+          $window.location.href = ('#/app/inviteSponsor/end');
+        }).error(function (err){
+          console.log("error: " + err.message);
+        });
       }
-
-    })
-
-    .controller('InviteSponsorStartCtrl', function($scope){
-
-    })
-
-    .controller('InviteSponsorPaymentCtrl', function($rootScope, $scope, $http, store, DonationAPI, $window){
-      $scope.user = {
-        email: ""
-      };
-      $scope.updateDonation = function(status, response) {
-
-        var email = this.user.email;
-        if(!email) {
-          return false;
-        }
-
-        if (response.error) {
-          console.log('token:' + response.error.message);
-        } else {
-          console.log("amount:" + store.get('donor.amount'));
-          DonationAPI.completeSponsor({
-            firstName: store.get('user.firstname'),
-            lastName: store.get('user.lastname'),
-            email: email,
-            amount: store.get('donor.amount'),
-            months: store.get('donor.months'),
-            stripeToken: response.id,
-            userId: '576d5555765c85f11c7f0ca1'
-          }).success(function (data){
-            $window.location.href = ('#/app/inviteSponsor/end');
-          }).error(function (err){
-            console.log("error: " + err.message);
-          });
-        }
-      }
-    })
+    }
+  })
 
 
-        // Do the first time when page loaded
-        // $scope.doRefresh();
+  // Do the first time when page loaded
+  // $scope.doRefresh();
 
   .controller('InviteSponsorEndCtrl', function($scope, $http, store){
     $scope.months = store.get('donor.months');
@@ -1918,20 +1918,33 @@ angular.module('starter.controllers', ['starter.appServices',
 
 
 
-.controller('HistoryCtrl', function($scope, $rootScope, HistoryAPI, AuthAPI) {
+  .controller('HistoryCtrl', function($scope, $rootScope, HistoryAPI, AuthAPI) {
 
-  $scope.weekHistory = [];
-  console.log('empty user history array initialized: ' + $scope.uHistory);
+    /*Chart Configuration*/
+    $scope.labels = ['6/1', '6/2', '6/3', '6/4', '6/5', '6/6', '6/7'];
+    $scope.series = ['Series A'];
 
-  var today = Date.now();
-  $scope.endDate = new Date(today);
-  console.log('end date: ' + $scope.endDate);
-  var newDate = new Date($scope.endDate);
-  newDate.setDate(newDate.getDate() - 7);
-  $scope.startDate = new Date(newDate);
+    $scope.data = [
+      [65, 59, 80, 81, 56, 55, 40, 80]
+    ];
+
+    /*CHART NOTE
+    It is very easy to display the bar chart. The labels array is for the days and the data array is for the miles for those days
+    End Chart Configuration
+     */
+
+    $scope.weekHistory = [];
+    console.log('empty user history array initialized: ' + $scope.uHistory);
+
+    var today = Date.now();
+    $scope.endDate = new Date(today);
+    console.log('end date: ' + $scope.endDate);
+    var newDate = new Date($scope.endDate);
+    newDate.setDate(newDate.getDate() - 7);
+    $scope.startDate = new Date(newDate);
 
 
-  console.log('start date' + $scope.startDate);
+    console.log('start date' + $scope.startDate);
 
 
 
@@ -1952,43 +1965,43 @@ angular.module('starter.controllers', ['starter.appServices',
         console.log(err);
       });
 
-          $scope.getCurrentWeekHistory = function(){
-            var today = Date.now();
-            $scope.endDate = new Date(today);
-            console.log('end date: ' + $scope.endDate);
-            var newDate = new Date($scope.endDate);
-            newDate.setDate(newDate.getDate() - 7);
-            $scope.startDate = new Date(newDate);
+    $scope.getCurrentWeekHistory = function(){
+      var today = Date.now();
+      $scope.endDate = new Date(today);
+      console.log('end date: ' + $scope.endDate);
+      var newDate = new Date($scope.endDate);
+      newDate.setDate(newDate.getDate() - 7);
+      $scope.startDate = new Date(newDate);
 
-            for(var i=0; i< $scope.uHistory.length;  i++){
-              if($scope.uHistory[i].date >= $scope.startDate && $scope.uHistory[i].date <= $scope.endDate){
-                $scope.weekHistory.push($scope.uHistory[i]);
-              }
-            }
-          }
+      for(var i=0; i< $scope.uHistory.length;  i++){
+        if($scope.uHistory[i].date >= $scope.startDate && $scope.uHistory[i].date <= $scope.endDate){
+          $scope.weekHistory.push($scope.uHistory[i]);
+        }
+      }
+    }
 
-          $scope.decrementWeek = function(){
-            var weekStartDate = new Date();
-            var weekEndDate = new Date();
-            weekEndDate.setDate($scope.startDate.getDate() -1);
-            console.log('weekEndDate: ' + weekEndDate);
-            weekStartDate.setDate(weekEndDate.getDate() -7);
-            console.log('weekStartDate: ' + weekStartDate);
-            $scope.endDate =  new Date(weekEndDate);
-            console.log('$scope.endDate'+ $scope.endDate);
-            $scope.startDate = new Date(weekStartDate);
-            console.log('$scope.startDate' + $scope.startDate);
+    $scope.decrementWeek = function(){
+      var weekStartDate = new Date();
+      var weekEndDate = new Date();
+      weekEndDate.setDate($scope.startDate.getDate() -1);
+      console.log('weekEndDate: ' + weekEndDate);
+      weekStartDate.setDate(weekEndDate.getDate() -7);
+      console.log('weekStartDate: ' + weekStartDate);
+      $scope.endDate =  new Date(weekEndDate);
+      console.log('$scope.endDate'+ $scope.endDate);
+      $scope.startDate = new Date(weekStartDate);
+      console.log('$scope.startDate' + $scope.startDate);
 
-            for(var i=0; i < $scope.uHistory.length; i++){
-              if($scope.uHistory[i].date >= $scope.startDate && $scope.uHistory[i].date <= $scope.endDate){
-                $scope.weekHistory.push($scope.uHistory[i]);
+      for(var i=0; i < $scope.uHistory.length; i++){
+        if($scope.uHistory[i].date >= $scope.startDate && $scope.uHistory[i].date <= $scope.endDate){
+          $scope.weekHistory.push($scope.uHistory[i]);
 
-              }
+        }
 
-            }
-
-
-          }
+      }
 
 
-        });
+    }
+
+
+  });
