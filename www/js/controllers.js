@@ -1883,10 +1883,10 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.data = [
       [65, 59, 80, 81, 56, 55, 40, 80]
     ];
-    /*CHART NOTE
-      Displaying is very easy, the labels array is for the days, and the data array is for the miles data.
 
-      End Chart Configuration
+    /*CHART NOTE
+    It is very easy to display the bar chart. The labels array is for the days and the data array is for the miles for those days
+    End Chart Configuration
      */
 
     $scope.weekHistory = [];
@@ -1960,4 +1960,4 @@ angular.module('starter.controllers', ['starter.appServices',
     }
 
 
-  })
+  });

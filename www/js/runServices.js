@@ -64,12 +64,17 @@ angular.module('starter.runServices', ['ionic'])
   $rootScope.getRunPace = function(){
     return $window.localStorage.pace;
   };
-
+  $rootScope.setRunPath = function(coordinates){
+    return $window.localStorage.runPath = coordinates
+  };
+  $rootScope.getRunPath = function(){
+    return $window.localStorage.runPath;
+  }
   return{
 
     saveRun: function(form){
       return $http.post(base+'history', form);
-    },
+    }
 
   }
 });
