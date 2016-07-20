@@ -19,9 +19,9 @@
 
 }
 
-  .sign-in .logo-title span{
-    font-weight: 500;
-  }
+.sign-in .logo-title span{
+  font-weight: 500;
+}
 
 .sign-in .logo-subtitle {
   padding: 0 0 7% 0;
@@ -44,11 +44,11 @@
   margin: 0 0 10px 0;
 }
 
-  .sign-in .forgot-password {
-    background-color: #00b9be;
-    text-align: center;
-    display: inline-block;
-  }
+.sign-in .forgot-password {
+  background-color: #00b9be;
+  text-align: center;
+  display: inline-block;
+}
 
 /*create account and sign in buttons*/
 .sign-in.options li{
@@ -66,7 +66,7 @@
   margin: 0;
 }
 
-  .sign-in.social.button img {
-    width:60%;
-    height: auto;
-  }
+.sign-in.social.button img {
+  width:60%;
+  height: auto;
+}

@@ -92,7 +92,7 @@ angular.module('starter.controllers', ['starter.appServices',
           var name =data.name.first + data.name.last;
           console.log('name: ' + name);
 
-        $rootScope.setName(name);
+          $rootScope.setName(name);
 
           $window.location.href  = ('#/app/charities');
         })
@@ -191,27 +191,27 @@ angular.module('starter.controllers', ['starter.appServices',
 
     $scope.loginByFB = function() {
 
-        console.log("begin login by FB");
-        ngFB.login({scope:'email'}).then(function (response){
-            if (response.status == 'connected') {
+      console.log("begin login by FB");
+      ngFB.login({scope:'email'}).then(function (response){
+        if (response.status == 'connected') {
 
-                AuthAPI.signinByFB({
-                  access_token: response.authResponse.accessToken
-                }).success(function(data, status, headers, config){
-                  $rootScope.hide();
-                  $window.location.href=('#/app/run');
-                }).error(function(error){
-                  console.log("AuthAPI.signinByFB failed:" + error);
-                  $rootScope.hide();
-                  $rootScope.notify("Login with facebook failed")
-                });
-            } else if (response.status == 'not_authorized') {
-                console.log('facebook login not authorized')
-            } else {
-                console.log('facebook login failed');
-            }
-        });
-        console.log("end login by FB");
+          AuthAPI.signinByFB({
+            access_token: response.authResponse.accessToken
+          }).success(function(data, status, headers, config){
+            $rootScope.hide();
+            $window.location.href=('#/app/charities');
+          }).error(function(error){
+            console.log("AuthAPI.signinByFB failed:" + error);
+            $rootScope.hide();
+            $rootScope.notify("Login with facebook failed")
+          });
+        } else if (response.status == 'not_authorized') {
+          console.log('facebook login not authorized')
+        } else {
+          console.log('facebook login failed');
+        }
+      });
+      console.log("end login by FB");
 
     };
 
@@ -221,25 +221,25 @@ angular.module('starter.controllers', ['starter.appServices',
 
     $scope.showForgotPassword = function(){
       var forgotPassword = $ionicPopup.show({
-      template: '<input type="email" ng-model="popup.email">',
+        template: '<input type="email" ng-model="popup.email">',
         title: 'Enter Email for Password Reset',
         //subTitle: 'Whatever you want',
         scope: $scope,
         buttons: [
-        { text: 'Cancel' },
-        {
-          text: '<b>submit</b>',
-          type: 'button-positive',
-          onTap: function(e) {
-            if (!$scope.popup.email) {
-              //don't allow the user to close unless he enters wifi password
-              e.preventDefault();
-            } else {
-              return $scope.popup.email;
+          { text: 'Cancel' },
+          {
+            text: '<b>submit</b>',
+            type: 'button-positive',
+            onTap: function(e) {
+              if (!$scope.popup.email) {
+                //don't allow the user to close unless he enters wifi password
+                e.preventDefault();
+              } else {
+                return $scope.popup.email;
+              }
             }
           }
-        }
-      ]
+        ]
       })
     }
 
@@ -283,18 +283,18 @@ angular.module('starter.controllers', ['starter.appServices',
     //(L)DISTANCE: MEDIUMPURPLE
     //(L)PACE: DarkGoldenRod
 
-      //UI-INTERACTIONS: TEAL
-      //UI-CHANGES: GREEN
-      //RUN STATE CHANGE: HOTPINK
-      //TIMER:ROYALBLUE
-      //DISTANCE: PURPLE
-      //POLYLINE: LIME
-      //PACE: GOLD
-      //LAP: AQUA
-      //MONEYRAISED: GREY
-      //(L)TIMER: BLUE
-      //(L)DISTANCE: MEDIUMPURPLE
-      //(L)PACE: DarkGoldenRod
+    //UI-INTERACTIONS: TEAL
+    //UI-CHANGES: GREEN
+    //RUN STATE CHANGE: HOTPINK
+    //TIMER:ROYALBLUE
+    //DISTANCE: PURPLE
+    //POLYLINE: LIME
+    //PACE: GOLD
+    //LAP: AQUA
+    //MONEYRAISED: GREY
+    //(L)TIMER: BLUE
+    //(L)DISTANCE: MEDIUMPURPLE
+    //(L)PACE: DarkGoldenRod
 
 
     $scope.user =  {
@@ -308,29 +308,29 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.isRunning = false;
     $scope.isPaused = false;
 
-     $scope.toggleRun = function() {
-        $scope.isRunning = !$scope.isRunning;
-     }
-     //
-     // $scope.lapBtnTapped = function() {
-     //   if ($scope.isPaused) {
-     //     resume();
-     //   } else {
-     //     $scope.lap();
-     //   }
-     // }
+    $scope.toggleRun = function() {
+      $scope.isRunning = !$scope.isRunning;
+    }
+    //
+    // $scope.lapBtnTapped = function() {
+    //   if ($scope.isPaused) {
+    //     resume();
+    //   } else {
+    //     $scope.lap();
+    //   }
+    // }
 
-     // $scope.pause = function() {
-     //   $scope.isPaused = true;
-     // }
+    // $scope.pause = function() {
+    //   $scope.isPaused = true;
+    // }
 
-     // function resume() {
-     //   $scope.isPaused = false;
-     // }
+    // function resume() {
+    //   $scope.isPaused = false;
+    // }
 
-     // function lap() {
-     //   console.log("lap");
-     // }
+    // function lap() {
+    //   console.log("lap");
+    // }
 
 
     //DOM elements for google maps overlay
@@ -1456,8 +1456,8 @@ angular.module('starter.controllers', ['starter.appServices',
       console.log('attempting to update user\'s selected charity');
 
       CharityAPI.selectCharity({
-       charity: charity},{
-      email:email})
+          charity: charity},{
+          email:email})
         .success(function(data, status, headers, config){
 
           console.log('inside select charityAPI success');
@@ -1640,10 +1640,6 @@ angular.module('starter.controllers', ['starter.appServices',
 
   })
 
-  .controller('InviteSponsorStartCtrl', function($scope){
-
-  })
-
   .controller('InviteSponsorInfoCtrl', function($rootScope, $scope, $http, store, $window){
     $scope.user = {
       firstname: "",
@@ -1661,11 +1657,12 @@ angular.module('starter.controllers', ['starter.appServices',
 
       store.set('user.firstname',firstname);
       store.set('user.lastname', lastname);
-      $window.location.href = ('#/app/sponsors/amount');
+      $window.location.href = ('#/app/inviteSponsor/amount');
     }
   })
 
   .controller('InviteSponsorAmountCtrl', function($scope, $http, store, $window) {
+
     $scope.active = 'zero';
 
     $scope.setActive = function (type) {
@@ -1674,118 +1671,119 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.isActive = function (type) {
       return type === $scope.active;
     };
+
   })
-
-
-
-  .controller('MyPledgesCtrl', function($rootScope, $scope, $filter, DonationAPI) {
-    // $scope.doRefresh = function() {
-    DonationAPI.getAllPledges($rootScope.getToken(), "577525799f1f51030075a292")
-      .success(function (data, status, headers, config) {
-        $scope.list = [];
-        for (var i = 0; i < data.length; i++) {
-          data[i].end_date = $filter('date')(data[i].end_date, "MMM dd yyyy");
-          $scope.list.push(data[i]);
-        };
-
-        $scope.donor = {
-          amount: ""
-        };
-
-
-        $scope.saveMoney = function () {
-
-          var amount = this.donor.amount;
-
-          if (!amount && $scope.active == 'zero') {
-            return false;
+    .controller('MyPledgesCtrl', function($rootScope, $scope, $filter, DonationAPI) {
+      // $scope.doRefresh = function() {
+      DonationAPI.getAllPledges($rootScope.getToken(), "577525799f1f51030075a292")
+        .success(function (data, status, headers, config) {
+          $scope.list = [];
+          for (var i = 0; i < data.length; i++) {
+            data[i].end_date = $filter('date')(data[i].end_date, "MMM dd yyyy");
+            $scope.list.push(data[i]);
           }
-          if (amount != '') {
+          ;
+
+          $scope.donor = {
+            amount: ""
+          };
+
+          $scope.saveMoney = function () {
+
+            var amount = this.donor.amount;
+
+            if (!amount && $scope.active == 'zero') {
+              return false;
+            }
+            if (amount != '') {
+              store.set('donor.amount', amount);
+            }
+            $window.location.href = ('#/app/inviteSponsor/pledge');
+          }
+
+          $scope.saveMoneyWithAmount = function (amount) {
             store.set('donor.amount', amount);
           }
-          $window.location.href = ('#/app/sponsors/pledge');
+
+        })
+    })
+
+    .controller('MyPledgesCtrl', function($rootScope, $scope, $filter, DonationAPI) {
+
+    })
+
+    .controller('InviteSponsorPledgeCtrl', function($scope, $http, store, $window){
+
+      $scope.active = 'zero';
+      $scope.setActive = function(type) {
+        $scope.active = type;
+      };
+      $scope.isActive = function(type) {
+        return type === $scope.active;
+      };
+
+      $scope.donor = {
+        months: ""
+      };
+
+      $scope.saveMonths = function() {
+
+        var months = this.donor.months;
+
+        if (!months && $scope.active == 'zero') {
+          return false;
+        }
+        if (months != '') {
+          store.set('donor.months', months);
+        }
+        $window.location.href = ('#/app/inviteSponsor/payment');
+      }
+
+      $scope.saveMonthsWithMonths = function(months) {
+        store.set('donor.months',months);
+      }
+
+    })
+
+    .controller('InviteSponsorStartCtrl', function($scope){
+
+    })
+
+    .controller('InviteSponsorPaymentCtrl', function($rootScope, $scope, $http, store, DonationAPI, $window){
+      $scope.user = {
+        email: ""
+      };
+      $scope.updateDonation = function(status, response) {
+
+        var email = this.user.email;
+        if(!email) {
+          return false;
         }
 
-        $scope.saveMoneyWithAmount = function (amount) {
-          store.set('donor.amount', amount);
+        if (response.error) {
+          console.log('token:' + response.error.message);
+        } else {
+          console.log("amount:" + store.get('donor.amount'));
+          DonationAPI.completeSponsor({
+            firstName: store.get('user.firstname'),
+            lastName: store.get('user.lastname'),
+            email: email,
+            amount: store.get('donor.amount'),
+            months: store.get('donor.months'),
+            stripeToken: response.id,
+            userId: '576d5555765c85f11c7f0ca1'
+          }).success(function (data){
+            $window.location.href = ('#/app/inviteSponsor/end');
+          }).error(function (err){
+            console.log("error: " + err.message);
+          });
         }
-
-
-      })
-  })
-
-  .controller('InviteSponsorPledgeCtrl', function($scope, $http, store, $window){
-
-    $scope.active = 'zero';
-    $scope.setActive = function(type) {
-      $scope.active = type;
-    };
-    $scope.isActive = function(type) {
-      return type === $scope.active;
-    };
-
-    $scope.donor = {
-      months: ""
-    };
-
-    $scope.saveMonths = function() {
-
-      var months = this.donor.months;
-
-      if (!months && $scope.active == 'zero') {
-        return false;
       }
-      if (months != '') {
-        store.set('donor.months', months);
-      }
-      $window.location.href = ('#/app/sponsors/payment');
-    }
-
-    $scope.saveMonthsWithMonths = function(months) {
-      store.set('donor.months',months);
-    }
+    })
 
 
-  })
-  .controller('InviteSponsorStartCtrl', function($scope){
-
-  })
-
-  .controller('InviteSponsorPaymentCtrl', function($rootScope, $scope, $http, store, DonationAPI, $window){
-    $scope.user = {
-      email: ""
-    };
-    $scope.updateDonation = function(status, response) {
-
-      var email = this.user.email;
-      if(!email) {
-        return false;
-      }
-
-      if (response.error) {
-        console.log('token:' + response.error.message);
-      } else {
-        console.log("amount:" + store.get('donor.amount'));
-        DonationAPI.completeSponsor({
-          firstName: store.get('user.firstname'),
-          lastName: store.get('user.lastname'),
-          email: email,
-          amount: store.get('donor.amount'),
-          months: store.get('donor.months'),
-          stripeToken: response.id,
-          userId: '576d5555765c85f11c7f0ca1'
-        }).success(function (data){
-          $window.location.href = ('#/app/sponsors/con');
-        }).error(function (err){
-          console.log("error: " + err.message);
-        });
-      }
-    }
-  })
-
-
-  // Do the first time when page loaded
-  // $scope.doRefresh();
+        // Do the first time when page loaded
+        // $scope.doRefresh();
 
   .controller('InviteSponsorEndCtrl', function($scope, $http, store){
     $scope.months = store.get('donor.months');
@@ -1857,9 +1855,9 @@ angular.module('starter.controllers', ['starter.appServices',
         password: password
       }).success(function (data, headers, config, status) {
 
-        $rootScope.hide();
-        $window.location.href = ('#/app/account');
-      })
+          $rootScope.hide();
+          $window.location.href = ('#/app/account');
+        })
 
         .error(function (error) {
           if (error.error && error.error.code == 11000) {
@@ -1875,43 +1873,22 @@ angular.module('starter.controllers', ['starter.appServices',
 
 
 
-  .controller('PlaylistCtrl', function($scope, $stateParams) {
-  })
 
-  .controller('SponsorsPledgeCtrl', function($scope) {
-    $scope.active = 'zero';
-    $scope.setActive = function (type) {
-      $scope.active = type;
-    };
-    $scope.isActive = function (type) {
-      return type === $scope.active;
-    };
+.controller('HistoryCtrl', function($scope, $rootScope, HistoryAPI, AuthAPI) {
 
-    $scope.isChecked = false;
+  $scope.weekHistory = [];
+  console.log('empty user history array initialized: ' + $scope.uHistory);
 
-    $scope.toggleCheck = function () {
-      $scope.isChecked = !$scope.isChecked;
-      console.log("Checked");
-    }
+  var today = Date.now();
+  $scope.endDate = new Date(today);
+  console.log('end date: ' + $scope.endDate);
+  var newDate = new Date($scope.endDate);
+  newDate.setDate(newDate.getDate() - 7);
+  $scope.startDate = new Date(newDate);
 
 
-  })
+  console.log('start date' + $scope.startDate);
 
-
-  .controller('HistoryCtrl', function($scope, $rootScope, HistoryAPI, AuthAPI) {
-
-    $scope.weekHistory = [];
-    console.log('empty user history array initialized: ' + $scope.uHistory);
-
-    var today = Date.now();
-    $scope.endDate = new Date(today);
-    console.log('end date: ' + $scope.endDate);
-    var newDate = new Date($scope.endDate);
-    newDate.setDate(newDate.getDate() - 7);
-    $scope.startDate = new Date(newDate);
-
-
-    console.log('start date' + $scope.startDate);
 
 
     console.log('user id is: ' +$rootScope.getUserId());
@@ -1925,51 +1902,49 @@ angular.module('starter.controllers', ['starter.appServices',
           console.log('user history set as: ' + $scope.uHistory[i]);
           $scope.getCurrentWeekHistory();
         }
-
-
       })
       .error(function(err){
         console.log('Get User history API request failed');
         console.log(err);
       });
 
-    $scope.getCurrentWeekHistory = function(){
-      var today = Date.now();
-      $scope.endDate = new Date(today);
-      console.log('end date: ' + $scope.endDate);
-      var newDate = new Date($scope.endDate);
-      newDate.setDate(newDate.getDate() - 7);
-      $scope.startDate = new Date(newDate);
+          $scope.getCurrentWeekHistory = function(){
+            var today = Date.now();
+            $scope.endDate = new Date(today);
+            console.log('end date: ' + $scope.endDate);
+            var newDate = new Date($scope.endDate);
+            newDate.setDate(newDate.getDate() - 7);
+            $scope.startDate = new Date(newDate);
 
-      for(var i=0; i< $scope.uHistory.length;  i++){
-        if($scope.uHistory[i].date >= $scope.startDate && $scope.uHistory[i].date <= $scope.endDate){
-          $scope.weekHistory.push($scope.uHistory[i]);
-        }
-      }
-    }
+            for(var i=0; i< $scope.uHistory.length;  i++){
+              if($scope.uHistory[i].date >= $scope.startDate && $scope.uHistory[i].date <= $scope.endDate){
+                $scope.weekHistory.push($scope.uHistory[i]);
+              }
+            }
+          }
 
-    $scope.decrementWeek = function(){
-      var weekStartDate = new Date();
-      var weekEndDate = new Date();
-      weekEndDate.setDate($scope.startDate.getDate() -1);
-      console.log('weekEndDate: ' + weekEndDate);
-      weekStartDate.setDate(weekEndDate.getDate() -7);
-      console.log('weekStartDate: ' + weekStartDate);
-      $scope.endDate =  new Date(weekEndDate);
-      console.log('$scope.endDate'+ $scope.endDate);
-      $scope.startDate = new Date(weekStartDate);
-      console.log('$scope.startDate' + $scope.startDate);
+          $scope.decrementWeek = function(){
+            var weekStartDate = new Date();
+            var weekEndDate = new Date();
+            weekEndDate.setDate($scope.startDate.getDate() -1);
+            console.log('weekEndDate: ' + weekEndDate);
+            weekStartDate.setDate(weekEndDate.getDate() -7);
+            console.log('weekStartDate: ' + weekStartDate);
+            $scope.endDate =  new Date(weekEndDate);
+            console.log('$scope.endDate'+ $scope.endDate);
+            $scope.startDate = new Date(weekStartDate);
+            console.log('$scope.startDate' + $scope.startDate);
 
-      for(var i=0; i < $scope.uHistory.length; i++){
-        if($scope.uHistory[i].date >= $scope.startDate && $scope.uHistory[i].date <= $scope.endDate){
-          $scope.weekHistory.push($scope.uHistory[i]);
+            for(var i=0; i < $scope.uHistory.length; i++){
+              if($scope.uHistory[i].date >= $scope.startDate && $scope.uHistory[i].date <= $scope.endDate){
+                $scope.weekHistory.push($scope.uHistory[i]);
 
-        }
+              }
 
-      }
-
-
-    }
+            }
 
 
-  });
+          }
+
+
+        });
