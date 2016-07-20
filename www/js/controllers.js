@@ -2,11 +2,10 @@ angular.module('starter.controllers', ['starter.appServices',
     'starter.charityServices',
     'starter.authServices',
     'starter.runServices',
-    'starter.accountServices',
-    'starter.accountServices',
     'starter.donationServices',
     'starter.userServices',
-    'starter.runServices','ionic','ngCordova',
+    'starter.historyServices',
+    'starter.runServices','ionic','ngCordova'
   ])
 
 
@@ -18,7 +17,7 @@ angular.module('starter.controllers', ['starter.appServices',
       lastName: "",
       email: "",
       password: "",
-      charityId: undefined,
+      charity: "",
       history: [],
       provider: "",
       past_donations_from: [],
@@ -59,6 +58,7 @@ angular.module('starter.controllers', ['starter.appServices',
       var lastName = this.user.lastName;
       var email  =  this.user.email;
       var password = this.user.password;
+      var charity = this.user.charity;
 
 
       if(!firstName){
@@ -81,14 +81,17 @@ angular.module('starter.controllers', ['starter.appServices',
         lastName: lastName,
         email: email,
         password: password,
+        charity: charity,
         provider: 'local'
       }).success(function (data, status, headers, config){
           $rootScope.hide();
           //$rootScope.setCharity(charity);
           $rootScope.setEmail(email);
-          var name = firstName + ' ' + lastName;
-          $rootScope.setName(name);
-          console.log('name set as: ' + $rootScope.getName());
+          var name =data.name.first + data.name.last;
+          console.log('name: ' + name);
+
+        $rootScope.setName(name);
+
           $window.location.href  = ('#/app/charities');
         })
         .error(function(error){
@@ -106,9 +109,10 @@ angular.module('starter.controllers', ['starter.appServices',
 
     $scope.user = {
       email: "",
+      id: "",
       name: "",
       password: "",
-      charity: undefined,
+      charity: "",
       history: [],
       provider: "",
       past_donations_from: [],
@@ -162,7 +166,12 @@ angular.module('starter.controllers', ['starter.appServices',
           $rootScope.setCreatedAt($scope.user.created);
           console.log('createdAt local storage set: ' + $rootScope.getCreatedAt());
 
-          console.log('Charity: ' + $scope.user.charityId);
+          $scope.user.id = data._id;
+          console.log('$scope.user.id set to: ' + $scope.user.id);
+          $rootScope.setUserId($scope.user.id);
+          console.log('User id local storage set: ' + $rootScope.getUserId());
+
+          console.log('Charity: ' + $scope.user.charity);
           // $scope.user.charityId = data.charityId;
           // console.log('$scope.user.charityId set as: ' + $scope.user.charityId);
           // $rootScope.setSelectedCharity($scope.user.charityId);
@@ -859,8 +868,9 @@ angular.module('starter.controllers', ['starter.appServices',
           console.log('%cminutes: ' + $scope.minutes, 'color: RoyalBlue');
           console.log('minutes incremented');
         }
-        var time = $scope.minutes + ':'+ $scope.seconds;
-        $rootScope.setRunTime(time);
+
+        $rootScope.setRunMinutes($scope.minutes);
+        $rootScope.setRunSeconds($scope.seconds);
         console.log('%cRun time (global) set as: ' + $rootScope.getRunTime(), 'color: RoyalBlue');
 
         console.log('%cTimer Interval mark', 'color: RoyalBlue');
@@ -1196,10 +1206,8 @@ angular.module('starter.controllers', ['starter.appServices',
 
     $scope.stopRun = function(){
 
-      $scope.pushRunInfo = function(){
-        $rootScope.$broadcast("PushRunInfo");
-      }
 
+      $scope.postRun();
       $scope.removeResume();
       $scope.removeStop();
       console.log('%c$scope.stopTimer() called', 'color: RoyalBlue');
@@ -1216,35 +1224,37 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.map.controls[google.maps.ControlPosition.BOTTOM].push(runSummaryButtonControlDiv);
     }
 
-    $rootScope.$on("PushRunInfo", function(){
-      var distance = $rootScope.getRunDistance();
-      console.log('Push run- Distance: '+ distance);
+    $scope.postRun = function(){
 
-      var time = $rootScope.getRunTime();
-      console.log('Push run- Time: ' + time);
+      console.log('Push run- Distance: '+ $rootScope.getRunDistance());
 
-      var pace = $rootScope.getRunPace();
-      console.log('Push run-  Pace: ' + pace);
+      console.log('Push run- minutes: ' + $rootScope.getRunMinutes());
+      console.log('Push run-  Seconds: ' + $rootScope.getRunSeconds());
+      console.log('Push run-  Pace: ' + $rootScope.getRunPace());
+      console.log('Push run-  user: ' + $rootScope.getEmail());
 
-      $scope.runInfo.distance = distance;
-      $scope.runInfo.time = time;
-      $scope.runInfo.pace = pace;
 
-      RunAPI.saveRun(
-        {email: $rootScope.getEmail()},
-        {runInfo: $scope.runInfo})
+
+      var form = {
+        distance: $rootScope.getRunDistance(),
+        seconds: $rootScope.getRunSeconds(),
+        minutes: $rootScope.getRunMinutes(),
+        pace: $rootScope.getRunPace(),
+        user: $rootScope.getUserId(),
+        date: Date.now()
+      }
+
+      RunAPI.saveRun(form)
         .success(function(data, status, headers, config){
           //just status header for now
           console.log('saveRun API call returned success');
-          console.log('Run info: ' + $scope.runInfo);
+
         })
         .error(function(err){
           console.log(err);
           console.log('Save run API call failed');
         });
-
-
-    })
+    }
 
 
     $scope.centerOnMe = function(){
@@ -1408,8 +1418,9 @@ angular.module('starter.controllers', ['starter.appServices',
 
       var email = $rootScope.getEmail();
       console.log('email: ' + email);
+      console.log('charity: ' + charity);
       $rootScope.setSelectedCharity(charity);
-     charity = $rootScope.getSelectedCharity();
+      charity = $rootScope.getSelectedCharity();
       console.log('charity: ' + $rootScope.getSelectedCharity());
       console.log('attempting to update user\'s selected charity');
 
@@ -1637,6 +1648,7 @@ angular.module('starter.controllers', ['starter.appServices',
   })
 
 
+
   .controller('MyPledgesCtrl', function($rootScope, $scope, $filter, DonationAPI) {
     // $scope.doRefresh = function() {
     DonationAPI.getAllPledges($rootScope.getToken(), "577525799f1f51030075a292")
@@ -1710,7 +1722,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
   })
 
-  .controller('InviteSponsorPaymentCtrl', function($rootScope, $scope, $http, store, API, $window){
+  .controller('InviteSponsorPaymentCtrl', function($rootScope, $scope, $http, store, DonationAPI, $window){
     $scope.user = {
       email: ""
     };
@@ -1857,14 +1869,78 @@ angular.module('starter.controllers', ['starter.appServices',
   })
 
 
-  .controller('HistoryCtrl', function($scope) {
+  .controller('HistoryCtrl', function($scope, $rootScope, HistoryAPI, AuthAPI) {
 
-    $scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
-    $scope.series = ['Series A', 'Series B'];
+    $scope.weekHistory = [];
+    console.log('empty user history array initialized: ' + $scope.uHistory);
 
-    $scope.data = [
-      [65, 59, 80, 81, 56, 55, 40],
-      [28, 48, 40, 19, 86, 27, 90]
-    ];
+    var today = Date.now();
+    $scope.endDate = new Date(today);
+    console.log('end date: ' + $scope.endDate);
+    var newDate = new Date($scope.endDate);
+    newDate.setDate(newDate.getDate() - 7);
+    $scope.startDate = new Date(newDate);
+
+
+    console.log('start date' + $scope.startDate);
+
+
+    console.log('user id is: ' +$rootScope.getUserId());
+    HistoryAPI.getAll( {'userId': $rootScope.getUserId()}   )
+      .success(function(data){
+        console.log(data);
+        console.log('History API get user history call succeeded');
+        $scope.uHistory = [];
+        for(var i=  0; i<data.length; i++){
+          $scope.uHistory.push(data[i]);
+          console.log('user history set as: ' + $scope.uHistory[i]);
+          $scope.getCurrentWeekHistory();
+        }
+
+
+      })
+      .error(function(err){
+        console.log('Get User history API request failed');
+        console.log(err);
+      });
+
+    $scope.getCurrentWeekHistory = function(){
+      var today = Date.now();
+      $scope.endDate = new Date(today);
+      console.log('end date: ' + $scope.endDate);
+      var newDate = new Date($scope.endDate);
+      newDate.setDate(newDate.getDate() - 7);
+      $scope.startDate = new Date(newDate);
+
+      for(var i=0; i< $scope.uHistory.length;  i++){
+        if($scope.uHistory[i].date >= $scope.startDate && $scope.uHistory[i].date <= $scope.endDate){
+          $scope.weekHistory.push($scope.uHistory[i]);
+        }
+      }
+    }
+
+    $scope.decrementWeek = function(){
+      var weekStartDate = new Date();
+      var weekEndDate = new Date();
+      weekEndDate.setDate($scope.startDate.getDate() -1);
+      console.log('weekEndDate: ' + weekEndDate);
+      weekStartDate.setDate(weekEndDate.getDate() -7);
+      console.log('weekStartDate: ' + weekStartDate);
+      $scope.endDate =  new Date(weekEndDate);
+      console.log('$scope.endDate'+ $scope.endDate);
+      $scope.startDate = new Date(weekStartDate);
+      console.log('$scope.startDate' + $scope.startDate);
+
+      for(var i=0; i < $scope.uHistory.length; i++){
+        if($scope.uHistory[i].date >= $scope.startDate && $scope.uHistory[i].date <= $scope.endDate){
+          $scope.weekHistory.push($scope.uHistory[i]);
+
+        }
+
+      }
+
+
+    }
+
 
   });

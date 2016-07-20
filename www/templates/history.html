@@ -1,11 +1,6 @@
-<head>
-  <link rel="stylesheet" type="text/css" href="css/history.css">
-  <script src="node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
-  <script src="node_modules/chart.js/Chart.min.js"></script>
-  <script src="node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
-</head>
+
 <ion-content class="BarCtrl">
-<
+
   <div class="month-slide-wrapper">
     <ion-slide-box on-slide-changed="slideHasChanged($index)">
       <ion-slide>
@@ -73,10 +68,10 @@
   <div class="week-buttons-wrapper">
     <div class="row">
       <div class="col col-40" style="text-align: right">
-        <button class="button left-button"></button>
+        <button class="button left-button" ng-click="decrementWeek()"></button>
       </div>
       <div class="col col-20 col-center">
-        6/1 - 6/7
+        {{startDate}} - {{endDate}}
       </div>
       <div class="col col-40" style="text-align: left">
         <button class="button right-button"></button>
@@ -91,7 +86,6 @@
     <canvas id="bar" class="chart chart-bar"
             chart-data="{{data}}" chart-labels="{{labels}}" chart-series="{{series}}">
     </canvas>
-
   </div>
 
 
