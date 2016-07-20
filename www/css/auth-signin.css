@@ -30,6 +30,8 @@
   text-align: center;
   position: relative;
   left: 7%;
+  font-size: 1.25em;
+  font-weight: 300;
 }
 
 .sign-in .input-label {

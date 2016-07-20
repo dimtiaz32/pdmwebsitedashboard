@@ -11,71 +11,71 @@
 
     <!--DropDown stuff-->
 
-    <div class="overlay">
+    <div class="run-page overlay">
 
-      <div class="detail" ng-show="!isRunning">
-        <p class="header" style="padding-top: 5px"> Welcome {{user.name}}</p>
+      <div class="run-page detail" ng-show="!isRunning">
+        <p class="run-page header" style="padding-top: 5px"> Welcome {{user.name}}</p>
         <hr>
-        <p style="color: #00b9be" class="detail-head">Every mile raises $0.50 for</p>
-        <p class="header">Teens Run DC</p>
+        <p style="color: #00b9be" class="run-page detail-head">Every mile raises $0.50 for</p>
+        <p class="run-page header">Teens Run DC</p>
 
         <div ng-show="isDetailDisplayed">
           <hr>
-          <span class="head">This week</span>
-          <p class="label">$17.20<span class="units"> raised and</span> 34 miles <span class="units">run for charity</span></p>
+          <span class="run-page head">This week</span>
+          <p class="run-page label">$17.20<span class="units"> raised and</span> 34 miles <span class="units">run for charity</span></p>
           <hr>
-          <span class="head">This month</span>
-          <p class="label">$50.10<span class="units"> raised and</span> 100 miles <span class="units">run for charity</span></p>
+          <span class="run-page head">This month</span>
+          <p class="run-page label">$50.10<span class="units"> raised and</span> 100 miles <span class="units">run for charity</span></p>
         </div>
-        <button class="button-slide"
+        <button class="run-page button-slide"
                 ng-class="isDetailDisplayed ? 'button-slide-down' : 'button-slide-up'"
                 ng-click="isDetailDisplayed = !isDetailDisplayed">
         </button>
       </div>
 
-      <div class="detail" ng-show="isRunning">
-        <div class="row">
-          <div class="col col-50">
-            <p class="head">Duration</p>
-            <p class="label">{{minutes}}:{{seconds}}<span class="units">min:sec</span></p>
+      <div class="run-page detail" ng-show="isRunning">
+        <div class="run-page row">
+          <div class="run-page col col-50">
+            <p class="run-page head">Duration</p>
+            <p class="run-page label">{{minutes}}:{{seconds}}<span class="units">min:sec</span></p>
           </div>
-          <div class="verticalLine"></div>
-          <div class="col col-50">
-            <p class="head">Distance</p>
-            <p class="label">{{distance}}<span class="units">mi</span></p>
-          </div>
-        </div>
-
-        <hr>
-
-        <div class="row">
-          <div class="col col-50">
-            <p class="head">Pace</p>
-            <p class="label">{{pace}}<span class="units">min/mi</span></p>
-          </div>
-          <div class="verticalLine"></div>
-          <div class="col col-50">
-            <p class="head">Funds Raised</p>
-            <p class="label">$3.57</p>
+          <div class="run-page verticalLine"></div>
+          <div class="run-page col col-50">
+            <p class="run-page head">Distance</p>
+            <p class="run-page label">{{distance}}<span class="units">mi</span></p>
           </div>
         </div>
 
+        <hr class="run-page">
 
-        <div class="detail" ng-show="isDetailDisplayed">
+        <div class="run-page row">
+          <div class="run-page col col-50">
+            <p class="run-page head">Pace</p>
+            <p class="run-page label">{{pace}}<span class="units">min/mi</span></p>
+          </div>
+          <div class="run-page verticalLine"></div>
+          <div class="run-page col col-50">
+            <p class="run-page head">Funds Raised</p>
+            <p class="run-page label">$3.57</p>
+          </div>
+        </div>
+
+
+        <div class="run-page detail" ng-show="isDetailDisplayed">
           <hr>
-          <div class="row">
-            <div class="col col-50">
-              <p class="head">Lap {{lapNumber}} Duration</p>
-              <p class="label">{{lapMinutes}}:{{lapSeconds}}<span class="units">min:sec</span></p>
+          <div class="run-page row">
+            <div class="run-page col col-50">
+              <p class="run-page head">Lap {{lapNumber}} Duration</p>
+              <p class="run-page label">{{lapMinutes}}:{{lapSeconds}}<span class="units">min:sec</span></p>
             </div>
-            <div class="verticalLine"></div>
-            <div class="col col-50">
-              <p class="head">Lap {{lapNumber}} Distance</p>
-              <p class="label">{{lapDistance}}<span class="units">mi</span></p>
+            <div class="run-page verticalLine"></div>
+            <div class="run-page col col-50">
+              <p class="run-page head">Lap {{lapNumber}} Distance</p>
+              <p class="run-page label">{{lapDistance}}<span class="units">mi</span></p>
             </div>
           </div>
         </div>
-        <button class="button-slide"
+        <button class="run-page button-slide"
                 ng-class="isDetailDisplayed ? 'button-slide-down' : 'button-slide-up'"
                 ng-click="isDetailDisplayed = !isDetailDisplayed">
         </button>

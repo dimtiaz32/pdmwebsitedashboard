@@ -1,31 +1,31 @@
-.item.item-divider {
+.my-sponsors.item.item-divider {
   text-align: center;
   font-size: x-large;
   font-weight: normal;
 }
 
-.item.item-text-wrap {
+.my-sponsors.item.item-text-wrap {
   text-align: center;
 }
 
-h1 {
+.my-sponsors h1 {
   font-size: x-large;
   font-weight: normal;
 }
 
-i {
+.my-sponsors i {
   text-align: center;
 }
 
-.card {
+.my-sponsors .card {
   font-family: "HelveticaNeue";
 }
 
-.item.item-input-inset {
+.my-sponsors .item.item-input-inset {
   border: none;
 }
 
-ion-content.payment {
+.my-sponsors ion-content.payment {
   background-image:url('../img/bg.jpg');
   background-repeat:no-repeat;
   background-size: 100%;

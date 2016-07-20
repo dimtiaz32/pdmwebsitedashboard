@@ -1,11 +1,11 @@
-.sign-in .logo-image {
+.sign-up .logo-image {
   display: block;
   margin: auto auto 10% auto;
   width: 20%;
   height: auto;
 }
 
-.sign-in .logo-title {
+.sign-up .logo-title {
   color: #fff;
   text-align: center;
   font-size: 2em;
@@ -15,7 +15,7 @@
 
 }
 
-  .sign-in .logo-title span{
+  .sign-up .logo-title span{
     font-weight: 500;
   }
 

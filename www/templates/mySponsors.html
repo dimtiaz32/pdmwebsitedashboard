@@ -1,55 +1,55 @@
 <ion-view view-title="Sponsors" ng-controller="MyDonationCtrl">
     <ion-nav-buttons side="right" >
-        <button class="button button-clear button-positive" ng-click="openModal($event)">
+        <button class="my-sponsors button button-clear button-positive" ng-click="openModal($event)">
           InviteSponsor
         </button>
     </ion-nav-buttons>
-    <ion-content class="has-header" >
+    <ion-content class="my-sponsors has-header" >
       <ion-refresher ng-hide="noSponsor" pulling-text="Pull to refresh..." on-refresh="doRefresh('fetchMySponsors')"></ion-refresher>
-      <div class="wrapper">
-        <div class="sponsor-header">
-          <div class="row">
-            <div class="col col-50 image">
+      <div class="my-sponsors wrapper">
+        <div class="my-sponsors sponsor-header">
+          <div class="my-sponsors row">
+            <div class="my-sponsors col col-50 image">
             </div>
-            <div class="col col-50">
+            <div class="my-sponsors col col-50">
               <h2>Jane Doe</h2>
-              <div class="row row-center">
-                <div class="col col-67">$252.24</div>
-                <div class="col col-33">raised for charity</div>
+              <div class="my-sponsors row row-center">
+                <div class="my-sponsors col col-67">$252.24</div>
+                <div class="my-sponsors col col-33">raised for charity</div>
               </div>
-              <div class="row">
-                <div class="col">
-                  <button class="button button-small button-clear button-PDMLight" ng-click="managePledges()">Manage my pledges</button>
+              <div class="my-sponsors row">
+                <div class="my-sponsors col">
+                  <button class="my-sponsors button button-small button-clear button-PDMLight" ng-click="managePledges()">Manage my pledges</button>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
-        <div class="row row-center">
-          <div class="col">
+        
+        <div class="my-sponsors row row-center">
+          <div class="my-sponsors col">
             <h3>My Sponsors</h3>
           </div>
-          <div class="col pledge">
-            <p class="pledge">Pledge</p>
-            <p class="ending-date">ending date</p>
+          <div class="my-sponsors col pledge">
+            <p class="my-sponsors pledge">Pledge</p>
+            <p class="my-sponsors ending-date">ending date</p>
           </div>
         </div>
         <hr>
-        <div class="list">
+        <div class="my-sponsors list">
           <!-- use this template for all the cells-->
-          <a class="item item-icon-left" ng-repeat="sponsor in sponsors">
-            <span class="cell-vertical-center-text"> {{ sponsor.donor.firstName }} {{sponsor.donor.lastName}}</span>
-              <span class="item-note">
-                <p class="pledge">{{ formateCurreny(sponsor.per_mile_donation) }}/mile</p>
-                <p class="ending-date">{{ formateDate(sponsor.end_date) }}</p>
+          <a class="my-sponsors item item-icon-left" ng-repeat="sponsor in sponsors">
+            <span class="my-sponsors cell-vertical-center-text"> {{ sponsor.donor.firstName }} {{sponsor.donor.lastName}}</span>
+              <span class="my-sponsors item-note">
+                <p class="my-sponsors pledge">{{ formateCurreny(sponsor.per_mile_donation) }}/mile</p>
+                <p class="my-sponsors ending-date">{{ formateDate(sponsor.end_date) }}</p>
               </span>
           </a>
         </div>
         <span ng-show="noData">
             No Sponsor now.
         </span>
-        <button class="button button-block button-clear button-sponsor-help">Need Help Getting Sponsors?</button>
+        <button class="my-sponsors button button-block button-clear button-sponsor-help">Need Help Getting Sponsors?</button>
       </div>
 
       </div>
