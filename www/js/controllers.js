@@ -1834,7 +1834,7 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.amount = store.get('donor.amount');
   })
 
-  .controller('AccountCtrl', function($rootScope, AuthAPI, AccountAPI, $window, $scope) {
+  .controller('AccountCtrl', function($rootScope, AuthAPI, UserAPI, $window, $scope) {
     //refresh on page load?
     //Profile Picture - edit
     //Name- cannot edit
@@ -1918,7 +1918,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
 
 
-  .controller('HistoryCtrl', function($scope, $rootScope, HistoryAPI, AuthAPI) {
+  .controller('HistoryCtrl', function($scope, $rootScope, HistoryAPI, AuthAPI, $filter) {
 
     /*Chart Configuration*/
     $scope.labels = ['6/1', '6/2', '6/3', '6/4', '6/5', '6/6', '6/7'];
@@ -1946,6 +1946,18 @@ angular.module('starter.controllers', ['starter.appServices',
 
     console.log('start date' + $scope.startDate);
 
+    var HistoryLogger = [{
+      // User: "",
+      // _v: "",
+      _id: "",
+      date: new Date(),
+      distance: Number,
+      // laps: [],
+      minutes: Number,
+      pace: Number,
+      // path:[],
+      seconds: Number
+    }]
 
 
     console.log('user id is: ' +$rootScope.getUserId());
@@ -1954,10 +1966,36 @@ angular.module('starter.controllers', ['starter.appServices',
         console.log(data);
         console.log('History API get user history call succeeded');
         $scope.uHistory = [];
-        for(var i=  0; i<data.length; i++){
-          $scope.uHistory.push(data[i]);
-          console.log('user history set as: ' + $scope.uHistory[i]);
-          $scope.getCurrentWeekHistory();
+        for(var i = 0; i<data.length; i++){
+          console.log('i:' + i);
+          HistoryLogger.push(data[i]);
+          console.log('Data._id' + data[i]._id);
+          HistoryLogger._id = data[i]._id;
+          console.log('HistoryLogger._id: ' + HistoryLogger._id);
+          HistoryLogger.date = data[i].date;
+          console.log('HistoryLogger.date: ' + HistoryLogger.date);
+          HistoryLogger.distance = data[i].distance;
+          console.log(' HistoryLogger.distance: ' +  HistoryLogger.distance);
+          // HistoryLogger.laps = data[i].laps[i];
+          // console.log('HistoryLogger.laps: ' + HistoryLogger.laps);
+          HistoryLogger.minutes= data[i].minutes;
+          console.log(' HistoryLogger.minutes: ' +  HistoryLogger.minutes);
+          HistoryLogger.pace = data[i].pace;
+          console.log('HistoryLogger.pace: ' + HistoryLogger.pace);
+          // HistoryLogger.path = data[i].path[i];
+          // console.log('HistoryLogger.path: ' + HistoryLogger.path);
+          HistoryLogger.seconds = data[i].seconds;
+          console.log('HistoryLogger.seconds: ' + HistoryLogger.seconds);
+
+          console.log('HistoryLogger: ' +HistoryLogger);
+
+
+          $scope.uHistory = [HistoryLogger];
+          console.log('$scope.uHistory: ' + $scope.uHistory);
+          // data[i].date = $filter('date')(data[i].date, "MMM dd yyyy");
+          // $scope.uHistory.push(data[i].Object);
+          // console.log('user history set as: ' + $scope.uHistory[i]);
+          // $scope.getCurrentWeekHistory();
         }
       })
       .error(function(err){

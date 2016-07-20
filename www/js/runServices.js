@@ -65,7 +65,7 @@ angular.module('starter.runServices', ['ionic'])
     return $window.localStorage.pace;
   };
   $rootScope.setRunPath = function(coordinates){
-    return $window.localStorage.runPath = coordinates
+    return $window.localStorage.runPath = coordinates;
   };
   $rootScope.getRunPath = function(){
     return $window.localStorage.runPath;
@@ -117,7 +117,7 @@ angular.module('starter.runServices', ['ionic'])
 
   $rootScope.setLapNumber = function(number){
     return $window.localStorage.lapNumber = number;
-  }
+  };
   $rootScope.getLapNumber = function(){
     return $window.localStorage.lapNumber;
   };
