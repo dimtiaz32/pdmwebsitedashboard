@@ -58,9 +58,6 @@
 }
 
 /*SOCIAL MEDIA LOGINS*/
-
-/*new google logo*/
-
 sign-in.social-wrap button{
   width:205px;
 }
@@ -69,87 +66,3 @@ sign-in.social-wrap button{
   width:60%;
   height: auto;
 }
-
-/*fb,twitter, google(outdated appearance - see bottom for updated)*/
-/*div.social-wrap.sign-in{
-  width: 205px;
-  margin: auto;
-}
-div.social-wrap.sign-in button {
-    padding-right: 45px;
-    height: 35px;
-    background: none;
-    border: none;
-    display: block;
-    background-size: 35px 35px;
-    background-position: right center;
-    background-repeat: no-repeat;
-    border-radius: 4px;
-    color: white;
-    font-family:"Merriweather Sans", sans-serif;
-    font-size: 14px;
-    margin-bottom: 15px;
-    width: 205px;
-    border-bottom: 2px solid transparent;
-    border-left: 1px solid transparent;
-    border-right: 1px solid transparent;
-    box-shadow: 0 4px 2px -2px gray;
-    text-shadow: rgba(0, 0, 0, .5) -1px -1px 0;
-}
-.sign-in button#facebook {
-    border-color: #2d5073;
-    background-color: #3b5998;
-    background-image: url(../img/facebook-icon-1.png);
-}
-.sign-in button#twitter {
-    border-color: #007aa6;
-    background-color: #008cbf;
-    background-image: url(../img/Twitter_logo_white-1.png);
-}
-.sign-in button#googleplus {
-    border-color: #111;
-    background-color: #222;
-    text-shadow: #333 -1px -1px 0;
-    background-image:url(../img/google-plus-xxl-1.png);
-}
-div.social-wrap.sign-in button:active {
-    background-color: #222;
-}
-
-.sign-in div.social-wrap.c button {
-    padding-left: 35px;
-    padding-right: 0px;
-    height: 35px;
-    background: none;
-    border: none;
-    display: block;
-    background-size: 25px 25px, cover;
-    background-position: 10px center, center center;
-    background-repeat: no-repeat, repeat;
-    border-radius: 4px;
-    color: white;
-    font-family:"Merriweather Sans", sans-serif;
-    font-size: 14px;
-    margin-bottom: 15px;
-    width: 205px;
-    border-bottom: 2px solid transparent;
-    border-left: 1px solid transparent;
-    border-right: 1px solid transparent;
-    box-shadow: 0 4px 2px -2px gray;
-    text-shadow: rgba(0, 0, 0, .4) -1px -1px 0;
-}
-
-div.sign-in.social-wrap.c > .googleplus {
-    background-size: 30px 30px, cover;
-    background-image: url(../img/google-plus-xxl-2.png), -webkit-gradient(linear, left top, left bottom, color-stop(1%, #353233), color-stop(100%, #1d1b1c));
-}
-div.sign-in.social-wrap.c > .facebook {
-    background: url(../img/facebook-icon-2.png), -webkit-gradient(linear, left top, left bottom, color-stop(0%, #4c74c4), color-stop(100%, #3b5998));
-    background-size: 25px 25px, cover;
-    background-position: 10px center, center center;
-    background-repeat: no-repeat, repeat;
-}
-div.sign-in.social-wrap.c > .twitter {
-    background-image: url(../img/Twitter_logo_white-2.png), -webkit-gradient(linear, left top, left bottom, color-stop(1%, #00aced), color-stop(99%, #00a9ff));
-    ;
-}*/
