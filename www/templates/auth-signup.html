@@ -1,32 +1,34 @@
 <ion-header-bar class="bar-positive">
-   <h1 class="title">Sign Up</h1>
+  <a class="button icon-left ion-chevron-left button-clear" href="#/auth/signin">Back</a>
 </ion-header-bar>
-<ion-content class="has-header padding">
-   <div class="list">
-      <label class="item item-input">
-      <span class="input-label">First Name</span>
-      <input type="text" ng-model="user.firstName">
-      </label>
-      <label class="item item-input">
-        <span class="input-label">Last Name</span>
-        <input type="text" ng-model="user.lastName">
-      </label>
-      <label class="item item-input">
-      <span class="input-label">Email</span>
+<ion-content class="sign-up has-header padding">
+  <div class="sign-in logo">
+    <img class="sign-in logo-image" src="../img/PDM logo.png">
+    <h1 class="sign-in logo-title">Become a DREAM<span>RUNNER</span></h1>
+  </div>
+  <div class="sign-up list">
+    <label class="sign-up item item-input">
+    <span class="sign-up input-label">First Name</span>
+    <input type="text" ng-model="user.firstName">
+    </label>
+    <label class="sign-up item item-input">
+      <span class="sign-up input-label">Last Name</span>
+      <input type="text" ng-model="user.lastName">
+    </label>
+    <label class="sign-up item item-input">
+      <span class="sign-up input-label">Email</span>
       <input type="text" ng-model="user.email">
-      </label>
-      <label class="item item-input">
-      <span class="input-label">Password</span>
+    </label>
+      <label class="sign-up item item-input">
+      <span class="sign-up input-label">Password</span>
       <input type="password" ng-model="user.password">
-      </label>
-     <label class="item item-input">
-       <span class="input-label">Verify Password</span>
-       <input type="password" ng-model="secondPassword.password" ng-required="">
-     </label>
-      <label class="item item-input">
-      <button class="button button-block button-positive" ng-click="createUser()">
-      Sign Up
-      </button>
-      </label>
-   </div>
+    </label>
+   <label class="sign-up item item-input">
+     <span class="sign-up input-label">Verify Password</span>
+     <input type="password" ng-model="secondPassword.password" ng-required="">
+   </label>
+   <button class="sign-up button button-full" ng-click="createUser()">
+    Create Account
+   </button>
+  </div>
 </ion-content>

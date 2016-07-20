@@ -21,7 +21,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
       }
     });
   })
-
   .config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('auth', {
@@ -35,7 +34,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
         views: {
           'auth-signin':{
             templateUrl: 'templates/auth-signin.html',
-            controller: 'LoginCtrl'
+            controller: 'LoginCtrl',
           }
         }
       })
@@ -49,6 +48,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
           }
         }
       })
+
 
       .state('app', {
         url: '/app',
