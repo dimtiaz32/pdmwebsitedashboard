@@ -1259,7 +1259,7 @@ angular.module('starter.controllers', ['starter.appServices',
       console.log('Push run- minutes: ' + $rootScope.getRunMinutes());
       console.log('Push run-  Seconds: ' + $rootScope.getRunSeconds());
       console.log('Push run-  Pace: ' + $rootScope.getRunPace());
-      console.log('Push run-  user: ' + $rootScope.getEmail());
+      console.log('Push run-  User: ' + $rootScope.getUserId());
 
 
 
@@ -1268,7 +1268,8 @@ angular.module('starter.controllers', ['starter.appServices',
         seconds: $rootScope.getRunSeconds(),
         minutes: $rootScope.getRunMinutes(),
         pace: $rootScope.getRunPace(),
-        user: $rootScope.getUserId(),
+        User: $rootScope.getUserId(),
+        checkpoints : [$rootScope.get],
         date: Date.now()
       }
 
@@ -1914,7 +1915,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
 
     console.log('user id is: ' +$rootScope.getUserId());
-    HistoryAPI.getAll( {'userId': $rootScope.getUserId()}   )
+    HistoryAPI.getAll(  $rootScope.getUserId()  )
       .success(function(data){
         console.log(data);
         console.log('History API get user history call succeeded');
