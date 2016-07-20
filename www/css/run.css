@@ -1,20 +1,20 @@
 
-.scroll {
+.run-page.scroll {
   height: 100%;
 }
 
-#map {
+.run-page #map {
   width: 100%;
   height: 70%;
 }
 
-.row {
+.run-page .row {
   position: relative;
   z-index: 10;
   background-color: white;
 }
 
-p.head {
+.run-page p.head {
   font-family: "HelveticaNeue-Light";
   font-size: 1em;
   font-weight: lighter;
@@ -24,7 +24,7 @@ p.head {
   line-height: 1;
 }
 
-p.label {
+.run-page p.label {
   text-align: center;
   font-family: "HelveticaNeue-Light";
   font-size: 2em;
@@ -32,7 +32,7 @@ p.label {
   line-height: 0.5;
 }
 
-p.detail-head {
+p.run-page.detail-head {
   text-align: center;
   font-family: "HelveticaNeue-Light";
   font-size: large;
@@ -43,16 +43,16 @@ p.detail-head {
   /*line-height: 0.5;*/
 }
 
-span.units {
+.run-page span.units {
   font-size: 0.5em;
 }
 
-span.head {
+.run-page span.head {
   font-family: "HelveticaNeue-Light";
   font-size: small;
 }
 
-button.button-large.button-lap {
+button.run-page.button-large.button-lap {
 
   position: absolute;
   top: 65%;
@@ -67,7 +67,7 @@ button.button-large.button-lap {
   z-index: 10;
 }
 
-button.button-large.button-pause {
+button.run-page.button-large.button-pause {
   position: absolute;
   top: 80%;
   left: 5%;
@@ -81,7 +81,7 @@ button.button-large.button-pause {
   z-index: 10;
 }
 
-button.button-large.button-pause-red{
+button.run-page.button-large.button-pause-red{
   position: absolute;
   top: 80%;
   left: 5%;
@@ -95,7 +95,7 @@ button.button-large.button-pause-red{
   z-index: 10;
 }
 
-button.button-large.button-start {
+button.run-page.button-large.button-start {
 
   position: absolute;
   top: 50%;
@@ -110,19 +110,19 @@ button.button-large.button-start {
   z-index: 10;
 }
 
-hr {
+hr.run-page {
   height: 1px;
 
   background-color: lightgrey;
 
 }
 
-.verticalLine {
+.verticalLine.run-page {
   border-left: thin solid lightgrey;
   transition: 1s all linear;
 }
 
-button.button-slide-up {
+button.run-page.button-slide-up {
   background-image: url("../img/pull down grey bar straight.png");
   background-size: contain;
   background-position: center;
@@ -137,7 +137,7 @@ button.button-slide-up {
   margin-bottom: 3px;
 }
 
-button.button-slide-down {
+button.run-page.button-slide-down {
   background-image: url("../img/pull down grey bar.png");
   background-size: contain;
   background-position: center;
@@ -152,7 +152,7 @@ button.button-slide-down {
   margin-bottom: 3px;
 }
 
-h2 {
+h2.run-page {
   /*Check to remove this later*/
   font-family: "HelveticaNeue-Light";
   font-size: x-large;
@@ -161,11 +161,11 @@ h2 {
   padding-top: 0;
 }
 
-.detail {
+.run-page.detail {
   transition: 0.1s all linear;
 }
 
-.overlay {
+.run-page.overlay {
   position: absolute;
   width: 100%;
   top:0;
@@ -175,10 +175,8 @@ h2 {
   z-index: 10;
 }
 
-p.header {
+p.run-page.header {
   font-family: "HelveticaNeue-Light";
   font-size: x-large;
   text-align: center;
-
 }
-

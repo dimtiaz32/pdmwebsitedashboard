@@ -1,4 +1,4 @@
-.header .heading {
+.invite-sponsor.header .heading {
   background-color: #efefef;
   color: #000000;
   font-weight: 200;
@@ -7,7 +7,7 @@
   padding: 4% 2% 2% 2%;
 }
 
-h2{
+h2.invite-sponsor {
   padding: 3% 5% 0 5%;
   margin: 0;
   /*padding-top: 2%;
@@ -20,14 +20,14 @@ h2{
   text-align: left;
 }
 
-p {
+p.invite-sponsor {
   font-size: 1em;
   font-weight: 300;
   padding: 0 5% 3% 5%;
 }
 
 /*Donation Link Styling*/
-.donation-link p {
+.donation-link.invite-sponsor p {
   text-align: center;
   background-color: #efefef;
   padding: 2%;
@@ -36,30 +36,30 @@ p {
 
 
 /*Share Buttons Styling - Text and Email*/
-ul {
+ul.invite-sponsor {
     list-style-type: none;
     margin: 0;
     padding: 0;
     margin-bottom: 3%;
 }
 
-li {
+ul.invite-sponsor li {
     display: inline;
 }
 #buttons {
   text-align: center;
 }
-.button.button-assertive {
+.invite-sponsor.button.button-assertive {
     background-color: #ce1d1f;
     width: 35%;
     padding: 0;
     margin-right: 7%;
     margin-left: 7%
 }
-.button.button-assertive.activated {
+.invite-sponsor.button.button-assertive.activated {
     background-color: #00b9be;
 }
-.fb-logo {
+.invite-sponsor.fb-logo {
   position: relative;
   top: 10px;
   left: 5%;
