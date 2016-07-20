@@ -4,7 +4,7 @@
 
 .sign-in .logo-image {
   display: block;
-  margin: 10% auto 0 auto;
+  margin: 20px auto 0 auto;
   width: 20%;
   height: auto;
 }
@@ -46,6 +46,27 @@
 
   .sign-in .forgot-password {
     background-color: #00b9be;
-    text-align: center;;
-    display: inline-block;;
+    text-align: center;
+    display: inline-block;
+  }
+
+/*create account and sign in buttons*/
+.sign-in.options li{
+  background-color: transparent;
+  display: inline;
+  float: left;
+}
+
+/*SOCIAL MEDIA LOGINS*/
+.sign-in.social.button{
+  width:100%;
+  background-color: #00b9be;
+  padding: 0;
+  border: 0;
+  margin: 0;
+}
+
+  .sign-in.social.button img {
+    width:60%;
+    height: auto;
   }

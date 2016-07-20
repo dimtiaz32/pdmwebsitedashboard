@@ -1,5 +1,4 @@
-<ion-header-bar class="bar-positive">
-</ion-header-bar>
+
 <ion-content class="sign-in has-header">
   <div class="sign-in logo">
     <img class="sign-in logo-image" src="../img/PDM logo.png">
@@ -18,16 +17,16 @@
     <button class="sign-in login button button-full button-positive" ng-click="login()">
       Sign in
     </button>
+
     <button class="sign-in register button button-full button-positive" onclick="window.location.href = '#/auth/signup'">
       Create Account
     </button>
     <button class="sign-in forgot-password button button-full button-positive" ng-click="showForgotPassword()">
       Forgot Password
     </button>
-    <label class="item">
-        <button class="button button-block button-positive" ng-click="loginByFB()">
-        Login with Facebook
-        </button>
-    </label>
+    <div class="sign-in social-wrap">
+      <button class="sign-in social facebook button" ng-click="loginByFB()"><img src="../img/facebook-login.png"></button>
+      <button class="sign-in social google button"><img src="../img/google-login.png"></button>
+    </div>
   </div>
 </ion-content>
