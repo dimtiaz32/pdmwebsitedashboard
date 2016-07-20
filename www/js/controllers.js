@@ -187,7 +187,7 @@ angular.module('starter.controllers', ['starter.appServices',
                   access_token: response.authResponse.accessToken
                 }).success(function(data, status, headers, config){
                   $rootScope.hide();
-                  $window.location.href=('#/app/run');
+                  $window.location.href=('#/app/charities');
                 }).error(function(error){
                   console.log("AuthAPI.signinByFB failed:" + error);
                   $rootScope.hide();
@@ -1625,112 +1625,99 @@ angular.module('starter.controllers', ['starter.appServices',
 
   })
 
-  .controller('InviteSponsorStartCtrl', function($scope){
-
-  })
-
   .controller('InviteSponsorInfoCtrl', function($rootScope, $scope, $http, store, $window){
-    $scope.user = {
-      firstname: "",
-      lastname: ""
-    };
-    $scope.saveName = function() {
+        $scope.user = {
+          firstname: "",
+          lastname: ""
+        };
+        $scope.saveName = function() {
 
-      var firstname = this.user.firstname;
-      var lastname = this.user.lastname;
+          var firstname = this.user.firstname;
+          var lastname = this.user.lastname;
 
-      if(!firstname || !lastname) {
-        //$rootScope.notify("Please enter valid data");
-        return false;
-      }
+          if(!firstname || !lastname) {
+            //$rootScope.notify("Please enter valid data");
+            return false;
+          }
 
-      store.set('user.firstname',firstname);
-      store.set('user.lastname', lastname);
-      $window.location.href = ('#/app/sponsors/amount');
-    }
+          store.set('user.firstname',firstname);
+          store.set('user.lastname', lastname);
+          $window.location.href = ('#/app/inviteSponsor/amount');
+        }
   })
 
   .controller('InviteSponsorAmountCtrl', function($scope, $http, store, $window) {
-    $scope.active = 'zero';
 
-    $scope.setActive = function (type) {
-      $scope.active = type;
-    };
-    $scope.isActive = function (type) {
-      return type === $scope.active;
-    };
+          $scope.active = 'zero';
+
+          $scope.setActive = function(type) {
+            $scope.active = type;
+          };
+          $scope.isActive = function(type) {
+            return type === $scope.active;
+          };
+
+          $scope.donor = {
+              amount: ""
+          };
+
+          $scope.saveMoney = function() {
+
+            var amount = this.donor.amount;
+
+            if(!amount && $scope.active == 'zero') {
+              return false;
+            }
+            if (amount != '') {
+                store.set('donor.amount', amount);
+            }
+            $window.location.href = ('#/app/inviteSponsor/pledge');
+          }
+
+          $scope.saveMoneyWithAmount = function(amount) {
+             store.set('donor.amount', amount);
+          }
+
   })
 
 
   .controller('MyPledgesCtrl', function($rootScope, $scope, $filter, DonationAPI) {
-    // $scope.doRefresh = function() {
-    DonationAPI.getAllPledges($rootScope.getToken(), "577525799f1f51030075a292")
-      .success(function (data, status, headers, config) {
-        $scope.list = [];
-        for (var i = 0; i < data.length; i++) {
-          data[i].end_date = $filter('date')(data[i].end_date, "MMM dd yyyy");
-          $scope.list.push(data[i]);
-        };
 
-        $scope.donor = {
-          amount: ""
-        };
-
-
-        $scope.saveMoney = function () {
-
-          var amount = this.donor.amount;
-
-          if (!amount && $scope.active == 'zero') {
-            return false;
-          }
-          if (amount != '') {
-            store.set('donor.amount', amount);
-          }
-          $window.location.href = ('#/app/sponsors/pledge');
-        }
-
-        $scope.saveMoneyWithAmount = function (amount) {
-          store.set('donor.amount', amount);
-        }
-
-
-      })
   })
 
   .controller('InviteSponsorPledgeCtrl', function($scope, $http, store, $window){
 
-    $scope.active = 'zero';
-    $scope.setActive = function(type) {
-      $scope.active = type;
-    };
-    $scope.isActive = function(type) {
-      return type === $scope.active;
-    };
+        $scope.active = 'zero';
+        $scope.setActive = function(type) {
+          $scope.active = type;
+        };
+        $scope.isActive = function(type) {
+          return type === $scope.active;
+        };
 
-    $scope.donor = {
-      months: ""
-    };
+        $scope.donor = {
+          months: ""
+        };
 
-    $scope.saveMonths = function() {
+        $scope.saveMonths = function() {
 
-      var months = this.donor.months;
+          var months = this.donor.months;
 
-      if (!months && $scope.active == 'zero') {
-        return false;
-      }
-      if (months != '') {
-        store.set('donor.months', months);
-      }
-      $window.location.href = ('#/app/sponsors/payment');
-    }
+          if (!months && $scope.active == 'zero') {
+            return false;
+          }
+          if (months != '') {
+            store.set('donor.months', months);
+          }
+          $window.location.href = ('#/app/inviteSponsor/payment');
+        }
 
-    $scope.saveMonthsWithMonths = function(months) {
-      store.set('donor.months',months);
-    }
-
+        $scope.saveMonthsWithMonths = function(months) {
+          store.set('donor.months',months);
+        }
 
   })
+
   .controller('InviteSponsorStartCtrl', function($scope){
 
   })
@@ -1759,7 +1746,7 @@ angular.module('starter.controllers', ['starter.appServices',
           stripeToken: response.id,
           userId: '576d5555765c85f11c7f0ca1'
         }).success(function (data){
-          $window.location.href = ('#/app/sponsors/con');
+          $window.location.href = ('#/app/inviteSponsor/end');
         }).error(function (err){
           console.log("error: " + err.message);
         });
