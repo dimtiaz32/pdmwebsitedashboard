@@ -69,7 +69,68 @@ angular.module('starter.runServices', ['ionic'])
   };
   $rootScope.getRunPath = function(){
     return $window.localStorage.runPath;
+  };
+  $rootScope.setLapDistance = function(distance){
+    return $window.localStorage.lapDistance = distance;
+  };
+
+  $rootScope.getLapDistance = function(){
+    return $window.localStorage.lapDistance;
+  };
+  $rootScope.setLapMinutes = function(minutes){
+    return $window.localStorage.lapMinutes = minutes;
+  };
+
+  $rootScope.getLapDistance = function(){
+    return $window.localStorage.lapMinutes;
+  };
+
+  $rootScope.setLapSeconds = function(seconds){
+    return $window.localStorage.lapSeconds = seconds;
+  };
+
+  $rootScope.getLapSeconds = function(){
+    return $window.localStorage.lapSeconds;
+  };
+
+  $rootScope.setLapMinutes = function(minutes){
+    return $window.localStorage.lapMinutes =  minutes;
+  };
+  $rootScope.getLapMinutes = function(){
+    return $window.localStorage.lapMinutes;
+  };
+
+
+  $rootScope.setLapPace = function(pace){
+    return $window.localStorage.lapPace = pace;
+  };
+
+  $rootScope.getLapPace = function(){
+    return $window.localStorage.lapPace;
+  };
+  $rootScope.setLapPath = function(coordinates){
+    return $window.localStorage.lapPath = coordinates;
+  };
+  $rootScope.getLapPath = function(){
+    return $window.localStorage.lapPath;
+  };
+
+  $rootScope.setLapNumber = function(number){
+    return $window.localStorage.lapNumber = number;
   }
+  $rootScope.getLapNumber = function(){
+    return $window.localStorage.lapNumber;
+  };
+
+  $rootScope.setLaps = function(laps){
+    return $window.localStorage.laps = laps;
+  };
+
+  $rootScope.getLaps = function(){
+    return $window.localStorage.laps;
+  };
+
+
   return{
 
     saveRun: function(form){

@@ -335,14 +335,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
     //DOM elements for google maps overlay
 
-    $scope.runInfo = {
-      duration: Number,
-      distance: Number,
-      pace: Number,
-      fundsRaised:"",
-      laps: [],
-      created: Date
-    }
+
 
 
     //lap, pause DOM elements
@@ -809,6 +802,8 @@ angular.module('starter.controllers', ['starter.appServices',
         $scope.distanceCoords.push(currentCoords);
         console.log('%cCurrent coords pushed to distance array. distanceCoords values: ' + $scope.distanceCoords, 'color: Purple');
 
+        $rootScope.setRunPath($scope.distanceCoords);
+        console.log('Run path global var set as: ' + $rootScope.getRunPath());
         $scope.distance = google.maps.geometry.spherical.computeLength({
           path: $scope.distanceCoords
         });
@@ -932,6 +927,10 @@ angular.module('starter.controllers', ['starter.appServices',
           console.log('%cLap seconds checked, incremented', 'color: Blue');
           $scope.lapSeconds++;
           console.log('%cLap seconds: ' + $scope.lapSeconds, 'color: Blue');
+          // $rootScope.setLapSeconds($scope.lapSeconds);
+          // $rootScope.setLapMinutes($scope.lapMinutes);
+          // console.log('Lap Minutes global var: ' + $rootScope.getLapMinutes() + '; Lap seconds  global var: ' + $rootScope.getLapSeconds());
+
           if ($scope.lapSeconds > 59) {
             console.log('%cLap seconds reached 60, reset to 0', 'color: Blue');
             $scope.lapSeconds = 0;
@@ -939,6 +938,11 @@ angular.module('starter.controllers', ['starter.appServices',
             $scope.lapMinutes++;
             console.log('%cLap minutes: ' + $scope.lapMinutes, 'color: Blue');
             console.log('%cLap minutes incremented', 'color: Blue');
+
+            // $rootScope.setLapSeconds($scope.lapSeconds);
+            // $rootScope.setLapMinutes($scope.lapMinutes);
+            // console.log('Lap Minutes global var: ' + $rootScope.getLapMinutes() + '; Lap seconds  global var: ' + $rootScope.getLapSeconds());
+
           }
         }
         console.log('%cLap Timer interval mark', 'color: Blue');
@@ -982,10 +986,16 @@ angular.module('starter.controllers', ['starter.appServices',
         $scope.lapCoords.push(currentCoords);
         console.log('%cLap coords array' + currentCoords, 'color: MediumPurple');
 
+        // $rootScope.setLapPath($scope.lapCoords);
+        // console.log('Lap path global var set as: '+$rootScope.getPath());
+
         $scope.lapDistance = google.maps.geometry.spherical.computeLength({
           path: $scope.lapCoords
         });
         console.log('%cLap distance: ' + $scope.lapDistance, 'color: MediumPurple');
+
+        // $rootScope.setLapDistance($scope.lapDistance);
+        // console.log('Lap distance global var: ' + $rootScope.getLapDistance());
       }, 2000);
     }
 
@@ -994,6 +1004,7 @@ angular.module('starter.controllers', ['starter.appServices',
       $interval.cancel(lapDistanceInitializer);
       lapDistanceInitializer = undefined;
     }
+    $scope.laps = [];
 
     $scope.lap = function(){
 
@@ -1007,11 +1018,39 @@ angular.module('starter.controllers', ['starter.appServices',
 
       var time = $scope.lapMinutes + ':' +$scope.lapSeconds;
 
-      $scope.lapInfo = ['time', $scope.distance, $scope.number];
+
 
       $scope.stopLapTimer();
       $scope.stopLapDistance();
       $scope.stopLapPaceCalculator();
+
+
+      $rootScope.setLapPath($scope.lapCoords);
+      console.log('Lap path global var set as: '+$rootScope.getLapPath());
+
+      $rootScope.setLapDistance($scope.lapDistance);
+      console.log('Lap distance global var: ' + $rootScope.getLapDistance());
+
+      $rootScope.setLapNumber($scope.lapNumber);
+      console.log('Lap Number global var set as: ' + $rootScope.getLapNumber());
+
+      $rootScope.setLapSeconds($scope.lapSeconds);
+      $rootScope.setLapMinutes($scope.lapMinutes);
+      console.log('Lap Minutes global var: ' + $rootScope.getLapMinutes() + '; Lap seconds  global var: ' + $rootScope.getLapSeconds());
+
+      var l = {
+        number: $rootScope.getLapNumber(),
+        distance:  $rootScope.getLapDistance(),
+        seconds: $rootScope.getLapSeconds(),
+        minutes: $rootScope.getLapMinutes(),
+        pace: $rootScope.getLapPace(),
+        path: $rootScope.getLapPath()
+      };
+
+      $scope.laps.push(l);
+      console.log('Laps array (for push) set as: ' + $scope.laps);
+      $rootScope.setLaps($scope.laps);
+      console.log('Laps array global var set as: ' + $rootScope.getToken());
 
       $scope.startLapTimer();
       $scope.getLapDistance();
@@ -1100,6 +1139,9 @@ angular.module('starter.controllers', ['starter.appServices',
 
         $scope.lapPace = milesPerSecond * 60;
         console.log('%cMiles per minute (Pace): ' + $scope.lapPace, 'color: DarkGoldenRod ');
+
+        $rootScope.setLapPace($scope.lapPace);
+        console.log('Lap pace global var: ' + $rootScope.getLapPace());
 
       }, 2100);
     }
@@ -1255,11 +1297,12 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.postRun = function(){
 
       console.log('Push run- Distance: '+ $rootScope.getRunDistance());
-
       console.log('Push run- minutes: ' + $rootScope.getRunMinutes());
       console.log('Push run-  Seconds: ' + $rootScope.getRunSeconds());
       console.log('Push run-  Pace: ' + $rootScope.getRunPace());
       console.log('Push run-  User: ' + $rootScope.getUserId());
+      console.log('Push run- Path: ' + $rootScope.getRunPath());
+      console.log('Push run- Laps: ' + $rootScope.getLaps());
 
 
 
@@ -1269,7 +1312,8 @@ angular.module('starter.controllers', ['starter.appServices',
         minutes: $rootScope.getRunMinutes(),
         pace: $rootScope.getRunPace(),
         User: $rootScope.getUserId(),
-        checkpoints : [$rootScope.get],
+        runPath: $rootScope.getRunPath(),
+       // laps: [$rootScope.getLaps()],
         date: Date.now()
       }
 
