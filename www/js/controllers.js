@@ -7,7 +7,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
     'starter.historyServices',
 
-    'starter.runServices','ionic','ngCordova','ngOpenFB'])
+    'starter.runServices','ionic','ngCordova','ngOpenFB', 'chart.js'])
 
 
 
