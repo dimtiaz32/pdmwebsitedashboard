@@ -2097,6 +2097,8 @@ angular.module('starter.controllers', ['starter.appServices',
           $scope.seconds.push(HistoryLoggerForm.seconds);
           console.log('$scope.seconds: ' + $scope.seconds);
 
+          $scope.dateSorter(HistoryLoggerForm.date);
+
         }
 
         $scope.getCurrentWeekHistory($scope.dates);
@@ -2619,5 +2621,20 @@ angular.module('starter.controllers', ['starter.appServices',
     }
 
 
+    $scope.dateSorter = function(date){
+      var bigDay = new Date(date);
+      // bigDay.setDate(date.getDate());
+      var bigDaySplit = bigDay.toString().split(" ");
+      var year = bigDaySplit[3];
+      var month = bigDaySplit[1];
+      var day = bigDaySplit[2];
+
+      console.log(' DATE SORTER: year: ' + year + ' month: ' + month + ' day: ' + day );
+
+      $scope.monthCalculators = function(month){
+
+      }
+
+    }
 
   });
