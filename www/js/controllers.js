@@ -1925,7 +1925,7 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.series = ['Miles Run'];
 
     $scope.data = [
-      [65, 59, 80, 81, 56, 55, 50]
+      [5, 0, 3, 4, 7, 10, 8]
     ];
 
     $scope.colors = [{
@@ -1933,10 +1933,25 @@ angular.module('starter.controllers', ['starter.appServices',
     }];
 
     $scope.options = {
+      legend: {
+        display: true,
+        fullWidth: false,
+        labels: {
+          fontFamily: "Helvetica Neue",
+          boxWidth: 0
+        }
+      },
+
       scales: {
         yAxes: [{
           ticks: {
             beginAtZero: true
+          }
+        }],
+
+        xAxes: [{
+          gridLines: {
+            display: false
           }
         }]
       }
