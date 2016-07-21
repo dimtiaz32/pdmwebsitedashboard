@@ -1925,7 +1925,7 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.series = ['Miles Run'];
 
     $scope.data = [
-      [5, 0, 3, 4, 7, 10, 8]
+      [5, 0, 3, 5, 7, 11, 9]
     ];
 
     $scope.colors = [{
@@ -1934,8 +1934,8 @@ angular.module('starter.controllers', ['starter.appServices',
 
     $scope.options = {
       legend: {
-        display: true,
-        fullWidth: false,
+        display: false,
+        position: "left",
         labels: {
           fontFamily: "Helvetica Neue",
           boxWidth: 0
@@ -1945,7 +1945,14 @@ angular.module('starter.controllers', ['starter.appServices',
       scales: {
         yAxes: [{
           ticks: {
-            beginAtZero: true
+            beginAtZero: true,
+            stepSize: 2,
+          },
+
+          scaleLabel: {
+            display: true,
+            labelString: "miles",
+            fontFamily: "Helvetica Neue"
           }
         }],
 
@@ -1961,7 +1968,7 @@ angular.module('starter.controllers', ['starter.appServices',
     End Chart Configuration
      */
 
-    
+
     console.log('empty user history array initialized: ' + $scope.uHistory);
 
     var today = Date.now();
@@ -2003,8 +2010,8 @@ angular.module('starter.controllers', ['starter.appServices',
 
         for(var i = 0; i<data.length; i++){
           console.log('i:' + i);
-        
-         
+
+
            var HistoryLoggerForm = {
               // User: "",
               // _v: "",
