@@ -1,23 +1,115 @@
-.charity-list ion-item {
+.charity-page.charity-header, charity-page.charity-detail ion-item {
+  border-bottom: 2px solid #00b9be;
+  z-index: 2px;
+}
+
+hr.charity-page {
+  height: 1px;
+  color: #808080;
+}
+
+.charity-page.charity-header h3 {
+    text-align: center;
+    font-size: 16px;
+    padding-top: 10px;
+    font-weight: 400;
+}
+
+.charity-page.charity-header h1 {
+  text-align: center;
+  font-weight: 200;
+  margin: 10px;
+}
+
+.charity-page.charity-detail {
+  width: auto;
+  height: 100px;
+  background-color: transparent;
+}
+
+  .charity-page.charity-detail.item-thumbnail-left.item {
+    border:none;
+  }
+
+  .charity-page.charity-detail img:first-child {
+    background-color: blue;
+    margin: 15px 15px;
+    width: 70px;
+    height: 70px;
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+  }
+
+  .charity-page.charity-detail a {
+    position: relative;
+    top: 5%;
+    left: -3%;
+  }
+
+  .charity-page.charity-detail p {
+    position: relative;
+    left: -3%;
+  }
+
+button.charity-page.button-slide-up {
+  background-image: url("../img/pull down grey bar straight.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: transparent;;
+  border: none;
+  display: block;
+
+  position: relative;
+  bottom: 5px;
+
+  width: 100%;
+  height: 0.8vh;
+
+  margin-bottom: 3px;
+}
+
+button.charity-page.button-slide-down {
+  background-image: url("../img/pull down grey bar.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: transparent;;
+  border: none;
+
+  width: 100%;
+  height: 1.5vh;
+
+  margin-bottom: 3px;
+}
+
+
+.charity-page.charity-list ion-item:first-child	 {
+  border-top: none;
+}
+
+.charity-page.charity-list ion-item {
   min-height: 75px;
   height: 75px;
 }
 
-
-.charity-list img:first-child {
+.charity-page.charity-list img:first-child {
   background-color: red;
-  max-width: 50px;
-  max-height: 50px;
+  width: 50px;
+  height: 50px;
   position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  margin: 15px;
+  display: inline
 }
 
-.charity-list h2 {
+.charity-page.charity-list h2 {
   padding: 2% 0 0 0;
   position: relative;
   left: -10%;
 }
 
-.charity-list p {
+.charity-page.charity-list p {
   padding: 0;
   position: relative;
   left: -10%;

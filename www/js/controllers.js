@@ -1463,6 +1463,8 @@ angular.module('starter.controllers', ['starter.appServices',
 
   .controller('CharitiesCtrl', function($rootScope, $timeout, $ionicModal, $window, $scope, CharityAPI, AuthAPI){
 
+    $scope.isDetailDisplayed = false;
+
     // $rootScope.$on('fetchSelectedCharity', function(){
     //   //TODO: FETCH, SERVER FOR USER SELECTED CHARITY, UI FOR ID PARAMS
     //   CharityAPI.getSelectedCharity()

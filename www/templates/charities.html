@@ -1,7 +1,26 @@
-<ion-view view-title="Charities">
+<ion-view view-title="Charities" ng-controller="CharitiesCtrl">
   <ion-content>
-    <ion-list class="charity-list" show-delete="shouldShowDelete" show-reorder="shouldShowReorder" can-swipe="listCanSwipe">
-      <ion-item ng-repeat="charity in charities" class="item-thumbnail-left" ng-click="selectCharity('{{charity._id}}')">
+    <div class="charity-page charity-header"</div>
+      <h3>Every mile raises $0.50 for</h3>
+      <hr class="charity-page">
+      <h1>Teens Run DC</h1>
+      <div class="charity-page charity-detail" ng-show="isDetailDisplayed">
+        <hr class="charity-page">
+        <ion-item class="charity-page charity-detail item-thumbnail-left">
+          <img ng-src="{{charity.logo}}">
+          <a ng-href="{{charity.website}}">website</a>
+          <p>charity description and mission statement and words and lots and lots of wordscharity description and mission statement and words and lots and lots of wordscharity description and mission statement and words and lots and lots of wordscharity description and mission statement and words and lots and lots of wordscharity description and mission statement and words and lots and lots of words</p>
+          <p><b>Funds raised this month: $ALOT</b></p>
+          <p><b>Funds raised this year: $MORE</b></p>
+        </ion-item>
+      </div>
+      <button class="charity-page button-slide"
+              ng-class="isDetailDisplayed ? 'button-slide-down' : 'button-slide-up'"
+              ng-click="isDetailDisplayed = !isDetailDisplayed">
+      </button>
+    </div>
+    <ion-list class="charity-page charity-list" show-delete="shouldShowDelete" show-reorder="shouldShowReorder" can-swipe="listCanSwipe">
+      <ion-item ng-repeat="charity in charities" class="charity-page charity-list item-thumbnail-left" ng-click="selectCharity('{{charity._id}}')">
         <img ng-src="{{charity.logo}}">
         <h2>{{charity.name}}</h2>
         <p>{{charity.description}} dsklaj dsfjkldsaajfklds jkladsjklsad kldsaj kldsaf  dsklaj dsfjkldsaajfklds jkladsjklsad kldsaj kldsaf dsklaj dsfjkldsaajfklds jkladsjklsad kldsaj kldsaf dsklaj dsfjkldsaajfklds jkladsjklsad kldsaj kldsaf dsklaj dsfjkldsaajfklds jkladsjklsad kldsaj kldsaf dsklaj dsfjkldsaajfklds jkladsjklsad kldsaj kldsaf dsklaj dsfjkldsaajfklds jkladsjklsad kldsaj kldsaf dsklaj dsfjkldsaajfklds jkladsjklsad kldsaj kldsaf</p>
