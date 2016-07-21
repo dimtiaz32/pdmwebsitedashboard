@@ -1933,7 +1933,7 @@ angular.module('starter.controllers', ['starter.appServices',
     End Chart Configuration
      */
 
-    $scope.weekHistory = [];
+    
     console.log('empty user history array initialized: ' + $scope.uHistory);
 
     var today = Date.now();
@@ -1946,7 +1946,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
     console.log('start date' + $scope.startDate);
 
-    var HistoryLogger = [{
+    var HistoryLoggerForm = {
       // User: "",
       // _v: "",
       _id: "",
@@ -1957,7 +1957,7 @@ angular.module('starter.controllers', ['starter.appServices',
       pace: Number,
       // path:[],
       seconds: Number
-    }]
+    }
 
 
     console.log('user id is: ' +$rootScope.getUserId());
@@ -1966,36 +1966,42 @@ angular.module('starter.controllers', ['starter.appServices',
         console.log(data);
         console.log('History API get user history call succeeded');
         $scope.uHistory = [];
+        $scope.ids = [];
+        $scope.dates = [];
+        $scope.distances = [];
+        $scope.minutes = [];
+        $scope.paces = [];
+        $scope.seconds  = [];
+
         for(var i = 0; i<data.length; i++){
           console.log('i:' + i);
-          HistoryLogger.push(data[i]);
-          console.log('Data._id' + data[i]._id);
-          HistoryLogger._id = data[i]._id;
-          console.log('HistoryLogger._id: ' + HistoryLogger._id);
-          HistoryLogger.date = data[i].date;
-          console.log('HistoryLogger.date: ' + HistoryLogger.date);
-          HistoryLogger.distance = data[i].distance;
-          console.log(' HistoryLogger.distance: ' +  HistoryLogger.distance);
-          // HistoryLogger.laps = data[i].laps[i];
-          // console.log('HistoryLogger.laps: ' + HistoryLogger.laps);
-          HistoryLogger.minutes= data[i].minutes;
-          console.log(' HistoryLogger.minutes: ' +  HistoryLogger.minutes);
-          HistoryLogger.pace = data[i].pace;
-          console.log('HistoryLogger.pace: ' + HistoryLogger.pace);
-          // HistoryLogger.path = data[i].path[i];
-          // console.log('HistoryLogger.path: ' + HistoryLogger.path);
-          HistoryLogger.seconds = data[i].seconds;
-          console.log('HistoryLogger.seconds: ' + HistoryLogger.seconds);
-
-          console.log('HistoryLogger: ' +HistoryLogger);
-
-
-          $scope.uHistory = [HistoryLogger];
-          console.log('$scope.uHistory: ' + $scope.uHistory);
-          // data[i].date = $filter('date')(data[i].date, "MMM dd yyyy");
-          // $scope.uHistory.push(data[i].Object);
-          // console.log('user history set as: ' + $scope.uHistory[i]);
-          // $scope.getCurrentWeekHistory();
+        
+         
+           var HistoryLoggerForm = {
+              // User: "",
+              // _v: "",
+              _id: data[i]._id,
+              date: data[i].date,
+              distance: data[i].distance,
+              // laps: [],
+              minutes: data[i].minutes,
+              pace: data[i].pace,
+              // path:[],
+              seconds: data[i].seconds
+            };
+            console.log('HistoryLoggerForm: '+ HistoryLoggerForm._id);
+            $scope.ids.push(HistoryLoggerForm._id);
+            console.log('$scope.ids: ' + $scope.ids);
+            $scope.dates.push(HistoryLoggerForm.date);
+            console.log('$scope.dates: ' + $scope.dates);
+            $scope.distances.push(HistoryLoggerForm.distance);
+            console.log('$scope.distances: ' + $scope.distances);
+            $scope.minutes.push(HistoryLoggerForm.minutes);
+            console.log('$scope.minutes: ' + $scope.minutes);
+            $scope.paces.push(HistoryLoggerForm.pace);
+            console.log('$scope.pace: ' + $scope.paces);
+            $scope.seconds.push(HistoryLoggerForm.seconds);
+            console.log('$scope.seconds: ' + $scope.seconds);
         }
       })
       .error(function(err){
@@ -2011,8 +2017,8 @@ angular.module('starter.controllers', ['starter.appServices',
       newDate.setDate(newDate.getDate() - 7);
       $scope.startDate = new Date(newDate);
 
-      for(var i=0; i< $scope.uHistory.length;  i++){
-        if($scope.uHistory[i].date >= $scope.startDate && $scope.uHistory[i].date <= $scope.endDate){
+      for(var i=0; i< $scope.dates.length;  i++){
+        if($scope.dates[i].date >= $scope.startDate && $scope.uHistory[i].date <= $scope.endDate){
           $scope.weekHistory.push($scope.uHistory[i]);
         }
       }
@@ -2030,9 +2036,42 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.startDate = new Date(weekStartDate);
       console.log('$scope.startDate' + $scope.startDate);
 
-      for(var i=0; i < $scope.uHistory.length; i++){
-        if($scope.uHistory[i].date >= $scope.startDate && $scope.uHistory[i].date <= $scope.endDate){
-          $scope.weekHistory.push($scope.uHistory[i]);
+      console.log('$scope.dates: ' + $scope.dates)
+      console.log('$scope.dates.length: ' + $scope.dates.length );
+
+      $scope.weekIds = [];
+      $scope.weekDates = [];
+      $scope.weekDistances = [];
+      $scope.weekMinutes = [];
+      $scope.weekPace = [];
+      $scope.weekSeconds = [];
+
+      for(var i=0; i < $scope.dates.length; i++){
+          $scope.weekDates.push($scope.dates[i]);
+          console.log('$scope.weekDates: ' + $scope.weekDates);
+          $scope.weekIds.push($scope.ids[i]);
+          console.log('$scope.weekIds: '+$scope.weekIds);
+          $scope.weekDistances.push($scope.distances[i]);
+          console.log('$scope.weekDistances: ' + $scope.weekDistances);
+          $scope.weekMinutes.push($scope.minutes[i]);
+          console.log('$scope.weekDates: ' + $scope.weekDates);
+          $scope.weekPace.push($scope.paces[i]);
+          console.log('$scope.paces: ' + $scope.weekPace);
+          $scope.weekSeconds.push($scope.seconds[i]);
+          console.log('$scope.weekSeconds: ' + $scope.weekSeconds);
+        if($scope.dates[i] >= $scope.startDate && $scope.dates[i] <= $scope.endDate){
+          $scope.weekDates.push($scope.dates[i]);
+          console.log('$scope.weekDates: ' + $scope.weekDates);
+          $scope.weekIds.push($scope.ids[i]);
+          console.log('$scope.weekIds: '+weekIds);
+          $scope.weekDistances.push($scope.distances[i]);
+          console.log('$scope.weekDistances: ' + $scope.weekDistances);
+          $scope.weekMinutes.push($scope.minutes[i]);
+          console.log('$scope.weekDates: ' + $scope.weekDates);
+          $scope.weekPace.push($scope.paces[i]);
+          console.log('$scope.paces: ' + $scope.weekPace);
+          $scope.weekSeconds.push($scope.seconds[i]);
+          console.log('$scope.weekSeconds: ' + $scope.weekSeconds);
 
         }
 
