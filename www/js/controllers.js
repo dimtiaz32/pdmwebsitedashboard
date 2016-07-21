@@ -2084,6 +2084,44 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.weekSeconds = [];
 
       for(var i=0; i < $scope.dates.length; i++){
+        //day 1 is most current day
+        var dayOne =new Date();
+        dayOne.setDate($scope.startDate.getDate());
+
+        var dayTwo = new Date();
+        dayTwo.setDate(dayOne.getDate()-1);
+
+        var dayThree = new Date();
+        dayThree.setDate(dayTwo.getDate() - 1);
+
+        var dayFour = new Date();
+        dayFour.setDate(dayThree.getDate() -1);
+
+        var dayFive = new Date();
+        dayFive.setDate(dayFour.getDate() - 1);
+
+        var daySix = new Date();
+        daySix.setDate(daySix.getDate() - 1);
+
+        var daySeven = new Date();
+        daySeven.setDate(daySeven.getDate() - 1);
+
+
+        console.log('day one: ' + dayOne);
+        console.log('day two: ' + dayTwo);
+        console.log('day three: ' + dayThree);
+        console.log('day four: ' + dayFour);
+        console.log('day five: ' + dayFive);
+        console.log('day six: ' + daySix);
+        console.log('day Seven: ' + daySeven);
+
+
+        var dayTwo =
+        switch($scope.dates[i]){
+          case 0:
+
+
+        }
           $scope.weekDates.push($scope.dates[i]);
           console.log('$scope.weekDates: ' + $scope.weekDates);
           $scope.weekIds.push($scope.ids[i]);
@@ -2096,21 +2134,7 @@ angular.module('starter.controllers', ['starter.appServices',
           console.log('$scope.paces: ' + $scope.weekPace);
           $scope.weekSeconds.push($scope.seconds[i]);
           console.log('$scope.weekSeconds: ' + $scope.weekSeconds);
-        if($scope.dates[i] >= $scope.startDate && $scope.dates[i] <= $scope.endDate){
-          $scope.weekDates.push($scope.dates[i]);
-          console.log('$scope.weekDates: ' + $scope.weekDates);
-          $scope.weekIds.push($scope.ids[i]);
-          console.log('$scope.weekIds: '+weekIds);
-          $scope.weekDistances.push($scope.distances[i]);
-          console.log('$scope.weekDistances: ' + $scope.weekDistances);
-          $scope.weekMinutes.push($scope.minutes[i]);
-          console.log('$scope.weekDates: ' + $scope.weekDates);
-          $scope.weekPace.push($scope.paces[i]);
-          console.log('$scope.paces: ' + $scope.weekPace);
-          $scope.weekSeconds.push($scope.seconds[i]);
-          console.log('$scope.weekSeconds: ' + $scope.weekSeconds);
 
-        }
 
       }
 
