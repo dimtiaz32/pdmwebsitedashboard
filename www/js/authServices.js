@@ -102,6 +102,13 @@ angular.module('starter.authServices', [])
     return $window.localStorage.selectedCharity;
   };
 
+  $rootScope.setUserId = function(userId){
+    return $window.localStorage.userId = userId;
+  };
+
+  $rootScope.getUserId = function(){
+    return $window.localStorage.userId;
+  };
 
   // $rootScope.setCharity = function(charity){
   //   return $window.localStorage.selectedCharity = charity;

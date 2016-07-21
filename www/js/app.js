@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives', 'stripe', 'ngOpenFB'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives', 'stripe', 'ngOpenFB', 'angular-storage', 'chart.js'])
 
   .run(function($ionicPlatform, ngFB) {
 
@@ -143,7 +143,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
 
       .state('app.inviteSponsor-pledge', {
         url:'/inviteSponsor/pledge',
-        view: {
+        views: {
           'menuContent': {
             templateUrl:'templates/inviteSponsor-pledge.html',
             controller:'InviteSponsorPledgeCtrl'
@@ -153,7 +153,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
 
       .state('app.inviteSponsor-payment',{
         url:'/inviteSponsor/payment',
-        view: {
+        views: {
           'menuContent': {
             templateUrl:'templates/inviteSponsor-payment.html',
             controller:'InviteSponsorPaymentCtrl'
@@ -163,7 +163,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
 
       .state('app.inviteSponsor-end',{
         url:'/inviteSponsor/end',
-        view:{
+        views:{
           'menuContent': {
             templateUrl:'templates/inviteSponsor-end.html',
             controller:'InviteSponsorEndCtrl'

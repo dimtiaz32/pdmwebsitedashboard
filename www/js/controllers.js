@@ -2,11 +2,13 @@ angular.module('starter.controllers', ['starter.appServices',
     'starter.charityServices',
     'starter.authServices',
     'starter.runServices',
-    'starter.accountServices',
-    'starter.accountServices',
     'starter.donationServices',
     'starter.userServices',
-    'starter.runServices','ionic','ngCordova','ngOpenFB'])
+
+    'starter.historyServices',
+
+    'starter.runServices','ionic','ngCordova','ngOpenFB', 'chart.js'])
+
 
 
 
@@ -17,7 +19,7 @@ angular.module('starter.controllers', ['starter.appServices',
       lastName: "",
       email: "",
       password: "",
-      charityId: undefined,
+      charity: "",
       history: [],
       provider: "",
       past_donations_from: [],
@@ -58,6 +60,7 @@ angular.module('starter.controllers', ['starter.appServices',
       var lastName = this.user.lastName;
       var email  =  this.user.email;
       var password = this.user.password;
+      var charity = this.user.charity;
 
 
       if(!firstName){
@@ -80,14 +83,17 @@ angular.module('starter.controllers', ['starter.appServices',
         lastName: lastName,
         email: email,
         password: password,
+        charity: charity,
         provider: 'local'
       }).success(function (data, status, headers, config){
           $rootScope.hide();
           //$rootScope.setCharity(charity);
           $rootScope.setEmail(email);
-          var name = firstName + ' ' + lastName;
+          var name =data.name.first + data.name.last;
+          console.log('name: ' + name);
+
           $rootScope.setName(name);
-          console.log('name set as: ' + $rootScope.getName());
+
           $window.location.href  = ('#/app/charities');
         })
         .error(function(error){
@@ -105,9 +111,10 @@ angular.module('starter.controllers', ['starter.appServices',
 
     $scope.user = {
       email: "",
+      id: "",
       name: "",
       password: "",
-      charity: undefined,
+      charity: "",
       history: [],
       provider: "",
       past_donations_from: [],
@@ -161,7 +168,12 @@ angular.module('starter.controllers', ['starter.appServices',
           $rootScope.setCreatedAt($scope.user.created);
           console.log('createdAt local storage set: ' + $rootScope.getCreatedAt());
 
-          console.log('Charity: ' + $scope.user.charityId);
+          $scope.user.id = data._id;
+          console.log('$scope.user.id set to: ' + $scope.user.id);
+          $rootScope.setUserId($scope.user.id);
+          console.log('User id local storage set: ' + $rootScope.getUserId());
+
+          console.log('Charity: ' + $scope.user.charity);
           // $scope.user.charityId = data.charityId;
           // console.log('$scope.user.charityId set as: ' + $scope.user.charityId);
           // $rootScope.setSelectedCharity($scope.user.charityId);
@@ -179,27 +191,27 @@ angular.module('starter.controllers', ['starter.appServices',
 
     $scope.loginByFB = function() {
 
-        console.log("begin login by FB");
-        ngFB.login({scope:'email'}).then(function (response){
-            if (response.status == 'connected') {
+      console.log("begin login by FB");
+      ngFB.login({scope:'email'}).then(function (response){
+        if (response.status == 'connected') {
 
-                AuthAPI.signinByFB({
-                  access_token: response.authResponse.accessToken
-                }).success(function(data, status, headers, config){
-                  $rootScope.hide();
-                  $window.location.href=('#/app/run');
-                }).error(function(error){
-                  console.log("AuthAPI.signinByFB failed:" + error);
-                  $rootScope.hide();
-                  $rootScope.notify("Login with facebook failed")
-                });
-            } else if (response.status == 'not_authorized') {
-                console.log('facebook login not authorized')
-            } else {
-                console.log('facebook login failed');
-            }
-        });
-        console.log("end login by FB");
+          AuthAPI.signinByFB({
+            access_token: response.authResponse.accessToken
+          }).success(function(data, status, headers, config){
+            $rootScope.hide();
+            $window.location.href=('#/app/charities');
+          }).error(function(error){
+            console.log("AuthAPI.signinByFB failed:" + error);
+            $rootScope.hide();
+            $rootScope.notify("Login with facebook failed")
+          });
+        } else if (response.status == 'not_authorized') {
+          console.log('facebook login not authorized')
+        } else {
+          console.log('facebook login failed');
+        }
+      });
+      console.log("end login by FB");
 
     };
 
@@ -209,25 +221,25 @@ angular.module('starter.controllers', ['starter.appServices',
 
     $scope.showForgotPassword = function(){
       var forgotPassword = $ionicPopup.show({
-      template: '<input type="email" ng-model="popup.email">',
+        template: '<input type="email" ng-model="popup.email">',
         title: 'Enter Email for Password Reset',
         //subTitle: 'Whatever you want',
         scope: $scope,
         buttons: [
-        { text: 'Cancel' },
-        {
-          text: '<b>submit</b>',
-          type: 'button-positive',
-          onTap: function(e) {
-            if (!$scope.popup.email) {
-              //don't allow the user to close unless he enters wifi password
-              e.preventDefault();
-            } else {
-              return $scope.popup.email;
+          { text: 'Cancel' },
+          {
+            text: '<b>submit</b>',
+            type: 'button-positive',
+            onTap: function(e) {
+              if (!$scope.popup.email) {
+                //don't allow the user to close unless he enters wifi password
+                e.preventDefault();
+              } else {
+                return $scope.popup.email;
+              }
             }
           }
-        }
-      ]
+        ]
       })
     }
 
@@ -271,18 +283,18 @@ angular.module('starter.controllers', ['starter.appServices',
     //(L)DISTANCE: MEDIUMPURPLE
     //(L)PACE: DarkGoldenRod
 
-      //UI-INTERACTIONS: TEAL
-      //UI-CHANGES: GREEN
-      //RUN STATE CHANGE: HOTPINK
-      //TIMER:ROYALBLUE
-      //DISTANCE: PURPLE
-      //POLYLINE: LIME
-      //PACE: GOLD
-      //LAP: AQUA
-      //MONEYRAISED: GREY
-      //(L)TIMER: BLUE
-      //(L)DISTANCE: MEDIUMPURPLE
-      //(L)PACE: DarkGoldenRod
+    //UI-INTERACTIONS: TEAL
+    //UI-CHANGES: GREEN
+    //RUN STATE CHANGE: HOTPINK
+    //TIMER:ROYALBLUE
+    //DISTANCE: PURPLE
+    //POLYLINE: LIME
+    //PACE: GOLD
+    //LAP: AQUA
+    //MONEYRAISED: GREY
+    //(L)TIMER: BLUE
+    //(L)DISTANCE: MEDIUMPURPLE
+    //(L)PACE: DarkGoldenRod
 
 
     $scope.user =  {
@@ -296,41 +308,34 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.isRunning = false;
     $scope.isPaused = false;
 
-     $scope.toggleRun = function() {
-        $scope.isRunning = !$scope.isRunning;
-     }
-     //
-     // $scope.lapBtnTapped = function() {
-     //   if ($scope.isPaused) {
-     //     resume();
-     //   } else {
-     //     $scope.lap();
-     //   }
-     // }
+    $scope.toggleRun = function() {
+      $scope.isRunning = !$scope.isRunning;
+    }
+    //
+    // $scope.lapBtnTapped = function() {
+    //   if ($scope.isPaused) {
+    //     resume();
+    //   } else {
+    //     $scope.lap();
+    //   }
+    // }
 
-     // $scope.pause = function() {
-     //   $scope.isPaused = true;
-     // }
+    // $scope.pause = function() {
+    //   $scope.isPaused = true;
+    // }
 
-     // function resume() {
-     //   $scope.isPaused = false;
-     // }
+    // function resume() {
+    //   $scope.isPaused = false;
+    // }
 
-     // function lap() {
-     //   console.log("lap");
-     // }
+    // function lap() {
+    //   console.log("lap");
+    // }
 
 
     //DOM elements for google maps overlay
 
-    $scope.runInfo = {
-      duration: Number,
-      distance: Number,
-      pace: Number,
-      fundsRaised:"",
-      laps: [],
-      created: Date
-    }
+
 
 
     //lap, pause DOM elements
@@ -797,6 +802,8 @@ angular.module('starter.controllers', ['starter.appServices',
         $scope.distanceCoords.push(currentCoords);
         console.log('%cCurrent coords pushed to distance array. distanceCoords values: ' + $scope.distanceCoords, 'color: Purple');
 
+        $rootScope.setRunPath($scope.distanceCoords);
+        console.log('Run path global var set as: ' + $rootScope.getRunPath());
         $scope.distance = google.maps.geometry.spherical.computeLength({
           path: $scope.distanceCoords
         });
@@ -884,8 +891,9 @@ angular.module('starter.controllers', ['starter.appServices',
           console.log('%cminutes: ' + $scope.minutes, 'color: RoyalBlue');
           console.log('minutes incremented');
         }
-        var time = $scope.minutes + ':'+ $scope.seconds;
-        $rootScope.setRunTime(time);
+
+        $rootScope.setRunMinutes($scope.minutes);
+        $rootScope.setRunSeconds($scope.seconds);
         console.log('%cRun time (global) set as: ' + $rootScope.getRunTime(), 'color: RoyalBlue');
 
         console.log('%cTimer Interval mark', 'color: RoyalBlue');
@@ -919,6 +927,10 @@ angular.module('starter.controllers', ['starter.appServices',
           console.log('%cLap seconds checked, incremented', 'color: Blue');
           $scope.lapSeconds++;
           console.log('%cLap seconds: ' + $scope.lapSeconds, 'color: Blue');
+          // $rootScope.setLapSeconds($scope.lapSeconds);
+          // $rootScope.setLapMinutes($scope.lapMinutes);
+          // console.log('Lap Minutes global var: ' + $rootScope.getLapMinutes() + '; Lap seconds  global var: ' + $rootScope.getLapSeconds());
+
           if ($scope.lapSeconds > 59) {
             console.log('%cLap seconds reached 60, reset to 0', 'color: Blue');
             $scope.lapSeconds = 0;
@@ -926,6 +938,11 @@ angular.module('starter.controllers', ['starter.appServices',
             $scope.lapMinutes++;
             console.log('%cLap minutes: ' + $scope.lapMinutes, 'color: Blue');
             console.log('%cLap minutes incremented', 'color: Blue');
+
+            // $rootScope.setLapSeconds($scope.lapSeconds);
+            // $rootScope.setLapMinutes($scope.lapMinutes);
+            // console.log('Lap Minutes global var: ' + $rootScope.getLapMinutes() + '; Lap seconds  global var: ' + $rootScope.getLapSeconds());
+
           }
         }
         console.log('%cLap Timer interval mark', 'color: Blue');
@@ -969,10 +986,16 @@ angular.module('starter.controllers', ['starter.appServices',
         $scope.lapCoords.push(currentCoords);
         console.log('%cLap coords array' + currentCoords, 'color: MediumPurple');
 
+        // $rootScope.setLapPath($scope.lapCoords);
+        // console.log('Lap path global var set as: '+$rootScope.getPath());
+
         $scope.lapDistance = google.maps.geometry.spherical.computeLength({
           path: $scope.lapCoords
         });
         console.log('%cLap distance: ' + $scope.lapDistance, 'color: MediumPurple');
+
+        // $rootScope.setLapDistance($scope.lapDistance);
+        // console.log('Lap distance global var: ' + $rootScope.getLapDistance());
       }, 2000);
     }
 
@@ -981,6 +1004,7 @@ angular.module('starter.controllers', ['starter.appServices',
       $interval.cancel(lapDistanceInitializer);
       lapDistanceInitializer = undefined;
     }
+    $scope.laps = [];
 
     $scope.lap = function(){
 
@@ -994,11 +1018,39 @@ angular.module('starter.controllers', ['starter.appServices',
 
       var time = $scope.lapMinutes + ':' +$scope.lapSeconds;
 
-      $scope.lapInfo = ['time', $scope.distance, $scope.number];
+
 
       $scope.stopLapTimer();
       $scope.stopLapDistance();
       $scope.stopLapPaceCalculator();
+
+
+      $rootScope.setLapPath($scope.lapCoords);
+      console.log('Lap path global var set as: '+$rootScope.getLapPath());
+
+      $rootScope.setLapDistance($scope.lapDistance);
+      console.log('Lap distance global var: ' + $rootScope.getLapDistance());
+
+      $rootScope.setLapNumber($scope.lapNumber);
+      console.log('Lap Number global var set as: ' + $rootScope.getLapNumber());
+
+      $rootScope.setLapSeconds($scope.lapSeconds);
+      $rootScope.setLapMinutes($scope.lapMinutes);
+      console.log('Lap Minutes global var: ' + $rootScope.getLapMinutes() + '; Lap seconds  global var: ' + $rootScope.getLapSeconds());
+
+      var l = {
+        number: $rootScope.getLapNumber(),
+        distance:  $rootScope.getLapDistance(),
+        seconds: $rootScope.getLapSeconds(),
+        minutes: $rootScope.getLapMinutes(),
+        pace: $rootScope.getLapPace(),
+        path: $rootScope.getLapPath()
+      };
+
+      $scope.laps.push(l);
+      console.log('Laps array (for push) set as: ' + $scope.laps);
+      $rootScope.setLaps($scope.laps);
+      console.log('Laps array global var set as: ' + $rootScope.getToken());
 
       $scope.startLapTimer();
       $scope.getLapDistance();
@@ -1087,6 +1139,9 @@ angular.module('starter.controllers', ['starter.appServices',
 
         $scope.lapPace = milesPerSecond * 60;
         console.log('%cMiles per minute (Pace): ' + $scope.lapPace, 'color: DarkGoldenRod ');
+
+        $rootScope.setLapPace($scope.lapPace);
+        console.log('Lap pace global var: ' + $rootScope.getLapPace());
 
       }, 2100);
     }
@@ -1221,10 +1276,8 @@ angular.module('starter.controllers', ['starter.appServices',
 
     $scope.stopRun = function(){
 
-      $scope.pushRunInfo = function(){
-        $rootScope.$broadcast("PushRunInfo");
-      }
 
+      $scope.postRun();
       $scope.removeResume();
       $scope.removeStop();
       console.log('%c$scope.stopTimer() called', 'color: RoyalBlue');
@@ -1241,35 +1294,40 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.map.controls[google.maps.ControlPosition.BOTTOM].push(runSummaryButtonControlDiv);
     }
 
-    $rootScope.$on("PushRunInfo", function(){
-      var distance = $rootScope.getRunDistance();
-      console.log('Push run- Distance: '+ distance);
+    $scope.postRun = function(){
 
-      var time = $rootScope.getRunTime();
-      console.log('Push run- Time: ' + time);
+      console.log('Push run- Distance: '+ $rootScope.getRunDistance());
+      console.log('Push run- minutes: ' + $rootScope.getRunMinutes());
+      console.log('Push run-  Seconds: ' + $rootScope.getRunSeconds());
+      console.log('Push run-  Pace: ' + $rootScope.getRunPace());
+      console.log('Push run-  User: ' + $rootScope.getUserId());
+      console.log('Push run- Path: ' + $rootScope.getRunPath());
+      console.log('Push run- Laps: ' + $rootScope.getLaps());
 
-      var pace = $rootScope.getRunPace();
-      console.log('Push run-  Pace: ' + pace);
 
-      $scope.runInfo.distance = distance;
-      $scope.runInfo.time = time;
-      $scope.runInfo.pace = pace;
 
-      RunAPI.saveRun(
-        {email: $rootScope.getEmail()},
-        {runInfo: $scope.runInfo})
+      var form = {
+        distance: $rootScope.getRunDistance(),
+        seconds: $rootScope.getRunSeconds(),
+        minutes: $rootScope.getRunMinutes(),
+        pace: $rootScope.getRunPace(),
+        User: $rootScope.getUserId(),
+        runPath: $rootScope.getRunPath(),
+       // laps: [$rootScope.getLaps()],
+        date: Date.now()
+      }
+
+      RunAPI.saveRun(form)
         .success(function(data, status, headers, config){
           //just status header for now
           console.log('saveRun API call returned success');
-          console.log('Run info: ' + $scope.runInfo);
+
         })
         .error(function(err){
           console.log(err);
           console.log('Save run API call failed');
         });
-
-
-    })
+    }
 
 
     $scope.centerOnMe = function(){
@@ -1435,16 +1493,17 @@ angular.module('starter.controllers', ['starter.appServices',
 
       var email = $rootScope.getEmail();
       console.log('email: ' + email);
+      console.log('charity: ' + charity);
       $rootScope.setSelectedCharity(charity);
-     charity = $rootScope.getSelectedCharity();
+      charity = $rootScope.getSelectedCharity();
       console.log('charity: ' + $rootScope.getSelectedCharity());
       console.log('attempting to update user\'s selected charity');
 
       console.log('attempting to update user\'s selected charity');
 
       CharityAPI.selectCharity({
-       charity: charity},{
-      email:email})
+          charity: charity},{
+          email:email})
         .success(function(data, status, headers, config){
 
           console.log('inside select charityAPI success');
@@ -1627,10 +1686,6 @@ angular.module('starter.controllers', ['starter.appServices',
 
   })
 
-  .controller('InviteSponsorStartCtrl', function($scope){
-
-  })
-
   .controller('InviteSponsorInfoCtrl', function($rootScope, $scope, $http, store, $window){
     $scope.user = {
       firstname: "",
@@ -1648,11 +1703,12 @@ angular.module('starter.controllers', ['starter.appServices',
 
       store.set('user.firstname',firstname);
       store.set('user.lastname', lastname);
-      $window.location.href = ('#/app/sponsors/amount');
+      $window.location.href = ('#/app/inviteSponsor/amount');
     }
   })
 
   .controller('InviteSponsorAmountCtrl', function($scope, $http, store, $window) {
+
     $scope.active = 'zero';
 
     $scope.setActive = function (type) {
@@ -1661,9 +1717,8 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.isActive = function (type) {
       return type === $scope.active;
     };
+
   })
-
-
   .controller('MyPledgesCtrl', function($rootScope, $scope, $filter, DonationAPI) {
     // $scope.doRefresh = function() {
     DonationAPI.getAllPledges($rootScope.getToken(), "577525799f1f51030075a292")
@@ -1672,12 +1727,12 @@ angular.module('starter.controllers', ['starter.appServices',
         for (var i = 0; i < data.length; i++) {
           data[i].end_date = $filter('date')(data[i].end_date, "MMM dd yyyy");
           $scope.list.push(data[i]);
-        };
+        }
+        ;
 
         $scope.donor = {
           amount: ""
         };
-
 
         $scope.saveMoney = function () {
 
@@ -1689,15 +1744,18 @@ angular.module('starter.controllers', ['starter.appServices',
           if (amount != '') {
             store.set('donor.amount', amount);
           }
-          $window.location.href = ('#/app/sponsors/pledge');
+          $window.location.href = ('#/app/inviteSponsor/pledge');
         }
 
         $scope.saveMoneyWithAmount = function (amount) {
           store.set('donor.amount', amount);
         }
 
-
       })
+  })
+
+  .controller('MyPledgesCtrl', function($rootScope, $scope, $filter, DonationAPI) {
+
   })
 
   .controller('InviteSponsorPledgeCtrl', function($scope, $http, store, $window){
@@ -1724,15 +1782,15 @@ angular.module('starter.controllers', ['starter.appServices',
       if (months != '') {
         store.set('donor.months', months);
       }
-      $window.location.href = ('#/app/sponsors/payment');
+      $window.location.href = ('#/app/inviteSponsor/payment');
     }
 
     $scope.saveMonthsWithMonths = function(months) {
       store.set('donor.months',months);
     }
 
-
   })
+
   .controller('InviteSponsorStartCtrl', function($scope){
 
   })
@@ -1761,7 +1819,7 @@ angular.module('starter.controllers', ['starter.appServices',
           stripeToken: response.id,
           userId: '576d5555765c85f11c7f0ca1'
         }).success(function (data){
-          $window.location.href = ('#/app/sponsors/con');
+          $window.location.href = ('#/app/inviteSponsor/end');
         }).error(function (err){
           console.log("error: " + err.message);
         });
@@ -1778,7 +1836,7 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.amount = store.get('donor.amount');
   })
 
-  .controller('AccountCtrl', function($rootScope, AuthAPI, AccountAPI, $window, $scope) {
+  .controller('AccountCtrl', function($rootScope, AuthAPI, UserAPI, $window, $scope) {
     //refresh on page load?
     //Profile Picture - edit
     //Name- cannot edit
@@ -1843,9 +1901,9 @@ angular.module('starter.controllers', ['starter.appServices',
         password: password
       }).success(function (data, headers, config, status) {
 
-        $rootScope.hide();
-        $window.location.href = ('#/app/account');
-      })
+          $rootScope.hide();
+          $window.location.href = ('#/app/account');
+        })
 
         .error(function (error) {
           if (error.error && error.error.code == 11000) {
@@ -1861,37 +1919,203 @@ angular.module('starter.controllers', ['starter.appServices',
 
 
 
-  .controller('PlaylistCtrl', function($scope, $stateParams) {
-  })
 
-  .controller('SponsorsPledgeCtrl', function($scope) {
-    $scope.active = 'zero';
-    $scope.setActive = function (type) {
-      $scope.active = type;
+  .controller('HistoryCtrl', function($scope, $rootScope, HistoryAPI, AuthAPI, $filter) {
+
+    /*Chart Configuration*/
+    $scope.labels = ['6/1', '6/2', '6/3', '6/4', '6/5', '6/6', '6/7'];
+    $scope.series = ['Miles Run'];
+
+    $scope.data = [
+      [5, 0, 3, 5, 7, 11, 9]
+    ];
+
+    $scope.colors = [{
+      "backgroundColor": "#00b9be"
+    }];
+
+    $scope.options = {
+      legend: {
+        display: false,
+        position: "left",
+        labels: {
+          fontFamily: "Helvetica Neue",
+          boxWidth: 0
+        }
+      },
+
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+            stepSize: 2,
+          },
+
+          scaleLabel: {
+            display: true,
+            labelString: "miles",
+            fontFamily: "Helvetica Neue"
+          }
+        }],
+
+        xAxes: [{
+          gridLines: {
+            display: false
+          }
+        }]
+      }
     };
-    $scope.isActive = function (type) {
-      return type === $scope.active;
-    };
+    /*CHART NOTE
+    It is very easy to display the bar chart. The labels array is for the days and the data array is for the miles for those days
+    End Chart Configuration
+     */
 
-    $scope.isChecked = false;
 
-    $scope.toggleCheck = function () {
-      $scope.isChecked = !$scope.isChecked;
-      console.log("Checked");
+    console.log('empty user history array initialized: ' + $scope.uHistory);
+
+    var today = Date.now();
+    $scope.endDate = new Date(today);
+    console.log('end date: ' + $scope.endDate);
+    var newDate = new Date($scope.endDate);
+    newDate.setDate(newDate.getDate() - 7);
+    $scope.startDate = new Date(newDate);
+
+
+    console.log('start date' + $scope.startDate);
+
+    var HistoryLoggerForm = {
+      // User: "",
+      // _v: "",
+      _id: "",
+      date: new Date(),
+      distance: Number,
+      // laps: [],
+      minutes: Number,
+      pace: Number,
+      // path:[],
+      seconds: Number
     }
 
 
-  })
+    console.log('user id is: ' +$rootScope.getUserId());
+    HistoryAPI.getAll(  $rootScope.getUserId()  )
+      .success(function(data){
+        console.log(data);
+        console.log('History API get user history call succeeded');
+        $scope.uHistory = [];
+        $scope.ids = [];
+        $scope.dates = [];
+        $scope.distances = [];
+        $scope.minutes = [];
+        $scope.paces = [];
+        $scope.seconds  = [];
+
+        for(var i = 0; i<data.length; i++){
+          console.log('i:' + i);
 
 
-  .controller('HistoryCtrl', function($scope) {
+           var HistoryLoggerForm = {
+              // User: "",
+              // _v: "",
+              _id: data[i]._id,
+              date: data[i].date,
+              distance: data[i].distance,
+              // laps: [],
+              minutes: data[i].minutes,
+              pace: data[i].pace,
+              // path:[],
+              seconds: data[i].seconds
+            };
+            console.log('HistoryLoggerForm: '+ HistoryLoggerForm._id);
+            $scope.ids.push(HistoryLoggerForm._id);
+            console.log('$scope.ids: ' + $scope.ids);
+            $scope.dates.push(HistoryLoggerForm.date);
+            console.log('$scope.dates: ' + $scope.dates);
+            $scope.distances.push(HistoryLoggerForm.distance);
+            console.log('$scope.distances: ' + $scope.distances);
+            $scope.minutes.push(HistoryLoggerForm.minutes);
+            console.log('$scope.minutes: ' + $scope.minutes);
+            $scope.paces.push(HistoryLoggerForm.pace);
+            console.log('$scope.pace: ' + $scope.paces);
+            $scope.seconds.push(HistoryLoggerForm.seconds);
+            console.log('$scope.seconds: ' + $scope.seconds);
+        }
+      })
+      .error(function(err){
+        console.log('Get User history API request failed');
+        console.log(err);
+      });
 
-    $scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
-    $scope.series = ['Series A', 'Series B'];
+    $scope.getCurrentWeekHistory = function(){
+      var today = Date.now();
+      $scope.endDate = new Date(today);
+      console.log('end date: ' + $scope.endDate);
+      var newDate = new Date($scope.endDate);
+      newDate.setDate(newDate.getDate() - 7);
+      $scope.startDate = new Date(newDate);
 
-    $scope.data = [
-      [65, 59, 80, 81, 56, 55, 40],
-      [28, 48, 40, 19, 86, 27, 90]
-    ];
+      for(var i=0; i< $scope.dates.length;  i++){
+        if($scope.dates[i].date >= $scope.startDate && $scope.uHistory[i].date <= $scope.endDate){
+          $scope.weekHistory.push($scope.uHistory[i]);
+        }
+      }
+    }
+
+    $scope.decrementWeek = function(){
+      var weekStartDate = new Date();
+      var weekEndDate = new Date();
+      weekEndDate.setDate($scope.startDate.getDate() -1);
+      console.log('weekEndDate: ' + weekEndDate);
+      weekStartDate.setDate(weekEndDate.getDate() -7);
+      console.log('weekStartDate: ' + weekStartDate);
+      $scope.endDate =  new Date(weekEndDate);
+      console.log('$scope.endDate'+ $scope.endDate);
+      $scope.startDate = new Date(weekStartDate);
+      console.log('$scope.startDate' + $scope.startDate);
+
+      console.log('$scope.dates: ' + $scope.dates)
+      console.log('$scope.dates.length: ' + $scope.dates.length );
+
+      $scope.weekIds = [];
+      $scope.weekDates = [];
+      $scope.weekDistances = [];
+      $scope.weekMinutes = [];
+      $scope.weekPace = [];
+      $scope.weekSeconds = [];
+
+      for(var i=0; i < $scope.dates.length; i++){
+          $scope.weekDates.push($scope.dates[i]);
+          console.log('$scope.weekDates: ' + $scope.weekDates);
+          $scope.weekIds.push($scope.ids[i]);
+          console.log('$scope.weekIds: '+$scope.weekIds);
+          $scope.weekDistances.push($scope.distances[i]);
+          console.log('$scope.weekDistances: ' + $scope.weekDistances);
+          $scope.weekMinutes.push($scope.minutes[i]);
+          console.log('$scope.weekDates: ' + $scope.weekDates);
+          $scope.weekPace.push($scope.paces[i]);
+          console.log('$scope.paces: ' + $scope.weekPace);
+          $scope.weekSeconds.push($scope.seconds[i]);
+          console.log('$scope.weekSeconds: ' + $scope.weekSeconds);
+        if($scope.dates[i] >= $scope.startDate && $scope.dates[i] <= $scope.endDate){
+          $scope.weekDates.push($scope.dates[i]);
+          console.log('$scope.weekDates: ' + $scope.weekDates);
+          $scope.weekIds.push($scope.ids[i]);
+          console.log('$scope.weekIds: '+weekIds);
+          $scope.weekDistances.push($scope.distances[i]);
+          console.log('$scope.weekDistances: ' + $scope.weekDistances);
+          $scope.weekMinutes.push($scope.minutes[i]);
+          console.log('$scope.weekDates: ' + $scope.weekDates);
+          $scope.weekPace.push($scope.paces[i]);
+          console.log('$scope.paces: ' + $scope.weekPace);
+          $scope.weekSeconds.push($scope.seconds[i]);
+          console.log('$scope.weekSeconds: ' + $scope.weekSeconds);
+
+        }
+
+      }
+
+
+    }
+
 
   });
