@@ -1952,7 +1952,8 @@ angular.module('starter.controllers', ['starter.appServices',
           scaleLabel: {
             display: true,
             labelString: "miles",
-            fontFamily: "Helvetica Neue"
+            fontFamily: "Helvetica Neue",
+            fontSize: "20"
           }
         }],
 
