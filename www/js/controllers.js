@@ -1922,12 +1922,25 @@ angular.module('starter.controllers', ['starter.appServices',
 
     /*Chart Configuration*/
     $scope.labels = ['6/1', '6/2', '6/3', '6/4', '6/5', '6/6', '6/7'];
-    $scope.series = ['Series A'];
+    $scope.series = ['Miles Run'];
 
     $scope.data = [
-      [65, 59, 80, 81, 56, 55, 40, 80]
+      [65, 59, 80, 81, 56, 55, 50]
     ];
 
+    $scope.colors = [{
+      "backgroundColor": "#00b9be"
+    }];
+
+    $scope.options = {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    };
     /*CHART NOTE
     It is very easy to display the bar chart. The labels array is for the days and the data array is for the miles for those days
     End Chart Configuration
