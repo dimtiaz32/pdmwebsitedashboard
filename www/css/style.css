@@ -1,9 +1,9 @@
 /*Get rid of tab bars*/
- .tabs-icon-top.pane.tabs-bottom.tabs-standard {
+ .auth.tabs-icon-top.pane.tabs-bottom.tabs-standard {
    background-color: #00b9be;
  }
 
- .tabs-icon-top.pane.tabs-bottom.tabs-standard .tab-nav.tabs {
+ .auth.tabs-icon-top.pane.tabs-bottom.tabs-standard .tab-nav.tabs {
    background-color: #00b9be;
    display: none;
  }

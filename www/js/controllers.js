@@ -11,8 +11,6 @@ angular.module('starter.controllers', ['starter.appServices',
 
 
 
-
-
   .controller('SignUpCtrl', function($scope, $rootScope, $ionicModal, $timeout, AuthAPI, $window, UserAPI){
     $scope.user = {
       firstName: "",

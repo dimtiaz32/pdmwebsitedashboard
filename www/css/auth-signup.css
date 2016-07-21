@@ -1,6 +1,10 @@
+.pane {
+  background-color: #00b9be;
+}
+
 .sign-up .logo-image {
   display: block;
-  margin: auto auto 10% auto;
+  margin: -5% auto 10% auto;
   width: 20%;
   height: auto;
 }
@@ -26,7 +30,7 @@
 }
 
   .sign-up.has-header button {
-    margin-top: 10%;
+    margin-top: 0;
     background-color: #01999d;
     color: #fff;
   }
