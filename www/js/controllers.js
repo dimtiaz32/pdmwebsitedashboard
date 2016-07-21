@@ -1930,6 +1930,7 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.rData = [];
 
 
+
     $scope.options = {
       legend: {
         display: false,
@@ -1994,7 +1995,6 @@ angular.module('starter.controllers', ['starter.appServices',
       seconds: Number
     }
     $scope.monthToNumber = function(month){
-      var monthNumber;
       switch(month){
         case "Jan":
           monthNumber = 01;
@@ -2013,7 +2013,7 @@ angular.module('starter.controllers', ['starter.appServices',
           return monthNumber;
           break;
         case "May":
-          monthNumber = 5;
+          monthNumber = 05;
           return monthNumber;
           break;
         case "Jun":
@@ -2028,7 +2028,7 @@ angular.module('starter.controllers', ['starter.appServices',
           monthNumber = 08;
           return monthNumber;
           break;
-        case "Sept":
+        case "Sep":
           monthNumber = 09;
           return monthNumber;
           break;
@@ -2047,6 +2047,7 @@ angular.module('starter.controllers', ['starter.appServices',
         default:
           monthNumber = 0;
           return monthNumber;
+          break;
       }
     };
 
@@ -2095,7 +2096,11 @@ angular.module('starter.controllers', ['starter.appServices',
           $scope.seconds.push(HistoryLoggerForm.seconds);
           console.log('$scope.seconds: ' + $scope.seconds);
 
-          $scope.dateSorter(HistoryLoggerForm.date);
+          $scope.dateSorter($scope.dates[i]);
+
+
+
+
 
         }
 
@@ -2618,8 +2623,21 @@ angular.module('starter.controllers', ['starter.appServices',
 
     }
 
+    $scope.januaryRunDates = [];
+    $scope.februaryRunDates = [];
+    $scope.marchRunDates = [];
+    $scope.aprilRunDates = [];
+    $scope.mayRunDates = [];
+    $scope.juneRunDates = [];
+    $scope.julyRunDates = [];
+    $scope.augustRunDates = [];
+    $scope.septemberRunDates = [];
+    $scope.octoberRunDates = [];
+    $scope.novemberRunDates = [];
+    $scope.decemberRunDates = [];
 
     $scope.dateSorter = function(date){
+
       var bigDay = new Date(date);
       // bigDay.setDate(date.getDate());
       var bigDaySplit = bigDay.toString().split(" ");
@@ -2629,9 +2647,140 @@ angular.module('starter.controllers', ['starter.appServices',
 
       console.log(' DATE SORTER: year: ' + year + ' month: ' + month + ' day: ' + day );
 
-      $scope.monthCalculators = function(month){
+      var convertedMonth = $scope.monthToNumber(month);
 
+      console.log('DATE SORTER CONVERTED MONTH: ' + convertedMonth);
+
+      switch(convertedMonth){
+        case 1:
+          $scope.januaryRunDates.push(date);
+          break;
+
+        case 2:
+          $scope.februaryRunDates.push(date);
+          break;
+        case 3:
+          $scope.marchRunDates.push(date);
+          break;
+        case 4:
+          $scope.aprilRunDates.push(date);
+          break;
+        case 5:
+          $scope.mayRunDates.push(date);
+          break;
+        case 6:
+          $scope.juneRunDates.push(date);
+          break;
+        case 7:
+          $scope.julyRunDates.push(date);
+          break;
+        case 8:
+          $scope.augustRunDates.push(date);
+          break;
+        case 9:
+          $scope.septemberRunDates.push(date);
+          break;
+        case 10:
+          $scope.octoberRunDates.push(date);
+          break;
+        case 11:
+          $scope.novemberRunDates.push(date);
+          break;
+        case 12:
+          $scope.decemberRunDates.push(date);
+          break;
+        default:
+          console.log('Error: date could not be logged');
+          break;
       }
+
+      console.log('januaryRunDates: ' + $scope.januaryRunDates);
+      console.log('februaryRunDates: ' + $scope.februaryRunDates);
+      console.log('marchRunDates: ' + $scope.marchRunDates);
+      console.log('aprilRunDates: ' + $scope.aprilRunDates);
+      console.log('mayRunDates: ' + $scope.mayRunDates);
+      console.log('juneRunDates: ' + $scope.juneRunDates);
+      console.log('julyRunDates: ' + $scope.julyRunDates);
+      console.log('augustRunDates: ' + $scope.augustRunDates);
+      console.log('septemberRunDates: ' + $scope.septemberRunDates);
+      console.log('octoberRunDates: ' + $scope.octoberRunDates);
+      console.log('novemberRunDates: ' + $scope.novemberRunDates);
+      console.log('decemberRunDates: ' + $scope.decemberRunDates);
+
+      // switch(convertedMonth){
+      //   case 1:
+      //     $scope.januaryRunDates.push(date);
+      //     return $scope.januaryRunDates;
+      //     break;
+      //   case 2:
+      //     $scope.februaryRunDates.push(date);
+      //     return $scope.februaryRunDates;
+      //     break;
+      //   case 3:
+      //     $scope.marchRunDates.push(date);
+      //     return $scope.marchRunDates;
+      //     break;
+      //   case 4:
+      //     $scope.aprilRunDates.push(date);
+      //     return $scope.aprilRunDates;
+      //     break;
+      //   case 5:
+      //     $scope.mayRunDates.push(date);
+      //     return $scope.mayRunDates;
+      //     break;
+      //   case 6:
+      //     $scope.juneRunDates.push(date);
+      //     return $scope.juneRunDates;
+      //     break;
+      //   case 7:
+      //     $scope.julyRunDates.push(date);
+      //     return $scope.julyRunDates;
+      //     break;
+      //   case 8:
+      //     $scope.augustRunDates.push(date);
+      //     return $scope.augustRunDates;
+      //     break;
+      //   case 9:
+      //     $scope.septemberRunDates.push(date);
+      //     return $scope.septemberRunDates;
+      //     break;
+      //   case 10:
+      //     $scope.octoberRunDates.push(date);
+      //     return $scope.octoberRunDates;
+      //     break;
+      //   case 11:
+      //     $scope.novemberRunDates.push(date);
+      //     return $scope.novemberRunDates;
+      //     break;
+      //   case 12:
+      //     $scope.decemberRunDates.push(date);
+      //     return $scope.decemberRunDates;
+      //     break;
+      //   default:
+      //     console.log('Error: date could not be logged');
+      // }
+      //
+      // console.log('januaryRunDates: ' + $scope.januaryRunDates);
+      // console.log('februaryRunDates: ' + $scope.februaryRunDates);
+      // console.log('marchRunDates: ' + $scope.marchRunDates);
+      // console.log('aprilRunDates: ' + $scope.aprilRunDates);
+      // console.log('mayRunDates: ' + $scope.mayRunDates);
+      // console.log('juneRunDates: ' + $scope.juneRunDates);
+      // console.log('julyRunDates: ' + $scope.julyRunDates);
+      // console.log('augustRunDates: ' + $scope.augustRunDates);
+      // console.log('septemberRunDates: ' + $scope.septemberRunDates);
+      // console.log('octoberRunDates: ' + $scope.octoberRunDates);
+      // console.log('novemberRunDates: ' + $scope.novemberRunDates);
+      // console.log('decemberRunDates: ' + $scope.decemberRunDates);
+
+    }
+
+
+
+
+
+
+    $scope.monthCalculators = function(month){
 
     }
 
