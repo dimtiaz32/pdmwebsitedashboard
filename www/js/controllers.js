@@ -2103,7 +2103,7 @@ angular.module('starter.controllers', ['starter.appServices',
           $scope.seconds.push(HistoryLoggerForm.seconds);
           console.log('$scope.seconds: ' + $scope.seconds);
 
-          $scope.dateSorter($scope.dates[i]);
+          $scope.monthSorter($scope.dates[i], $scope.distances[i], $scope.paces[i]);
 
 
 
@@ -2643,7 +2643,34 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.novemberRunDates = [];
     $scope.decemberRunDates = [];
 
-    $scope.dateSorter = function(date){
+    $scope.januaryRunDistances = [];
+    $scope.februaryRunDistances = [];
+    $scope.marchRunDistances = [];
+    $scope.aprilRunDistances = [];
+    $scope.mayRunDistances = [];
+    $scope.juneRunDistances= [];
+    $scope.julyRunDistances = [];
+    $scope.augustRunDistances = [];
+    $scope.septemberRunDistances = [];
+    $scope.octoberRunDistances = [];
+    $scope.novemberRunDistances = [];
+    $scope.decemberRunDistances = [];
+
+    $scope.januaryRunPaces = [];
+    $scope.februaryRunPaces= [];
+    $scope.marchRunPaces= [];
+    $scope.aprilRunPaces= [];
+    $scope.mayRunPaces= [];
+    $scope.juneRunPaces= [];
+    $scope.julyRunPaces= [];
+    $scope.augustRunPaces= [];
+    $scope.septemberRunPaces= [];
+    $scope.octoberRunPaces= [];
+    $scope.novemberRunPaces= [];
+    $scope.decemberRunPaces= [];
+
+
+    $scope.monthSorter = function(date, distance, pace){
 
       var bigDay = new Date(date);
       // bigDay.setDate(date.getDate());
@@ -2661,40 +2688,64 @@ angular.module('starter.controllers', ['starter.appServices',
       switch(convertedMonth){
         case 1:
           $scope.januaryRunDates.push(date);
+          $scope.januaryRunDistances.push(distance);
+          $scope.januaryRunPaces.push(pace);
           break;
 
         case 2:
           $scope.februaryRunDates.push(date);
+          $scope.februaryRunDistances.push(distance);
+          $scope.februaryRunPaces.push(pace);
           break;
         case 3:
           $scope.marchRunDates.push(date);
+          $scope.marchRunDistances.push(distance);
+          $scope.marchRunPaces.push(pace);
           break;
         case 4:
           $scope.aprilRunDates.push(date);
+          $scope.aprilRunDistances.push(distance);
+          $scope.aprilRunPaces.push(pace);
           break;
         case 5:
           $scope.mayRunDates.push(date);
+          $scope.mayRunDistances.push(distance)
+          $scope.mayRunPaces.push(pace);
           break;
         case 6:
           $scope.juneRunDates.push(date);
+          $scope.juneRunDistances.push(distance);
+          $scope.juneRunPaces.push(pace);
           break;
         case 7:
           $scope.julyRunDates.push(date);
+          $scope.julyRunDistances.push(distance);
+          $scope.julyRunPaces.push(pace);
           break;
         case 8:
           $scope.augustRunDates.push(date);
+          $scope.augustRunDistances.push(distance);
+          $scope.augustRunPaces.push(pace);
           break;
         case 9:
           $scope.septemberRunDates.push(date);
+          $scope.septemberRunDistances.push(distance);
+          $scope.septemberRunPaces.push(pace);
           break;
         case 10:
           $scope.octoberRunDates.push(date);
+          $scope.octoberRunDistances.push(distance);
+          $scope.octoberRunPaces.push(pace);
           break;
         case 11:
           $scope.novemberRunDates.push(date);
+          $scope.novemberRunDistances.push(distance);
+          $scope.novemberRunPaces.push(pace);
           break;
         case 12:
           $scope.decemberRunDates.push(date);
+          $scope.decemberRunDistances.push(distance);
+          $scope.decemberRunPaces.push(pace);
           break;
         default:
           console.log('Error: date could not be logged');
@@ -2714,81 +2765,157 @@ angular.module('starter.controllers', ['starter.appServices',
       console.log('novemberRunDates: ' + $scope.novemberRunDates);
       console.log('decemberRunDates: ' + $scope.decemberRunDates);
 
-      // switch(convertedMonth){
-      //   case 1:
-      //     $scope.januaryRunDates.push(date);
-      //     return $scope.januaryRunDates;
-      //     break;
-      //   case 2:
-      //     $scope.februaryRunDates.push(date);
-      //     return $scope.februaryRunDates;
-      //     break;
-      //   case 3:
-      //     $scope.marchRunDates.push(date);
-      //     return $scope.marchRunDates;
-      //     break;
-      //   case 4:
-      //     $scope.aprilRunDates.push(date);
-      //     return $scope.aprilRunDates;
-      //     break;
-      //   case 5:
-      //     $scope.mayRunDates.push(date);
-      //     return $scope.mayRunDates;
-      //     break;
-      //   case 6:
-      //     $scope.juneRunDates.push(date);
-      //     return $scope.juneRunDates;
-      //     break;
-      //   case 7:
-      //     $scope.julyRunDates.push(date);
-      //     return $scope.julyRunDates;
-      //     break;
-      //   case 8:
-      //     $scope.augustRunDates.push(date);
-      //     return $scope.augustRunDates;
-      //     break;
-      //   case 9:
-      //     $scope.septemberRunDates.push(date);
-      //     return $scope.septemberRunDates;
-      //     break;
-      //   case 10:
-      //     $scope.octoberRunDates.push(date);
-      //     return $scope.octoberRunDates;
-      //     break;
-      //   case 11:
-      //     $scope.novemberRunDates.push(date);
-      //     return $scope.novemberRunDates;
-      //     break;
-      //   case 12:
-      //     $scope.decemberRunDates.push(date);
-      //     return $scope.decemberRunDates;
-      //     break;
-      //   default:
-      //     console.log('Error: date could not be logged');
-      // }
-      //
-      // console.log('januaryRunDates: ' + $scope.januaryRunDates);
-      // console.log('februaryRunDates: ' + $scope.februaryRunDates);
-      // console.log('marchRunDates: ' + $scope.marchRunDates);
-      // console.log('aprilRunDates: ' + $scope.aprilRunDates);
-      // console.log('mayRunDates: ' + $scope.mayRunDates);
-      // console.log('juneRunDates: ' + $scope.juneRunDates);
-      // console.log('julyRunDates: ' + $scope.julyRunDates);
-      // console.log('augustRunDates: ' + $scope.augustRunDates);
-      // console.log('septemberRunDates: ' + $scope.septemberRunDates);
-      // console.log('octoberRunDates: ' + $scope.octoberRunDates);
-      // console.log('novemberRunDates: ' + $scope.novemberRunDates);
-      // console.log('decemberRunDates: ' + $scope.decemberRunDates);
+      console.log('januaryRunDistances: ' + $scope.januaryRunDistances);
+      console.log('februaryRunDistances: ' + $scope.februaryRunDistances);
+      console.log('marchRunDistances: ' + $scope.marchRunDistances);
+      console.log('aprilRunDistances: ' + $scope.aprilRunDistances);
+      console.log('mayRunDistances: ' + $scope.mayRunDistances);
+      console.log('juneRunDistances: ' + $scope.juneRunDistances);
+      console.log('julyRunDistances: ' + $scope.julyRunDistances);
+      console.log('augustRunDistances: ' + $scope.augustRunDistances);
+      console.log('septemberRunDistances: ' + $scope.septemberRunDistances);
+      console.log('octoberRunDistances: ' + $scope.octoberRunDistances);
+      console.log('novemberRunDistances: ' + $scope.novemberRunDistances);
+      console.log('decemberRunDistances: ' + $scope.decemberRunDistances);
+
+      console.log('januaryRunPaces: ' + $scope.januaryRunPaces);
+      console.log('februaryRunPaces: ' + $scope.februaryRunPaces);
+      console.log('marchRunPaces: ' + $scope.marchRunPaces);
+      console.log('aprilRunPaces: ' + $scope.aprilRunPaces);
+      console.log('mayRunPaces: ' + $scope.mayRunPaces);
+      console.log('juneRunPaces: ' + $scope.juneRunPaces);
+      console.log('julyRunPaces: ' + $scope.julyRunPaces);
+      console.log('augustRunPaces: ' + $scope.augustRunPaces);
+      console.log('septemberRunPaces: ' + $scope.septemberRunPaces);
+      console.log('octoberRunPaces: ' + $scope.octoberRunPaces);
+      console.log('novemberRunPaces: ' + $scope.novemberRunPaces);
+      console.log('decemberRunPaces: ' + $scope.decemberRunPaces);
+
+      $scope.currentMonth();
+
+
+    }
+    $scope.currentMonth = function(){
+      console.log('Today: ' + $scope.endDate);
+      var TodaySplit = $scope.endDate.toString().split(" ");
+      console.log('TodaySplit: ' + TodaySplit );
+      var thisMonth = TodaySplit[1];
+      console.log('This month: ' + thisMonth );
+      var thisMonthNumber = $scope.monthToNumber(thisMonth);
+      console.log('This month number: ' + thisMonthNumber);
+      $scope.setMonthArrays(thisMonthNumber);
+    }
+
+
+    // $scope.getThisMonth = function(month){
+    //
+    //   $scope.setMonthArray(month);
+    // }
+    $scope.monthDistanceCalculator = function(month, distances, paces){
+      // var selectedRunDates = month;
+      console.log('This month array from month calculator: ' + month);
+      console.log('This month length from month calculator: ' + month.length);
+      console.log('This month array distances: ' + distances);
+      console.log('This month array of paces: ' + paces);
+
+
+      $scope.monthTotalDistance = 0;
+       for(var i=0; i<distances.length; i++){
+          console.log('distances value: ' + distances[i]);
+         $scope.monthTotalDistance += distances[i];
+         console.log('Month total distance: ' + $scope.monthTotalDistance);
+       }
+
+      var paceSum = 0;
+      for(var i=0; i< paces.length; i++){
+        console.log('paces value: ' + paces[i]);
+        paceSum += paces[i];
+        console.log('Month pace total sum: ' + paceSum);
+      }
+      $scope.monthAveragePace = paceSum / paces.length;
+      console.log('monthAveragePace: ' + $scope.monthAveragePace);
+
+
+
+
+
+    }
+
+    $scope.setMonthArrays = function(monthNumber){
+      console.log('Entered set month array with number ' + monthNumber);
+      console.log('Checking values of monthRunDates....');
+      console.log('januaryRunDates: ' + $scope.januaryRunDates);
+      console.log('februaryRunDates: ' + $scope.februaryRunDates);
+      console.log('marchRunDates: ' + $scope.marchRunDates);
+      console.log('aprilRunDates: ' + $scope.aprilRunDates);
+      console.log('mayRunDates: ' + $scope.mayRunDates);
+      console.log('juneRunDates: ' + $scope.juneRunDates);
+      console.log('julyRunDates: ' + $scope.julyRunDates);
+      console.log('augustRunDates: ' + $scope.augustRunDates);
+      console.log('septemberRunDates: ' + $scope.septemberRunDates);
+      console.log('octoberRunDates: ' + $scope.octoberRunDates);
+      console.log('novemberRunDates: ' + $scope.novemberRunDates);
+      console.log('decemberRunDates: ' + $scope.decemberRunDates);
+      console.log('januaryRunDistances: ' + $scope.januaryRunDistances);
+      console.log('februaryRunDistances: ' + $scope.februaryRunDistances);
+      console.log('marchRunDistances: ' + $scope.marchRunDistances);
+      console.log('aprilRunDistances: ' + $scope.aprilRunDistances);
+      console.log('mayRunDistances: ' + $scope.mayRunDistances);
+      console.log('juneRunDistances: ' + $scope.juneRunDistances);
+      console.log('julyRunDistances: ' + $scope.julyRunDistances);
+      console.log('augustRunDistances: ' + $scope.augustRunDistances);
+      console.log('septemberRunDistances: ' + $scope.septemberRunDistances);
+      console.log('octoberRunDistances: ' + $scope.octoberRunDistances);
+      console.log('novemberRunDistances: ' + $scope.novemberRunDistances);
+      console.log('decemberRunDistances: ' + $scope.decemberRunDDistances);
+
+      switch(monthNumber){
+        case 1:
+          $scope.monthDistanceCalculator($scope.januaryRunDates, $scope.januaryRunDistances, $scope.januaryRunPaces);
+          break;
+
+        case 2:
+          $scope.monthDistanceCalculator($scope.februaryRunDates, $scope.februaryRunDistances, $scope.februaryRunPaces);
+          break;
+        case 3:
+          $scope.monthDistanceCalculator($scope.marchRunDates, $scope.marchRunDistances, $scope.marchRunPaces );
+          break;
+        case 4:
+          $scope.monthDistanceCalculator($scope.aprilRunDates, $scope.aprilRunDistances, $scope.aprilRunPaces);
+          break;
+        case 5:
+          $scope.monthDistanceCalculator($scope.mayRunDates, $scope.mayRunDistances, $scope.mayRunPaces);
+          break;
+        case 6:
+          $scope.monthDistanceCalculator($scope.juneRunDates, $scope.juneRunDistances, $scope.juneRunPaces);
+          break;
+        case 7:
+          return $scope.monthDistanceCalculator($scope.julyRunDates, $scope.julyRunDistances, $scope.julyRunPaces);
+          break;
+        case 8:
+          $scope.monthDistanceCalculator($scope.augustRunDates, $scope.augustRunDistances, $scope.augustRunPaces);
+          break;
+        case 9:
+          $scope.monthDistanceCalculator($scope.septemberRunDates, $scope.septemberRunDistances, $scope.septemberRunPaces);
+          break;
+        case 10:
+          $scope.monthDistanceCalculator($scope.octoberRunDates, $scope.octoberRunDistances, $scope.octoberRunPaces);
+          break;
+        case 11:
+          $scope.monthDistanceCalculator($scope.novemberRunDates, $scope.novemberRunDistances, $scope.novemberRunPaces);
+          break;
+        case 12:
+          $scope.monthDistanceCalculator($scope.decemberRunDates, $scope.decemberRunDistances, $scope.decemberRunPaces);
+          break;
+        default:
+          console.log('Error: date could not be logged');
+          break;
+      }
 
     }
 
 
 
 
-
-
-    $scope.monthCalculators = function(month){
-
-    }
 
   });
