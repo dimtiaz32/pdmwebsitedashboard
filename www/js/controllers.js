@@ -1953,9 +1953,9 @@ angular.module('starter.controllers', ['starter.appServices',
 
           scaleLabel: {
             display: true,
-            labelString: "miles",
+            labelString: "Miles",
             fontFamily: "Helvetica Neue",
-            fontSize: "20"
+            fontSize: "16"
           }
         }],
 
@@ -1964,6 +1964,13 @@ angular.module('starter.controllers', ['starter.appServices',
             display: false
           }
         }]
+      }
+    };
+
+    $scope.onClick = function (bar, evt) {
+      console.log(bar, evt);
+      if (bar[0] != null) {
+        console.log("Bar with value " + $scope.data[0][bar[0]._index] + " clicked");
       }
     };
     /*CHART NOTE
