@@ -345,13 +345,14 @@ angular.module('starter.controllers', ['starter.appServices',
       lapUI.style.borderRadius = '3px';
       lapUI.style.boxShadow = '0 2px 6px rgba(0, 0, 0, .3)';
       lapUI.style.cursor = 'pointer';
-      lapUI.style.top = '10px';
+      // lapUI.style.top = '10px';
+      // lapUI.style.bottom = '150px';
+      // lapUI.style.width = '556px';
+      // lapUI.style.position = 'relative';
+      lapUI.style.width = '275px';
       lapUI.style.height = '50px';
-      lapUI.style.width = '556px';
-      lapUI.style.bottom = '150px';
-      lapUI.style.position = 'relative';
       lapUI.style.zIndex = '10';
-      lapUI.style.marginBottom = '100px';
+      lapUI.style.marginBottom = '25px';
       lapUI.style.textAlign = 'center';
       lapUI.title = 'Lap';
       buttonDiv.appendChild(lapUI);
@@ -359,7 +360,7 @@ angular.module('starter.controllers', ['starter.appServices',
       var lapText = document.createElement('div');
       lapText.style.color = 'rgb(255, 255, 255)';
       lapText.style.fontFamily = 'HelveticaNeue-Light';
-      lapText.style.fontSize = '50px';
+      lapText.style.fontSize = '24px';
       lapText.style.lineHeight = '50px';
       lapText.style.lineWidth = '556px';
       lapText.style.paddingLefft = '5px';
@@ -389,25 +390,25 @@ angular.module('starter.controllers', ['starter.appServices',
       pauseUI.style.borderRadius = '3px';
       pauseUI.style.boxShadow = '0 2px 6px rgba(0, 0, 0, .3)';
       pauseUI.style.cursor = 'pointer';
-      pauseUI.style.top = '10px';
-
+      // pauseUI.style.top = '10px';
+      // pauseUI.style.width = '556px';
+      pauseUI.style.width = '275px';
       pauseUI.style.height = '50px';
-      pauseUI.style.width = '556px';
-
       pauseUI.style.zIndex = '10';
-      pauseUI.style.marginBottom = '50px';
+      pauseUI.style.marginBottom = '25px';
       pauseUI.style.textAlign = 'center';
+      pauseUI.style.margin = 'inherit auto';
       pauseUI.title = 'Pause';
       buttonDiv.appendChild(pauseUI);
 
       var pauseText = document.createElement('div');
       pauseText.style.color = '#00b9be';
       pauseText.style.fontFamily = 'Roboto,Arial,sans-serif';
-      pauseText.style.fontSize = '50px';
+      pauseText.style.fontSize = '24px';
       pauseText.style.lineHeight = '50px';
       pauseText.style.lineWidth = '556px';
-      pauseText.style.paddingLeft = '5px';
-      pauseText.style.paddingRight = '5px';
+      // pauseText.style.paddingLeft = '5px';
+      // pauseText.style.paddingRight = '5px';
       pauseText.innerHTML = 'Pause';
       pauseUI.appendChild(pauseText);
 
@@ -439,13 +440,15 @@ angular.module('starter.controllers', ['starter.appServices',
       resumeUI.style.borderRadius = '3px';
       resumeUI.style.boxShadow = '0 2px 6px rgba(0, 0, 0, .3)';
       resumeUI.style.cursor = 'pointer';
-      resumeUI.style.top = '10px';
-      resumeUI.style.height = '50px';
-      resumeUI.style.width = '556px';
-      resumeUI.style.bottom = '150px';
-      resumeUI.style.position = 'relative';
+      // resumeUI.style.top = '10px';
+      // resumeUI.style.height = '50px';
+      // resumeUI.style.width = '556px';
+      // resumeUI.style.bottom = '150px';
+      // resumeUI.style.position = 'relative';
+      resumeUI.style.width = '275px';
+      resumeUI.style.bottom = '25px';
       resumeUI.style.zIndex = '10';
-      resumeUI.style.marginBottom = '100px';
+      resumeUI.style.marginBottom = '25px';
       resumeUI.style.textAlign = 'center';
       resumeUI.title = 'Lap';
       pausedDiv.appendChild(resumeUI);
@@ -453,7 +456,7 @@ angular.module('starter.controllers', ['starter.appServices',
       var resumeText = document.createElement('div');
       resumeText.style.color = 'rgb(255, 255, 255)';
       resumeText.style.fontFamily = 'Roboto,Arial,sans-serif';
-      resumeText.style.fontSize = '50px';
+      resumeText.style.fontSize = '24px';
       resumeText.style.lineHeight = '50px';
       resumeText.style.lineWidth = '556px';
       resumeText.style.paddingLefft = '5px';
@@ -476,19 +479,21 @@ angular.module('starter.controllers', ['starter.appServices',
       }
 
       var stopUI = document.createElement('div');
-      stopUI.style.backgroundColor = '#00b9be';
+      stopUI.style.backgroundColor = '#ce1d1f';
       stopUI.style.align = 'center';
-      stopUI.style.border = '2px solid #00b9be';
+      stopUI.style.border = '2px solid #ce1d1f';
       stopUI.style.borderRadius = '3px';
       stopUI.style.boxShadow = '0 2px 6px rgba(0, 0, 0, .3)';
       stopUI.style.cursor = 'pointer';
-      stopUI.style.top = '10px';
+      // stopUI.style.top = '10px';
+      // stopUI.style.height = '50px';
+      // stopUI.style.width = '556px';
+      // stopUI.style.bottom = '150px';
+      // stopUI.style.position = 'relative';
       stopUI.style.height = '50px';
-      stopUI.style.width = '556px';
-      stopUI.style.bottom = '150px';
-      stopUI.style.position = 'relative';
+      stopUI.style.width = '275px';
       stopUI.style.zIndex = '10';
-      stopUI.style.marginBottom = '100px';
+      stopUI.style.marginBottom = '25px';
       stopUI.style.textAlign = 'center';
       stopUI.title = 'Lap';
       pausedDiv.appendChild(stopUI);
@@ -496,7 +501,7 @@ angular.module('starter.controllers', ['starter.appServices',
       var stopText = document.createElement('div');
       stopText.style.color = 'rgb(255, 255, 255)';
       stopText.style.fontFamily = 'Roboto,Arial,sans-serif';
-      stopText.style.fontSize = '50px';
+      stopText.style.fontSize = '24px';
       stopText.style.lineHeight = '50px';
       stopText.style.lineWidth = '556px';
       stopText.style.paddingLefft = '5px';
@@ -631,26 +636,28 @@ angular.module('starter.controllers', ['starter.appServices',
       startUI.style.borderRadius = '3px';
       startUI.style.boxShadow = '0 2px 6px rgba(0, 0, 0, .3)';
       startUI.style.cursor = 'pointer';
-      startUI.style.top = '10px';
-      startUI.style.left = '300px';
-      startUI.style.right = '400px';
+      // startUI.style.top = '10px';
+      // startUI.style.left = '300px';
+      // startUI.style.right = '400px';
+      // startUI.style.width = '800px';
+      startUI.style.width = '275px';
       startUI.style.height = '50px';
-      startUI.style.width = '800px';
       startUI.style.zIndex = '10';
-      startUI.style.marginBottom = '50px';
+      startUI.style.marginBottom = '25px';
       startUI.style.textAlign = 'center';
       startUI.title = 'Start dreamrun';
+      startUI.style.margin = 'inherit auto';
       startDiv.appendChild(startUI);
 
       var startText = document.createElement('div');
       startText.style.color = 'rgb(255, 255, 255)';
       startText.style.fontFamily = 'Roboto,Arial,sans-serif';
-      startText.style.fontSize = '50px';
+      startText.style.fontSize = '24px';
       startText.style.lineHeight = '50px';
       startText.style.lineWidth = '556px';
+      startText.innerHTML = 'Start My DREAM<b>RUN</b>';
       // startText.style.paddingLeft = '5px';
       // startText.style.paddingRight = '5px';
-      startText.innerHTML = 'Start My DREAM<b>RUN</b>';
       startUI.appendChild(startText);
 
       $scope.removeStartUI = function(){
@@ -689,13 +696,13 @@ angular.module('starter.controllers', ['starter.appServices',
       summaryButtonUI.style.borderRadius = '3px';
       summaryButtonUI.style.boxShadow = '0 2px 6px rgba(0, 0, 0, .3)';
       summaryButtonUI.style.cursor = 'pointer';
-      summaryButtonUI.style.top = '10px';
-
+      // summaryButtonUI.style.top = '10px';
+      // summaryButtonUI.style.height = '50px';
+      // summaryButtonUI.style.width = '556px';
       summaryButtonUI.style.height = '50px';
-      summaryButtonUI.style.width = '556px';
-
+      summaryButtonUI.style.width = '275px';
       summaryButtonUI.style.zIndex = '10';
-      summaryButtonUI.style.marginBottom = '50px';
+      summaryButtonUI.style.marginBottom = '25px';
       summaryButtonUI.style.textAlign = 'center';
       summaryButtonUI.title = 'Pause';
       summaryButtonDiv.appendChild(summaryButtonUI);
@@ -703,7 +710,7 @@ angular.module('starter.controllers', ['starter.appServices',
       var summaryButtonText = document.createElement('div');
       summaryButtonText.style.color = '#00b9be';
       summaryButtonText.style.fontFamily = 'Roboto,Arial,sans-serif';
-      summaryButtonText.style.fontSize = '50px';
+      summaryButtonText.style.fontSize = '24px';
       summaryButtonText.style.lineHeight = '50px';
       summaryButtonText.style.lineWidth = '556px';
       summaryButtonText.style.paddingLeft = '5px';
