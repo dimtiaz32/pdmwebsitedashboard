@@ -44,11 +44,19 @@
   margin: 0 0 5px 0;
 }
 
+  .sign-in .button:hover {
+    border: none;
+  }
+
 .sign-in .forgot-password {
   background-color: #00b9be;
   text-align: center;
   display: inline-block;
 }
+
+  .sign-in .forgot-password:hover {
+    background-color: transparent;
+  }
 
 /*create account and sign in buttons*/
 .sign-in.options li{

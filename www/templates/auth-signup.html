@@ -27,14 +27,11 @@
      <span class="sign-up input-label">Verify Password</span>
      <input type="password" ng-model="secondPassword.password" ng-required="">
    </label>
-   <button class="sign-up button button-full" ng-click="createUser()">
+   <button class="sign-up button button-full button-positive" ng-click="createUser()">
     Create Account
    </button>
-   <a href="#/auth/signin">
-    <button class="sign-up button button-full">
-      Cancel
-    </button>
-   </a>
-
+   <button class="sign-up button button-full button-positive" onClick="location.href='#/auth/signin'">
+    Cancel
+   </button>
   </div>
 </ion-content>

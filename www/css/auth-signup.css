@@ -1,6 +1,6 @@
-ion-header-bar.sign-up {
+/*ion-header-bar.sign-up {
   background-color: #00b9be !important;
-}
+}*/
 
 .sign-up .logo-image {
   display: block;
@@ -30,20 +30,16 @@ ion-content.sign-up {
   padding-bottom: 20%
 }
 
-  ion-content.sign-up button, ion-content.sign-up a {
+  .sign-up .button {
     margin-top: 0;
     background-color: #01999d;
     color: #fff;
     text-decoration: none;
   }
 
-  ion-content.sign-up button:hover, ion-content.sign-up button:active, ion-content.sign-up button:focus {
-    margin-top: 0;
-    background-color: #01999d;
-    color: #fff;
-    outline: none;
+  .sign-up .button:hover {
+    border: none;
   }
-
 
 
 .sign-up .input-label {

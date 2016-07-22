@@ -1,26 +1,36 @@
 /*Get rid of tab bars in sign-in and sign-up pages*/
- .auth.tabs-icon-top.pane.tabs-bottom.tabs-standard {
-   background-color: #00b9be;
- }
+  .auth .tab-nav.tabs{
+    display: none;
+    background-color: #00b9be;
+  }
 
- .auth.tabs-icon-top.pane.tabs-bottom.tabs-standard .tab-nav.tabs {
-   background-color: #00b9be;
-   display: none;
- }
+  .auth.tabs-icon-top.pane.tabs-bottom.tabs-standard {
+    background-color: #00b9be;
+  }
+
+  /*.auth.tabs-icon-top.pane.tabs-bottom.tabs-standard .tab-nav.tabs {
+     background-color: #00b9be;
+     display: none;
+   }*/
 /*^^^WILL AFFECT ALL TAB BARS*/
+
 
 /*STYLE FOR ALL POPUPS*/
 .popup {
   border-radius: 8px !important;
 }
 
-.popup .popup-buttons .button-default {
-}
+  .popup input {
+    padding: 5px;
+  }
 
-.popup .popup-buttons .button-positive {
-  color: #fff;
-  background-color: #00b9be;
-}
+  .popup .popup-buttons .button-default {
+  }
+
+  .popup .popup-buttons .button-positive {
+    color: #fff;
+    background-color: #00b9be;
+  }
 /*STYLE FOR ALL POPUPS*/
 
 
