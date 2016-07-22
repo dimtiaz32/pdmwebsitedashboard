@@ -9,6 +9,21 @@
  }
 /*^^^WILL AFFECT ALL TAB BARS*/
 
+/*STYLE FOR ALL POPUPS*/
+.popup {
+  border-radius: 8px !important;
+}
+
+.popup .popup-buttons .button-default {
+}
+
+.popup .popup-buttons .button-positive {
+  color: #fff;
+  background-color: #00b9be;
+}
+/*STYLE FOR ALL POPUPS*/
+
+
 .nav-bar-block, .bar {
   background-color: #00b9be !important;
 }

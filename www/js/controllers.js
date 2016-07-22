@@ -219,13 +219,13 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.showForgotPassword = function(){
       var forgotPassword = $ionicPopup.show({
         template: '<input type="email" ng-model="popup.email">',
-        title: 'Enter Email for Password Reset',
+        title: 'Enter email for password reset',
         //subTitle: 'Whatever you want',
         scope: $scope,
         buttons: [
           { text: 'Cancel' },
           {
-            text: '<b>submit</b>',
+            text: '<b>Submit</b>',
             type: 'button-positive',
             onTap: function(e) {
               if (!$scope.popup.email) {
@@ -523,7 +523,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
       $scope.showEnsureStop = function(){
         var ensureStop = $ionicPopup.show({
-          title: 'Are You sure you want to stop?',
+          title: 'Are you sure you want to stop?',
           //subTitle: 'Whatever you want',
           scope: $scope,
           buttons: [
