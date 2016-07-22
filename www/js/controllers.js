@@ -241,13 +241,13 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.showForgotPassword = function(){
       var forgotPassword = $ionicPopup.show({
         template: '<input type="email" ng-model="popup.email">',
-        title: 'Enter Email for Password Reset',
+        title: 'Enter email for password reset',
         //subTitle: 'Whatever you want',
         scope: $scope,
         buttons: [
           { text: 'Cancel' },
           {
-            text: '<b>submit</b>',
+            text: '<b>Submit</b>',
             type: 'button-positive',
             onTap: function(e) {
               if (!$scope.popup.email) {
@@ -286,7 +286,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
   // })
 
-  .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI, AuthAPI){
+  .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI, $ionicPopup,  AuthAPI){
     //CONSOLE LOGGING COLORS:
 
     //UI-INTERACTIONS: TEAL
@@ -531,8 +531,8 @@ angular.module('starter.controllers', ['starter.appServices',
       stopUI.appendChild(stopText);
 
       stopUI.addEventListener('click', function () {
-        console.log('%cstop activated', 'color: Teal');
-        $scope.stopRun();
+        console.log('%c showing ensure stop...', 'color: Teal');
+        $scope.showEnsureStop();
       });
 
       $scope.removeStop = function(){
@@ -541,6 +541,26 @@ angular.module('starter.controllers', ['starter.appServices',
 
       $scope.addStop = function(){
         pausedDiv.appendChild(stopUI);
+      }
+
+      $scope.showEnsureStop = function(){
+        var ensureStop = $ionicPopup.show({
+          title: 'Are you sure you want to stop?',
+          //subTitle: 'Whatever you want',
+          scope: $scope,
+          buttons: [
+            { text: 'Cancel' },
+            {
+              text: '<b>Stop Run</b>',
+              type: 'button-positive',
+              onTap: function(e) {
+                console.log('%cstop activated', 'color: Teal');
+                return $scope.stopRun();
+
+              }
+            }
+          ]
+        })
       }
 
 
@@ -810,24 +830,29 @@ angular.module('starter.controllers', ['starter.appServices',
         $scope.myLatLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
         console.log('%cuser coords: ' + $scope.myLatLng, 'color: Purple');
       });
-      return $scope.myLatLng;
       console.log('%cReturning myLatLng from userCoords: ' + $scope.myLatLng, 'color: Purple');
       console.log('%cuser Coords Interval mark, refreshing coords', 'color: Purple');
+      return $scope.myLatLng;
+
     }
 
     //distance functions
     var distanceInitializer;
+    $scope.distanceCoords = [];
     $scope.runDistance = function(){
-      $scope.distanceCoords = [];
+
       console.log('%cEmpty coorindate arry for distance function initialized' + $scope.distanceCoords, 'color: Purple');
 
       distanceInitializer = $interval(function(){
         var currentCoords = $scope.userCoords();
         console.log('%cuser Coords called from within distance initializers: ' + currentCoords, 'color: Purple');
 
-        $scope.distanceCoords.push(currentCoords);
-        console.log('%cCurrent coords pushed to distance array. distanceCoords values: ' + $scope.distanceCoords, 'color: Purple');
-
+        if(currentCoords == undefined){
+          console.log('Current coords undefined');
+        } else {
+          $scope.distanceCoords.push(currentCoords);
+          console.log('%cCurrent coords pushed to distance array. distanceCoords values: ' + $scope.distanceCoords, 'color: Purple');
+        }
         $rootScope.setRunPath($scope.distanceCoords);
         console.log('Run path global var set as: ' + $rootScope.getRunPath());
         $scope.distance = google.maps.geometry.spherical.computeLength({
@@ -849,7 +874,7 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.distance = 1;
       console.log('%cDistance reset: ' + $scope.distance, 'color: Purple');
 
-      $scope.distanceCoords = [];
+      // $scope.distanceCoords = [];
     }
 
     var polyDrawer;
@@ -995,22 +1020,26 @@ angular.module('starter.controllers', ['starter.appServices',
 
     $scope.laps = [];
 
-
+    $scope.lapCoords = [];
     var lapDistanceInitializer;
     $scope.getLapDistance = function(){
       console.log('%cLap distance function activated', 'color: MediumPurple');
 
-      $scope.lapCoords = [];
+
       console.log('%cEmpty lap coords array initialized: ' + $scope.lapCoords, 'color: MediumPurple');
 
       lapDistanceInitializer = $interval(function(){
-        $scope.userCoords();
         console.log('%cGet current coords called from lap distance', 'color: MediumPurple');
 
         var currentCoords = $scope.userCoords();
 
-        $scope.lapCoords.push(currentCoords);
-        console.log('%cLap coords array' + currentCoords, 'color: MediumPurple');
+        if(currentCoords == undefined){
+          console.log('Current coords undefined');
+        } else {
+          $scope.lapCoords.push(currentCoords);
+          console.log('%cCurrent coords pushed to distance array. distanceCoords values: ' + $scope.lapCoords, 'color: MediumPurple');
+        }
+
 
         // $rootScope.setLapPath($scope.lapCoords);
         // console.log('Lap path global var set as: '+$rootScope.getPath());
@@ -1030,59 +1059,7 @@ angular.module('starter.controllers', ['starter.appServices',
       $interval.cancel(lapDistanceInitializer);
       lapDistanceInitializer = undefined;
     }
-    $scope.laps = [];
 
-    $scope.lap = function(){
-
-      //pace functions for everything
-      //log lap values
-
-      console.log('%cLap Number: ' + $scope.lapNumber, 'color: Aqua');
-      console.log('%cLap Seconds: ' + $scope.lapSeconds, 'color: Aqua');
-      console.log('%cLap minutes: ' + $scope.lapMinutes, 'color: Aqua');
-      console.log('%cLap distance: ' + $scope.lapDistance, 'color: Aqua');
-
-      var time = $scope.lapMinutes + ':' +$scope.lapSeconds;
-
-
-
-      $scope.stopLapTimer();
-      $scope.stopLapDistance();
-      $scope.stopLapPaceCalculator();
-
-
-      $rootScope.setLapPath($scope.lapCoords);
-      console.log('Lap path global var set as: '+$rootScope.getLapPath());
-
-      $rootScope.setLapDistance($scope.lapDistance);
-      console.log('Lap distance global var: ' + $rootScope.getLapDistance());
-
-      $rootScope.setLapNumber($scope.lapNumber);
-      console.log('Lap Number global var set as: ' + $rootScope.getLapNumber());
-
-      $rootScope.setLapSeconds($scope.lapSeconds);
-      $rootScope.setLapMinutes($scope.lapMinutes);
-      console.log('Lap Minutes global var: ' + $rootScope.getLapMinutes() + '; Lap seconds  global var: ' + $rootScope.getLapSeconds());
-
-      var l = {
-        number: $rootScope.getLapNumber(),
-        distance:  $rootScope.getLapDistance(),
-        seconds: $rootScope.getLapSeconds(),
-        minutes: $rootScope.getLapMinutes(),
-        pace: $rootScope.getLapPace(),
-        path: $rootScope.getLapPath()
-      };
-
-      $scope.laps.push(l);
-      console.log('Laps array (for push) set as: ' + $scope.laps);
-      $rootScope.setLaps($scope.laps);
-      console.log('Laps array global var set as: ' + $rootScope.getToken());
-
-      $scope.startLapTimer();
-      $scope.getLapDistance();
-      $scope.lapPaceCalculator();
-      $scope.lapNumber++;
-    }
 
     $scope.setStartingLatLng = function(){
       console.log('setting start coords');
@@ -1118,10 +1095,13 @@ angular.module('starter.controllers', ['starter.appServices',
         var distanceInMiles = paceDistance * milesPerMeter;
         console.log('%cDistance in miles: ' + distanceInMiles, 'color: Gold');
 
-        milesPerSecond = 10 / time;
+
+        //10 is hard coded value since value is 0 when testing
+        milesPerSecond = time / 10;
+        //milesPerSecond = time / distanceInMiles;
         console.log('%cMiles per second: ' + milesPerSecond, 'color: Gold');
 
-        $scope.pace = milesPerSecond * 60;
+        $scope.pace = milesPerSecond / 60;
         console.log('%cMiles per minute (Pace): ' + $scope.pace, 'color: Gold');
 
         $rootScope.setRunPace($scope.pace);
@@ -1160,7 +1140,7 @@ angular.module('starter.controllers', ['starter.appServices',
         var distanceInMiles = lapPaceDistance * milesPerMeter;
         console.log('%cDistance in miles: ' + distanceInMiles, 'color: DarkGoldenRod ');
 
-        milesPerSecond = 10 / time;
+        milesPerSecond = distanceInMiles / time;
         console.log('%cMiles per second: ' + milesPerSecond, 'color: DarkGoldenRod ');
 
         $scope.lapPace = milesPerSecond * 60;
@@ -1171,6 +1151,8 @@ angular.module('starter.controllers', ['starter.appServices',
 
       }, 2100);
     }
+
+
     $scope.stopLapPaceCalculator = function(){
       console.log('%cStopping pace calculator... ', 'color: DarkGoldenRod ');
       $interval.cancel(lapPaceInitializer);
@@ -1184,6 +1166,59 @@ angular.module('starter.controllers', ['starter.appServices',
       console.log('%cMoney raised calculator active', 'color: Grey');
 
 
+    }
+
+
+
+    $scope.lat = [];
+    $scope.long = [];
+    $scope.lapLat = [];
+    $scope.lapLong = [];
+
+    $scope.lapCoordsDeterminant = function(i, split){
+      var splitNumber = i;
+      if (i = 0 || i % 2 == 0) {
+        var coordSplit = split.toString().split('(');
+        var firstSplit = coordSplit[0];
+        var secondSplit = coordSplit[1];
+        console.log('Coord split ' + splitNumber + 'first split: ' + firstSplit);
+        console.log('Coord split ' + splitNumber + 'second split: ' + secondSplit);
+        $scope.lapLat.push(secondSplit);
+        console.log('$scope.lapLat: ' + $scope.lapLat);
+
+      } else {
+        var coordSplit = split.toString().split(')');
+        var firstSplit = coordSplit[0];
+        var secondSplit = coordSplit[1];
+        console.log('Coord split ' + splitNumber + 'first split: ' + firstSplit);
+        console.log('Coord split ' + splitNumber + 'second split: ' + secondSplit);
+        $scope.lapLong.push(firstSplit);
+        console.log('$scope.lapLong: ' + $scope.lapLong);
+      }
+    }
+
+
+    $scope.coordsDeterminant = function(i, split) {
+      var splitNumber = i;
+      if (i = 0 || i % 2 == 0) {
+        coordSplit = split.toString().split('(');
+        var firstSplit = coordSplit[0];
+        var secondSplit = coordSplit[1];
+        console.log('Coord split ' + splitNumber + 'first split: ' + firstSplit);
+        console.log('Coord split ' + splitNumber + 'second split: ' + secondSplit);
+        $scope.lat.push(secondSplit);
+        console.log('$scope.lat: ' + $scope.lat);
+
+      } else {
+        coordSplit = split.toString().split(')');
+        var firstSplit = coordSplit[0];
+        var secondSplit = coordSplit[1];
+        console.log('Coord split ' + splitNumber + 'first split: ' + firstSplit);
+        console.log('Coord split ' + splitNumber + 'second split: ' + secondSplit);
+        $scope.long.push(firstSplit);
+        console.log('$scope.long: ' + $scope.long);
+
+      }
     }
 
     //map states
@@ -1209,10 +1244,6 @@ angular.module('starter.controllers', ['starter.appServices',
       console.log('%cStarting run...', 'color: HotPink');
 
 
-      // console.log("Attempting to remove dropdown info");
-      // $scope.removeWelcomeUI();
-
-
       console.log("%cAttempting to remove start button...", 'color: HotPink');
       $scope.removeStartUI();
 
@@ -1223,16 +1254,100 @@ angular.module('starter.controllers', ['starter.appServices',
       buttonControlDiv.index = 1;
       $scope.map.controls[google.maps.ControlPosition.BOTTOM].push(buttonControlDiv);
 
-      // var runInfoControlDiv = document.createElement('div');
-      // var runInfoControl = $scope.runInfoControl(runInfoControlDiv, $scope.map);
-      //
-      // runInfoControlDiv.index = 1;
-      // $scope.map.controls[google.maps.ControlPosition.TOP].push(runInfoControlDiv);
-
       $scope.run();
 
-
     };
+
+    $scope.lapPushNumbers = [];
+    $scope.lapPushDistances = [];
+    $scope.lapPushSeconds = [];
+    $scope.lapPushMinutes = [];
+    $scope.lapPushPace = [];
+    $scope.lapPushLat = [];
+    $scope.lapPushLong = [];
+
+    $scope.lap = function(){
+
+      console.log('%cLap Number: ' + $scope.lapNumber, 'color: Aqua');
+      console.log('%cLap Seconds: ' + $scope.lapSeconds, 'color: Aqua');
+      console.log('%cLap minutes: ' + $scope.lapMinutes, 'color: Aqua');
+      console.log('%cLap distance: ' + $scope.lapDistance, 'color: Aqua');
+      console.log('%cLap Path : ' + $scope.lapCoords, 'color: Aqua' );
+      console.log('%cLap Pace: ' + $scope.lapPace, 'color: Aqua');
+
+      $scope.stopLapTimer();
+      $scope.stopLapDistance();
+      $scope.stopLapPaceCalculator();
+
+      var lapCoordString = $scope.lapCoords.toString();
+      console.log('lapCoordString: ' + lapCoordString);
+
+      var lapCoordSplit = lapCoordString.split(',');
+      console.log('lapCoordSplit: ' + lapCoordSplit);
+      console.log('lapCoordSplit.length : ' + lapCoordSplit.length);
+
+      var firstLapSplit = lapCoordSplit[0];
+      console.log('firstLapSplit: ' + firstLapSplit);
+
+      var secondLapSplit = lapCoordSplit[1];
+      console.log('secondSplit: ' + secondLapSplit);
+
+      var thirdLapSplit = lapCoordSplit[2];
+      console.log('thirdSplit: ' + thirdLapSplit);
+
+
+      for (var i=0; i< lapCoordSplit.length; i++){
+        var splitNumber = i;
+        var split = lapCoordSplit[i];
+        if(split == ""){
+          console.log('split value is null');
+          i++;
+        } else {
+          console.log('Split ' + splitNumber + ': ' + split);
+          $scope.lapCoordsDeterminant(i, split);
+        }
+      }
+
+      console.log('$scope.lapLat: ' + $scope.lapLat);
+      console.log('$scope.lapLong: ' + $scope.lapLong);
+
+
+      $scope.lapPushNumbers.push($scope.lapNumber);
+      $scope.lapPushDistances.push($scope.lapDistance);
+      $scope.lapPushSeconds.push($scope.lapSeconds);
+      $scope.lapPushMinutes.push($scope.lapMinutes);
+      $scope.lapPushPace.push($scope.lapPace);
+      $scope.lapPushLat.push($scope.lapLat);
+      $scope.lapPushLong.push($scope.lapLong);
+      console.log('lapPushNumbers: ' + $scope.lapPushNumbers);
+      console.log('lapPushDistances: ' + $scope.lapPushDistances);
+      console.log('lapPushSeconds: ' + $scope.lapPushSeconds);
+      console.log('lapPushMinutes: ' + $scope.lapPushMinutes);
+      console.log('lapPushPace: ' + $scope.lapPushLat);
+      console.log('lapPushCoords: ' + $scope.lapPushLong);
+
+      console.log('$scope.laps.number: ' + $scope.laps.number);
+      console.log('$scope.laps.seconds: ' + $scope.laps.seconds);
+
+
+      for(var i = 0; i < $scope.lapLat.length; i++){
+        $scope.lapLat.pop();
+        console.log('$scope.lapLatPop: ' + $scope.lapLatPop);
+      }
+      console.log('$scope.lapLat post pop: ' + $scope.lapLat);
+      for(var i = 0; i<$scope.lapLong.length; i++){
+        $scope.lapLong.pop();
+        console.log('$scope.lapLongPop: ' + $scope.lapLong);
+      }
+      console.log('$scope.lapLong post pop: ' + $scope.lapLong);
+
+
+
+      $scope.startLapTimer();
+      $scope.getLapDistance();
+      $scope.lapPaceCalculator();
+      $scope.lapNumber++;
+    }
 
     $scope.run = function(){
       //$scope.stopTimer() destroys timer. nothing registers if not destroyed
@@ -1296,13 +1411,11 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.resumePolylineDrawer();
       $scope.resumeLapTimer();
       // $scope.resumeCoordsArrayUpdater();
-
-
     }
 
     $scope.stopRun = function(){
 
-
+      console.log('Distance coords: '+ $scope.distanceCoords );
       $scope.postRun();
       $scope.removeResume();
       $scope.removeStop();
@@ -1320,17 +1433,59 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.map.controls[google.maps.ControlPosition.BOTTOM].push(runSummaryButtonControlDiv);
     }
 
+
+
     $scope.postRun = function(){
 
-      console.log('Push run- Distance: '+ $rootScope.getRunDistance());
-      console.log('Push run- minutes: ' + $rootScope.getRunMinutes());
-      console.log('Push run-  Seconds: ' + $rootScope.getRunSeconds());
-      console.log('Push run-  Pace: ' + $rootScope.getRunPace());
-      console.log('Push run-  User: ' + $rootScope.getUserId());
-      console.log('Push run- Path: ' + $rootScope.getRunPath());
-      console.log('Push run- Laps: ' + $rootScope.getLaps());
-
-
+      // console.log('Push run- Distance: '+ $rootScope.getRunDistance());
+      // console.log('Push run- minutes: ' + $rootScope.getRunMinutes());
+      // console.log('Push run-  Seconds: ' + $rootScope.getRunSeconds());
+      // console.log('Push run-  Pace: ' + $rootScope.getRunPace());
+      // console.log('Push run-  User: ' + $rootScope.getUserId());
+      // console.log('Push run- Path: ' + $rootScope.getRunPath());
+      // console.log('Push run- Laps: ' + $rootScope.getLaps());
+      //
+      // console.log('lapPushNumbers: ' + $scope.lapPushNumbers);
+      // console.log('lapPushDistances: ' + $scope.lapPushDistances);
+      // console.log('lapPushSeconds: ' + $scope.lapPushSeconds);
+      // console.log('lapPushMinutes: ' + $scope.lapPushMinutes);
+      // console.log('lapPushPace: ' + $scope.lapPushPace);
+      // console.log('lapPushPace: ' + $scope.lapPushLat);
+      // console.log('lapPushCoords: ' + $scope.lapPushLong);
+      //
+      // console.log('$scope.distanceCoords: ' +$scope.distanceCoords);
+      //
+      // var coordString = $scope.distanceCoords.toString();
+      // console.log('coordString: ' + coordString);
+      //
+      // var coordSplit = coordString.split(',');
+      // console.log('coordSplit: ' + coordSplit);
+      // console.log('coordSplit.length : ' + coordSplit.length);
+      //
+      // var firstSplit = coordSplit[0];
+      // console.log('firstSplit: ' + firstSplit);
+      //
+      // var secondSplit = coordSplit[1];
+      // console.log('secondSplit: ' + secondSplit);
+      //
+      // var thirdSplit = coordSplit[2];
+      // console.log('thirdSplit: ' + thirdSplit);
+      //
+      //
+      // for (var i=0; i< coordSplit.length; i++){
+      //   var splitNumber = i;
+      //   var split = coordSplit[i];
+      //   if(split == ""){
+      //     console.log('split value is null');
+      //     i++;
+      //   } else {
+      //     console.log('Split ' + splitNumber + ': ' + split);
+      //     $scope.coordsDeterminant(i, split);
+      //   }
+      // }
+      //
+      // console.log('$scope.lat: ' + $scope.lat);
+      // console.log('$scope.long: ' + $scope.long);
 
       var form = {
         distance: $rootScope.getRunDistance(),
@@ -1338,10 +1493,11 @@ angular.module('starter.controllers', ['starter.appServices',
         minutes: $rootScope.getRunMinutes(),
         pace: $rootScope.getRunPace(),
         User: $rootScope.getUserId(),
-        runPath: $rootScope.getRunPath(),
+        path: [{lat: $scope.lat}, {long: $scope.long}],
        // laps: [$rootScope.getLaps()],
         date: Date.now()
       }
+      console.log('Run save form: ' + form);
 
       RunAPI.saveRun(form)
         .success(function(data, status, headers, config){
@@ -1369,7 +1525,6 @@ angular.module('starter.controllers', ['starter.appServices',
 
       navigator.geolocation.getCurrentPosition(function(pos){
         console.log('Got pos', pos);
-
         $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
         // $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
         $scope.hide();
@@ -1958,6 +2113,7 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.rData = [];
 
 
+
     $scope.options = {
       legend: {
         display: false,
@@ -2029,7 +2185,6 @@ angular.module('starter.controllers', ['starter.appServices',
       seconds: Number
     }
     $scope.monthToNumber = function(month){
-      var monthNumber;
       switch(month){
         case "Jan":
           monthNumber = 01;
@@ -2048,7 +2203,7 @@ angular.module('starter.controllers', ['starter.appServices',
           return monthNumber;
           break;
         case "May":
-          monthNumber = 5;
+          monthNumber = 05;
           return monthNumber;
           break;
         case "Jun":
@@ -2063,7 +2218,7 @@ angular.module('starter.controllers', ['starter.appServices',
           monthNumber = 08;
           return monthNumber;
           break;
-        case "Sept":
+        case "Sep":
           monthNumber = 09;
           return monthNumber;
           break;
@@ -2082,6 +2237,7 @@ angular.module('starter.controllers', ['starter.appServices',
         default:
           monthNumber = 0;
           return monthNumber;
+          break;
       }
     };
 
@@ -2129,6 +2285,12 @@ angular.module('starter.controllers', ['starter.appServices',
           console.log('$scope.pace: ' + $scope.paces);
           $scope.seconds.push(HistoryLoggerForm.seconds);
           console.log('$scope.seconds: ' + $scope.seconds);
+
+          $scope.monthSorter($scope.dates[i], $scope.distances[i], $scope.paces[i]);
+
+
+
+
 
         }
 
@@ -2363,7 +2525,7 @@ angular.module('starter.controllers', ['starter.appServices',
           console.log('Day Seven miles: ' + $scope.daySevenMiles);
 
         } else {
-          console.log('Error: query did not match any existing dates with history information');
+          console.log('Query date did not return any history information');
         }
 
 
@@ -2650,6 +2812,292 @@ angular.module('starter.controllers', ['starter.appServices',
       }];
 
     }
+
+    $scope.januaryRunDates = [];
+    $scope.februaryRunDates = [];
+    $scope.marchRunDates = [];
+    $scope.aprilRunDates = [];
+    $scope.mayRunDates = [];
+    $scope.juneRunDates = [];
+    $scope.julyRunDates = [];
+    $scope.augustRunDates = [];
+    $scope.septemberRunDates = [];
+    $scope.octoberRunDates = [];
+    $scope.novemberRunDates = [];
+    $scope.decemberRunDates = [];
+
+    $scope.januaryRunDistances = [];
+    $scope.februaryRunDistances = [];
+    $scope.marchRunDistances = [];
+    $scope.aprilRunDistances = [];
+    $scope.mayRunDistances = [];
+    $scope.juneRunDistances= [];
+    $scope.julyRunDistances = [];
+    $scope.augustRunDistances = [];
+    $scope.septemberRunDistances = [];
+    $scope.octoberRunDistances = [];
+    $scope.novemberRunDistances = [];
+    $scope.decemberRunDistances = [];
+
+    $scope.januaryRunPaces = [];
+    $scope.februaryRunPaces= [];
+    $scope.marchRunPaces= [];
+    $scope.aprilRunPaces= [];
+    $scope.mayRunPaces= [];
+    $scope.juneRunPaces= [];
+    $scope.julyRunPaces= [];
+    $scope.augustRunPaces= [];
+    $scope.septemberRunPaces= [];
+    $scope.octoberRunPaces= [];
+    $scope.novemberRunPaces= [];
+    $scope.decemberRunPaces= [];
+
+
+    $scope.monthSorter = function(date, distance, pace){
+
+      var bigDay = new Date(date);
+      // bigDay.setDate(date.getDate());
+      var bigDaySplit = bigDay.toString().split(" ");
+      var year = bigDaySplit[3];
+      var month = bigDaySplit[1];
+      var day = bigDaySplit[2];
+
+      console.log(' DATE SORTER: year: ' + year + ' month: ' + month + ' day: ' + day );
+
+      var convertedMonth = $scope.monthToNumber(month);
+
+      console.log('DATE SORTER CONVERTED MONTH: ' + convertedMonth);
+
+      switch(convertedMonth){
+        case 1:
+          $scope.januaryRunDates.push(date);
+          $scope.januaryRunDistances.push(distance);
+          $scope.januaryRunPaces.push(pace);
+          break;
+
+        case 2:
+          $scope.februaryRunDates.push(date);
+          $scope.februaryRunDistances.push(distance);
+          $scope.februaryRunPaces.push(pace);
+          break;
+        case 3:
+          $scope.marchRunDates.push(date);
+          $scope.marchRunDistances.push(distance);
+          $scope.marchRunPaces.push(pace);
+          break;
+        case 4:
+          $scope.aprilRunDates.push(date);
+          $scope.aprilRunDistances.push(distance);
+          $scope.aprilRunPaces.push(pace);
+          break;
+        case 5:
+          $scope.mayRunDates.push(date);
+          $scope.mayRunDistances.push(distance)
+          $scope.mayRunPaces.push(pace);
+          break;
+        case 6:
+          $scope.juneRunDates.push(date);
+          $scope.juneRunDistances.push(distance);
+          $scope.juneRunPaces.push(pace);
+          break;
+        case 7:
+          $scope.julyRunDates.push(date);
+          $scope.julyRunDistances.push(distance);
+          $scope.julyRunPaces.push(pace);
+          break;
+        case 8:
+          $scope.augustRunDates.push(date);
+          $scope.augustRunDistances.push(distance);
+          $scope.augustRunPaces.push(pace);
+          break;
+        case 9:
+          $scope.septemberRunDates.push(date);
+          $scope.septemberRunDistances.push(distance);
+          $scope.septemberRunPaces.push(pace);
+          break;
+        case 10:
+          $scope.octoberRunDates.push(date);
+          $scope.octoberRunDistances.push(distance);
+          $scope.octoberRunPaces.push(pace);
+          break;
+        case 11:
+          $scope.novemberRunDates.push(date);
+          $scope.novemberRunDistances.push(distance);
+          $scope.novemberRunPaces.push(pace);
+          break;
+        case 12:
+          $scope.decemberRunDates.push(date);
+          $scope.decemberRunDistances.push(distance);
+          $scope.decemberRunPaces.push(pace);
+          break;
+        default:
+          console.log('Error: date could not be logged');
+          break;
+      }
+
+      console.log('januaryRunDates: ' + $scope.januaryRunDates);
+      console.log('februaryRunDates: ' + $scope.februaryRunDates);
+      console.log('marchRunDates: ' + $scope.marchRunDates);
+      console.log('aprilRunDates: ' + $scope.aprilRunDates);
+      console.log('mayRunDates: ' + $scope.mayRunDates);
+      console.log('juneRunDates: ' + $scope.juneRunDates);
+      console.log('julyRunDates: ' + $scope.julyRunDates);
+      console.log('augustRunDates: ' + $scope.augustRunDates);
+      console.log('septemberRunDates: ' + $scope.septemberRunDates);
+      console.log('octoberRunDates: ' + $scope.octoberRunDates);
+      console.log('novemberRunDates: ' + $scope.novemberRunDates);
+      console.log('decemberRunDates: ' + $scope.decemberRunDates);
+
+      console.log('januaryRunDistances: ' + $scope.januaryRunDistances);
+      console.log('februaryRunDistances: ' + $scope.februaryRunDistances);
+      console.log('marchRunDistances: ' + $scope.marchRunDistances);
+      console.log('aprilRunDistances: ' + $scope.aprilRunDistances);
+      console.log('mayRunDistances: ' + $scope.mayRunDistances);
+      console.log('juneRunDistances: ' + $scope.juneRunDistances);
+      console.log('julyRunDistances: ' + $scope.julyRunDistances);
+      console.log('augustRunDistances: ' + $scope.augustRunDistances);
+      console.log('septemberRunDistances: ' + $scope.septemberRunDistances);
+      console.log('octoberRunDistances: ' + $scope.octoberRunDistances);
+      console.log('novemberRunDistances: ' + $scope.novemberRunDistances);
+      console.log('decemberRunDistances: ' + $scope.decemberRunDistances);
+
+      console.log('januaryRunPaces: ' + $scope.januaryRunPaces);
+      console.log('februaryRunPaces: ' + $scope.februaryRunPaces);
+      console.log('marchRunPaces: ' + $scope.marchRunPaces);
+      console.log('aprilRunPaces: ' + $scope.aprilRunPaces);
+      console.log('mayRunPaces: ' + $scope.mayRunPaces);
+      console.log('juneRunPaces: ' + $scope.juneRunPaces);
+      console.log('julyRunPaces: ' + $scope.julyRunPaces);
+      console.log('augustRunPaces: ' + $scope.augustRunPaces);
+      console.log('septemberRunPaces: ' + $scope.septemberRunPaces);
+      console.log('octoberRunPaces: ' + $scope.octoberRunPaces);
+      console.log('novemberRunPaces: ' + $scope.novemberRunPaces);
+      console.log('decemberRunPaces: ' + $scope.decemberRunPaces);
+
+      $scope.currentMonth();
+
+
+    }
+    $scope.currentMonth = function(){
+      console.log('Today: ' + $scope.endDate);
+      var TodaySplit = $scope.endDate.toString().split(" ");
+      console.log('TodaySplit: ' + TodaySplit );
+      var thisMonth = TodaySplit[1];
+      console.log('This month: ' + thisMonth );
+      var thisMonthNumber = $scope.monthToNumber(thisMonth);
+      console.log('This month number: ' + thisMonthNumber);
+      $scope.setMonthArrays(thisMonthNumber);
+    }
+
+
+    // $scope.getThisMonth = function(month){
+    //
+    //   $scope.setMonthArray(month);
+    // }
+    $scope.monthDistanceCalculator = function(month, distances, paces){
+      // var selectedRunDates = month;
+      console.log('This month array from month calculator: ' + month);
+      console.log('This month length from month calculator: ' + month.length);
+      console.log('This month array distances: ' + distances);
+      console.log('This month array of paces: ' + paces);
+
+
+      $scope.monthTotalDistance = 0;
+       for(var i=0; i<distances.length; i++){
+          console.log('distances value: ' + distances[i]);
+         $scope.monthTotalDistance += distances[i];
+         console.log('Month total distance: ' + $scope.monthTotalDistance);
+       }
+
+      var paceSum = 0;
+      for(var i=0; i< paces.length; i++){
+        console.log('paces value: ' + paces[i]);
+        paceSum += paces[i];
+        console.log('Month pace total sum: ' + paceSum);
+      }
+      $scope.monthAveragePace = paceSum / paces.length;
+      console.log('monthAveragePace: ' + $scope.monthAveragePace);
+
+
+
+
+
+    }
+
+    $scope.setMonthArrays = function(monthNumber){
+      console.log('Entered set month array with number ' + monthNumber);
+      console.log('Checking values of monthRunDates....');
+      console.log('januaryRunDates: ' + $scope.januaryRunDates);
+      console.log('februaryRunDates: ' + $scope.februaryRunDates);
+      console.log('marchRunDates: ' + $scope.marchRunDates);
+      console.log('aprilRunDates: ' + $scope.aprilRunDates);
+      console.log('mayRunDates: ' + $scope.mayRunDates);
+      console.log('juneRunDates: ' + $scope.juneRunDates);
+      console.log('julyRunDates: ' + $scope.julyRunDates);
+      console.log('augustRunDates: ' + $scope.augustRunDates);
+      console.log('septemberRunDates: ' + $scope.septemberRunDates);
+      console.log('octoberRunDates: ' + $scope.octoberRunDates);
+      console.log('novemberRunDates: ' + $scope.novemberRunDates);
+      console.log('decemberRunDates: ' + $scope.decemberRunDates);
+      console.log('januaryRunDistances: ' + $scope.januaryRunDistances);
+      console.log('februaryRunDistances: ' + $scope.februaryRunDistances);
+      console.log('marchRunDistances: ' + $scope.marchRunDistances);
+      console.log('aprilRunDistances: ' + $scope.aprilRunDistances);
+      console.log('mayRunDistances: ' + $scope.mayRunDistances);
+      console.log('juneRunDistances: ' + $scope.juneRunDistances);
+      console.log('julyRunDistances: ' + $scope.julyRunDistances);
+      console.log('augustRunDistances: ' + $scope.augustRunDistances);
+      console.log('septemberRunDistances: ' + $scope.septemberRunDistances);
+      console.log('octoberRunDistances: ' + $scope.octoberRunDistances);
+      console.log('novemberRunDistances: ' + $scope.novemberRunDistances);
+      console.log('decemberRunDistances: ' + $scope.decemberRunDDistances);
+
+      switch(monthNumber){
+        case 1:
+          $scope.monthDistanceCalculator($scope.januaryRunDates, $scope.januaryRunDistances, $scope.januaryRunPaces);
+          break;
+
+        case 2:
+          $scope.monthDistanceCalculator($scope.februaryRunDates, $scope.februaryRunDistances, $scope.februaryRunPaces);
+          break;
+        case 3:
+          $scope.monthDistanceCalculator($scope.marchRunDates, $scope.marchRunDistances, $scope.marchRunPaces );
+          break;
+        case 4:
+          $scope.monthDistanceCalculator($scope.aprilRunDates, $scope.aprilRunDistances, $scope.aprilRunPaces);
+          break;
+        case 5:
+          $scope.monthDistanceCalculator($scope.mayRunDates, $scope.mayRunDistances, $scope.mayRunPaces);
+          break;
+        case 6:
+          $scope.monthDistanceCalculator($scope.juneRunDates, $scope.juneRunDistances, $scope.juneRunPaces);
+          break;
+        case 7:
+          return $scope.monthDistanceCalculator($scope.julyRunDates, $scope.julyRunDistances, $scope.julyRunPaces);
+          break;
+        case 8:
+          $scope.monthDistanceCalculator($scope.augustRunDates, $scope.augustRunDistances, $scope.augustRunPaces);
+          break;
+        case 9:
+          $scope.monthDistanceCalculator($scope.septemberRunDates, $scope.septemberRunDistances, $scope.septemberRunPaces);
+          break;
+        case 10:
+          $scope.monthDistanceCalculator($scope.octoberRunDates, $scope.octoberRunDistances, $scope.octoberRunPaces);
+          break;
+        case 11:
+          $scope.monthDistanceCalculator($scope.novemberRunDates, $scope.novemberRunDistances, $scope.novemberRunPaces);
+          break;
+        case 12:
+          $scope.monthDistanceCalculator($scope.decemberRunDates, $scope.decemberRunDistances, $scope.decemberRunPaces);
+          break;
+        default:
+          console.log('Error: date could not be logged');
+          break;
+      }
+
+    }
+
+
 
 
 

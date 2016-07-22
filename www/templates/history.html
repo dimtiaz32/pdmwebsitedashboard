@@ -12,40 +12,40 @@
     <ion-slide-box on-slide-changed="history-page ">
       <!--slideHasChanged($index)-->
       <ion-slide>
-        <div class="history-page month-slide">January</div>
+        <div class="history-page month-slide" ng-click="setMonthArrays(1)">January</div>
       </ion-slide>
       <ion-slide>
-        <div class="history-page month-slide">February</div>
+        <div class="history-page month-slide" ng-click="setMonthArrays(2)">February</div>
       </ion-slide>
       <ion-slide>
-        <div class="history-page month-slide">March</div>
+        <div class="history-page month-slide ng-click="setMonthArrays(3)">March</div>
       </ion-slide>
       <ion-slide>
-        <div class="history-page month-slide">April</div>
+        <div class="history-page month-slide" ng-click="setMonthArrays(4)">April</div>
       </ion-slide>
       <ion-slide>
-        <div class="history-page month-slide">May</div>
+        <div class="history-page month-slide" ng-click="setMonthArrays(5)">May</div>
       </ion-slide>
       <ion-slide>
-        <div class="history-page month-slide">June</div>
+        <div class="history-page month-slide" ng-click="setMonthArrays(6)">June</div>
       </ion-slide>
       <ion-slide>
-        <div class="history-page month-slide">July</div>
+        <div class="history-page month-slide" ng-click="setMonthArrays(7)">July</div>
       </ion-slide>
       <ion-slide>
-        <div class="history-page month-slide">August</div>
+        <div class="history-page month-slide" ng-click="setMonthArrays(8)">August</div>
       </ion-slide>
       <ion-slide>
-        <div class="history-page month-slide">September</div>
+        <div class="history-page month-slide" ng-click="setMonthArrays(9)">September</div>
       </ion-slide>
       <ion-slide>
-        <div class="history-page month-slide">October</div>
+        <div class="history-page month-slide" ng-click="setMonthArrays(10)">October</div>
       </ion-slide>
       <ion-slide>
-        <div class="history-page month-slide">November</div>
+        <div class="history-page month-slide" ng-click="setMonthArrays(11)">November</div>
       </ion-slide>
       <ion-slide>
-        <div class="history-page month-slide">December</div>
+        <div class="history-page month-slide" ng-click="setMonthArrays(12)">December</div>
       </ion-slide>
     </ion-slide-box>
   </div>
@@ -60,13 +60,13 @@
 
     <div class="history-page center-bubble-box">
       <p class="history-page label">Total Distance</p>
-      <p class="history-page value">78</p>
+      <p class="history-page value">{{monthTotalDistance}}</p>
       <p class="history-page units">miles</p>
     </div>
 
     <div class="history-page right-bubble-box">
       <p class="history-page label">Average Pace</p>
-      <p class="history-page value">7:25</p>
+      <p class="history-page value">{{monthAveragePace}}</p>
       <p class="history-page units">min:mile</p>
     </div>
 
@@ -78,7 +78,7 @@
         <button class="button left-button" ng-click="decrementWeek()"></button>
       </div>
       <div class="col col-20 col-center">
-        {{displayDayOneDate}} - {{displayDaySevenDate}}
+       {{displayDaySevenDate}} - {{displayDayOneDate}}
 
       </div>
       <div class="history-page col col-40" style="text-align: left">
