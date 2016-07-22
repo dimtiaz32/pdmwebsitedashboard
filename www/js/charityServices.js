@@ -70,13 +70,14 @@ angular.module('starter.charityServices', ['ionic'])
         }
       });
     },
-    selectCharity: function(charity, email){
+    selectCharity: function(charity, id){
       return $http.put(base+'user/selectedCharity', charity, {
         method: 'PUT',
         params: {
-          email: email
+          id: id
         }
       });
+
     },
     getSelectedCharity: function(token, email){
       return $http.get(base+'user/selectedCharity', email, {

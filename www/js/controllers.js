@@ -902,6 +902,8 @@ angular.module('starter.controllers', ['starter.appServices',
     //timer functions
     var startTimer;
     $scope.startTimer = function(){
+      $scope.minutes = 0;
+      $scope.seconds = 0;
       startTimer = $interval(function(){
         console.log('%cTimer activated', 'color: RoyalBlue');
         if($scope.seconds < 60) {
@@ -912,6 +914,8 @@ angular.module('starter.controllers', ['starter.appServices',
           }
           console.log('%cseconds: ' + $scope.seconds, 'color: RoyalBlue');
           console.log('%cminutes: ' + $scope.minutes, 'color: RoyalBlue');
+          return $scope.seconds, $scope.minutes;
+
         } else  if ($scope.seconds > 59) {
           console.log('%cseconds reached 60, reset to 0', 'color: RoyalBlue');
           $scope.seconds = 00;
@@ -943,37 +947,57 @@ angular.module('starter.controllers', ['starter.appServices',
       console.log('%cstop timer function activated', 'color: RoyalBlue');
       $interval.cancel(startTimer);
       startTimer = undefined;
-      $scope.minutes = 0;
-      $scope.seconds = 0;
+
     }
 
     //lap functions
+
     var startLapTimer;
     $scope.startLapTimer = function(){
+      $scope.lapSeconds = 0;
+      $scope.lapMinutes = 0;
       startLapTimer = $interval(function(){
         console.log('%cLap timer started', 'color: Blue');
         if($scope.lapSeconds < 60) {
-          console.log('%cLap seconds checked, incremented', 'color: Blue');
+          console.log('%cseconds checked, incremented', 'color: RoyalBlue');
           $scope.lapSeconds++;
-          console.log('%cLap seconds: ' + $scope.lapSeconds, 'color: Blue');
-          // $rootScope.setLapSeconds($scope.lapSeconds);
-          // $rootScope.setLapMinutes($scope.lapMinutes);
-          // console.log('Lap Minutes global var: ' + $rootScope.getLapMinutes() + '; Lap seconds  global var: ' + $rootScope.getLapSeconds());
-
-          if ($scope.lapSeconds > 59) {
-            console.log('%cLap seconds reached 60, reset to 0', 'color: Blue');
-            $scope.lapSeconds = 0;
-            console.log('%cLap seconds: ' + $scope.lapSeconds, 'color: Blue');
-            $scope.lapMinutes++;
-            console.log('%cLap minutes: ' + $scope.lapMinutes, 'color: Blue');
-            console.log('%cLap minutes incremented', 'color: Blue');
-
-            // $rootScope.setLapSeconds($scope.lapSeconds);
-            // $rootScope.setLapMinutes($scope.lapMinutes);
-            // console.log('Lap Minutes global var: ' + $rootScope.getLapMinutes() + '; Lap seconds  global var: ' + $rootScope.getLapSeconds());
-
+          if($scope.lapSeconds < 10){
+            $scope.lapSeconds = '0' + $scope.lapSeconds;
           }
+          console.log('%cseconds: ' + $scope.seconds, 'color: RoyalBlue');
+          console.log('%cminutes: ' + $scope.minutes, 'color: RoyalBlue');
+        } else  if ($scope.seconds > 59) {
+          console.log('%cseconds reached 60, reset to 0', 'color: RoyalBlue');
+          $scope.lapSeconds = 0;
+          console.log('%cseconds: ' + $scope.seconds, 'color: RoyalBlue');
+          $scope.lapMinutes++;
+          console.log('%cminutes: ' + $scope.lapMinutes, 'color: RoyalBlue');
+          console.log('minutes incremented');
         }
+
+
+        // if($scope.lapSeconds < 60) {
+        //   console.log('%cLap seconds checked, incremented', 'color: Blue');
+        //   $scope.lapSeconds++;
+        //   console.log('%cLap seconds: ' + $scope.lapSeconds, 'color: Blue');
+        //   // $rootScope.setLapSeconds($scope.lapSeconds);
+        //   // $rootScope.setLapMinutes($scope.lapMinutes);
+        //   // console.log('Lap Minutes global var: ' + $rootScope.getLapMinutes() + '; Lap seconds  global var: ' + $rootScope.getLapSeconds());
+        //
+        //   if ($scope.lapSeconds > 59) {
+        //     console.log('%cLap seconds reached 60, reset to 0', 'color: Blue');
+        //     $scope.lapSeconds = 0;
+        //     console.log('%cLap seconds: ' + $scope.lapSeconds, 'color: Blue');
+        //     $scope.lapMinutes++;
+        //     console.log('%cLap minutes: ' + $scope.lapMinutes, 'color: Blue');
+        //     console.log('%cLap minutes incremented', 'color: Blue');
+        //
+        //     // $rootScope.setLapSeconds($scope.lapSeconds);
+        //     // $rootScope.setLapMinutes($scope.lapMinutes);
+        //     // console.log('Lap Minutes global var: ' + $rootScope.getLapMinutes() + '; Lap seconds  global var: ' + $rootScope.getLapSeconds());
+        //
+        //   }
+        // }
         console.log('%cLap Timer interval mark', 'color: Blue');
       }, 1000);
     }
@@ -992,8 +1016,6 @@ angular.module('starter.controllers', ['starter.appServices',
       console.log('%cLap timer stopped', 'color: Blue');
       $interval.cancel(startLapTimer);
       startLapTimer = undefined;
-      $scope.lapSeconds = 0;
-      $scope.lapMinutes = 0;
     }
 
     $scope.laps = [];
@@ -1098,11 +1120,12 @@ angular.module('starter.controllers', ['starter.appServices',
     var lapPaceInitializer;
     $scope.lapPaceCalculator = function(){
       console.log('%cLap Pace Calculator Called', 'color: DarkGoldenRod ');
-
+      $scope.lapPace = 0;
       //var metersPerMile = 1609.34;
       var milesPerMeter = 0.000621371;
 
       lapPaceInitializer = $interval(function(){
+
         var lapPaceSeconds = $scope.lapSeconds;
         console.log('%cLap Pace Seconds: ' + lapPaceSeconds, 'color: DarkGoldenRod ');
         var lapPaceMinutes = $scope.lapMinutes;
@@ -1121,7 +1144,7 @@ angular.module('starter.controllers', ['starter.appServices',
         milesPerSecond = distanceInMiles / time;
         console.log('%cMiles per second: ' + milesPerSecond, 'color: DarkGoldenRod ');
 
-        $scope.lapPace = milesPerSecond * 60;
+        $scope.lapPace = milesPerSecond / 60;
         console.log('%cMiles per minute (Pace): ' + $scope.lapPace, 'color: DarkGoldenRod ');
 
         $rootScope.setLapPace($scope.lapPace);
@@ -1135,7 +1158,7 @@ angular.module('starter.controllers', ['starter.appServices',
       console.log('%cStopping pace calculator... ', 'color: DarkGoldenRod ');
       $interval.cancel(lapPaceInitializer);
       lapPaceInitializer = undefined;
-      $scope.lapPace = 0;
+
     }
 
     //money raised calculator
@@ -1147,33 +1170,37 @@ angular.module('starter.controllers', ['starter.appServices',
     }
 
 
-
+    $scope.lapPushNumbers = [];
+    $scope.lapPushDistances = [];
+    $scope.lapPushSeconds = [];
+    $scope.lapPushMinutes = [];
+    $scope.lapPushPace = [];
     $scope.lat = [];
     $scope.long = [];
-    $scope.lapLat = [];
-    $scope.lapLong = [];
-
-    $scope.lapCoordsDeterminant = function(i, split){
-      var splitNumber = i;
-      if (i = 0 || i % 2 == 0) {
-        var coordSplit = split.toString().split('(');
-        var firstSplit = coordSplit[0];
-        var secondSplit = coordSplit[1];
-        console.log('Coord split ' + splitNumber + 'first split: ' + firstSplit);
-        console.log('Coord split ' + splitNumber + 'second split: ' + secondSplit);
-        $scope.lapLat.push(secondSplit);
-        console.log('$scope.lapLat: ' + $scope.lapLat);
-
-      } else {
-        var coordSplit = split.toString().split(')');
-        var firstSplit = coordSplit[0];
-        var secondSplit = coordSplit[1];
-        console.log('Coord split ' + splitNumber + 'first split: ' + firstSplit);
-        console.log('Coord split ' + splitNumber + 'second split: ' + secondSplit);
-        $scope.lapLong.push(firstSplit);
-        console.log('$scope.lapLong: ' + $scope.lapLong);
-      }
-    }
+    // $scope.lapLat = [];
+    // $scope.lapLong = [];
+    //
+    // $scope.lapCoordsDeterminant = function(i, split){
+    //   var splitNumber = i;
+    //   if (i = 0 || i % 2 == 0) {
+    //     var coordSplit = split.toString().split('(');
+    //     var firstSplit = coordSplit[0];
+    //     var secondSplit = coordSplit[1];
+    //     console.log('Coord split ' + splitNumber + 'first split: ' + firstSplit);
+    //     console.log('Coord split ' + splitNumber + 'second split: ' + secondSplit);
+    //     $scope.lapLat.push(secondSplit);
+    //     console.log('$scope.lapLat: ' + $scope.lapLat);
+    //
+    //   } else {
+    //     var coordSplit = split.toString().split(')');
+    //     var firstSplit = coordSplit[0];
+    //     var secondSplit = coordSplit[1];
+    //     console.log('Coord split ' + splitNumber + 'first split: ' + firstSplit);
+    //     console.log('Coord split ' + splitNumber + 'second split: ' + secondSplit);
+    //     $scope.lapLong.push(firstSplit);
+    //     console.log('$scope.lapLong: ' + $scope.lapLong);
+    //   }
+    // }
 
 
     $scope.coordsDeterminant = function(i, split) {
@@ -1236,88 +1263,136 @@ angular.module('starter.controllers', ['starter.appServices',
 
     };
 
-    $scope.lapPushNumbers = [];
-    $scope.lapPushDistances = [];
-    $scope.lapPushSeconds = [];
-    $scope.lapPushMinutes = [];
-    $scope.lapPushPace = [];
-    $scope.lapPushLat = [];
-    $scope.lapPushLong = [];
+
+    // $scope.lapPushLat = [];
+    // $scope.lapPushLong = [];
 
     $scope.lap = function(){
+
 
       console.log('%cLap Number: ' + $scope.lapNumber, 'color: Aqua');
       console.log('%cLap Seconds: ' + $scope.lapSeconds, 'color: Aqua');
       console.log('%cLap minutes: ' + $scope.lapMinutes, 'color: Aqua');
       console.log('%cLap distance: ' + $scope.lapDistance, 'color: Aqua');
-      console.log('%cLap Path : ' + $scope.lapCoords, 'color: Aqua' );
       console.log('%cLap Pace: ' + $scope.lapPace, 'color: Aqua');
+
+      if($scope.lapNumber == undefined){
+        $scope.lapNumber = 0;
+        var lapNumberString = $scope.lapNumber.toString();
+        console.log(' LAP NUMBER undefined, SET TO 0');
+        $scope.lapPushNumbers.push(lapNumberString);
+      } else{
+        var lapNumberString = $scope.lapNumber.toString();
+        $scope.lapPushNumbers.push(lapNumberString);
+      }
+      if($scope.lapDistance == undefined){
+        $scope.lapDistance = 0;
+        var lapDistanceString = $scope.lapDistance.toString();
+        console.log(' LAP DISTANCE undefined, SET TO 0');
+        $scope.lapPushDistances.push(lapDistanceString);
+      } else{
+        var lapDistanceString = $scope.lapDistance.toString();
+        $scope.lapPushDistances.push(lapDistanceString);
+      }
+      if($scope.lapSeconds == undefined){
+        $scope.lapSeconds = 0;
+        var lapSecondsString = $scope.lapSeconds.toString();
+        console.log(' LAP SECONDS undefined, SET TO 0');
+        $scope.lapPushSeconds.push(lapSecondsString);
+      } else{
+        var lapSecondsString = $scope.lapSeconds.toString();
+        $scope.lapPushSeconds.push(lapSecondsString);
+      }
+      if($scope.lapMinutes == undefined){
+        $scope.lapMinutes = 0;
+        var lapMinutesString = $scope.lapMinutes.toString();
+        console.log(' LAP MINUTES undefined, SET TO 0');
+        $scope.lapPushMinutes.push(lapMinutesString);
+      } else{
+        var lapMinutesString = $scope.lapMinutes.toString();
+        $scope.lapPushMinutes.push(lapMinutesString);
+      }
+      if($scope.lapPace == undefined){
+        $scope.lapPace = 0;
+        var lapPaceString = $scope.lapPace.toString();
+        console.log(' LAP PACE undefined, SET TO 0');
+        $scope.lapPushPace.push(lapPaceString);
+      } else{
+        var lapPaceString = $scope.lapPace.toString();
+        $scope.lapPushPace.push(lapPaceString);
+      }
+      //
+      // $scope.lapPushNumbers.push($scope.lapNumber);
+      // $scope.lapPushDistances.push($scope.lapDistance);
+      // $scope.lapPushSeconds.push($scope.lapSeconds);
+      // $scope.lapPushMinutes.push($scope.lapMinutes);
+      // $scope.lapPushPace.push($scope.lapPace);
+      //
+
+      // $scope.lapPushLat.push($scope.lapLat);
+      // $scope.lapPushLong.push($scope.lapLong);
+      console.log('lapPushNumbers: ' + $scope.lapPushNumbers);
+      console.log('lapPushDistances: ' + $scope.lapPushDistances);
+      console.log('lapPushSeconds: ' + $scope.lapPushSeconds);
+      console.log('lapPushMinutes: ' + $scope.lapPushMinutes);
+      // console.log('lapPushPace: ' + $scope.lapPushLat);
+      // console.log('lapPushCoords: ' + $scope.lapPushLong);
 
       $scope.stopLapTimer();
       $scope.stopLapDistance();
       $scope.stopLapPaceCalculator();
 
-      var lapCoordString = $scope.lapCoords.toString();
-      console.log('lapCoordString: ' + lapCoordString);
-
-      var lapCoordSplit = lapCoordString.split(',');
-      console.log('lapCoordSplit: ' + lapCoordSplit);
-      console.log('lapCoordSplit.length : ' + lapCoordSplit.length);
-
-      var firstLapSplit = lapCoordSplit[0];
-      console.log('firstLapSplit: ' + firstLapSplit);
-
-      var secondLapSplit = lapCoordSplit[1];
-      console.log('secondSplit: ' + secondLapSplit);
-
-      var thirdLapSplit = lapCoordSplit[2];
-      console.log('thirdSplit: ' + thirdLapSplit);
-
-
-      for (var i=0; i< lapCoordSplit.length; i++){
-        var splitNumber = i;
-        var split = lapCoordSplit[i];
-        if(split == ""){
-          console.log('split value is null');
-          i++;
-        } else {
-          console.log('Split ' + splitNumber + ': ' + split);
-          $scope.lapCoordsDeterminant(i, split);
-        }
-      }
+      // var lapCoordString = $scope.lapCoords.toString();
+      // console.log('lapCoordString: ' + lapCoordString);
+      //
+      // var lapCoordSplit = lapCoordString.split(',');
+      // console.log('lapCoordSplit: ' + lapCoordSplit);
+      // console.log('lapCoordSplit.length : ' + lapCoordSplit.length);
+      //
+      // var firstLapSplit = lapCoordSplit[0];
+      // console.log('firstLapSplit: ' + firstLapSplit);
+      //
+      // var secondLapSplit = lapCoordSplit[1];
+      // console.log('secondSplit: ' + secondLapSplit);
+      //
+      // var thirdLapSplit = lapCoordSplit[2];
+      // console.log('thirdSplit: ' + thirdLapSplit);
+      //
+      //
+      // for (var i=0; i< lapCoordSplit.length; i++){
+      //   var splitNumber = i;
+      //   var split = lapCoordSplit[i];
+      //   if(split == ""){
+      //     console.log('split value is null');
+      //     i++;
+      //   } else {
+      //     console.log('Split ' + splitNumber + ': ' + split);
+      //     $scope.lapCoordsDeterminant(i, split);
+      //   }
+      // }
 
       console.log('$scope.lapLat: ' + $scope.lapLat);
       console.log('$scope.lapLong: ' + $scope.lapLong);
 
 
-      $scope.lapPushNumbers.push($scope.lapNumber);
-      $scope.lapPushDistances.push($scope.lapDistance);
-      $scope.lapPushSeconds.push($scope.lapSeconds);
-      $scope.lapPushMinutes.push($scope.lapMinutes);
-      $scope.lapPushPace.push($scope.lapPace);
-      $scope.lapPushLat.push($scope.lapLat);
-      $scope.lapPushLong.push($scope.lapLong);
-      console.log('lapPushNumbers: ' + $scope.lapPushNumbers);
-      console.log('lapPushDistances: ' + $scope.lapPushDistances);
-      console.log('lapPushSeconds: ' + $scope.lapPushSeconds);
-      console.log('lapPushMinutes: ' + $scope.lapPushMinutes);
-      console.log('lapPushPace: ' + $scope.lapPushLat);
-      console.log('lapPushCoords: ' + $scope.lapPushLong);
-
-      console.log('$scope.laps.number: ' + $scope.laps.number);
-      console.log('$scope.laps.seconds: ' + $scope.laps.seconds);
 
 
-      for(var i = 0; i < $scope.lapLat.length; i++){
-        $scope.lapLat.pop();
-        console.log('$scope.lapLatPop: ' + $scope.lapLatPop);
-      }
-      console.log('$scope.lapLat post pop: ' + $scope.lapLat);
-      for(var i = 0; i<$scope.lapLong.length; i++){
-        $scope.lapLong.pop();
-        console.log('$scope.lapLongPop: ' + $scope.lapLong);
-      }
-      console.log('$scope.lapLong post pop: ' + $scope.lapLong);
+
+
+      // for(var i = 0; i < $scope.lapLat.length; i++){
+      //   $scope.lapLat.pop();
+      //   console.log('$scope.lapLatPop: ' + $scope.lapLatPop);
+      // }
+      // console.log('$scope.lapLat post pop: ' + $scope.lapLat);
+      // for(var i = 0; i<$scope.lapLong.length; i++){
+      //   $scope.lapLong.pop();
+      //   console.log('$scope.lapLongPop: ' + $scope.lapLong);
+      // }
+      // console.log('$scope.lapLong post pop: ' + $scope.lapLong);
+      // $scope.lapSeconds = 0;
+      // $scope.lapMinutes = 0;
+      // $scope.lapNumber = 0;
+      // $scope.lapDistance = 0;
 
 
 
@@ -1415,55 +1490,55 @@ angular.module('starter.controllers', ['starter.appServices',
 
     $scope.postRun = function(){
 
-      // console.log('Push run- Distance: '+ $rootScope.getRunDistance());
-      // console.log('Push run- minutes: ' + $rootScope.getRunMinutes());
-      // console.log('Push run-  Seconds: ' + $rootScope.getRunSeconds());
-      // console.log('Push run-  Pace: ' + $rootScope.getRunPace());
-      // console.log('Push run-  User: ' + $rootScope.getUserId());
-      // console.log('Push run- Path: ' + $rootScope.getRunPath());
-      // console.log('Push run- Laps: ' + $rootScope.getLaps());
-      //
-      // console.log('lapPushNumbers: ' + $scope.lapPushNumbers);
-      // console.log('lapPushDistances: ' + $scope.lapPushDistances);
-      // console.log('lapPushSeconds: ' + $scope.lapPushSeconds);
-      // console.log('lapPushMinutes: ' + $scope.lapPushMinutes);
-      // console.log('lapPushPace: ' + $scope.lapPushPace);
-      // console.log('lapPushPace: ' + $scope.lapPushLat);
-      // console.log('lapPushCoords: ' + $scope.lapPushLong);
-      //
-      // console.log('$scope.distanceCoords: ' +$scope.distanceCoords);
-      //
-      // var coordString = $scope.distanceCoords.toString();
-      // console.log('coordString: ' + coordString);
-      //
-      // var coordSplit = coordString.split(',');
-      // console.log('coordSplit: ' + coordSplit);
-      // console.log('coordSplit.length : ' + coordSplit.length);
-      //
-      // var firstSplit = coordSplit[0];
-      // console.log('firstSplit: ' + firstSplit);
-      //
-      // var secondSplit = coordSplit[1];
-      // console.log('secondSplit: ' + secondSplit);
-      //
-      // var thirdSplit = coordSplit[2];
-      // console.log('thirdSplit: ' + thirdSplit);
-      //
-      //
-      // for (var i=0; i< coordSplit.length; i++){
-      //   var splitNumber = i;
-      //   var split = coordSplit[i];
-      //   if(split == ""){
-      //     console.log('split value is null');
-      //     i++;
-      //   } else {
-      //     console.log('Split ' + splitNumber + ': ' + split);
-      //     $scope.coordsDeterminant(i, split);
-      //   }
-      // }
-      //
-      // console.log('$scope.lat: ' + $scope.lat);
-      // console.log('$scope.long: ' + $scope.long);
+      console.log('Push run- Distance: '+ $rootScope.getRunDistance());
+      console.log('Push run- minutes: ' + $rootScope.getRunMinutes());
+      console.log('Push run-  Seconds: ' + $rootScope.getRunSeconds());
+      console.log('Push run-  Pace: ' + $rootScope.getRunPace());
+      console.log('Push run-  User: ' + $rootScope.getUserId());
+      console.log('Push run- Path: ' + $rootScope.getRunPath());
+
+
+      console.log('lapPushNumbers: ' + $scope.lapPushNumbers);
+      console.log('lapPushDistances: ' + $scope.lapPushDistances);
+      console.log('lapPushSeconds: ' + $scope.lapPushSeconds);
+      console.log('lapPushMinutes: ' + $scope.lapPushMinutes);
+      console.log('lapPushPace: ' + $scope.lapPushPace);
+
+
+
+      console.log('$scope.distanceCoords: ' +$scope.distanceCoords);
+
+      var coordString = $scope.distanceCoords.toString();
+      console.log('coordString: ' + coordString);
+
+      var coordSplit = coordString.split(',');
+      console.log('coordSplit: ' + coordSplit);
+      console.log('coordSplit.length : ' + coordSplit.length);
+
+      var firstSplit = coordSplit[0];
+      console.log('firstSplit: ' + firstSplit);
+
+      var secondSplit = coordSplit[1];
+      console.log('secondSplit: ' + secondSplit);
+
+      var thirdSplit = coordSplit[2];
+      console.log('thirdSplit: ' + thirdSplit);
+
+
+      for (var i=0; i< coordSplit.length; i++){
+        var splitNumber = i;
+        var split = coordSplit[i];
+        if(split == ""){
+          console.log('split value is null');
+          i++;
+        } else {
+          console.log('Split ' + splitNumber + ': ' + split);
+          $scope.coordsDeterminant(i, split);
+        }
+      }
+
+      console.log('$scope.lat: ' + $scope.lat);
+      console.log('$scope.long: ' + $scope.long);
 
       var form = {
         distance: $rootScope.getRunDistance(),
@@ -1471,10 +1546,16 @@ angular.module('starter.controllers', ['starter.appServices',
         minutes: $rootScope.getRunMinutes(),
         pace: $rootScope.getRunPace(),
         User: $rootScope.getUserId(),
+        lapNumber: $scope.pushLapNumbers,
+        lapDistance: $scope.pushLapDistances,
+        lapSeconds:  $scope.pushLapSeconds,
+        lapMinutes:  $scope.pushLapMinutes,
+        lapPace:  $scope.pushLapPace,
         path: [{lat: $scope.lat}, {long: $scope.long}],
-       // laps: [$rootScope.getLaps()],
         date: Date.now()
       }
+      console.log('Form Distance: ' + form.distance);
+      console.log('Form.lapDistance: ' + form.lapDistance);
       console.log('Run save form: ' + form);
 
       RunAPI.saveRun(form)
@@ -1663,10 +1744,9 @@ angular.module('starter.controllers', ['starter.appServices',
       console.log('attempting to update user\'s selected charity');
 
       console.log('attempting to update user\'s selected charity');
+      //var newCharity = charity.toString();
 
-      CharityAPI.selectCharity({
-          charity: charity},{
-          email:email})
+      CharityAPI.selectCharity(charity, $rootScope.getUserId())
         .success(function(data, status, headers, config){
 
           console.log('inside select charityAPI success');
