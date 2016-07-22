@@ -133,18 +133,22 @@ angular.module('starter.authServices', [])
 
   return {
     signin: function(form){
-      return $http.post(base+'authentication/signin', form);
+      return $http.post(base + 'authentication/signin', form);
     },
     signup: function(form){
-      return $http.post(base+'authentication/signup', form);
+      console.log("form:" + JSON.stringify(form));
+      return $http.post(base + 'authentication/signup', form);
     },
     signout: function(){
-      return $http.get(base+'/authentication/signout', {
+      return $http.get(base + 'authentication/signout', {
         method: 'GET'
       });
     },
     signinByFB: function(form) {
       return $http.post(base + 'authentication/facebook',form);
+    },
+    signinByGG: function(form) {
+      return $http.post(base + 'authentication/google',form);
     }
   }
 });
