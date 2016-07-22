@@ -1,5 +1,4 @@
-/*Get rid of tab bars*/
-
+/*Get rid of tab bars in sign-in and sign-up pages*/
  .auth.tabs-icon-top.pane.tabs-bottom.tabs-standard {
    background-color: #00b9be;
  }

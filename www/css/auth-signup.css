@@ -1,6 +1,10 @@
+ion-header-bar.sign-up {
+  background-color: #00b9be !important;
+}
+
 .sign-up .logo-image {
   display: block;
-  margin: -5% auto 10% auto;
+  margin: 0 auto 10px auto;
   width: 20%;
   height: auto;
 }
@@ -10,7 +14,7 @@
   text-align: center;
   font-size: 2em;
   font-weight: 200;
-  margin-bottom: 10%;
+  margin-bottom: 10px;
   padding: 0;
 
 }
@@ -19,17 +23,27 @@
     font-weight: 500;
   }
 
-.sign-up.has-header {
+ion-content.sign-up {
   background-color: #00b9be;
   padding: 0;
   padding-top: 10%;
+  padding-bottom: 20%
 }
 
-  .sign-up.has-header button {
+  ion-content.sign-up button, ion-content.sign-up a {
     margin-top: 0;
     background-color: #01999d;
     color: #fff;
+    text-decoration: none;
   }
+
+  ion-content.sign-up button:hover, ion-content.sign-up button:active, ion-content.sign-up button:focus {
+    margin-top: 0;
+    background-color: #01999d;
+    color: #fff;
+    outline: none;
+  }
+
 
 
 .sign-up .input-label {

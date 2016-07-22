@@ -1,9 +1,9 @@
-<ion-header-bar class="bar-positive">
+<!-- <ion-header-bar class="sign-up bar-positive">
   <a class="button icon-left ion-chevron-left button-clear" href="#/auth/signin">Back</a>
-</ion-header-bar>
-<ion-content class="sign-up has-header padding">
+</ion-header-bar> -->
+<ion-content class="sign-up  padding">
   <div class="sign-up logo">
-    <img class="sign-up logo-image" src="../img/PDM logo.png">
+    <img class="sign-up logo-image" ng-src="img/PDM logo.png">
     <h1 class="sign-up logo-title">Become a DREAM<span>RUNNER</span></h1>
   </div>
   <div class="sign-up list">
@@ -30,5 +30,11 @@
    <button class="sign-up button button-full" ng-click="createUser()">
     Create Account
    </button>
+   <a href="#/auth/signin">
+    <button class="sign-up button button-full">
+      Cancel
+    </button>
+   </a>
+
   </div>
 </ion-content>

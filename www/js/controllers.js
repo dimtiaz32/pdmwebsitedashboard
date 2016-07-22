@@ -10,7 +10,6 @@ angular.module('starter.controllers', ['starter.appServices',
     'starter.runServices','ionic','ngCordova','ngOpenFB', 'chart.js'])
 
 
-
   .controller('SignUpCtrl', function($scope, $rootScope, $ionicModal, $timeout, AuthAPI, $window, UserAPI){
     $scope.user = {
       firstName: "",
@@ -789,24 +788,29 @@ angular.module('starter.controllers', ['starter.appServices',
         $scope.myLatLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
         console.log('%cuser coords: ' + $scope.myLatLng, 'color: Purple');
       });
-      return $scope.myLatLng;
       console.log('%cReturning myLatLng from userCoords: ' + $scope.myLatLng, 'color: Purple');
       console.log('%cuser Coords Interval mark, refreshing coords', 'color: Purple');
+      return $scope.myLatLng;
+
     }
 
     //distance functions
     var distanceInitializer;
+    $scope.distanceCoords = [];
     $scope.runDistance = function(){
-      $scope.distanceCoords = [];
+
       console.log('%cEmpty coorindate arry for distance function initialized' + $scope.distanceCoords, 'color: Purple');
 
       distanceInitializer = $interval(function(){
         var currentCoords = $scope.userCoords();
         console.log('%cuser Coords called from within distance initializers: ' + currentCoords, 'color: Purple');
 
-        $scope.distanceCoords.push(currentCoords);
-        console.log('%cCurrent coords pushed to distance array. distanceCoords values: ' + $scope.distanceCoords, 'color: Purple');
-
+        if(currentCoords == undefined){
+          console.log('Current coords undefined');
+        } else {
+          $scope.distanceCoords.push(currentCoords);
+          console.log('%cCurrent coords pushed to distance array. distanceCoords values: ' + $scope.distanceCoords, 'color: Purple');
+        }
         $rootScope.setRunPath($scope.distanceCoords);
         console.log('Run path global var set as: ' + $rootScope.getRunPath());
         $scope.distance = google.maps.geometry.spherical.computeLength({
@@ -828,7 +832,7 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.distance = 1;
       console.log('%cDistance reset: ' + $scope.distance, 'color: Purple');
 
-      $scope.distanceCoords = [];
+      // $scope.distanceCoords = [];
     }
 
     var polyDrawer;
@@ -1097,10 +1101,13 @@ angular.module('starter.controllers', ['starter.appServices',
         var distanceInMiles = paceDistance * milesPerMeter;
         console.log('%cDistance in miles: ' + distanceInMiles, 'color: Gold');
 
-        milesPerSecond = 10 / time;
+
+        //10 is hard coded value since value is 0 when testing
+        milesPerSecond = time / 10;
+        //milesPerSecond = time / distanceInMiles;
         console.log('%cMiles per second: ' + milesPerSecond, 'color: Gold');
 
-        $scope.pace = milesPerSecond * 60;
+        $scope.pace = milesPerSecond / 60;
         console.log('%cMiles per minute (Pace): ' + $scope.pace, 'color: Gold');
 
         $rootScope.setRunPace($scope.pace);
@@ -1139,7 +1146,7 @@ angular.module('starter.controllers', ['starter.appServices',
         var distanceInMiles = lapPaceDistance * milesPerMeter;
         console.log('%cDistance in miles: ' + distanceInMiles, 'color: DarkGoldenRod ');
 
-        milesPerSecond = 10 / time;
+        milesPerSecond = distanceInMiles / time;
         console.log('%cMiles per second: ' + milesPerSecond, 'color: DarkGoldenRod ');
 
         $scope.lapPace = milesPerSecond * 60;
@@ -1150,6 +1157,8 @@ angular.module('starter.controllers', ['starter.appServices',
 
       }, 2100);
     }
+
+
     $scope.stopLapPaceCalculator = function(){
       console.log('%cStopping pace calculator... ', 'color: DarkGoldenRod ');
       $interval.cancel(lapPaceInitializer);
@@ -1281,7 +1290,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
     $scope.stopRun = function(){
 
-
+      console.log('Distance coords: '+ $scope.distanceCoords );
       $scope.postRun();
       $scope.removeResume();
       $scope.removeStop();
@@ -1299,6 +1308,32 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.map.controls[google.maps.ControlPosition.BOTTOM].push(runSummaryButtonControlDiv);
     }
 
+
+    $scope.lat = [];
+    $scope.long = [];
+
+    $scope.coordsDeterminant = function(i, split) {
+      var splitNumber = i;
+      if (i = 0 || i % 2 == 0) {
+        coordSplit = split.toString().split('(');
+        var firstSplit = coordSplit[0];
+        var secondSplit = coordSplit[1];
+        console.log('Coord split ' + splitNumber + 'first split: ' + firstSplit);
+        console.log('Coord split ' + splitNumber + 'second split: ' + secondSplit);
+        $scope.lat.push(secondSplit);
+        console.log('$scope.lat: ' + $scope.lat);
+
+      } else {
+        coordSplit = split.toString().split(')');
+        var firstSplit = coordSplit[0];
+        var secondSplit = coordSplit[1];
+        console.log('Coord split ' + splitNumber + 'first split: ' + firstSplit);
+        console.log('Coord split ' + splitNumber + 'second split: ' + secondSplit);
+        $scope.long.push(firstSplit);
+        console.log('$scope.long: ' + $scope.long);
+      }
+    }
+
     $scope.postRun = function(){
 
       console.log('Push run- Distance: '+ $rootScope.getRunDistance());
@@ -1309,6 +1344,83 @@ angular.module('starter.controllers', ['starter.appServices',
       console.log('Push run- Path: ' + $rootScope.getRunPath());
       console.log('Push run- Laps: ' + $rootScope.getLaps());
 
+      console.log('$scope.distanceCoords: ' +$scope.distanceCoords);
+
+      var coordString = $scope.distanceCoords.toString();
+      console.log('coordString: ' + coordString);
+
+      var coordSplit = coordString.split(',');
+      console.log('coordSplit: ' + coordSplit);
+      console.log('coordSplit.length : ' + coordSplit.length);
+
+      var firstSplit = coordSplit[0];
+      console.log('firstSplit: ' + firstSplit);
+
+      var secondSplit = coordSplit[1];
+      console.log('secondSplit: ' + secondSplit);
+
+      var thirdSplit = coordSplit[2];
+      console.log('thirdSplit: ' + thirdSplit);
+
+
+      for (var i=0; i< coordSplit.length; i++){
+        var splitNumber = i;
+        var split = coordSplit[i];
+        if(split == ""){
+          console.log('split value is null');
+          i++;
+        } else {
+          console.log('Split ' + splitNumber + ': ' + split);
+          $scope.coordsDeterminant(i, split);
+        }
+
+
+      }
+
+      console.log('$scope.lat: ' + $scope.lat);
+      console.log('$scope.long: ' + $scope.long);
+
+
+
+
+
+
+
+
+      // for(var i = 0; i < $scope.distanceCoords.length; i ++){
+      //   console.log($scope.distanceCoords);
+      //   var coordString =  $scope.distanceCoords.toString();
+      //
+      //   //
+      //   // if(i = 0){
+      //   //   firstCoordSplit = coordString.split('(');
+      //   //   console.log('firstCoordSplit: ' + firstCoordSplit);
+      //   //   $scope.coordSplit = firstCoordSplit[1];
+      //   // }
+      //   console.log('coordString: ' + coordString);
+      //
+      //   var coordSplit = coordString.split(',');
+      //   console.log('coordSplit: ' + coordSplit);
+      //   // var path = $scope.distanceCoords.split()
+      //
+      //   var coordSplitTwo = coordSplit.toString().split('(');
+      //   var coordSplitThree = coordSplitTwo.toString().split(')');
+      //   var coordSplitFour = coordSplitThree.toString().split();
+      //   console.log('coordSplitTwo: ' + coordSplitTwo);
+      //   console.log('coordSplitThree: ' + coordSplitThree);
+      //   console.log('coordSplitFour: ' + coordSplitFour);
+      //   console.log('courdSplitFour length: ' + coordSplitFour.length);
+      //   var coordSplitFourString = coordSplitFour.toString();
+      //   console.log(coordSplitFourString);
+      //
+      //
+      //
+      //   console.log('coordSplit length: ' +  coordSplit.length);
+      //
+      //   $scope.getLat(coordSplit);
+      // }
+
+
 
 
       var form = {
@@ -1317,7 +1429,7 @@ angular.module('starter.controllers', ['starter.appServices',
         minutes: $rootScope.getRunMinutes(),
         pace: $rootScope.getRunPace(),
         User: $rootScope.getUserId(),
-        runPath: $rootScope.getRunPath(),
+        runPath:$scope.distanceCoords,
        // laps: [$rootScope.getLaps()],
         date: Date.now()
       }
@@ -2349,7 +2461,7 @@ angular.module('starter.controllers', ['starter.appServices',
           console.log('Day Seven miles: ' + $scope.daySevenMiles);
 
         } else {
-          console.log('Error: query did not match any existing dates with history information');
+          console.log('Query date did not return any history information');
         }
 
 
