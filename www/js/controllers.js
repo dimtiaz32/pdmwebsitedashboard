@@ -86,6 +86,7 @@ angular.module('starter.controllers', ['starter.appServices',
           $rootScope.hide();
           //$rootScope.setCharity(charity);
           $rootScope.setEmail(email);
+          console.log("data:" + JSON.stringify(data));
           var name =data.name.first + data.name.last;
           console.log('name: ' + name);
 
@@ -190,7 +191,6 @@ angular.module('starter.controllers', ['starter.appServices',
         console.log("begin login by FB");
         ngFB.login({scope:'email'}).then(function (response){
           if (response.status == 'connected') {
-
             AuthAPI.signinByFB({
               access_token: response.authResponse.accessToken
             }).success(function(data, status, headers, config){
@@ -215,23 +215,23 @@ angular.module('starter.controllers', ['starter.appServices',
         console.log("begin login by google");
 
         GooglePlus.login({scope:"https://www.googleapis.com/auth/userinfo.email"}).then(function (authResult) {
-             console.log(authResult);
-
-             GooglePlus.getUser().then(function (user) {
-                 console.log(user);
-             });
+              console.log("google login success");
+              AuthAPI.signinByGG({
+                access_token: authResult.access_token
+              }).success(function(data, status, headers, config){
+                $rootScope.hide();
+                $window.location.href=('#/app/charities');
+              }).error(function(error){
+                console.log("AuthAPI.signinByFB failed:" + error);
+                $rootScope.hide();
+                $rootScope.notify("Login with facebook failed")
+              });
          }, function (err) {
-             console.log(err);
+              console.log("google login failed");
+              console.log(err);
          });
 
          console.log("end login by google");
-        // console.log("begin login by google");
-        // $cordovaOauth.google("69391540233-4b06qqevu0hc43puqta6ded42lbo1s0v.apps.googleusercontent.com",["email"]).then(function(result){
-        //     console.log("Google login success:" + JSON.stringify(result));
-        // },function(error){
-        //     console.log("Google login error:" + error);
-        // });
-        // console.log("end login by google");
     }
 
     $scope.popup = {
