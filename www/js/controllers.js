@@ -264,7 +264,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
   // })
 
-  .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI, AuthAPI){
+  .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI, $ionicPopup,  AuthAPI){
     //CONSOLE LOGGING COLORS:
 
     //UI-INTERACTIONS: TEAL
@@ -509,8 +509,8 @@ angular.module('starter.controllers', ['starter.appServices',
       stopUI.appendChild(stopText);
 
       stopUI.addEventListener('click', function () {
-        console.log('%cstop activated', 'color: Teal');
-        $scope.stopRun();
+        console.log('%c showing ensure stop...', 'color: Teal');
+        $scope.showEnsureStop();
       });
 
       $scope.removeStop = function(){
@@ -519,6 +519,26 @@ angular.module('starter.controllers', ['starter.appServices',
 
       $scope.addStop = function(){
         pausedDiv.appendChild(stopUI);
+      }
+
+      $scope.showEnsureStop = function(){
+        var ensureStop = $ionicPopup.show({
+          title: 'Are You sure you want to stop?',
+          //subTitle: 'Whatever you want',
+          scope: $scope,
+          buttons: [
+            { text: 'Cancel' },
+            {
+              text: '<b>Stop Run</b>',
+              type: 'button-positive',
+              onTap: function(e) {
+                console.log('%cstop activated', 'color: Teal');
+                return $scope.stopRun();
+
+              }
+            }
+          ]
+        })
       }
 
 
@@ -978,22 +998,26 @@ angular.module('starter.controllers', ['starter.appServices',
 
     $scope.laps = [];
 
-
+    $scope.lapCoords = [];
     var lapDistanceInitializer;
     $scope.getLapDistance = function(){
       console.log('%cLap distance function activated', 'color: MediumPurple');
 
-      $scope.lapCoords = [];
+
       console.log('%cEmpty lap coords array initialized: ' + $scope.lapCoords, 'color: MediumPurple');
 
       lapDistanceInitializer = $interval(function(){
-        $scope.userCoords();
         console.log('%cGet current coords called from lap distance', 'color: MediumPurple');
 
         var currentCoords = $scope.userCoords();
 
-        $scope.lapCoords.push(currentCoords);
-        console.log('%cLap coords array' + currentCoords, 'color: MediumPurple');
+        if(currentCoords == undefined){
+          console.log('Current coords undefined');
+        } else {
+          $scope.lapCoords.push(currentCoords);
+          console.log('%cCurrent coords pushed to distance array. distanceCoords values: ' + $scope.lapCoords, 'color: MediumPurple');
+        }
+
 
         // $rootScope.setLapPath($scope.lapCoords);
         // console.log('Lap path global var set as: '+$rootScope.getPath());
@@ -1013,59 +1037,7 @@ angular.module('starter.controllers', ['starter.appServices',
       $interval.cancel(lapDistanceInitializer);
       lapDistanceInitializer = undefined;
     }
-    $scope.laps = [];
 
-    $scope.lap = function(){
-
-      //pace functions for everything
-      //log lap values
-
-      console.log('%cLap Number: ' + $scope.lapNumber, 'color: Aqua');
-      console.log('%cLap Seconds: ' + $scope.lapSeconds, 'color: Aqua');
-      console.log('%cLap minutes: ' + $scope.lapMinutes, 'color: Aqua');
-      console.log('%cLap distance: ' + $scope.lapDistance, 'color: Aqua');
-
-      var time = $scope.lapMinutes + ':' +$scope.lapSeconds;
-
-
-
-      $scope.stopLapTimer();
-      $scope.stopLapDistance();
-      $scope.stopLapPaceCalculator();
-
-
-      $rootScope.setLapPath($scope.lapCoords);
-      console.log('Lap path global var set as: '+$rootScope.getLapPath());
-
-      $rootScope.setLapDistance($scope.lapDistance);
-      console.log('Lap distance global var: ' + $rootScope.getLapDistance());
-
-      $rootScope.setLapNumber($scope.lapNumber);
-      console.log('Lap Number global var set as: ' + $rootScope.getLapNumber());
-
-      $rootScope.setLapSeconds($scope.lapSeconds);
-      $rootScope.setLapMinutes($scope.lapMinutes);
-      console.log('Lap Minutes global var: ' + $rootScope.getLapMinutes() + '; Lap seconds  global var: ' + $rootScope.getLapSeconds());
-
-      var l = {
-        number: $rootScope.getLapNumber(),
-        distance:  $rootScope.getLapDistance(),
-        seconds: $rootScope.getLapSeconds(),
-        minutes: $rootScope.getLapMinutes(),
-        pace: $rootScope.getLapPace(),
-        path: $rootScope.getLapPath()
-      };
-
-      $scope.laps.push(l);
-      console.log('Laps array (for push) set as: ' + $scope.laps);
-      $rootScope.setLaps($scope.laps);
-      console.log('Laps array global var set as: ' + $rootScope.getToken());
-
-      $scope.startLapTimer();
-      $scope.getLapDistance();
-      $scope.lapPaceCalculator();
-      $scope.lapNumber++;
-    }
 
     $scope.setStartingLatLng = function(){
       console.log('setting start coords');
@@ -1174,6 +1146,59 @@ angular.module('starter.controllers', ['starter.appServices',
 
     }
 
+
+
+    $scope.lat = [];
+    $scope.long = [];
+    $scope.lapLat = [];
+    $scope.lapLong = [];
+
+    $scope.lapCoordsDeterminant = function(i, split){
+      var splitNumber = i;
+      if (i = 0 || i % 2 == 0) {
+        var coordSplit = split.toString().split('(');
+        var firstSplit = coordSplit[0];
+        var secondSplit = coordSplit[1];
+        console.log('Coord split ' + splitNumber + 'first split: ' + firstSplit);
+        console.log('Coord split ' + splitNumber + 'second split: ' + secondSplit);
+        $scope.lapLat.push(secondSplit);
+        console.log('$scope.lapLat: ' + $scope.lapLat);
+
+      } else {
+        var coordSplit = split.toString().split(')');
+        var firstSplit = coordSplit[0];
+        var secondSplit = coordSplit[1];
+        console.log('Coord split ' + splitNumber + 'first split: ' + firstSplit);
+        console.log('Coord split ' + splitNumber + 'second split: ' + secondSplit);
+        $scope.lapLong.push(firstSplit);
+        console.log('$scope.lapLong: ' + $scope.lapLong);
+      }
+    }
+
+
+    $scope.coordsDeterminant = function(i, split) {
+      var splitNumber = i;
+      if (i = 0 || i % 2 == 0) {
+        coordSplit = split.toString().split('(');
+        var firstSplit = coordSplit[0];
+        var secondSplit = coordSplit[1];
+        console.log('Coord split ' + splitNumber + 'first split: ' + firstSplit);
+        console.log('Coord split ' + splitNumber + 'second split: ' + secondSplit);
+        $scope.lat.push(secondSplit);
+        console.log('$scope.lat: ' + $scope.lat);
+
+      } else {
+        coordSplit = split.toString().split(')');
+        var firstSplit = coordSplit[0];
+        var secondSplit = coordSplit[1];
+        console.log('Coord split ' + splitNumber + 'first split: ' + firstSplit);
+        console.log('Coord split ' + splitNumber + 'second split: ' + secondSplit);
+        $scope.long.push(firstSplit);
+        console.log('$scope.long: ' + $scope.long);
+
+      }
+    }
+
     //map states
     $scope.mapCreated = function(map){
       $scope.map = map;
@@ -1197,10 +1222,6 @@ angular.module('starter.controllers', ['starter.appServices',
       console.log('%cStarting run...', 'color: HotPink');
 
 
-      // console.log("Attempting to remove dropdown info");
-      // $scope.removeWelcomeUI();
-
-
       console.log("%cAttempting to remove start button...", 'color: HotPink');
       $scope.removeStartUI();
 
@@ -1211,16 +1232,100 @@ angular.module('starter.controllers', ['starter.appServices',
       buttonControlDiv.index = 1;
       $scope.map.controls[google.maps.ControlPosition.BOTTOM].push(buttonControlDiv);
 
-      // var runInfoControlDiv = document.createElement('div');
-      // var runInfoControl = $scope.runInfoControl(runInfoControlDiv, $scope.map);
-      //
-      // runInfoControlDiv.index = 1;
-      // $scope.map.controls[google.maps.ControlPosition.TOP].push(runInfoControlDiv);
-
       $scope.run();
 
-
     };
+
+    $scope.lapPushNumbers = [];
+    $scope.lapPushDistances = [];
+    $scope.lapPushSeconds = [];
+    $scope.lapPushMinutes = [];
+    $scope.lapPushPace = [];
+    $scope.lapPushLat = [];
+    $scope.lapPushLong = [];
+
+    $scope.lap = function(){
+
+      console.log('%cLap Number: ' + $scope.lapNumber, 'color: Aqua');
+      console.log('%cLap Seconds: ' + $scope.lapSeconds, 'color: Aqua');
+      console.log('%cLap minutes: ' + $scope.lapMinutes, 'color: Aqua');
+      console.log('%cLap distance: ' + $scope.lapDistance, 'color: Aqua');
+      console.log('%cLap Path : ' + $scope.lapCoords, 'color: Aqua' );
+      console.log('%cLap Pace: ' + $scope.lapPace, 'color: Aqua');
+
+      $scope.stopLapTimer();
+      $scope.stopLapDistance();
+      $scope.stopLapPaceCalculator();
+
+      var lapCoordString = $scope.lapCoords.toString();
+      console.log('lapCoordString: ' + lapCoordString);
+
+      var lapCoordSplit = lapCoordString.split(',');
+      console.log('lapCoordSplit: ' + lapCoordSplit);
+      console.log('lapCoordSplit.length : ' + lapCoordSplit.length);
+
+      var firstLapSplit = lapCoordSplit[0];
+      console.log('firstLapSplit: ' + firstLapSplit);
+
+      var secondLapSplit = lapCoordSplit[1];
+      console.log('secondSplit: ' + secondLapSplit);
+
+      var thirdLapSplit = lapCoordSplit[2];
+      console.log('thirdSplit: ' + thirdLapSplit);
+
+
+      for (var i=0; i< lapCoordSplit.length; i++){
+        var splitNumber = i;
+        var split = lapCoordSplit[i];
+        if(split == ""){
+          console.log('split value is null');
+          i++;
+        } else {
+          console.log('Split ' + splitNumber + ': ' + split);
+          $scope.lapCoordsDeterminant(i, split);
+        }
+      }
+
+      console.log('$scope.lapLat: ' + $scope.lapLat);
+      console.log('$scope.lapLong: ' + $scope.lapLong);
+
+
+      $scope.lapPushNumbers.push($scope.lapNumber);
+      $scope.lapPushDistances.push($scope.lapDistance);
+      $scope.lapPushSeconds.push($scope.lapSeconds);
+      $scope.lapPushMinutes.push($scope.lapMinutes);
+      $scope.lapPushPace.push($scope.lapPace);
+      $scope.lapPushLat.push($scope.lapLat);
+      $scope.lapPushLong.push($scope.lapLong);
+      console.log('lapPushNumbers: ' + $scope.lapPushNumbers);
+      console.log('lapPushDistances: ' + $scope.lapPushDistances);
+      console.log('lapPushSeconds: ' + $scope.lapPushSeconds);
+      console.log('lapPushMinutes: ' + $scope.lapPushMinutes);
+      console.log('lapPushPace: ' + $scope.lapPushLat);
+      console.log('lapPushCoords: ' + $scope.lapPushLong);
+
+      console.log('$scope.laps.number: ' + $scope.laps.number);
+      console.log('$scope.laps.seconds: ' + $scope.laps.seconds);
+
+
+      for(var i = 0; i < $scope.lapLat.length; i++){
+        $scope.lapLat.pop();
+        console.log('$scope.lapLatPop: ' + $scope.lapLatPop);
+      }
+      console.log('$scope.lapLat post pop: ' + $scope.lapLat);
+      for(var i = 0; i<$scope.lapLong.length; i++){
+        $scope.lapLong.pop();
+        console.log('$scope.lapLongPop: ' + $scope.lapLong);
+      }
+      console.log('$scope.lapLong post pop: ' + $scope.lapLong);
+
+
+
+      $scope.startLapTimer();
+      $scope.getLapDistance();
+      $scope.lapPaceCalculator();
+      $scope.lapNumber++;
+    }
 
     $scope.run = function(){
       //$scope.stopTimer() destroys timer. nothing registers if not destroyed
@@ -1284,8 +1389,6 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.resumePolylineDrawer();
       $scope.resumeLapTimer();
       // $scope.resumeCoordsArrayUpdater();
-
-
     }
 
     $scope.stopRun = function(){
@@ -1309,119 +1412,58 @@ angular.module('starter.controllers', ['starter.appServices',
     }
 
 
-    $scope.lat = [];
-    $scope.long = [];
-
-    $scope.coordsDeterminant = function(i, split) {
-      var splitNumber = i;
-      if (i = 0 || i % 2 == 0) {
-        coordSplit = split.toString().split('(');
-        var firstSplit = coordSplit[0];
-        var secondSplit = coordSplit[1];
-        console.log('Coord split ' + splitNumber + 'first split: ' + firstSplit);
-        console.log('Coord split ' + splitNumber + 'second split: ' + secondSplit);
-        $scope.lat.push(secondSplit);
-        console.log('$scope.lat: ' + $scope.lat);
-
-      } else {
-        coordSplit = split.toString().split(')');
-        var firstSplit = coordSplit[0];
-        var secondSplit = coordSplit[1];
-        console.log('Coord split ' + splitNumber + 'first split: ' + firstSplit);
-        console.log('Coord split ' + splitNumber + 'second split: ' + secondSplit);
-        $scope.long.push(firstSplit);
-        console.log('$scope.long: ' + $scope.long);
-      }
-    }
 
     $scope.postRun = function(){
 
-      console.log('Push run- Distance: '+ $rootScope.getRunDistance());
-      console.log('Push run- minutes: ' + $rootScope.getRunMinutes());
-      console.log('Push run-  Seconds: ' + $rootScope.getRunSeconds());
-      console.log('Push run-  Pace: ' + $rootScope.getRunPace());
-      console.log('Push run-  User: ' + $rootScope.getUserId());
-      console.log('Push run- Path: ' + $rootScope.getRunPath());
-      console.log('Push run- Laps: ' + $rootScope.getLaps());
-
-      console.log('$scope.distanceCoords: ' +$scope.distanceCoords);
-
-      var coordString = $scope.distanceCoords.toString();
-      console.log('coordString: ' + coordString);
-
-      var coordSplit = coordString.split(',');
-      console.log('coordSplit: ' + coordSplit);
-      console.log('coordSplit.length : ' + coordSplit.length);
-
-      var firstSplit = coordSplit[0];
-      console.log('firstSplit: ' + firstSplit);
-
-      var secondSplit = coordSplit[1];
-      console.log('secondSplit: ' + secondSplit);
-
-      var thirdSplit = coordSplit[2];
-      console.log('thirdSplit: ' + thirdSplit);
-
-
-      for (var i=0; i< coordSplit.length; i++){
-        var splitNumber = i;
-        var split = coordSplit[i];
-        if(split == ""){
-          console.log('split value is null');
-          i++;
-        } else {
-          console.log('Split ' + splitNumber + ': ' + split);
-          $scope.coordsDeterminant(i, split);
-        }
-
-
-      }
-
-      console.log('$scope.lat: ' + $scope.lat);
-      console.log('$scope.long: ' + $scope.long);
-
-
-
-
-
-
-
-
-      // for(var i = 0; i < $scope.distanceCoords.length; i ++){
-      //   console.log($scope.distanceCoords);
-      //   var coordString =  $scope.distanceCoords.toString();
+      // console.log('Push run- Distance: '+ $rootScope.getRunDistance());
+      // console.log('Push run- minutes: ' + $rootScope.getRunMinutes());
+      // console.log('Push run-  Seconds: ' + $rootScope.getRunSeconds());
+      // console.log('Push run-  Pace: ' + $rootScope.getRunPace());
+      // console.log('Push run-  User: ' + $rootScope.getUserId());
+      // console.log('Push run- Path: ' + $rootScope.getRunPath());
+      // console.log('Push run- Laps: ' + $rootScope.getLaps());
       //
-      //   //
-      //   // if(i = 0){
-      //   //   firstCoordSplit = coordString.split('(');
-      //   //   console.log('firstCoordSplit: ' + firstCoordSplit);
-      //   //   $scope.coordSplit = firstCoordSplit[1];
-      //   // }
-      //   console.log('coordString: ' + coordString);
+      // console.log('lapPushNumbers: ' + $scope.lapPushNumbers);
+      // console.log('lapPushDistances: ' + $scope.lapPushDistances);
+      // console.log('lapPushSeconds: ' + $scope.lapPushSeconds);
+      // console.log('lapPushMinutes: ' + $scope.lapPushMinutes);
+      // console.log('lapPushPace: ' + $scope.lapPushPace);
+      // console.log('lapPushPace: ' + $scope.lapPushLat);
+      // console.log('lapPushCoords: ' + $scope.lapPushLong);
       //
-      //   var coordSplit = coordString.split(',');
-      //   console.log('coordSplit: ' + coordSplit);
-      //   // var path = $scope.distanceCoords.split()
+      // console.log('$scope.distanceCoords: ' +$scope.distanceCoords);
       //
-      //   var coordSplitTwo = coordSplit.toString().split('(');
-      //   var coordSplitThree = coordSplitTwo.toString().split(')');
-      //   var coordSplitFour = coordSplitThree.toString().split();
-      //   console.log('coordSplitTwo: ' + coordSplitTwo);
-      //   console.log('coordSplitThree: ' + coordSplitThree);
-      //   console.log('coordSplitFour: ' + coordSplitFour);
-      //   console.log('courdSplitFour length: ' + coordSplitFour.length);
-      //   var coordSplitFourString = coordSplitFour.toString();
-      //   console.log(coordSplitFourString);
+      // var coordString = $scope.distanceCoords.toString();
+      // console.log('coordString: ' + coordString);
+      //
+      // var coordSplit = coordString.split(',');
+      // console.log('coordSplit: ' + coordSplit);
+      // console.log('coordSplit.length : ' + coordSplit.length);
+      //
+      // var firstSplit = coordSplit[0];
+      // console.log('firstSplit: ' + firstSplit);
+      //
+      // var secondSplit = coordSplit[1];
+      // console.log('secondSplit: ' + secondSplit);
+      //
+      // var thirdSplit = coordSplit[2];
+      // console.log('thirdSplit: ' + thirdSplit);
       //
       //
-      //
-      //   console.log('coordSplit length: ' +  coordSplit.length);
-      //
-      //   $scope.getLat(coordSplit);
+      // for (var i=0; i< coordSplit.length; i++){
+      //   var splitNumber = i;
+      //   var split = coordSplit[i];
+      //   if(split == ""){
+      //     console.log('split value is null');
+      //     i++;
+      //   } else {
+      //     console.log('Split ' + splitNumber + ': ' + split);
+      //     $scope.coordsDeterminant(i, split);
+      //   }
       // }
-
-
-
+      //
+      // console.log('$scope.lat: ' + $scope.lat);
+      // console.log('$scope.long: ' + $scope.long);
 
       var form = {
         distance: $rootScope.getRunDistance(),
@@ -1429,10 +1471,11 @@ angular.module('starter.controllers', ['starter.appServices',
         minutes: $rootScope.getRunMinutes(),
         pace: $rootScope.getRunPace(),
         User: $rootScope.getUserId(),
-        runPath:$scope.distanceCoords,
+        path: [{lat: $scope.lat}, {long: $scope.long}],
        // laps: [$rootScope.getLaps()],
         date: Date.now()
       }
+      console.log('Run save form: ' + form);
 
       RunAPI.saveRun(form)
         .success(function(data, status, headers, config){
@@ -1460,7 +1503,6 @@ angular.module('starter.controllers', ['starter.appServices',
 
       navigator.geolocation.getCurrentPosition(function(pos){
         console.log('Got pos', pos);
-
         $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
         // $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
         $scope.hide();
