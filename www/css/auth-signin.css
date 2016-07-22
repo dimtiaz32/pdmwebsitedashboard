@@ -4,7 +4,7 @@
 
 .sign-in .logo-image {
   display: block;
-  margin: 13% auto 0 auto;
+  margin: 0 auto 0 auto;
   width: 20%;
   height: auto;
 }
@@ -19,7 +19,7 @@
 
 }
 
-.sign-in .logo-title span{
+.sign-in .logo-title span {
   font-weight: 500;
 }
 
@@ -41,7 +41,7 @@
 
 .sign-in .button {
   background-color: #01999d;
-  margin: 0 0 10px 0;
+  margin: 0 0 5px 0;
 }
 
 .sign-in .forgot-password {
@@ -69,4 +69,6 @@
 .sign-in.social.button img {
   width:60%;
   height: auto;
+  z-index: 10;
+
 }

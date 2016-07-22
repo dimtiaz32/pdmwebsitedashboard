@@ -10,7 +10,6 @@ angular.module('starter.controllers', ['starter.appServices',
     'starter.runServices','ionic','ngCordova','ngOpenFB', 'chart.js'])
 
 
-
   .controller('SignUpCtrl', function($scope, $rootScope, $ionicModal, $timeout, AuthAPI, $window, UserAPI){
     $scope.user = {
       firstName: "",
