@@ -1,0 +1,42 @@
+.item.item-button-left.item-button-right.history-day-page {
+  font-family: HelveticaNeue-Light;
+  text-align: center;
+}
+
+p.history-day-page.head {
+  font-family: HelveticaNeue-Light;
+  font-size: large;
+  text-align: left;
+}
+
+p.history-day-page.label {
+  font-family: HelveticaNeue-Light;
+  font-size: x-large;
+  text-align: center;
+}
+
+span.history-day-page.miles {
+  font-family: HelveticaNeue-Light;
+  font-size: small;
+  font-weight: lighter;
+}
+
+.history-day-page.vertical-line {
+  border-left: thin solid lightgrey;
+}
+
+hr.history-day-page {
+  height: 1px;
+  background-color: lightgrey;
+}
+
+.col-25.history-day-page {
+  font-family: HelveticaNeue-Light;
+  font-weight: lighter;
+  color: grey;
+  text-align: center;
+}
+
+.item.history-day-page.splits {
+  padding: 0;
+}
