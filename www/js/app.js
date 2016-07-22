@@ -181,6 +181,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
         }
       })
 
+      .state('app.historyDayView', {
+        url: '/history/day',
+        'history-day': {
+          templateUrl: 'templates/history-day.html',
+          controller: 'HistoryCtrl'
+        }
+      })
+
       .state('app.myPledges',{
         url:'/myPledges',
         views:{
