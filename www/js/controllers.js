@@ -107,7 +107,7 @@ angular.module('starter.controllers', ['starter.appServices',
         });
     }
   })
-  .controller('SigninCtrl', function($scope, $rootScope, $timeout, AuthAPI, $ionicPopup, $window, ngFB){
+  .controller('SigninCtrl', function($scope, $rootScope, $timeout, AuthAPI, $ionicPopup, $window, ngFB, GooglePlus){
 
     $scope.user = {
       email: "",
@@ -189,31 +189,53 @@ angular.module('starter.controllers', ['starter.appServices',
         });
     };
 
-    $scope.loginByFB = function() {
+    $scope.signinByFB = function() {
+        console.log("begin login by FB");
+        ngFB.login({scope:'email'}).then(function (response){
+          if (response.status == 'connected') {
 
-      console.log("begin login by FB");
-      ngFB.login({scope:'email'}).then(function (response){
-        if (response.status == 'connected') {
-
-          AuthAPI.signinByFB({
-            access_token: response.authResponse.accessToken
-          }).success(function(data, status, headers, config){
-            $rootScope.hide();
-            $window.location.href=('#/app/charities');
-          }).error(function(error){
-            console.log("AuthAPI.signinByFB failed:" + error);
-            $rootScope.hide();
-            $rootScope.notify("Login with facebook failed")
-          });
-        } else if (response.status == 'not_authorized') {
-          console.log('facebook login not authorized')
-        } else {
-          console.log('facebook login failed');
-        }
-      });
-      console.log("end login by FB");
-
+            AuthAPI.signinByFB({
+              access_token: response.authResponse.accessToken
+            }).success(function(data, status, headers, config){
+              $rootScope.hide();
+              $window.location.href=('#/app/charities');
+            }).error(function(error){
+              console.log("AuthAPI.signinByFB failed:" + error);
+              $rootScope.hide();
+              $rootScope.notify("Login with facebook failed")
+            });
+          } else if (response.status == 'not_authorized') {
+            console.log('facebook login not authorized')
+          } else {
+            console.log('facebook login failed');
+          }
+        });
+        console.log("end login by FB");
     };
+
+    $scope.signinByGoogle = function() {
+
+        console.log("begin login by google");
+
+        GooglePlus.login({scope:"https://www.googleapis.com/auth/userinfo.email"}).then(function (authResult) {
+             console.log(authResult);
+
+             GooglePlus.getUser().then(function (user) {
+                 console.log(user);
+             });
+         }, function (err) {
+             console.log(err);
+         });
+
+         console.log("end login by google");
+        // console.log("begin login by google");
+        // $cordovaOauth.google("69391540233-4b06qqevu0hc43puqta6ded42lbo1s0v.apps.googleusercontent.com",["email"]).then(function(result){
+        //     console.log("Google login success:" + JSON.stringify(result));
+        // },function(error){
+        //     console.log("Google login error:" + error);
+        // });
+        // console.log("end login by google");
+    }
 
     $scope.popup = {
       email: ""

@@ -4,10 +4,11 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives', 'stripe', 'ngOpenFB', 'angular-storage', 'chart.js'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives', 'stripe', 'ngOpenFB', 'angular-storage', 'chart.js','googleplus'])
 
   .run(function($ionicPlatform, ngFB) {
 
+    // TODO facebook application id, need to replace whenr release
     ngFB.init({appId: '1079958642070604'});
 
     $ionicPlatform.ready(function() {
@@ -24,6 +25,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
       }
     });
   })
+
+// TODO google application id, need to replace whenr release
+.config(['GooglePlusProvider', function(GooglePlusProvider) {
+         GooglePlusProvider.init({
+           clientId: '69391540233-4b06qqevu0hc43puqta6ded42lbo1s0v.apps.googleusercontent.com',
+           apiKey: 'AIzaSyBPjBC7a_MQp40VadwHeInENsCKnDqxdsw'
+         });
+    }])
+
   .config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('auth', {
