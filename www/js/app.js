@@ -242,4 +242,4 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
 
     Stripe.setPublishableKey('pk_test_AcHwMgfwhswjYGUhawRw0her');
 
-  });
+  })

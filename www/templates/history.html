@@ -7,7 +7,7 @@
 -->
 </head>
 
-<ion-content class="history-page BarCtrl">
+<ion-content class="history-page BarCtrl has-header">
   <div class="history-page month-slide-wrapper">
     <ion-slide-box on-slide-changed="history-page ">
       <!--slideHasChanged($index)-->
@@ -78,7 +78,7 @@
         <button class="button left-button" ng-click="decrementWeek()"></button>
       </div>
       <div class="col col-20 col-center">
-        {{startDate}} - {{endDate}}
+        {{displayDayOneDate}} - {{displayDaySevenDate}}
 
       </div>
       <div class="history-page col col-40" style="text-align: left">
@@ -93,11 +93,12 @@
   <div class="history-page card">
     <canvas id="bar"
             class="chart chart-bar"
-            chart-data="data"
+            chart-data="rData"
             chart-labels="labels"
             chart-series="series"
             chart-colors="colors"
-            chart-options="options">
+            chart-options="options"
+            chart-click="onClick">
     </canvas>
   </div>
 

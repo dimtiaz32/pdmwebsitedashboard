@@ -1,4 +1,14 @@
-/* Empty. Add your own CSS if you like */
+/*Get rid of tab bars in sign-in and sign-up pages*/
+ .auth.tabs-icon-top.pane.tabs-bottom.tabs-standard {
+   background-color: #00b9be;
+ }
+
+ .auth.tabs-icon-top.pane.tabs-bottom.tabs-standard .tab-nav.tabs {
+   background-color: #00b9be;
+   display: none;
+ }
+/*^^^WILL AFFECT ALL TAB BARS*/
+
 .nav-bar-block, .bar {
   background-color: #00b9be !important;
 }
