@@ -105,7 +105,7 @@ angular.module('starter.controllers', ['starter.appServices',
         });
     }
   })
-  .controller('SigninCtrl', function($scope, $rootScope, $timeout, AuthAPI, $ionicPopup, $window, ngFB, GooglePlus){
+  .controller('SigninCtrl', function($scope, $rootScope, $timeout, AuthAPI, $ionicPopup, $window, ngFB, GooglePlus, CharityAPI){
 
     $scope.user = {
       email: "",
@@ -125,6 +125,29 @@ angular.module('starter.controllers', ['starter.appServices',
 
     };
 
+    $scope.setUserCharity  = function(charityName){
+      $scope.charityHeader;
+      $scope.charityInfo;
+      console.log('charityName returned: ' +charityName);
+      if(charityName == undefined){
+        return $scope.charityHeader;
+      } else {
+        $scope.charityHeader = charityName;
+        console.log('$scope.charityHeader: ' + $scope.charityHeader);
+        var charityHeaderString =  $scope.charityHeader.toString();
+        console.log('Charity Stringified: ' + charityHeaderString);
+        CharityAPI.getCharityByName(charityHeaderString)
+          .success(function(data, status, headers, config){
+            var charityId = data._id;
+            console.log(charityId);
+            console.log('CharityApi.getOne successfully retrieved charity with values: ' + charityId);
+          })
+          .error(function(err){
+            console.log('CharityAPI.getOne failed with error: ' + err);
+            console.log('Could not retrieve charity information');
+          })
+      }
+    }
 
 
     $scope.login = function(){
@@ -171,7 +194,10 @@ angular.module('starter.controllers', ['starter.appServices',
           $rootScope.setUserId($scope.user.id);
           console.log('User id local storage set: ' + $rootScope.getUserId());
 
+          $scope.user.charityName = data.charityName;
           console.log('Charity: ' + $scope.user.charity);
+          $scope.setUserCharity($scope.user.charityName);
+
           // $scope.user.charityId = data.charityId;
           // console.log('$scope.user.charityId set as: ' + $scope.user.charityId);
           // $rootScope.setSelectedCharity($scope.user.charityId);
@@ -1775,15 +1801,16 @@ angular.module('starter.controllers', ['starter.appServices',
       var charityNameString = charityName.toString();
       $rootScope.setSelectedCharity(charityNameString);
 
-      console.log('charity: ' + $rootScope.getSelectedCharity());
-      console.log('attempting to update user\'s selected charity');
 
-      console.log('attempting to update user\'s selected charity');
+
+
       //var newCharity = charity.toString();
 
       console.log($rootScope.getUserId());
       CharityAPI.selectCharity($rootScope.getUserId(), {charityName: charityNameString})
         .success(function(data, status, headers, config){
+          console.log('charity: ' + $rootScope.getSelectedCharity());
+          console.log('attempting to update user\'s selected charity');
 
           console.log('inside select charityAPI success');
           //$window.location.href=('#/app/run');

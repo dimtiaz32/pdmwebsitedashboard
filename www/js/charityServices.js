@@ -62,11 +62,11 @@ angular.module('starter.charityServices', ['ionic'])
 
       });
     },
-    getOne: function(id){
-      return $http.get(base+'charities/' + id, {
+    getCharityByName: function(name){
+      return $http.get(base+'charity/',  {
         method: 'GET',
         params: {
-          token: token
+          name: name
         }
       });
     },
@@ -88,14 +88,14 @@ angular.module('starter.charityServices', ['ionic'])
       });
     },
 
-    putItem: function(token, form, id){
-      return $http.put(base+'charities/' + id, form, {
-        method: 'PUT',
-        params: {
-          token: token
-        }
-      });
-    },
+    // putItem: function(token, form, id){
+    //   return $http.put(base+'charities/' + id, form, {
+    //     method: 'PUT',
+    //     params: {
+    //       token: token
+    //     }
+    //   });
+    // },
     saveCharity: function(form){
       return $http.post(base+'charities', form, {
         method: 'POST'
