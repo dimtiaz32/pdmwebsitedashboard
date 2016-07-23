@@ -126,27 +126,50 @@ angular.module('starter.controllers', ['starter.appServices',
     };
 
     $scope.setUserCharity  = function(charityName){
-      $scope.charityHeader;
-      $scope.charityInfo;
-      console.log('charityName returned: ' +charityName);
-      if(charityName == undefined){
-        return $scope.charityHeader;
-      } else {
-        $scope.charityHeader = charityName;
-        console.log('$scope.charityHeader: ' + $scope.charityHeader);
-        var charityHeaderString =  $scope.charityHeader.toString();
-        console.log('Charity Stringified: ' + charityHeaderString);
-        CharityAPI.getCharityByName(charityHeaderString)
-          .success(function(data, status, headers, config){
-            var charityId = data._id;
-            console.log(charityId);
-            console.log('CharityApi.getOne successfully retrieved charity with values: ' + charityId);
-          })
-          .error(function(err){
-            console.log('CharityAPI.getOne failed with error: ' + err);
-            console.log('Could not retrieve charity information');
-          })
-      }
+
+      $scope.charityHeader = charityName;
+      console.log('$scope.charityHeader: ' + $scope.charityHeader);
+      var charityHeaderString =  $scope.charityHeader.toString();
+      console.log('Charity Stringified: ' + charityHeaderString);
+      CharityAPI.getCharityByName(charityHeaderString)
+        .success(function(data, status, headers, config){
+          if(data.length == 0){
+            $scope.noCharity = true;
+          } else {
+            var cId = data._id;
+            console.log('JSON returned charityId value of: ' + cId);
+            var cName = data.name;
+            console.log('getCharityByName returned cName value of: ' + cName);
+            var cDescription = data.description;
+            console.log('getCharityByName returned cDescription value of: ' + cDescription);
+            var cUrl = data.url;
+            console.log('getCharityByName returned cUrl value of: ' + cUrl);
+            var cAvatar = data.avatar;
+            console.log('getCharityByName returned cAvatar: ' + cAvatar);
+            $rootScope.setSelectedCharityName(cName);
+            console.log('$rootScope.getSelectedCharityName(): ' + $rootScope.getSelectedCharityName());
+            $rootScope.setSelectedCharityDescription(cDescription);
+            console.log('$rootScope.getSelectedCharityDescription(): ' + $rootScope.getSelectedCharityDescription());
+            $rootScope.setSelectedCharityUrl(cUrl);
+            console.log('$rootScope.getSelectedCharityUrl(): ' + $rootScope.getSelectedCharityUrl());
+            $rootScope.setSelectedCharityAvatar(cAvatar);
+            console.log('$rootScope.getSelectedCharityAvatar' + $rootScope.getSelectedCharityAvatar());
+            $rootScope.setSelectedCharityId(cId);
+            console.log('$rootScope.getSelectedCharityId(): ' + $rootScope.getSelectedCharityId());
+          }
+
+          $rootScope.$broadcast('fetchMySponsors');
+
+          if($scope.noSponsor = true){
+            console.log('fetchMySponsors returned no sponsors');
+          }
+
+        })
+        .error(function(err){
+          console.log('CharityAPI.getOne failed with error: ' + err);
+          console.log('Could not retrieve charity information');
+        })
+
     }
 
 
@@ -319,7 +342,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
   // })
 
-  .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI, $ionicPopup,  AuthAPI){
+  .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI, CharityAPI, $ionicPopup,  AuthAPI){
     //CONSOLE LOGGING COLORS:
 
     //UI-INTERACTIONS: TEAL
@@ -352,6 +375,13 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.user =  {
       name: ""
     };
+
+    $scope.charityName = $rootScope.getSelectedCharityName();
+    console.log('Run charityName: ' + $scope.charityName);
+
+    $scope.moneyRaised = $rootScope.getMoneyRaisedPerMile();
+    console.log('$scope.moneyRaised: ' + $scope.moneyRaised);
+
 
     $scope.user.name = $rootScope.getName();
 
@@ -1221,13 +1251,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
     }
 
-    //money raised calculator
 
-    $scope.moneyRaisedCalculator = function(){
-      console.log('%cMoney raised calculator active', 'color: Grey');
-
-
-    }
 
 
     $scope.lapPushNumbers = [];
@@ -1655,8 +1679,8 @@ angular.module('starter.controllers', ['starter.appServices',
 
   })
 
-  .controller('AppCtrl', function($rootScope, $scope, $filter, $ionicModal, $timeout, DonationAPI) {
-
+  .controller('AppCtrl', function($rootScope, $scope, $filter, $ionicModal, $timeout, DonationAPI, CharityAPI) {
+    $scope.moneyRaised = 0;
     $scope.fetchMyPledges = function() {
       $rootScope.$broadcast("fetchMyPledges");
     }
@@ -1670,15 +1694,31 @@ angular.module('starter.controllers', ['starter.appServices',
     };
 
     $rootScope.$on('fetchMySponsors', function() {
-      DonationAPI.getAllSponsors($rootScope.getToken(),"577525799f1f51030075a291").success(function(data, status, headers, config){
+      DonationAPI.getAllSponsors($rootScope.getToken(),
+        "577525799f1f51030075a291"
+      )
+        .success(function(data, status, headers, config){
         $scope.sponsors = [];
-        for (var i = 0; i < data.length; i++) {
-          $scope.sponsors.push(data[i]);
-        }
+        $scope.moneyRaisedHolder = [];
+
+
+
         if(data.length == 0) {
-          $scope.noSponsor = true;
+         return $scope.noSponsor = true;
         } else {
-          $scope.noSponsor = false;
+          for (var i = 0; i < data.length; i++) {
+            $scope.sponsors.push(data[i]);
+            $scope.moneyRaisedHolder.push(data[i].per_mile_donation);
+            console.log('data[i].per_mile_donation values: ' + data[i].per_mile_donation);
+            console.log('$scope.moneyRaisedHolder: ' + $scope.moneyRaisedHolder[i] + '    ' + $scope.moneyRaisedHolder);
+            console.log('Money Raised Value before addition: ' + $scope.moneyRaised);
+            $scope.moneyRaised += $scope.moneyRaisedHolder[i];
+            console.log('Money raised Value post addition: ' + $scope.moneyRaised);
+          }
+          console.log('My Sponsors JSON returned value of: ' + $scope.sponsors);
+          console.log('Money raised per mile final result: ' + $scope.moneyRaised);
+          $rootScope.setMoneyRaisedPerMile($scope.moneyRaised);
+          console.log('$scope.getMoneyRaised per mile: ' + $rootScope.getMoneyRaisedPerMile());
         }
 
       }).error(function(data, status, headers, config){
@@ -1768,6 +1808,10 @@ angular.module('starter.controllers', ['starter.appServices',
   .controller('CharitiesCtrl', function($rootScope, $timeout, $ionicModal, $window, $scope, CharityAPI, AuthAPI){
 
     $scope.isDetailDisplayed = false;
+    $scope.charityName  = $rootScope.getSelectedCharityName();
+    $scope.charityDescription = $rootScope.getSelectedCharityDescription();
+    $scope.charityAvatar = $rootScope.getSelectedCharityAvatar();
+    $scope.charityUrl = $rootScope.getSelectedCharityUrl();
 
     // $rootScope.$on('fetchSelectedCharity', function(){
     //   //TODO: FETCH, SERVER FOR USER SELECTED CHARITY, UI FOR ID PARAMS
@@ -1917,8 +1961,11 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.openModal = function($event) {
       console.log("try open the modal");
       DonationAPI.inviteSponsor("token",{
-        charity:"5771430bdcba0f275f2a0a5e",
-        userId:"577525799f1f51030075a291"
+        // charity:"5771430bdcba0f275f2a0a5e",
+        // userId:"577525799f1f51030075a291"
+        //might have to cast these to strings?
+        charity: $rootScope.getSelectedCharityId(),
+        userId: $rootScope.getUserId()
       }).success(function (data, status, headers, config){
         $scope.data = data;
         // $scope.shareBySMS = function() {

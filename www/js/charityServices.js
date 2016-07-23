@@ -42,14 +42,47 @@ angular.module('starter.charityServices', ['ionic'])
     return $window.localStorage.token;
   };
 
-  $rootScope.setSelectedCharity = function(charity){
-    return $window.localStorage.charity = charity;
+  $rootScope.setSelectedCharityName = function(charityName){
+    return $window.localStorage.charityName = charityName;
+  };
+  $rootScope.getSelectedCharityName = function(){
+    return $window.localStorage.charityName;
+  };
+  $rootScope.setSelectedCharityDescription = function(charityDescription){
+    return $window.localStorage.charityDescription = charityDescription;
+  };
+  $rootScope.getSelectedCharityDescription = function(){
+    return $window.localStorage.charityDescription;
+  };
+  $rootScope.setSelectedCharityUrl = function(charityUrl){
+    return $window.localStorage.charityUrl = charityUrl;
+  };
+  $rootScope.getSelectedCharityUrl = function(){
+    return $window.localStorage.charityUrl;
   };
 
-  $rootScope.getSelectedCharity = function(){
-    return $window.localStorage.charity;
+  $rootScope.setSelectedCharityAvatar = function(charityAvatar){
+    return $window.localStorage.charityAvatar = charityAvatar;
+  };
+  $rootScope.getSelectedCharityAvatar = function(){
+    return $window.localStorage.charityAvatar;
   };
 
+  $rootScope.setMoneyRaisedPerMile = function(moneyPerMile){
+    return $window.localStorage.moneyPerMile = moneyPerMile;
+  };
+
+  $rootScope.getMoneyRaisedPerMile = function(){
+    return $window.localStorage.moneyPerMile;
+  };
+
+  $rootScope.setSelectedCharityId = function(charityId){
+    return $window.localStorage.charityId = charityId;
+  };
+
+  $rootScope.getSelectedCharityId = function(){
+    return $window.localStorage.charityId;
+  };
 
 
 

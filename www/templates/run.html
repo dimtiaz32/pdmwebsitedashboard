@@ -14,10 +14,13 @@
     <div class="run-page overlay">
 
       <div class="run-page detail" ng-show="!isRunning">
+
         <p class="run-page header" style="padding-top: 10px"> Welcome {{user.name}}</p>
         <hr>
-        <p style="color: #00b9be" class="run-page detail-head">Every mile raises $0.50 for</p>
-        <p class="run-page header">Teens Run DC</p>
+        <p style="color: #00b9be" class="run-page detail-head" ng-show="noSponsor">Every mile raises ${{moneyRaised}} for</p>
+        <a href="#/app/mySponsors"><p style="color: #00b9be" class="run-page detail-head" ng-show="!noSponsor" >Add Sponsors to raise money for your cause!</p></a>
+        <p class="run-page header" ng-show="noCharity">{{charityName}}</p>
+        <a href="#/app/charities"><p style="color: #00b9be" class="run-page header" ng-show="!noCharity">Select a charity!</p></a>
 
         <div ng-show="isDetailDisplayed">
           <hr>
