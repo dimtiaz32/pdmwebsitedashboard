@@ -70,8 +70,8 @@ angular.module('starter.charityServices', ['ionic'])
         }
       });
     },
-    selectCharity: function(charity, id){
-      return $http.put(base+'user/selectedCharity', charity, {
+    selectCharity: function(id, charityName){
+      return $http.put(base+'user/selectedCharity', charityName, {
         method: 'PUT',
         params: {
           id: id

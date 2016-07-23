@@ -25,6 +25,7 @@ angular.module('starter.directives', [])
           var mapOptions = {
             center: myLatLng,
             zoom: 19,
+            disableDefaultUI: true,
             mapTypeId: google.maps.MapTypeId.ROADMAP
           };
 

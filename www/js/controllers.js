@@ -195,7 +195,10 @@ angular.module('starter.controllers', ['starter.appServices',
               access_token: response.authResponse.accessToken
             }).success(function(data, status, headers, config){
               $rootScope.hide();
+              $rootScope.setUserId(data._id);
+              console.log('User id: ' + $rootScope.getUserId());
               $window.location.href=('#/app/charities');
+
             }).error(function(error){
               console.log("AuthAPI.signinByFB failed:" + error);
               $rootScope.hide();
@@ -220,6 +223,10 @@ angular.module('starter.controllers', ['starter.appServices',
                 access_token: authResult.access_token
               }).success(function(data, status, headers, config){
                 $rootScope.hide();
+                $rootScope.setUserId(data._id);
+                $rootScope.setEmail(data.email);
+                console.log('User email: ' + $rootScope.getEmail());
+                console.log('User id: ' + $rootScope.getUserId());
                 $window.location.href=('#/app/charities');
               }).error(function(error){
                 console.log("AuthAPI.signinByFB failed:" + error);
@@ -1066,6 +1073,11 @@ angular.module('starter.controllers', ['starter.appServices',
         // $rootScope.setLapPath($scope.lapCoords);
         // console.log('Lap path global var set as: '+$rootScope.getPath());
 
+        $scope.marker = new google.maps.Marker({
+          position: currentCoords,
+          map: $scope.map
+        })
+
         $scope.lapDistance = google.maps.geometry.spherical.computeLength({
           path: $scope.lapCoords
         });
@@ -1755,20 +1767,22 @@ angular.module('starter.controllers', ['starter.appServices',
       });
 
 
-    $scope.selectCharity = function(charity){
+    $scope.selectCharity = function(charityName){
 
       var email = $rootScope.getEmail();
       console.log('email: ' + email);
-      console.log('charity: ' + charity);
-      $rootScope.setSelectedCharity(charity);
-      charity = $rootScope.getSelectedCharity();
+      console.log('charity: ' + charityName);
+      var charityNameString = charityName.toString();
+      $rootScope.setSelectedCharity(charityNameString);
+
       console.log('charity: ' + $rootScope.getSelectedCharity());
       console.log('attempting to update user\'s selected charity');
 
       console.log('attempting to update user\'s selected charity');
       //var newCharity = charity.toString();
 
-      CharityAPI.selectCharity(charity, $rootScope.getUserId())
+      console.log($rootScope.getUserId());
+      CharityAPI.selectCharity($rootScope.getUserId(), {charityName: charityNameString})
         .success(function(data, status, headers, config){
 
           console.log('inside select charityAPI success');
