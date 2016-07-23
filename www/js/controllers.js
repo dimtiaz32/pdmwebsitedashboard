@@ -217,9 +217,9 @@ angular.module('starter.controllers', ['starter.appServices',
           $rootScope.setUserId($scope.user.id);
           console.log('User id local storage set: ' + $rootScope.getUserId());
 
-          $scope.user.charityName = data.charityName;
-          console.log('Charity: ' + $scope.user.charity);
-          $scope.setUserCharity($scope.user.charityName);
+          // $scope.user.charityName = data.charityName;
+          // console.log('Charity: ' + $scope.user.charity);
+          // $scope.setUserCharity($scope.user.charityName);
 
           // $scope.user.charityId = data.charityId;
           // console.log('$scope.user.charityId set as: ' + $scope.user.charityId);

@@ -15,12 +15,13 @@
 
       <div class="run-page detail" ng-show="!isRunning">
 
-        <p class="run-page header" style="padding-top: 10px"> Welcome {{user.name}}</p>
-        <hr>
+        <p class="run-page header"> Welcome {{user.name}}</p>
+        <hr class="run-page">
         <p style="color: #00b9be" class="run-page detail-head" ng-show="noSponsor">Every mile raises ${{moneyRaised}} for</p>
-        <a href="#/app/mySponsors"><p style="color: #00b9be" class="run-page detail-head" ng-show="!noSponsor" >Add Sponsors to raise money for your cause!</p></a>
+        <a class="run-page no-sponsor detail-head" href="#/app/mySponsors"><p class="run-page no-sponsor detail-head" ng-show="!noSponsor" >Invite sponsors to start fundraising</p></a>
+        <hr class="run-page">
         <p class="run-page header" ng-show="noCharity">{{charityName}}</p>
-        <a href="#/app/charities"><p style="color: #00b9be" class="run-page header" ng-show="!noCharity">Select a charity!</p></a>
+        <a class="run-page no-charity header" href="#/app/charities"><p class="run-page no-charity header" ng-show="!noCharity">Select a charity</p></a>
 
         <div ng-show="isDetailDisplayed">
           <hr>
@@ -83,7 +84,6 @@
                 ng-click="isDetailDisplayed = !isDetailDisplayed">
         </button>
       </div>
-
     </div>
 
     <!--End Dropdown-->
@@ -118,7 +118,7 @@
     <!--<div class="button button-assertive">Start Dreamrun</div> -->
   </ion-content>
 
-  <ion-footer-bar class="bar-stable">
+  <ion-footer-bar class="run-page bar-stable">
     <a ng-click="centerOnMe()" class="button button-icon icon ion-navigate"></a>
   </ion-footer-bar>
 
