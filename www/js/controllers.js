@@ -30,7 +30,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
     $scope.secondPassword = {
       password:""
-    };
+    };a
 
 
     $scope.verifyPassword = function(){
@@ -218,11 +218,12 @@ angular.module('starter.controllers', ['starter.appServices',
           console.log('User id local storage set: ' + $rootScope.getUserId());
 
 
-          console.log(data.charityName);
-          if(data.charityName == undefined){
-            return $scope.noCharity = true;
+          // console.log(data.charityName);
+          if(data.charityName == undefined || data.charityName == ""){
+            $scope.noCharity = true;
           } else {
             $scope.setUserCharity(data.charityName);
+
           }
 
 
