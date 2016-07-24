@@ -2318,8 +2318,8 @@ angular.module('starter.controllers', ['starter.appServices',
             margin : {
                 top: 20,
                 right: 20,
-                bottom: 50,
-                left: 50
+                bottom: 20,
+                left: 55
             },
             x: function(d){return d[0];},
             y: function(d){return d[1]/100000;},
@@ -2327,6 +2327,7 @@ angular.module('starter.controllers', ['starter.appServices',
             valueFormat: function(d){
                 return d3.format(',.1f')(d);
             },
+            c0lor: ['#00b9be'],
             duration: 100,
             xAxis: {
                 // axisLabel: 'X Axis',
@@ -2337,7 +2338,7 @@ angular.module('starter.controllers', ['starter.appServices',
                 showMaxMin: false
             },
             yAxis: {
-                // axisLabel: 'Y Axis',
+                axisLabel: 'Miles',
                 axisLabelDistance: -10,
                 tickFormat: function(d){
                     return d3.format(',.1f')(d);
@@ -2376,7 +2377,8 @@ angular.module('starter.controllers', ['starter.appServices',
     // $scope.options = {
     //   legend: {
     //     display: false,
-    //     position: "left",
+    //     position: "absolute",
+    //     bottom: 0,
     //     labels: {
     //       fontFamily: "Helvetica Neue",
     //       boxWidth: 0
@@ -2405,13 +2407,13 @@ angular.module('starter.controllers', ['starter.appServices',
     //     }]
     //   }
     // };
-    //
-    // $scope.onClick = function (bar, evt) {
-    //   console.log(bar, evt);
-    //   if (bar[0] != null) {
-    //     console.log("Bar with value " + $scope.data[0][bar[0]._index] + " clicked");
-    //   }
-    // };
+
+    $scope.onClick = function (bar, evt) {
+      console.log(bar, evt);
+      if (bar[0] != null) {
+        console.log("Bar with value " + $scope.data[0][bar[0]._index] + " clicked");
+      }
+    };
     /*CHART NOTE
     It is very easy to display the bar chart. The labels array is for the days and the data array is for the miles for those days
     End Chart Configuration

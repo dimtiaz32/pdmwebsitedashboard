@@ -104,17 +104,17 @@
     text-align: center;
   }
 
-  .history-page p.week-label {
-    font-family: "HelveticaNeue-Light";
-  }
+.history-page .week-nav {
+  font-size: 4vh;
+}
 
-  .history-page .week-buttons-wrapper {
-    text-align: center;
+  .history-page .week-nav li button{
+    font-size: 4vh;
   }
 
 .history-page .spacer {
   background-color: transparent;
-  height: 3vh;
+  height: 4vh;
 }
 
 .history-page .week-nav ul  {
@@ -127,12 +127,13 @@
   }
 
 .history-page .history-chart {
-  background-color: #efefef;
-  position: relative;
+  background-color: transparent;
+  position: absolute;
     bottom: 0;
     right: 0;
     left: 0;
 }
+
 
 
 /*.history-page.month-slide {
