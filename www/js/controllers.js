@@ -218,9 +218,9 @@ angular.module('starter.controllers', ['starter.appServices',
           console.log('User id local storage set: ' + $rootScope.getUserId());
 
 
-          console.log(data.charityName);
+          // console.log(data.charityName);
           if(data.charityName == undefined){
-            return $scope.noCharity = true;
+            $scope.noCharity = true;
           } else {
             $scope.setUserCharity(data.charityName);
           }
