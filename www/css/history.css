@@ -126,6 +126,14 @@
     display: inline-block;
   }
 
+.history-page .history-chart {
+  background-color: #efefef;
+  position: relative;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+
 
 /*.history-page.month-slide {
   background: no-repeat;
