@@ -220,6 +220,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
           // console.log(data.charityName);
           if(data.charityName == undefined || data.charityName == ""){
+
             $scope.noCharity = true;
           } else {
             $scope.setUserCharity(data.charityName);
@@ -1708,6 +1709,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
   .controller('AppCtrl', function($rootScope, $scope, $filter, $ionicModal, $timeout, DonationAPI, CharityAPI) {
     $scope.moneyRaised = 0;
+
     $scope.fetchMyPledges = function() {
       $rootScope.$broadcast("fetchMyPledges");
     }
@@ -2311,7 +2313,6 @@ angular.module('starter.controllers', ['starter.appServices',
   .controller('HistoryCtrl', function($scope, $rootScope, HistoryAPI, AuthAPI, $filter) {
 
     /*Chart Configuration*/
-
 
     $scope.rData = [];
 
