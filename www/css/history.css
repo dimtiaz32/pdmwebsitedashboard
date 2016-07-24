@@ -35,7 +35,7 @@
 
 .history-page.bubble-wrapper {
   width: 100vw;
-  height: 45vw;
+  height: 53vw;
 }
 
   .history-page.left-bubble-box {
@@ -127,11 +127,22 @@
   }
 
 .history-page .history-chart {
-  background-color: #efefef;
+  background-color: #FFFFFF;
   position: relative;
-    bottom: 0;
-    right: 0;
-    left: 0;
+    bottom: 10px;
+    right: 10px;
+    left: 10px;
+}
+
+.history-page .chart-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.history-page .card {
+  height: 50%;
 }
 
 
@@ -267,4 +278,4 @@ ion-content.BarCtrl{
   background-position: center;
   background-color: white;
 
-}*/
+*/

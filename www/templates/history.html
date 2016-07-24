@@ -6,46 +6,66 @@
 </head> -->
 <ion-view view-title="History">
 
-  <ion-content scroll="false">
+  <ion-content scroll="false" ng-controller="HistoryCtrl">
     <ion-slides  options="" slider="">
       <ion-slide-page class="history-page">
-        <div class="header">
-          <ul>
-            <li><button class="ion-chevron-left"></button></li>
-            <li><h1>January</h1></li>
-            <li><button class="ion-chevron-right"></button></li>
-          </ul>
-        </div>
-        <div class="history-page bubble-wrapper">
 
-          <div class="history-page bubble-box left-bubble-box">
-            <p class="history-page label">Money Raised</p>
-            <p class="history-page value">$7.80</p>
+          <div class="header">
+            <ul>
+              <li><button class="ion-chevron-left"></button></li>
+              <li><h1>January</h1></li>
+              <li><button class="ion-chevron-right"></button></li>
+            </ul>
+          </div>
+          <div id="bubble" class="history-page bubble-wrapper">
+
+            <div class="history-page bubble-box left-bubble-box">
+              <p class="history-page label">Money Raised</p>
+              <p class="history-page value">$7.80</p>
+            </div>
+
+            <div class="history-page bubble-box center-bubble-box">
+              <p class="history-page label">Total Distance</p>
+              <p class="history-page value" style="font-size: 8vh;">{{monthTotalDistance}}</p>
+              <p class="history-page units">miles</p>
+            </div>
+
+            <div class="history-page bubble-box right-bubble-box">
+              <p class="history-page label">Average Pace</p>
+              <p class="history-page value">{{monthAveragePace}}</p>
+              <p class="history-page units">min:mile</p>
+            </div>
+          </div>
+          <div id="spacer" class="spacer"></div>
+          <div id="weeks" class="week-nav">
+            <ul>
+              <li><button class="ion-chevron-left" ng-click="decrementWeek()"></button></li>
+              <li>{{displayDaySevenDate}} - {{displayDayOneDate}}</li>
+              <li><button class="ion-chevron-right"></button></li>
+            </ul>
           </div>
 
-          <div class="history-page bubble-box center-bubble-box">
-            <p class="history-page label">Total Distance</p>
-            <p class="history-page value" style="font-size: 8vh;">{{monthTotalDistance}}</p>
-            <p class="history-page units">miles</p>
+          <div class="history-page card">
+            <canvas id="bar"
+                    class="chart chart-bar"
+                    chart-data="rData"
+                    chart-labels="labels"
+                    chart-series="series"
+                    chart-colors="colors"
+                    chart-options="options"
+                    chart-click="onClick">
+            </canvas>
           </div>
 
-          <div class="history-page bubble-box right-bubble-box">
-            <p class="history-page label">Average Pace</p>
-            <p class="history-page value">{{monthAveragePace}}</p>
-            <p class="history-page units">min:mile</p>
+
+        <!--
+        <div class="history-page chart-container">
+          <div class="history-page history-chart">
+            <nvd3 options="options" data="data"></nvd3>
           </div>
         </div>
-        <div class="spacer"></div>
-        <div class="week-nav">
-          <ul>
-            <li><button class="ion-chevron-left" ng-click="decrementWeek()"></button></li>
-            <li>{{displayDaySevenDate}} - {{displayDayOneDate}}</li>
-            <li><button class="ion-chevron-right"></button></li>
-          </ul>
-        </div>
-        <div class="history-chart">
-          <nvd3 options="options" data="data"></nvd3>
-        </div>
+
+        -->
       </ion-slide-page>
 
 
