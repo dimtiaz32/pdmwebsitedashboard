@@ -15,6 +15,10 @@
 /*^^^WILL AFFECT ALL TAB BARS*/
 
 
+.ion-chevron-right, .ion-chevron-left {
+  background-color: transparent;
+  border: none;
+}
 
 .popup {
   border-radius: 8px !important;
