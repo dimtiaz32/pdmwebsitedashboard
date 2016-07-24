@@ -1,7 +1,7 @@
 <ion-view view-title="Charities" ng-controller="CharitiesCtrl">
   <ion-content>
-    <div class="charity-page charity-header">
-      <h3>Every mile raises $0.50 for</h3>
+    <div class="charity-page charity-header" ng-show="!noCharity">
+      <h3>Every mile raises ${{moneyRaised}} for</h3>
       <hr class="charity-page">
       <h1>{{charityName}}</h1>
       <div class="charity-page charity-detail" ng-show="isDetailDisplayed">
@@ -9,11 +9,11 @@
         <ion-item class="charity-page charity-detail item-thumbnail-left">
           <img ng-src="{{charityAvatar}}">
           <a ng-href="{{charityUrl}}">{{charityUrl}}</a>
-          <p>{{charityDescription}}</p>
-          <p><b>Funds raised this month: $ALOT</b></p>
-          <p><b>Funds raised this year: $MORE</b></p>
+            <p>{{charityDescription}}</p>
+            <p><b>Funds raised this month: $ALOT</b></p>
+            <p><b>Funds raised this year: $MORE</b></p>
+          </div>
         </ion-item>
-      </div>
       <button class="charity-page button-slide"
               ng-class="isDetailDisplayed ? 'button-slide-down' : 'button-slide-up'"
               ng-click="isDetailDisplayed = !isDetailDisplayed">

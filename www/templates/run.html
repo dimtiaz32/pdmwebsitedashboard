@@ -17,10 +17,10 @@
 
         <p class="run-page header" style="padding-top: 10px"> Welcome {{user.name}}</p>
         <hr>
-        <p style="color: #00b9be" class="run-page detail-head" ng-show="noSponsor">Every mile raises ${{moneyRaised}} for</p>
-        <a href="#/app/mySponsors"><p style="color: #00b9be" class="run-page detail-head" ng-show="!noSponsor" >Add Sponsors to raise money for your cause!</p></a>
-        <p class="run-page header" ng-show="noCharity">{{charityName}}</p>
-        <a href="#/app/charities"><p style="color: #00b9be" class="run-page header" ng-show="!noCharity">Select a charity!</p></a>
+        <p style="color: #00b9be" class="run-page detail-head" ng-show="!noSponsor">Every mile raises ${{moneyRaised}} for</p>
+        <a href="#/app/mySponsors"><p style="color: #00b9be" class="run-page detail-head" ng-show="noSponsor" >Add Sponsors to raise money for your cause!</p></a>
+        <p class="run-page header" ng-show="!noCharity">{{charityName}}</p>
+        <a href="#/app/charities"><p style="color: #00b9be" class="run-page header" ng-show="noCharity">Select a charity!</p></a>
 
         <div ng-show="isDetailDisplayed">
           <hr>
@@ -59,7 +59,7 @@
           <div class="run-page verticalLine"></div>
           <div class="run-page col col-50">
             <p class="run-page head">Funds Raised</p>
-            <p class="run-page label">$3.57</p>
+            <p class="run-page label">${{moneyCalc}}</p>
           </div>
         </div>
 
