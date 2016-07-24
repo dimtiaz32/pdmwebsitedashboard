@@ -24,12 +24,13 @@
         <a class="run-page no-charity header" href="#/app/charities"><p class="run-page no-charity header" ng-show="!noCharity">Select a charity</p></a>
 
         <div ng-show="isDetailDisplayed">
-          <hr>
-          <span class="run-page head">This week</span>
-          <p class="run-page label">$17.20<span class="units"> raised and</span> 34 miles <span class="units">run for charity</span></p>
-          <hr>
-          <span class="run-page head">This month</span>
-          <p class="run-page label">$50.10<span class="units"> raised and</span> 100 miles <span class="units">run for charity</span></p>
+
+          <hr class="full" style="height: 2px;">
+          <span class="run-page head">Week</span>
+          <p class="run-page label">$17.20 <span class="units">raised and</span> 34 miles <span class="units">run for charity</span></p>
+          <hr class="full">
+          <span class="run-page head">Month</span>
+          <p class="run-page label">$50.10 <span class="units">raised and</span> 100 miles <span class="units">run for charity</span></p>
         </div>
         <button class="run-page button-slide"
                 ng-class="isDetailDisplayed ? 'button-slide-down' : 'button-slide-up'"

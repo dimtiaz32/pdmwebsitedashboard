@@ -27,18 +27,12 @@ hr.run-page {
   line-height: 1;
 }
 
-.run-page p.label {
-  text-align: center;
-  font-family: "HelveticaNeue-Light";
-  font-size: 2em;
-
-  line-height: 0.5;
-}
 
 p.run-page.detail-head {
   text-align: center;
   font-family: "HelveticaNeue-Light";
   font-size: large;
+
 
   padding-bottom: 0;
   padding-top: 5px;
@@ -46,14 +40,29 @@ p.run-page.detail-head {
   /*line-height: 0.5;*/
 }
 
-.run-page span.units {
-  font-size: 0.5em;
+.run-page hr.full {
+  margin: 0 0 1% 0;
 }
 
-.run-page span.head {
+.run-page p.label {
   font-family: "HelveticaNeue-Light";
-  font-size: small;
+  font-size: 1.75em;
+  margin: 2% 0 5% 5%;
+  line-height: 0.5;
+  font-weight: 300;
 }
+
+  .run-page span.units {
+    font-size: 0.5em;
+    color: #808080;
+  }
+
+  .run-page span.head {
+    font-family: "HelveticaNeue-Light";
+    font-size: small;
+    margin-left: 5%;
+    color: #808080;
+  }
 
 button.run-page.button-large.button-lap {
 
