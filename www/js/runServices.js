@@ -70,6 +70,15 @@ angular.module('starter.runServices', ['ionic'])
   $rootScope.getRunPath = function(){
     return $window.localStorage.runPath;
   };
+
+  $rootScope.setRunMoneyRaisedAmount = function(moneyRaised){
+    return $window.localStorage.runMoneyRaised = moneyRaised;
+  };
+
+  $rootScope.getRunMoneyRaisedAmount = function(){
+    return $window.localStorage.runMoneyRaised;
+  };
+
   $rootScope.setLapDistance = function(distance){
     return $window.localStorage.lapDistance = distance;
   };

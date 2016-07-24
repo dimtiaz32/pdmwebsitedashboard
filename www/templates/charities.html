@@ -1,17 +1,15 @@
 <ion-view view-title="Charities" ng-controller="CharitiesCtrl">
   <ion-content>
-    <div class="charity-page charity-header">
-      <h3>Every mile raises $0.50 for</h3>
+    <div class="charity-page charity-header" ng-show="!noCharity">
+      <h3>Every mile raises ${{moneyRaised}} for</h3>
       <hr class="charity-page">
-      <h1>charityName</h1>
+      <h1>{{charityName}}</h1>
       <div class="charity-page charity-detail" ng-show="isDetailDisplayed">
         <hr class="charity-page">
         <ion-item class="charity-page charity-detail item-thumbnail-left">
           <img ng-src="{{charityAvatar}}">
-          <a ng-href="{{charityUrl}}">charitywesbitename.com</a>
-          <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          <!-- <p><b>Funds raised this month: $ALOT</b></p>
-          <p><b>Funds raised this year: $MORE</b></p> -->
+          <a ng-href="{{charityUrl}}">{{charityUrl}}</a>
+          <p class="description">{{charityDescription}}</p>
         </ion-item>
         <hr>
         <ion-item class="charity-page charity-detail stats">
@@ -33,6 +31,7 @@
         ng-click="isDetailDisplayed = !isDetailDisplayed">
       </button>
     </div>
+  </div>
     <ion-list class="charity-page charity-list" show-delete="shouldShowDelete" show-reorder="shouldShowReorder" can-swipe="listCanSwipe">
       <ion-item ng-repeat="charity in charities" class="charity-page charity-list item-thumbnail-left" ng-click="selectCharity('{{charity.name}}')">
         <img ng-src="{{charity.logo}}">
