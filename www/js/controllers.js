@@ -2385,7 +2385,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
 */
     /*Angular-chart Chart Configuration*/
-<<<<<<< HEAD
+
 
      $scope.rData = [];
 
