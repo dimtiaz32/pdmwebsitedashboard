@@ -39,6 +39,15 @@ angular.module('starter.historyServices', [])
           user: user
         }
       });
+    },
+    getByMonth: function(user, month){
+      return $http.get(base+'history/month', {
+        method: 'GET',
+        params: {
+          user: user,
+          month: month
+        }
+      })
     }
   }
 

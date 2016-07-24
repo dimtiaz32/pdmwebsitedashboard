@@ -20,7 +20,8 @@
 
           <div class="history-page bubble-box left-bubble-box">
             <p class="history-page label">Money Raised</p>
-            <p class="history-page value">$7.80</p>
+            <p class="history-page value">${{monthTotalMoneyRaised}}</p>
+            <p class="history-page units"></p>
           </div>
 
           <div class="history-page bubble-box center-bubble-box">
@@ -39,7 +40,7 @@
         <div class="week-nav">
           <ul>
             <li><button class="ion-chevron-left" ng-click="decrementWeek()"></button></li>
-            <li>{{displayDaySevenDate}} - {{displayDayOneDate}}</li>
+            <li>{{displayDayOne}} - {{displayDaySeven}}</li>
             <li><button class="ion-chevron-right"></button></li>
           </ul>
         </div>
