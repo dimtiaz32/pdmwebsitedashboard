@@ -3,11 +3,6 @@
   z-index: 2px;
 }
 
-hr.charity-page {
-  height: 1px;
-  color: #808080;
-}
-
 .charity-page.charity-header h3 {
     text-align: center;
     font-size: 16px;

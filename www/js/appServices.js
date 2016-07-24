@@ -27,9 +27,9 @@ angular.module('starter.appServices', [])
         $rootScope.hide();
       }, 1999);
     };
-    
-    
+
+
     return {
-      
+
     }
   });

@@ -15,7 +15,7 @@
 /*^^^WILL AFFECT ALL TAB BARS*/
 
 
-/*STYLE FOR ALL POPUPS*/
+
 .popup {
   border-radius: 8px !important;
 }
@@ -31,8 +31,6 @@
     color: #fff;
     background-color: #00b9be;
   }
-/*STYLE FOR ALL POPUPS*/
-
 
 .nav-bar-block, .bar {
   background-color: #00b9be !important;
@@ -78,4 +76,15 @@ map {
 }
 .scroll {
   height:100%;
+}
+
+.button.back-button {
+  color: white !important;
+}
+
+hr {
+  border: none;
+  height: 1px;
+  background-color: #ccc;
+  margin: 0 5% 0 5%;
 }

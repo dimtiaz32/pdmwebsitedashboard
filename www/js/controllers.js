@@ -217,6 +217,7 @@ angular.module('starter.controllers', ['starter.appServices',
           $rootScope.setUserId($scope.user.id);
           console.log('User id local storage set: ' + $rootScope.getUserId());
 
+
           console.log(data.charityName);
           if(data.charityName == undefined){
             return $scope.noCharity = true;
@@ -226,7 +227,9 @@ angular.module('starter.controllers', ['starter.appServices',
 
 
 
-
+          // $scope.user.charityName = data.charityName;
+          // console.log('Charity: ' + $scope.user.charity);
+          // $scope.setUserCharity($scope.user.charityName);
 
           // $scope.user.charityId = data.charityId;
           // console.log('$scope.user.charityId set as: ' + $scope.user.charityId);
@@ -2809,7 +2812,6 @@ angular.module('starter.controllers', ['starter.appServices',
 
         for (var i = 0; i < data.length; i++) {
           console.log('i:' + i);
-
 
           var HistoryLoggerForm = {
             // User: "",

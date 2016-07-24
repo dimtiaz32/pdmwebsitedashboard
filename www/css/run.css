@@ -1,3 +1,6 @@
+hr.run-page {
+/
+}
 
 .run-page.scroll {
   height: 100%;
@@ -110,13 +113,6 @@ button.run-page.button-large.button-start {
   z-index: 10;
 }
 
-hr.run-page {
-  height: 1px;
-
-  background-color: lightgrey;
-
-}
-
 .verticalLine.run-page {
   border-left: thin solid lightgrey;
   transition: 1s all linear;
@@ -179,4 +175,36 @@ p.run-page.header {
   font-family: "HelveticaNeue-Light";
   font-size: x-large;
   text-align: center;
+  padding: 15px 0 5px 0;
 }
+
+.run-page.bar-stable .button {
+  color: white;
+}
+
+/*Styling for no charity or sponsors display*/
+a.run-page.no-sponsor {
+  text-decoration: none !important;
+}
+
+  a.run-page.no-sponsor p {
+    margin: 0;
+    color: #00b9be;
+    font-size: medium;
+    font-weight: 700;
+    padding: 5px 0 5px 0;
+    line-height: 30px;
+  }
+
+a.run-page.no-charity {
+  text-decoration: none !important;
+}
+
+  a.run-page.no-charity p {
+    margin: 0;
+    color: #00b9be;
+    font-size: medium;
+    font-weight: 700;
+    padding: 5px 0 5px 0;
+    line-height: 30px;
+  }
