@@ -9,14 +9,28 @@
         <ion-item class="charity-page charity-detail item-thumbnail-left">
           <img ng-src="{{charityAvatar}}">
           <a ng-href="{{charityUrl}}">charitywesbitename.com</a>
-          <p>charityDescription harityDescription harityDescription harityDescription harityDescription harityDescription</p>
-          <p><b>Funds raised this month: $ALOT</b></p>
-          <p><b>Funds raised this year: $MORE</b></p>
+          <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          <!-- <p><b>Funds raised this month: $ALOT</b></p>
+          <p><b>Funds raised this year: $MORE</b></p> -->
+        </ion-item>
+        <hr>
+        <ion-item class="charity-page charity-detail stats">
+          <div class="charity-page row">
+            <div class="charity-page col col-50">
+              <p class="charity-page head">Month</p>
+              <p class="charity-page label">$$$money</p>
+            </div>
+            <div class="charity-page verticalLine"></div>
+            <div class="charity-page col col-50">
+              <p class="charity-page head">Year</p>
+              <p class="charity-page label">$$$$$$$LOTS</p>
+            </div>
+          </div>
         </ion-item>
       </div>
       <button class="charity-page button-slide"
-              ng-class="isDetailDisplayed ? 'button-slide-down' : 'button-slide-up'"
-              ng-click="isDetailDisplayed = !isDetailDisplayed">
+        ng-class="isDetailDisplayed ? 'button-slide-down' : 'button-slide-up'"
+        ng-click="isDetailDisplayed = !isDetailDisplayed">
       </button>
     </div>
     <ion-list class="charity-page charity-list" show-delete="shouldShowDelete" show-reorder="shouldShowReorder" can-swipe="listCanSwipe">
