@@ -1,7 +1,7 @@
 <ion-view view-title="Pledges" ng-controller="MyDonationCtrl">
     <ion-nav-buttons side="right" >
         <button class="my-pledges button button-clear button-positive" ng-click="openModal($event)">
-          InviteSponsor
+          <span class="ion-person-add" style="color: #fff;font-size: 22px;"></span>
         </button>
     </ion-nav-buttons>
     <ion-content>
@@ -37,8 +37,8 @@
         </div>
         <hr>
         <div class="my-pledges list">
-          <!-- use this template for all the cells-->
-          <a class="my-pledges item item-icon-left" ng-repeat="pledge in pledges">
+          <!-- use this template for all the cells. Add this class below for pledge image: item-icon-left-->
+          <a class="my-pledges item" ng-repeat="pledge in pledges">
             <span class="my-pledges cell-vertical-center-text">{{ pledge.recipient.name.first }} {{pledge.recipient.name.last}}</span>
               <span class="my-pledges item-note">
                 <p class="my-pledges pledge">{{ formateCurreny(pledge.per_mile_donation) }}/mile</p>

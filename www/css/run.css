@@ -1,5 +1,5 @@
-hr.run-page {
-/
+.run-page.overlay {
+  box-shadow:0 2px 6px rgba(0, 0, 0, .3);
 }
 
 .run-page.scroll {
@@ -217,3 +217,7 @@ a.run-page.no-charity {
     padding: 5px 0 5px 0;
     line-height: 30px;
   }
+
+.stop-popup.button-positive {
+  background-color: rgb(206, 29, 31) !important;
+}

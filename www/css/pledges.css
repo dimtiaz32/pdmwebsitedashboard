@@ -21,7 +21,8 @@
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-
+  max-height: 120px;
+  margin: 10px 0;
 }
 
 .my-pledges.col.col-67 {
@@ -29,24 +30,24 @@
   font-family: "HelveticaNeue-Light";
   font-size: 1.5em;
 
-  text-align: left;
+  text-align: right;
 }
 .my-pledges.col.col-33 {
-  color: white;
+  color: #fff;
   font-family: "HelveticaNeue-Light";
   font-size: .65em;
 
   font-weight: thin;
   line-height: 100%;
   text-align: right;
+  padding: 5px 0;
 }
 
 .my-pledges h2 {
   font-family: "HelveticaNeue-Light";
-  font-weight: thin;
   font-size: 2em;
 
-  color: #000;
+  color: #fff;
   text-align: center;
 
   margin: auto;
@@ -60,7 +61,8 @@
 .my-pledges.button.button-small.button-clear.button-PDMLight {
   color: #00b9be; /*PDMLight color*/
   font-size: 1em;
-  font-weight: thick;
+  font-weight: 500;
+  line-height: normal;
 }
 
 .my-pledges.button.button-clear.button-sponsor-help {

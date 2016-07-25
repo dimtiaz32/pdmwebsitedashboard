@@ -1,13 +1,13 @@
 angular.module('starter.controllers', ['starter.appServices',
-    'starter.charityServices',
-    'starter.authServices',
-    'starter.runServices',
-    'starter.donationServices',
-    'starter.userServices',
+  'starter.charityServices',
+  'starter.authServices',
+  'starter.runServices',
+  'starter.donationServices',
+  'starter.userServices',
 
-    'starter.historyServices',
+  'starter.historyServices',
 
-    'starter.runServices','ionic','ngCordova','ngOpenFB', 'chart.js'])
+  'starter.runServices','ionic','ngCordova','ngOpenFB', 'chart.js'])
 
 
   .controller('SignUpCtrl', function($scope, $rootScope, $ionicModal, $timeout, AuthAPI, $window, UserAPI){
@@ -83,17 +83,17 @@ angular.module('starter.controllers', ['starter.appServices',
         charity: charity,
         provider: 'local'
       }).success(function (data, status, headers, config){
-          $rootScope.hide();
-          //$rootScope.setCharity(charity);
-          $rootScope.setEmail(email);
-          console.log("data:" + JSON.stringify(data));
-          var name =data.name.first + data.name.last;
-          console.log('name: ' + name);
+        $rootScope.hide();
+        //$rootScope.setCharity(charity);
+        $rootScope.setEmail(email);
+        console.log("data:" + JSON.stringify(data));
+        var name =data.name.first + data.name.last;
+        console.log('name: ' + name);
 
-          $rootScope.setName(name);
+        $rootScope.setName(name);
 
-          $window.location.href  = ('#/app/charities');
-        })
+        $window.location.href  = ('#/app/charities');
+      })
         .error(function(error){
           $rootScope.hide();
           if(error.error && error.error.code == 11000){
@@ -186,9 +186,9 @@ angular.module('starter.controllers', ['starter.appServices',
       }
 
       AuthAPI.signin({
-          email: email,
-          password: password
-        })
+        email: email,
+        password: password
+      })
         .success(function(data, status, headers, config){
           var firstName = data.name.first;
           var lastName = data.name.last;
@@ -219,10 +219,12 @@ angular.module('starter.controllers', ['starter.appServices',
 
 
           // console.log(data.charityName);
-          if(data.charityName == undefined){
+          if(data.charityName == undefined || data.charityName == ""){
+
             $scope.noCharity = true;
           } else {
             $scope.setUserCharity(data.charityName);
+
           }
 
 
@@ -247,57 +249,57 @@ angular.module('starter.controllers', ['starter.appServices',
     };
 
     $scope.signinByFB = function() {
-        console.log("begin login by FB");
-        ngFB.login({scope:'email'}).then(function (response){
-          if (response.status == 'connected') {
-            AuthAPI.signinByFB({
-              access_token: response.authResponse.accessToken
-            }).success(function(data, status, headers, config){
-              $rootScope.hide();
-              $rootScope.setUserId(data._id);
-              console.log('User id: ' + $rootScope.getUserId());
-              $window.location.href=('#/app/charities');
+      console.log("begin login by FB");
+      ngFB.login({scope:'email'}).then(function (response){
+        if (response.status == 'connected') {
+          AuthAPI.signinByFB({
+            access_token: response.authResponse.accessToken
+          }).success(function(data, status, headers, config){
+            $rootScope.hide();
+            $rootScope.setUserId(data._id);
+            console.log('User id: ' + $rootScope.getUserId());
+            $window.location.href=('#/app/charities');
 
-            }).error(function(error){
-              console.log("AuthAPI.signinByFB failed:" + error);
-              $rootScope.hide();
-              $rootScope.notify("Login with facebook failed")
-            });
-          } else if (response.status == 'not_authorized') {
-            console.log('facebook login not authorized')
-          } else {
-            console.log('facebook login failed');
-          }
-        });
-        console.log("end login by FB");
+          }).error(function(error){
+            console.log("AuthAPI.signinByFB failed:" + error);
+            $rootScope.hide();
+            $rootScope.notify("Login with facebook failed")
+          });
+        } else if (response.status == 'not_authorized') {
+          console.log('facebook login not authorized')
+        } else {
+          console.log('facebook login failed');
+        }
+      });
+      console.log("end login by FB");
     };
 
     $scope.signinByGoogle = function() {
 
-        console.log("begin login by google");
+      console.log("begin login by google");
 
-        GooglePlus.login({scope:"https://www.googleapis.com/auth/userinfo.email"}).then(function (authResult) {
-              console.log("google login success");
-              AuthAPI.signinByGG({
-                access_token: authResult.access_token
-              }).success(function(data, status, headers, config){
-                $rootScope.hide();
-                $rootScope.setUserId(data._id);
-                $rootScope.setEmail(data.email);
-                console.log('User email: ' + $rootScope.getEmail());
-                console.log('User id: ' + $rootScope.getUserId());
-                $window.location.href=('#/app/charities');
-              }).error(function(error){
-                console.log("AuthAPI.signinByFB failed:" + error);
-                $rootScope.hide();
-                $rootScope.notify("Login with facebook failed")
-              });
-         }, function (err) {
-              console.log("google login failed");
-              console.log(err);
-         });
+      GooglePlus.login({scope:"https://www.googleapis.com/auth/userinfo.email"}).then(function (authResult) {
+        console.log("google login success");
+        AuthAPI.signinByGG({
+          access_token: authResult.access_token
+        }).success(function(data, status, headers, config){
+          $rootScope.hide();
+          $rootScope.setUserId(data._id);
+          $rootScope.setEmail(data.email);
+          console.log('User email: ' + $rootScope.getEmail());
+          console.log('User id: ' + $rootScope.getUserId());
+          $window.location.href=('#/app/charities');
+        }).error(function(error){
+          console.log("AuthAPI.signinByFB failed:" + error);
+          $rootScope.hide();
+          $rootScope.notify("Login with facebook failed")
+        });
+      }, function (err) {
+        console.log("google login failed");
+        console.log(err);
+      });
 
-         console.log("end login by google");
+      console.log("end login by google");
     }
 
     $scope.popup = {
@@ -446,8 +448,10 @@ angular.module('starter.controllers', ['starter.appServices',
       lapUI.style.width = '275px';
       lapUI.style.height = '50px';
       lapUI.style.zIndex = '10';
-      lapUI.style.marginBottom = '25px';
+      lapUI.style.marginBottom = '20px';
       lapUI.style.textAlign = 'center';
+      lapUI.style.position = 'relative';
+      lapUI.style.bottom = '5px';
       lapUI.title = 'Lap';
       buttonDiv.appendChild(lapUI);
 
@@ -459,6 +463,7 @@ angular.module('starter.controllers', ['starter.appServices',
       lapText.style.lineWidth = '556px';
       lapText.style.paddingLefft = '5px';
       lapText.style.paddingRight = '5px';
+
       lapText.innerHTML = 'Lap';
       lapUI.appendChild(lapText);
 
@@ -492,6 +497,8 @@ angular.module('starter.controllers', ['starter.appServices',
       pauseUI.style.marginBottom = '25px';
       pauseUI.style.textAlign = 'center';
       pauseUI.style.margin = 'inherit auto';
+      pauseUI.style.position = 'relative';
+      pauseUI.style.bottom = '5px';
       pauseUI.title = 'Pause';
       buttonDiv.appendChild(pauseUI);
 
@@ -542,8 +549,10 @@ angular.module('starter.controllers', ['starter.appServices',
       resumeUI.style.width = '275px';
       resumeUI.style.bottom = '25px';
       resumeUI.style.zIndex = '10';
-      resumeUI.style.marginBottom = '25px';
+      resumeUI.style.marginBottom = '20px';
       resumeUI.style.textAlign = 'center';
+      resumeUI.style.position = 'relative';
+      resumeUI.style.bottom = '5px';
       resumeUI.title = 'Lap';
       pausedDiv.appendChild(resumeUI);
 
@@ -589,6 +598,8 @@ angular.module('starter.controllers', ['starter.appServices',
       stopUI.style.zIndex = '10';
       stopUI.style.marginBottom = '25px';
       stopUI.style.textAlign = 'center';
+      stopUI.style.position = 'relative';
+      stopUI.style.bottom = '5px';
       stopUI.title = 'Lap';
       pausedDiv.appendChild(stopUI);
 
@@ -625,7 +636,7 @@ angular.module('starter.controllers', ['starter.appServices',
             { text: 'Cancel' },
             {
               text: '<b>Stop Run</b>',
-              type: 'button-positive',
+              type: 'stop-popup button-positive',
               onTap: function(e) {
                 console.log('%cstop activated', 'color: Teal');
                 return $scope.stopRun();
@@ -761,6 +772,9 @@ angular.module('starter.controllers', ['starter.appServices',
       startUI.style.textAlign = 'center';
       startUI.title = 'Start dreamrun';
       startUI.style.margin = 'inherit auto';
+      startUI.style.position = 'relative';
+      startUI.style.bottom = '5px';
+
       startDiv.appendChild(startUI);
 
       var startText = document.createElement('div');
@@ -779,6 +793,8 @@ angular.module('starter.controllers', ['starter.appServices',
       }
 
       startUI.addEventListener('click', function(){
+
+
 
         $scope.isRunning = !$scope.isRunning;
 
@@ -819,6 +835,9 @@ angular.module('starter.controllers', ['starter.appServices',
       summaryButtonUI.style.marginBottom = '25px';
       summaryButtonUI.style.textAlign = 'center';
       summaryButtonUI.title = 'Pause';
+      summaryButtonUI.style.position = 'relative';
+      summaryButtonUI.style.bottom = '5px';
+
       summaryButtonDiv.appendChild(summaryButtonUI);
 
       var summaryButtonText = document.createElement('div');
@@ -840,6 +859,47 @@ angular.module('starter.controllers', ['starter.appServices',
       summaryButtonUI.addEventListener('click', function(){
         console.log('run summary button clicked');
       });
+    }
+
+    //Center-Map Button
+    $scope.locateControl = function(locateDiv, map){
+
+      var locateUI = document.createElement('img');
+      locateUI.src = "img/locate-me-icon.png";
+      locateUI.style.backgroundColor = '#fff';
+      locateUI.style.color = '#808080';
+      locateUI.style.borderRadius = '50%';
+      locateUI.style.cursor = 'pointer';
+      locateUI.style.width = '45px';
+      locateUI.style.height = '45px';
+      locateUI.style.position = 'absolute';
+      locateUI.style.bottom = '100px';
+      locateUI.style.right = '0';
+      locateUI.style.padding = '10px';
+      locateUI.style.boxShadow = '0 2px 6px rgba(0, 0, 0, .3)';
+      locateDiv.appendChild(locateUI);
+
+      $scope.removeLocateUI = function(){
+        locateDiv.removeChild(locateUI);
+      }
+
+      $scope.addOriginalPositionLocateUI = function(){
+        locateUI.style.position = 'absolute';
+        locateUI.style.bottom = '90px';
+        locateUI.style.left = '72vw';
+        locateDiv.appendChild(locateUI);
+      }
+
+      $scope.addRepositionedLocateUI = function(){
+        locateUI.style.position = 'absolute';
+        locateUI.style.bottom = '170px';
+        locateUI.style.left = '72vw';
+        locateDiv.appendChild(locateUI);
+      }
+
+      locateUI.addEventListener('click', function(){
+        $scope.centerOnMe()
+      })
     }
 
     // //run functions
@@ -1351,6 +1411,15 @@ angular.module('starter.controllers', ['starter.appServices',
       startControlDiv.index = 1;
       map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(startControlDiv);
 
+
+
+      var locateControlDiv = document.createElement('div');
+      var locateControl = $scope.locateControl(locateControlDiv, map);
+
+      locateControlDiv.index = 1;
+      map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(locateControlDiv);
+
+
     };
 
     $scope.startRun  = function(){
@@ -1359,7 +1428,8 @@ angular.module('starter.controllers', ['starter.appServices',
 
       console.log("%cAttempting to remove start button...", 'color: HotPink');
       $scope.removeStartUI();
-
+      $scope.removeLocateUI();
+      $scope.addRepositionedLocateUI();
 
       var buttonControlDiv = document.createElement('div');
       var buttonControl = $scope.runButtonControl(buttonControlDiv, $scope.map);
@@ -1580,6 +1650,8 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.postRun();
       $scope.removeResume();
       $scope.removeStop();
+      $scope.removeLocateUI();
+
       console.log('%c$scope.stopTimer() called', 'color: RoyalBlue');
       $scope.stopTimer();
       $scope.stopLapTimer();
@@ -1587,16 +1659,27 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.stopLapDistance();
       $scope.stopPaceCalculator();
       $scope.stopLapPaceCalculator();
+
+      $scope.addOriginalPositionLocateUI();
+
       var runSummaryButtonControlDiv = document.createElement('div');
       var runSummaryButtonControl = $scope.summaryButtonControl(runSummaryButtonControlDiv, $scope.map);
 
       runSummaryButtonControlDiv.index = 1;
       $scope.map.controls[google.maps.ControlPosition.BOTTOM].push(runSummaryButtonControlDiv);
+
+
     }
 
 
 
     $scope.postRun = function(){
+      var t = Date.now();
+      var today = new Date(t);
+      var todaySplit = today.toString().split(' ');
+      console.log('t: ' + t + ' today: ' + today + ' todaySplit: ' + todaySplit);
+      var runMonth = todaySplit[1];
+      console.log('Run month: ' + runMonth);
 
       console.log('Push run- Distance: '+ $rootScope.getRunDistance());
       console.log('Push run- minutes: ' + $rootScope.getRunMinutes());
@@ -1651,6 +1734,8 @@ angular.module('starter.controllers', ['starter.appServices',
 
       var form = {
         distance: $rootScope.getRunDistance(),
+        date: Date.now(),
+        month: runMonth,
         seconds: $rootScope.getRunSeconds(),
         minutes: $rootScope.getRunMinutes(),
         pace: $rootScope.getRunPace(),
@@ -1661,8 +1746,8 @@ angular.module('starter.controllers', ['starter.appServices',
         lapSeconds:  $scope.pushLapSeconds,
         lapMinutes:  $scope.pushLapMinutes,
         lapPace:  $scope.pushLapPace,
-        path: [{lat: $scope.lat}, {long: $scope.long}],
-        date: Date.now()
+        path: [{lat: $scope.lat}, {long: $scope.long}]
+
       }
       console.log('Form Distance: ' + form.distance);
       console.log('Form.lapDistance: ' + form.lapDistance);
@@ -1725,30 +1810,30 @@ angular.module('starter.controllers', ['starter.appServices',
         "577525799f1f51030075a291"
       )
         .success(function(data, status, headers, config){
-        $scope.sponsors = [];
-        $scope.moneyRaisedHolder = [];
+          $scope.sponsors = [];
+          $scope.moneyRaisedHolder = [];
 
 
 
-        if(data.length == 0) {
-         return $scope.noSponsor = true;
-        } else {
-          for (var i = 0; i < data.length; i++) {
-            $scope.sponsors.push(data[i]);
-            $scope.moneyRaisedHolder.push(data[i].per_mile_donation);
-            console.log('data[i].per_mile_donation values: ' + data[i].per_mile_donation);
-            console.log('$scope.moneyRaisedHolder: ' + $scope.moneyRaisedHolder[i] + '    ' + $scope.moneyRaisedHolder);
-            console.log('Money Raised Value before addition: ' + $scope.moneyRaised);
-            $scope.moneyRaised += $scope.moneyRaisedHolder[i];
-            console.log('Money raised Value post addition: ' + $scope.moneyRaised);
+          if(data.length == 0) {
+            return $scope.noSponsor = true;
+          } else {
+            for (var i = 0; i < data.length; i++) {
+              $scope.sponsors.push(data[i]);
+              $scope.moneyRaisedHolder.push(data[i].per_mile_donation);
+              console.log('data[i].per_mile_donation values: ' + data[i].per_mile_donation);
+              console.log('$scope.moneyRaisedHolder: ' + $scope.moneyRaisedHolder[i] + '    ' + $scope.moneyRaisedHolder);
+              console.log('Money Raised Value before addition: ' + $scope.moneyRaised);
+              $scope.moneyRaised += $scope.moneyRaisedHolder[i];
+              console.log('Money raised Value post addition: ' + $scope.moneyRaised);
+            }
+            console.log('My Sponsors JSON returned value of: ' + $scope.sponsors);
+            console.log('Money raised per mile final result: ' + $scope.moneyRaised);
+            $rootScope.setMoneyRaisedPerMile($scope.moneyRaised);
+            console.log('$scope.getMoneyRaised per mile: ' + $rootScope.getMoneyRaisedPerMile());
           }
-          console.log('My Sponsors JSON returned value of: ' + $scope.sponsors);
-          console.log('Money raised per mile final result: ' + $scope.moneyRaised);
-          $rootScope.setMoneyRaisedPerMile($scope.moneyRaised);
-          console.log('$scope.getMoneyRaised per mile: ' + $rootScope.getMoneyRaisedPerMile());
-        }
 
-      }).error(function(data, status, headers, config){
+        }).error(function(data, status, headers, config){
         console.log("Refresh Error~");
         $rootScope.notify("Oops something went wrong!! Please try again later");
       }).finally(function(){
@@ -1780,53 +1865,22 @@ angular.module('starter.controllers', ['starter.appServices',
     });
 
 
-    //move fetches to Services
-    // $rootScope.$on('fetchAccountInfo', function(){
-    //   $scope.user = {
-    //     email: $rootScope.getEmail(),
-    //     selectedCharity: "",
-    //     firstName: "",
-    //     lastName: "",
-    //     dob: ""
-    //   };
-    //
-    //   var email  =  $rootScope.getEmail();
-    //   console.log('fetching account information with email: ' + email);
-    //   var token = $rootScope.getToken();
-    //   console.log('fetching account information with token: ' + token);
-    //
-    //   UserAPI.getOne(email, token)
-    //     .success(function(data, status, headers, config){
-    //       console.log('entered User.getOne success call');
-    //
-    //       $scope.user.selectedCharity = data.selectedCharity;
-    //       console.log('UserAPI call returned selected charity value of : ' + $scope.user.selectedCharity);
-    //
-    //       $scope.user.firstName = data.firstName;
-    //       console.log('User firstname set: ' + $scope.user.firstName );
-    //
-    //       $scope.user.lastName = data.lastName;
-    //       console.log('User last name set: ' + $scope.user.lastName);
-    //
-    //       $scope.user.dob = data.dob;
-    //       console.log('User dob set as: ' + $scope.user.dob);
-    //
-    //       //rootScope for account info global variables. what do we need here?
-    //       //set selectedCharityId
-    //
-    //
-    //     })
-    // })
-    //
-    // $rootScope.$on('fetchCharityInformation', function(){
-    //   $scope.charity = {
-    //     name: "",
-    //     description: "",
-    //     avatar: ""
-    //   };
-    //
-    //
-    // })
+    //history stuff
+    var t = Date.now();
+    var today = new Date(t);
+
+    console.log('Today: ' +today );
+    var utcToday= new Date(today.toUTCString());
+    console.log('Today: ' + today + ' Converts to UTC string: ' + utcToday);
+    var isoToday = new Date(today.toISOString());
+    console.log('Today: ' + today + 'Converts to Iso string: ' + isoToday);
+    var todaySplit = today.toString().split(' ');
+    var todayMonth = todaySplit[1];
+    console.log('Today month: '  + todayMonth);
+
+    $scope.fetchMonthHistory = function(){
+      $rootScope.$broadcast('fetchMonthHistory');
+    }
 
   })
 
@@ -2289,9 +2343,9 @@ angular.module('starter.controllers', ['starter.appServices',
         password: password
       }).success(function (data, headers, config, status) {
 
-          $rootScope.hide();
-          $window.location.href = ('#/app/account');
-        })
+        $rootScope.hide();
+        $window.location.href = ('#/app/account');
+      })
 
         .error(function (error) {
           if (error.error && error.error.code == 11000) {
@@ -2305,675 +2359,541 @@ angular.module('starter.controllers', ['starter.appServices',
   })
 
 
+  .controller('HistoryDayCtrl', function($scope, $rootScope, HistoryAPI){
+
+  })
 
 
+  .controller('HistoryCtrl', function($scope, $rootScope, $window, HistoryAPI, AuthAPI, $filter) {
 
-  .controller('HistoryCtrl', function($scope, $rootScope, HistoryAPI, AuthAPI, $filter, $window, $ionicPosition) {
-
-
-
-    //Angular-nvd3 Chart Configuation/
-    /*
-    console.log(angular.element(document.getElementById('bubble')));
-
-    var position = $ionicPosition.position(angular.element(document.getElementById('bubble')));
-
-    console.log(position.height);
-
-
-    */
-
-    var chartHeight = $window.innerHeight - ($window.innerWidth * 0.6);
-    /*
+    $scope.colors = [{
+      fillColor: "#00b9be",
+      // strokeColor: "#00b9be",
+      highlightFill: "rgb(206, 29, 31)"
+      // highlightStroke: "rgb(206, 29, 31)"
+    }];
 
     $scope.options = {
-        chart: {
-            type: 'historicalBarChart',
-            height: chartHeight,
-            margin : {
-                top: 20,
-                right: 20,
-                bottom: 20,
-                left: 55
-            },
-            x: function(d){return d[0];},
-            y: function(d){return d[1]/100000;},
-            showValues: true,
-            valueFormat: function(d){
-                return d3.format(',.1f')(d);
-            },
-            c0lor: ['#00b9be'],
-            duration: 100,
-            xAxis: {
-                // axisLabel: 'X Axis',
-                tickFormat: function(d) {
-                    return d3.time.format('%m/%d')(new Date(d))
-                },
-                rotateLabels: 0,
-                showMaxMin: false
-            },
-            yAxis: {
-                axisLabel: 'Miles',
-                axisLabelDistance: -10,
-                tickFormat: function(d){
-                    return d3.format(',.1f')(d);
-                }
-            },
-            tooltip: {
-                keyFormatter: function(d) {
-                    return d3.time.format('%x')(new Date(d));
-                }
-            },
-            zoom: {
-                enabled: true,
-                scaleExtent: [1, 10],
-                useFixedDomain: false,
-                useNiceScale: true,
-                horizontalOff: false,
-                verticalOff: true,
-                unzoomEventType: 'dblclick.zoom'
-            }
+      legend: {
+        display: false,
+        position: "left",
+        labels: {
+          fontFamily: "Helvetica Neue",
+          boxWidth: 0
         }
-    };
+      },
 
-    $scope.data = [
-        {
-            "key" : "Quantity" ,
-            "bar": true,
-            "values" : [ [ 1136005200000 , 1271000.0] , [ 1138683600000 , 1271000.0] , [ 1141102800000 , 1271000.0] , [ 1143781200000 , 0] , [ 1146369600000 , 0] , [ 1149048000000 , 0] , [ 1151640000000 , 0] , [ 1154318400000 , 0] , [ 1156996800000 , 0] , [ 1159588800000 , 3899486.0] , [ 1162270800000 , 3899486.0] , [ 1164862800000 , 3899486.0] , [ 1167541200000 , 3564700.0] , [ 1170219600000 , 3564700.0] , [ 1172638800000 , 3564700.0] , [ 1175313600000 , 2648493.0] , [ 1177905600000 , 2648493.0] , [ 1180584000000 , 2648493.0] , [ 1183176000000 , 2522993.0] , [ 1185854400000 , 2522993.0] , [ 1188532800000 , 2522993.0] , [ 1191124800000 , 2906501.0] , [ 1193803200000 , 2906501.0] , [ 1196398800000 , 2906501.0] , [ 1199077200000 , 2206761.0] , [ 1201755600000 , 2206761.0] , [ 1204261200000 , 2206761.0] , [ 1206936000000 , 2287726.0] , [ 1209528000000 , 2287726.0] , [ 1212206400000 , 2287726.0] , [ 1214798400000 , 2732646.0] , [ 1217476800000 , 2732646.0] , [ 1220155200000 , 2732646.0] , [ 1222747200000 , 2599196.0] , [ 1225425600000 , 2599196.0] , [ 1228021200000 , 2599196.0] , [ 1230699600000 , 1924387.0] , [ 1233378000000 , 1924387.0] , [ 1235797200000 , 1924387.0] , [ 1238472000000 , 1756311.0] , [ 1241064000000 , 1756311.0] , [ 1243742400000 , 1756311.0] , [ 1246334400000 , 1743470.0] , [ 1249012800000 , 1743470.0] , [ 1251691200000 , 1743470.0] , [ 1254283200000 , 1519010.0] , [ 1256961600000 , 1519010.0] , [ 1259557200000 , 1519010.0] , [ 1262235600000 , 1591444.0] , [ 1264914000000 , 1591444.0] , [ 1267333200000 , 1591444.0] , [ 1270008000000 , 1543784.0] , [ 1272600000000 , 1543784.0] , [ 1275278400000 , 1543784.0] , [ 1277870400000 , 1309915.0] , [ 1280548800000 , 1309915.0] , [ 1283227200000 , 1309915.0] , [ 1285819200000 , 1331875.0] , [ 1288497600000 , 1331875.0] , [ 1291093200000 , 1331875.0] , [ 1293771600000 , 1331875.0] , [ 1296450000000 , 1154695.0] , [ 1298869200000 , 1154695.0] , [ 1301544000000 , 1194025.0] , [ 1304136000000 , 1194025.0] , [ 1306814400000 , 1194025.0] , [ 1309406400000 , 1194025.0] , [ 1312084800000 , 1194025.0] , [ 1314763200000 , 1244525.0] , [ 1317355200000 , 475000.0] , [ 1320033600000 , 475000.0] , [ 1322629200000 , 475000.0] , [ 1325307600000 , 690033.0] , [ 1327986000000 , 690033.0] , [ 1330491600000 , 690033.0] , [ 1333166400000 , 514733.0] , [ 1335758400000 , 514733.0]]
-        }];
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+            stepSize: 2
+          },
 
-*/
-    /*Angular-chart Chart Configuration*/
+          scaleLabel: {
+            display: true,
+            labelString: "Miles",
+            fontFamily: "Helvetica Neue",
+            fontSize: "16"
+          }
+        }],
 
-
-     $scope.rData = [];
-
-
-     $scope.options = {
-       legend: {
-         display: false,
-         position: "left",
-         labels: {
-           fontFamily: "Helvetica Neue",
-           boxWidth: 0
-         }
-       },
-
-       scales: {
-         yAxes: [{
-           ticks: {
-             beginAtZero: true,
-             stepSize: 2,
-           },
-
-           scaleLabel: {
-             display: true,
-             labelString: "Miles",
-             fontFamily: "Helvetica Neue",
-             fontSize: "16"
-           }
-         }],
-
-         xAxes: [{
-           gridLines: {
-             display: false
-           }
-         }]
-       }
-     };
-
-     $scope.onClick = function (bar, evt) {
-       console.log(bar, evt);
-       if (bar[0] != null) {
-         console.log("Bar with value " + $scope.data[0][bar[0]._index] + " clicked");
-       }
-     };
-
-    $scope.onClick = function (bar, evt) {
-      console.log(bar, evt);
-      if (bar[0] != null) {
-        console.log("Bar with value " + $scope.data[0][bar[0]._index] + " clicked");
+        xAxes: [{
+          gridLines: {
+            display: false
+          }
+        }]
       }
     };
 
-    /*CHART NOTE
-    It is very easy to display the bar chart. The labels array is for the days and the data array is for the miles for those days
-    End Chart Configuration
-     */
 
-    $scope.januaryRunDates = [];
-    $scope.februaryRunDates = [];
-    $scope.marchRunDates = [];
-    $scope.aprilRunDates = [];
-    $scope.mayRunDates = [];
-    $scope.juneRunDates = [];
-    $scope.julyRunDates = [];
-    $scope.augustRunDates = [];
-    $scope.septemberRunDates = [];
-    $scope.octoberRunDates = [];
-    $scope.novemberRunDates = [];
-    $scope.decemberRunDates = [];
+    $scope.selectDayView = function(bar, evt){
+      console.log(bar, evt);
+      console.log(bar.data[0].labels);
+      $window.location.href = ('#/app/historyDay');
 
-    $scope.januaryRunDistances = [];
-    $scope.februaryRunDistances = [];
-    $scope.marchRunDistances = [];
-    $scope.aprilRunDistances = [];
-    $scope.mayRunDistances = [];
-    $scope.juneRunDistances= [];
-    $scope.julyRunDistances = [];
-    $scope.augustRunDistances = [];
-    $scope.septemberRunDistances = [];
-    $scope.octoberRunDistances = [];
-    $scope.novemberRunDistances = [];
-    $scope.decemberRunDistances = [];
+    };
 
-    $scope.januaryRunPaces = [];
-    $scope.februaryRunPaces= [];
-    $scope.marchRunPaces= [];
-    $scope.aprilRunPaces= [];
-    $scope.mayRunPaces= [];
-    $scope.juneRunPaces= [];
-    $scope.julyRunPaces= [];
-    $scope.augustRunPaces= [];
-    $scope.septemberRunPaces= [];
-    $scope.octoberRunPaces= [];
-    $scope.novemberRunPaces= [];
-    $scope.decemberRunPaces= [];
+    var t = Date.now();
+    var today = new Date(t);
 
-    $scope.januaryMoneyRaised = [];
-    $scope.februaryMoneyRaised = [];
-    $scope.marchMoneyRaiseds = [];
-    $scope.aprilMoneyRaised = [];
-    $scope.mayMoneyRaised = [];
-    $scope.juneMoneyRaised = [];
-    $scope.julyMoneyRaised = [];
-    $scope.augustMoneyRaised = [];
-    $scope.septemberMoneyRaised = [];
-    $scope.octoberMoneyRaised = [];
-    $scope.novemberMoneyRaised = [];
-    $scope.decemberMoneyRaised = [];
+    console.log('Today: ' +today );
+    var utcToday= new Date(today.toUTCString());
+    console.log('Today: ' + today + ' Converts to UTC string: ' + utcToday);
+    var isoToday = new Date(today.toISOString());
+    console.log('Today: ' + today + 'Converts to Iso string: ' + isoToday);
+    var todaySplit = today.toString().split(' ');
+    var todayMonth = todaySplit[1];
+    console.log('Today month: '  + todayMonth);
 
-
-    $scope.ids = [];
-    $scope.dates = [];
+    //for get runs by month api call
     $scope.distances = [];
+    $scope.dates = [];
+    $scope.formattedDatesWithTime = [];
+    $scope.formattedDates = [];
     $scope.seconds = [];
     $scope.minutes = [];
     $scope.paces = [];
     $scope.moneyRaised = [];
-    $scope.days = [];
-    $scope.years = []
-    $scope.months = [];
 
+    //for weekViews
+    $scope.weekDates = [];
 
-    var t = Date.now();
-    $scope.today  = new Date(t);
-    console.log('Today: ' + $scope.today);
-
-    $scope.isoMonthToNumber = function(month){
-      switch(month){
-        case "Jan":
-          monthNumber = "01";
-          return monthNumber;
-        case "Feb":
-          monthNumber = "02";
-          return monthNumber;
-        case "Mar":
-          monthNumber = "03";
-          return monthNumber;
-        case "Apr":
-          monthNumber = "04";
-          return monthNumber;
-
-        case "May":
-          monthNumber = "05";
-          return monthNumber;
-
-        case "Jun":
-          monthNumber = "06";
-          return monthNumber;
-
-        case "Jul":
-          monthNumber = "07";
-          return monthNumber;
-
-        case "Aug":
-          monthNumber = "08";
-          return monthNumber;
-
-        case "Sep":
-          monthNumber = "09";
-          return monthNumber;
-
-        case "Oct":
-          monthNumber = "10";
-          return monthNumber;
-
-        case "Nov":
-          monthNumber = "11";
-          return monthNumber;
-
-        case "Dec":
-          monthNumber = "12";
-          return monthNumber;
-
-        default:
-          monthNumber = 0;
-          return monthNumber;
-
+    //month stuff
+    $scope.setMonthTotalDistance = function(distances){
+      $scope.monthTotalDistance;
+      var distanceSum = 0;
+      console.log('Distances.length: ' + distances.length);
+      for(var i= 0; i<distances.length; i++){
+        distanceSum = distanceSum +  distances[i];
+        console.log('monthTotal distance calculation: ' + distanceSum);
       }
-    };
-    $scope.assignMonth = function(date){
-      var splitOne = date.toString().split('/');
-      console.log('Split One: ' + splitOne);
-
-      var month = splitOne[0];
-      console.log('Month:' + month);
-      return month;
-
+      $scope.monthTotalDistance = distanceSum;
+      console.log('$scope.setMonthTotalDistance returning a total distance value of: ' + $scope.monthTotalDistance);
+      return $scope.monthTotalDistance;
     }
 
-    $scope.calculateMonthDistance = function(distance){
-      $scope.sum = 0;
-      for (var i = 0; i< distance.length; i++){
-        $scope.sum =+ distance[i];
-        console.log("Sum: " + $scope.sum);
-        return $scope.sum;
+    $scope.setMonthAveragePace = function(paces){
+      $scope.monthAveragePace;
+      var paceSum = 0;
+      console.log('Paces.length: ' + paces.length);
+      for(var i = 0; i< paces.length; i++){
+        paceSum = paceSum + paces[i];
+        console.log('value of paces at i : ' + paces[i]);
+        console.log('$scope.monthPaceSum calculation: ' + paceSum);
       }
+      $scope.monthAveragePace = paceSum / paces.length;
+      console.log('$scope.monthAveragePace: ' + $scope.monthAveragePace);
+      console.log('$scope.setMonthAveragePace returning an average pace of: ' + $scope.monthAveragePace);
+      return $scope.monthAveragePace;
     }
 
-    $scope.sumPace = function(pace){
-      $scope.sum = 0;
-      console.log('Pace.length from sumPace: ' + pace.length);
-      console.log('Pace from sumPace: ' + pace);
-      for(var i= 0; i<pace.length; i++){
-        $scope.sum =+ pace[i];
-        console.log('$scope.sum: ' + $scope.sum);
-
+    $scope.setMonthTotalMoneyRaised = function(moneyRaised){
+      $scope.monthTotalMoneyRaised = 0;
+      console.log('Distances.length: ' + moneyRaised.length);
+      for(var i= 0; i<moneyRaised.length; i++){
+        $scope.monthTotalMoneyRaised =+  moneyRaised[i];
+        console.log('$scope.monthTotal distance calculation: ' + $scope.monthTotalMoneyRaised);
       }
-      console.log('$scope.sum: ' + $scope.sum);
-      return $scope.sum;
-    };
-    $scope.calculateMonthPace = function(pace){
-      var sumPace = $scope.sumPace(pace);
-      console.log('Sum pace set as: ' + sumPace);
-
-      console.log('Pace.length: ' + pace.length);
-      $scope.average = sumPace / pace.length;
-      console.log('Average pace set as: ' + $scope.average);
-      return $scope.average;
+      console.log('$scope.setMonthTotalMoneyRaised returning a total distance value of: ' + $scope.monthTotalMoneyRaised);
+      return $scope.monthTotalMoneyRaised;
     }
 
-
-    $scope.calculateTotalMoneyRaised = function(moneyRaised){
-      $scope.mRaised = 0;
-      console.log('Money raised length: ' +moneyRaised.length);
-      for(var i = 0; i< moneyRaised.length; i++){
-        $scope.mRaised =+ moneyRaised[i];
-        console.log('$scope.mRaised: ' + $scope.mRaised);
-      }
-      console.log('$scope.mRaised: ' + $scope.mRaised);
-      return $scope.mRaised;
-    }
-
-    $scope.setMonthValues = function(monthNumber, date, distance, seconds, minutes, pace, moneyRaised){
-      console.log('monthNumber:' + monthNumber);
-      console.log('date: ' + date);
-      switch(monthNumber){
-        case "01":
-          $scope.januaryRunDates.push(date);
-          $scope.januaryRunDistances.push(distance);
-          $scope.januaryRunPaces.push(pace);
-          $scope.januaryMoneyRaised.push(moneyRaised);
-          console.log('januaryRunDates: ' + $scope.januaryRunDates);
-          console.log('januaryRunDistances: ' + $scope.januaryRunDistances);
-          console.log('januaryRunPaces: ' + $scope.januaryRunPaces);
-          console.log('januaryMoneyRaised: ' + $scope.januaryMoneyRaised);
-          return;
-        case "02":
-          $scope.februaryRunDates.push(date);
-          $scope.februaryRunDistances.push(distance);
-          $scope.februaryRunPaces.push(pace);
-          $scope.februaryMoneyRaised.push(moneyRaised);
-          console.log('februaryRunDates: ' + $scope.februaryRunDates);
-          console.log('februaryRunDistances: ' + $scope.februaryRunDistances);
-          console.log('februaryRunPaces: ' + $scope.februaryRunPaces);
-          console.log('februaryMoneyRaised: ' + $scope.februaryMoneyRaised);
-          return;
-        case "03":
-          $scope.marchRunDates.push(date);
-          $scope.marchRunDistances.push(distance);
-          $scope.marchRunPaces.push(pace);
-          $scope.marchMoneyRaiseds.push(moneyRaised);
-          console.log('marchRunDates: ' + $scope.marchRunDates);
-          console.log('marchRunDistances: ' + $scope.marchRunDistances);
-          console.log('marchRunPaces: ' + $scope.marchRunPaces);
-          console.log('marchMoneyRaised: ' + $scope.marchMoneyRaised);
-          return;
-        case "04":
-          $scope.aprilRunDates.push(date);
-          $scope.aprilRunDistances.push(distance);
-          $scope.aprilRunPaces.push(pace);
-          $scope.aprilMoneyRaised.push(moneyRaised);
-
-          console.log('aprilRunDates: ' + $scope.aprilRunDates);
-          console.log('aprilRunDistances: ' + $scope.aprilRunDistances);
-          console.log('aprilRunPaces: ' + $scope.aprilRunPaces);
-          console.log('aprilMoneyRaised: ' + $scope.aprilMoneyRaised);
-          return;
-        case "05":
-          $scope.mayRunDates.push(date);
-          $scope.mayRunDistances.push(distance);
-          $scope.mayRunPaces.push(pace);
-          $scope.mayMoneyRaised.push(moneyRaised);
-          console.log('mayRunDates: ' + $scope.mayRunDates);
-          console.log('mayRunDistances: ' + $scope.mayRunDistances);
-          console.log('mayRunPaces: ' + $scope.mayRunPaces);
-          console.log('mayMoneyRaised: ' + $scope.mayMoneyRaised);
-          return;
-        case "06":
-          $scope.juneRunDates.push(date);
-          $scope.juneRunDistances.push(distance);
-          $scope.juneRunPaces.push(pace);
-          $scope.juneMoneyRaised.push(moneyRaised);
-          console.log('juneRunDates: ' + $scope.juneRunDates);
-          console.log('juneRunDistances: ' + $scope.juneRunDistances);
-          console.log('juneRunPaces: ' + $scope.juneRunPaces);
-          console.log('juneRunPaces: ' + $scope.juneMoneyRaised);
-          return $scope.juneRunPaces;
-        case "07":
-          $scope.julyRunDates.push(date);
-          $scope.julyRunDistances.push(distance);
-          $scope.julyRunPaces.push(pace);
-          $scope.julyMoneyRaised.push(moneyRaised);
-          $scope.julyTotalDistance = $scope.calculateMonthDistance($scope.julyRunDistances);
-          $scope.julyAveragePace = $scope.calculateMonthPace($scope.julyRunPaces);
-          $scope.julyTotalMoneyRaised = $scope.calculateTotalMoneyRaised($scope.julyMoneyRaised);
-          console.log('julyRunDates: ' + $scope.julyRunDates);
-          console.log('julyRunDistances: ' + $scope.julyRunDistances);
-          console.log('julyRunPaces: ' + $scope.julyRunPaces);
-          console.log('julyMoneyRaised: ' + $scope.julyMoneyRaised);
-          console.log('julyTotalDistanceRun: ' + $scope.julyTotalDistance);
-          console.log('julyAveragePace: ' + $scope.julyAveragePace);
-          console.log('julyTotalMoneyRaised: ' + $scope.julyTotalMoneyRaised);
-          return;
-        case "08":
-          $scope.augustRunDates.push(date);
-          $scope.augustRunDistances.push(distance);
-          $scope.augustRunPaces.push(pace);
-          $scope.augustMoneyRaised.push(moneyRaised);
-          console.log('augustRunDates: ' + $scope.augustRunDates);
-          console.log('augustRunDistances: ' + $scope.augustRunDistances);
-          console.log('augustRunPaces: ' + $scope.augustRunPaces);
-          console.log('augustMoneyRaised: ' + $scope.augustMoneyRaised);
-          return;
-        case "09":
-          $scope.septemberRunDates.push(date);
-          $scope.septemberRunDistances.push(distance);
-          $scope.septemberRunPaces.push(pace);
-          $scope.septemberMoneyRaised.push(moneyRaised);
-          console.log('septemberRunDates: ' + $scope.septemberRunDates);
-          console.log('septemberRunDistances: ' + $scope.septemberRunDistances);
-          console.log('septemberRunPaces: ' + $scope.septemberRunPaces);
-          console.log('septemberMoneyRaised: ' + $scope.septemberMoneyRaised);
-          return;
-        case "10":
-          $scope.octoberRunDates.push(date);
-          $scope.octoberRunDistances.push(distance);
-          $scope.octoberRunPaces.push(pace);
-          $scope.octoberMoneyRaised.push(moneyRaised);
-          console.log('octoberRunDates: ' + $scope.octoberRunDates);
-          console.log('octoberRunDistances: ' + $scope.octoberRunDistances);
-          console.log('octoberMoneyRaised: ' + $scope.octoberMoneyRaised);
-          console.log('octoberRunPaces: ' + $scope.octoberRunPaces);
-          return;
-        case "11":
-          $scope.novemberRunDates.push(date);
-          $scope.novemberRunDistances.push(distance);
-          $scope.novemberRunPaces.push(pace);
-          $scope.novemberMoneyRaised.push(moneyRaised);
-          console.log('novemberRunDates: ' + $scope.novemberRunDates);
-          console.log('novemberRunDistances: ' + $scope.novemberRunDistances);
-          console.log('novemberRunPaces: ' + $scope.novemberRunPaces);
-          console.log('novemberMoneyRaised: ' + $scope.novemberMoneyRaised);
-          return;
-        case "12":
-          $scope.decemberRunDates.push(date);
-          $scope.decemberRunDistances.push(distance);
-          $scope.decemberRunPaces.push(pace);
-          $scope.decemberMoneyRaised.push(moneyRaised);
-          console.log('decemberRunPaces: ' + $scope.decemberRunPaces);
-          console.log('decemberRunDates: ' + $scope.decemberRunDates);
-          console.log('decemberRunDistances: ' + $scope.decemberRunDistances);
-          console.log('decemberMoneyRaised: ' + $scope.decemberMoneyRaised);
-          return;
-        default:
-          console.log('Error: date could not be logged');
-          return;
-      }
-    }
-
-
-    $scope.parseUTCDate = function(date){
-      var split = date.toString().split('-');
-      console.log('ParseUTCDate split: ' + split);
-      var year = split[0];
-      console.log('parseUTC year value: ' + year);
-      var month = split[1];
-      console.log('parseUTC month value: ' + month);
-      var dayTime = split[2];
-      var dayTimeSplit = dayTime.split('T');
-      var day = dayTimeSplit[0];
-      console.log('parseUTC day value: ' + day);
-
-      var newDate = month + '/' + day + '/' + year;
-      console.log('parseUTCDate returns: ' + newDate);
-
-      return newDate;
-    }
-
-
-    //for the s
-    $scope.parseISOdate = function(date){
-      var split = date.toString().split(' ');
-      console.log('ParseISODate split: ' + split);
-      var year = split[3];
-      console.log('parseISO year value: ' + year);
-      var isoMonth = split[1];
-      console.log('parseISO month value: ' + isoMonth);
-      var month = $scope.isoMonthToNumber(isoMonth);
-      console.log('parseISO converted month value: ' + month);
-      var dayTime = split[2];
-      var dayTimeSplit = dayTime.split('T');
-      var day = dayTimeSplit[0];
-      console.log('parseISO day value: ' + day);
-
-      var newDate = month + '/' + day + '/' + year;
-      console.log('parsedISODate returns: ' + newDate);
-
-    }
-
-
-    // $scope.setWeekViewDates = function(startDate, endDate){
-    //
-    // }
-
-    $scope.getRunDatesByMonth= function(monthNumber){
-      switch(monthNumber){
-        case "01":
-          console.log('$scope.januaryRunDates returned value of: ' + $scope.januaryRunDates);
-          return $scope.januaryRunDates;
-        case "02":
-          console.log('$scope.februaryRunDates returned value of: ' + $scope.februaryRunDates);
-          return $scope.februaryRunDates;
-        case "03":
-          console.log('$scope.marchRunDates returned value of: ' + $scope.marchRunDates);
-          return $scope.marchRunDates;
-        case "04":
-          console.log('$scope.aprilRunDates returned value of: ' + $scope.aprilRunDates);
-          return $scope.aprilRunDates;
-        case "05":
-          console.log('$scope.mayRunDates returned value of: ' + $scope.mayRunDates);
-          return $scope.mayRunDates;
-        case "06":
-          console.log('$scope.juneRunDates returned value of: ' + $scope.juneRunDates);
-          return $scope.juneRunDates;
-        case "07":
-          console.log('$scope.julyRunDates returned value of: ' + $scope.julyRunDates);
-          return $scope.julyRunDates;
-        case "08":
-          console.log('$scope.augustRunDates returned value of: ' + $scope.augustRunDates);
-          return $scope.augustRunDates;
-        case "09":
-          console.log('$scope.septemberRunDates returned value of: ' + $scope.septemberRunDates);
-          return $scope.septemberRunDates;
-        case "10":
-          console.log('$scope.octoberRunDates returned value of: ' + $scope.octoberRunDates);
-          return $scope.octoberRunDates;
-        case "11":
-          console.log('$scope.novemberRunDates returned value of: ' + $scope.novemberRunDates);
-          return $scope.novemberRunDates;
-        case "12":
-          console.log('$scope.decemberRunDates returned value of: ' + $scope.decemberRunDates);
-          return $scope.decemberRunDates;
-        default:
-          console.log('Error gettin distances by Month');
-          break;
-      }
-    }
-    $scope.getDistancesByMonth= function(monthNumber){
-      switch(monthNumber){
-        case "01":
-          console.log('$scope.julyRunDistances returned value of: ' + $scope.julyRunDistances);
-          return $scope.januaryRunDistances;
-        case "02":
-          console.log('$scope.julyRunDistances returned value of: ' + $scope.julyRunDistances);
-          return $scope.februaryRunDistances;
-        case "03":
-          console.log('$scope.julyRunDistances returned value of: ' + $scope.julyRunDistances);
-          return $scope.marchRunDistances;
-        case "04":
-          console.log('$scope.julyRunDistances returned value of: ' + $scope.julyRunDistances);
-          return $scope.aprilRunDistances;
-        case "05":
-          console.log('$scope.julyRunDistances returned value of: ' + $scope.julyRunDistances);
-          return $scope.mayRunDistances;
-        case "06":
-          console.log('$scope.julyRunDistances returned value of: ' + $scope.julyRunDistances);
-          return $scope.juneRunDistances;
-        case "07":
-          console.log('$scope.julyRunDistances returned value of: ' + $scope.julyRunDistances);
-          return $scope.julyRunDistances;
-        case "08":
-          console.log('$scope.julyRunDistances returned value of: ' + $scope.julyRunDistances);
-          return $scope.augustRunDistances;
-        case "09":
-          console.log('$scope.julyRunDistances returned value of: ' + $scope.julyRunDistances);
-          return $scope.septemberRunDistances;
-        case "10":
-          console.log('$scope.julyRunDistances returned value of: ' + $scope.julyRunDistances);
-          return $scope.octoberRunDistances;
-        case "11":
-          console.log('$scope.julyRunDistances returned value of: ' + $scope.julyRunDistances);
-          return $scope.novemberRunDistances;
-        case "12":
-          console.log('$scope.julyRunDistances returned value of: ' + $scope.julyRunDistances);
-          return $scope.decemberRunDistances;
-        default:
-          console.log('Error getting distances by Month');
-          break;
-      }
-    }
-
-
-    HistoryAPI.getAll($rootScope.getUserId())
-      .success(function (data) {
-        console.log(data);
-        console.log('History API get user history call succeeded');
-
-
+    // $rootScope.$on('fetchMonthHistory', function(){
+    HistoryAPI.getByMonth($rootScope.getUserId(), todayMonth)
+      .success(function(data, status, headers, config) {
+        console.log('HistoryAPI getByMonth successfully called');
         for (var i = 0; i < data.length; i++) {
-          console.log('i:' + i);
-
-          var HistoryLoggerForm = {
-            // User: "",
-            // _v: "",
-            _id: data[i]._id,
-            date: data[i].date,
-            distance: data[i].distance,
-            // laps: [],
-            minutes: data[i].minutes,
-            pace: data[i].pace,
-            // path:[],
-            seconds: data[i].seconds,
-            moneyRaised: data[i].moneyRaised
-          };
-          console.log('HistoryLoggerForm: ' + HistoryLoggerForm._id);
-          $scope.ids.push(HistoryLoggerForm._id);
-          console.log('$scope.ids: ' + $scope.ids);
-
-          var formattedDate = $scope.parseUTCDate(data[i].date);
-          console.log('Formatted Date: ' + formattedDate);
-
-          $scope.dates.push(formattedDate);
-          // console.log('$scope.dates: ' + $scope.dates[i]);
-          console.log('$scope.dates: ' + $scope.dates);
-
-          $scope.distances.push(HistoryLoggerForm.distance);
-          console.log('$scope.distances: ' + $scope.distances[i]);
+          $scope.distances.push(data[i].distance);
+          console.log('$scope.distances[i]: ' + $scope.distances[i]);
           console.log('$scope.distances: ' + $scope.distances);
 
-          $scope.minutes.push(HistoryLoggerForm.minutes);
-          // console.log('$scope.minutes: ' + $scope.minutes[i]);
-          console.log('$scope.minutes: ' + $scope.minutes);
 
-          $scope.paces.push(HistoryLoggerForm.pace);
-          // console.log('$scope.pace: ' + $scope.paces[i]);
-          console.log('$scope.pace: ' + $scope.paces);
+          $scope.dates.push(data[i].date);
+          console.log('$scope.dates: ' + $scope.dates[i]);
 
-          $scope.seconds.push(HistoryLoggerForm.seconds);
-          // console.log('$scope.seconds: ' + $scope.seconds[i]);
+          $scope.seconds.push(data[i].seconds);
           console.log('$scope.seconds: ' + $scope.seconds);
 
-          if(HistoryLoggerForm.moneyRaised == undefined){
-            var mRaised = 0;
-            $scope.moneyRaised.push(mRaised);
-            // console.log('$scope.moneyRaised: ' + $scope.moneyRaised[i]);
-            console.log('$scope.moneyRaised: ' + $scope.moneyRaised);
+          $scope.minutes.push(data[i].minutes);
+          console.log('$scope.minutes: ' + $scope.minutes);
 
-            // return $scope.moneyRaised;
-          } else {
-            $scope.moneyRaised.push(HistoryLoggerForm.moneyRaised);
-            // console.log('$scope.moneyRaised: ' + $scope.moneyRaised[i]);
-            console.log('$scope.moneyRaised: ' + $scope.moneyRaised);
-            // return $scope.moneyRaised;
-          }
+          $scope.paces.push(data[i].pace);
+          console.log('$scope.pace: '+ $scope.paces);
 
-          var m = $scope.assignMonth($scope.dates[i]);
-          console.log('M: ' + m);
-
-          var monthRunPacesTest = $scope.setMonthValues(m, $scope.dates[i], $scope.distances[i], $scope.seconds[i],
-                    $scope.minutes[i], $scope.paces[i], $scope.moneyRaised[i]);
-
-          var getJulyRunDistancesTest = $scope.getDistancesByMonth(m);
-          console.log('getJulyRunDistancesTest returned value of: ' + getJulyRunDistancesTest);
-          var getJulyRunDatesByMonthTest = $scope.getRunDatesByMonth(m);
-          console.log('getJulyRunDatesByMonthTest returned dates of: ' + getJulyRunDatesByMonthTest);
-
-          console.log('$scope.today: ' + $scope.today);
-          var parsedISODate = $scope.parseISOdate($scope.today);
+          $scope.moneyRaised.push(data[i].moneyRaised);
+          console.log('$scope.moneyRaised: ' + $scope.moneyRaised);
 
 
 
         }
 
+        console.log('Today value from inside HistoryAPI call: ' + today);
+        $scope.getWeekDatesOnLoad();
+
+        var thisMonthTotalDistance = $scope.setMonthTotalDistance($scope.distances);
+        console.log('HistoryAPI getByMonth set total distance value as: ' + thisMonthTotalDistance);
+
+        var thisMonthAveragePace = $scope.setMonthAveragePace($scope.paces);
+        console.log('HistoryAPI getByMonth set average pace as: ' + thisMonthAveragePace);
+
+        var thisMonthTotalMoneyRaised = $scope.setMonthTotalMoneyRaised($scope.moneyRaised);
+        console.log('HistoryAPI getByMonth set total money raised value as: ' + thisMonthTotalMoneyRaised);
+
+        console.log('$scope.dates.length: ' + $scope.dates.length);
+        for(var i=0; i< $scope.dates.length; i++){
+          var dateHolder = new Date($scope.dates[i]);
+          console.log('dateHolder: ' + dateHolder);
+          var dateFormatHolder = new Date(dateHolder.toISOString());
+          console.log('dateFormatHolder: ' + dateFormatHolder);
+          $scope.formattedDatesWithTime.push(dateFormatHolder);
+          console.log('formattedDatesWithTime[i]: ' + $scope.formattedDatesWithTime[i]);
+          console.log('formattedDatesWithTime: ' + $scope.formattedDatesWithTime);
+        }
+
+
       })
-      .error(function (err) {
-        console.log('Get User history API request failed');
-        console.log(err);
-
+      .error(function(err){
+        console.log('HistoryAPI getBYMonth returned error: ' + err);
       });
+    // })
 
 
+
+    //week stuff
+    $scope.startDate;
+    $scope.endDate;
+
+    $scope.monthToNumber = function(month){
+      switch(month){
+        case "Jan":
+          monthNumber = 01;
+          return monthNumber;
+          break;
+        case "Feb":
+          monthNumber = 02;
+          return monthNumber;
+          break;
+        case "Mar":
+          monthNumber = 03;
+          return monthNumber;
+          break;
+        case "Apr":
+          monthNumber = 04;
+          return monthNumber;
+          break;
+        case "May":
+          monthNumber = 05;
+          return monthNumber;
+          break;
+        case "Jun":
+          monthNumber = 06;
+          return monthNumber;
+          break;
+        case "Jul":
+          monthNumber = 07;
+          return monthNumber;
+          break;
+        case "Aug":
+          monthNumber = 08;
+          return monthNumber;
+          break;
+        case "Sep":
+          monthNumber = 09;
+          return monthNumber;
+          break;
+        case "Oct":
+          monthNumber = 10;
+          return monthNumber;
+          break;
+        case "Nov":
+          monthNumber = 11;
+          return monthNumber;
+          break;
+        case "Dec":
+          monthNumber = 12;
+          return monthNumber;
+          break;
+        default:
+          monthNumber = 0;
+          return monthNumber;
+          break;
+      }
+    };
+    $scope.parseDisplayDatesForWeek = function(startDate, endDate){
+      console.log('startDate: ' + startDate + ' endDate: ' + endDate );
+      var endParserHolder = new Date(endDate);
+      var startParserHolder = new Date(startDate);
+      var endparser = endParserHolder.toString().split(' ');
+      var startparser = startParserHolder.toString().split(' ');
+      console.log('endParserHolder: ' + endParserHolder + ' parser : ' + endparser);
+      console.log('parserHolder: ' + startParserHolder + ' parser : ' + startparser);
+
+      $scope.displayDayArray = [];
+      var thisEndMonth = endparser[1];
+      var thisEndDay = endparser[2];
+      var thisStartMonth = startparser[1];
+      var thisStartDay = startparser[2];
+      var monthNumber = $scope.monthToNumber(thisStartMonth);
+      console.log('thisEndMonth: ' + thisEndMonth + ' thisEndDay: ' + thisEndDay);
+      console.log('thisStartMonth: ' + monthNumber + ' thisStartDay: ' + thisStartDay);
+      var thisDay = thisStartDay;
+      for(var i=0; i<6; i++){
+        thisDay++;
+        console.log('thisDay: ' + i + '  ' + thisDay);
+        $scope.displayDayArray[i] = thisDay;
+      }
+
+      console.log('$scope.displayDayArray[3]: ' + $scope.displayDayArray[3]);
+
+      //day one is the startDate
+      $scope.displayDayOne = monthNumber + '/' + thisStartDay;
+      $scope.displayDayTwo = monthNumber + '/' + $scope.displayDayArray[0];
+      $scope.displayDayThree = monthNumber + '/' + $scope.displayDayArray[1];
+      $scope.displayDayFour = monthNumber + '/' + $scope.displayDayArray[2];
+      $scope.displayDayFive = monthNumber + '/' + $scope.displayDayArray[3];
+      $scope.displayDaySix = monthNumber + '/' + $scope.displayDayArray[4];
+      $scope.displayDaySeven = monthNumber + '/' + thisEndDay;
+
+      console.log('$scope.displayDayFive: ' + $scope.displayDayFive);
+      console.log('parseDatesForWeekDisplay ' + $scope.displayDayOne + ' ' + $scope.displayDayTwo + ' ' +
+        $scope.displayDayThree + ' ' + $scope.displayDayFour + ' ' + $scope.displayDayFive + ' ' +
+        $scope.displayDaySix + ' ' + $scope.displayDaySeven);
+
+
+      $scope.labels = [$scope.displayDayOne,  $scope.displayDayTwo,
+        $scope.displayDayThree, $scope.displayDayFour,
+        $scope.displayDayFive, $scope.displayDaySix, $scope.displayDaySeven];
+
+    }
+
+
+
+    $scope.parseDatesForMatch = function(date){
+      var tempDate = new Date(date);
+      var splitTempDate = tempDate.toString().split( ' ');
+      console.log('splitTempDate: ' + splitTempDate);
+      var weekDay = splitTempDate[0];
+      console.log('weekDate from parseDatesForMatch: ' + weekDay);
+      var month = splitTempDate[1];
+      console.log('monthDate from parseDatesForMatch: ' + month);
+      var date = splitTempDate[2];
+      console.log('date from parseDatesForMatch: ' + date);
+      var year = splitTempDate[3];
+      console.log('year from parseDatesForMatch: ' + year);
+      var dateForMatch = month.toString() + ' ' + date.toString() + ' ' + year.toString();
+      console.log('parseDatesForMatch returns value of: ' + dateForMatch);
+      return dateForMatch;
+    }
+
+    // $scope.parseJSONDatesForMatch = function(date){
+    //   var tempDate = new Date(date);
+    //   console.log('tempdate from parseJSONDates for match: ' + tempDate);
+    //   tempDate.setDate(tempDate.getDate());
+    //   console.log('tempdate from parseJSONDates for match: ' + tempDate);
+    //   var splitTempDate = tempDate.toString().split('-');
+    //   console.log('splitTempDate from parseJSONDatesForMatch: ' + splitTempDate);
+    //   var tempYear = splitTempDate[0];
+    //   var tempMonth = splitTempDate[1];
+    //   var tempDate = splitTempDate[2];
+    //   var month = $scope.month
+    // }
+
+
+    $scope.matchWeekValues = function(dayOne, dayTwo, dayThree, dayFour, dayFive, daySix, daySeven){
+      console.log('match week values called with params: ' + dayOne + ' '+ dayTwo+ ' '
+        + dayThree + ' ' + dayFour+ ' ' + dayFive+ ' ' +daySix+ ' ' +daySeven);
+      console.log('$scope.dates: ' +$scope.dates);
+      console.log('$scope.dates.length: ' + $scope.dates.length);
+      var tempDayOneHolder = 0;
+      var tempDayTwoHolder = 0;
+      var tempDayThreeHolder = 0;
+      var tempDayFourHolder = 0;
+      var tempDayFiveHolder = 0;
+      var tempDaySixHolder = 0;
+      var tempDaySevenHolder = 0;
+      for(var i=0; i< $scope.dates.length; i++){
+        var datesArrayFormatter = new Date($scope.dates[i]);
+        console.log('datesArrayFormatter: ' + datesArrayFormatter);
+        // datesArrayFormatter.setDate(datesArrayFormatter.getDate());
+        // console.log('datesArrayFormatter: ' + datesArrayFormatter);
+        // datesArrayFormatter = datesArrayFormatter.toISOString();
+        // console.log('datesArrayFormatter: ' + datesArrayFormatter);
+        datesArrayFormatter = $scope.parseDatesForMatch(datesArrayFormatter);
+        console.log('datesArrayFormatter: ' + datesArrayFormatter);
+
+        if(dayOne == datesArrayFormatter){
+          console.log('dayOne matched with datesArrayFormatter at day: ' + dayOne + ' ' + datesArrayFormatter);
+          tempDayOneHolder = $scope.distances[i];
+          console.log('$scope.distances[i] (dayOne): ' + $scope.distances[i]);
+          console.log('tempDayOneHolder: ' + tempDayOneHolder);
+          // return $scope.dayOneDistance;
+        } else if(dayTwo == datesArrayFormatter){
+          console.log('dayTwo matched with datesArrayFormatter at day: ' + dayTwo + ' ' + datesArrayFormatter);
+          tempDayTwoHolder = $scope.distances[i];
+          console.log('$scope.distances[i] (dayTwo): ' + $scope.distances[i]);
+          console.log('tempDayTwoHolder: ' + tempDayTwoHolder);
+          // return $scope.dayTwoDistance;
+
+        } else if(dayThree == datesArrayFormatter){
+          console.log('dayThree matched with datesArrayFormatter at day: ' + dayThree + ' ' + datesArrayFormatter);
+          tempDayThreeHolder = $scope.distances[i];
+          console.log('$scope.distances[i] (dayThree): ' + $scope.distances[i]);
+          console.log('tempDayThreeHolder: ' + tempDayThreeHolder);
+          // return $scope.dayThreeDistance;
+        }
+
+        else if(dayFour == datesArrayFormatter){
+          console.log('dayFour matched with datesArrayFormatter at day: ' + dayFour + ' ' + datesArrayFormatter);
+          tempDayFourHolder = $scope.distances[i];
+          console.log('$scope.distances[i] (tempDayFourHolder): ' + $scope.distances[i]);
+          console.log('tempDayFourHolder: ' + tempDayFourHolder);
+          // return $scope.dayFourDistance;
+        }
+
+        else if(dayFive == datesArrayFormatter){
+          console.log('dayFive matched with datesArrayFormatter at day: ' + dayFive + ' ' + datesArrayFormatter);
+          tempDayFiveHolder = $scope.distances[i];
+          console.log('$scope.distances[i] (dayFive): ' + $scope.distances[i]);
+          console.log('tempDayFiveHolder: ' + tempDayFiveHolder);
+          // return $scope.dayFiveDistance;
+        }
+
+        else if(daySix == datesArrayFormatter){
+          console.log('daySix matched with datesArrayFormatter at day: ' + daySix + ' ' + datesArrayFormatter);
+          tempDaySixHolder = tempDaySixHolder + $scope.distances[i];
+          console.log('$scope.distances[i] ( day six): ' + $scope.distances[i]);
+          console.log('$tempDaySixHolder ' + tempDaySixHolder);
+          // return $scope.daySixDistance;
+        }
+
+        else if(daySeven == datesArrayFormatter){
+          console.log('daySeven matched with datesArrayFormatter at day: ' + daySeven + ' ' + datesArrayFormatter);
+          tempDaySevenHolder = $scope.distances[i];
+          console.log('$scope.distances[i] (daySeven): ' + $scope.distances[i]);
+          console.log('tempDaySevenHolder: ' + tempDaySevenHolder);
+          // return $scope.daySevenDistance;
+        }
+
+        $scope.dayOneDistance = tempDayOneHolder;
+        console.log('$scope.dayOneDistance: ' + $scope.dayOneDistance);
+        $scope.dayTwoDistance = tempDayTwoHolder;
+        console.log('$scope.dayTwoDistance: ' + $scope.dayTwoDistance);
+        $scope.dayThreeDistance = tempDayThreeHolder;
+        console.log('$scope.dayThreeDistance: ' + $scope.dayThreeDistance);
+        $scope.dayFourDistance = tempDayFourHolder;
+        console.log('$scope.dayFourDistance: ' + $scope.dayFourDistance);
+        $scope.dayFiveDistance = tempDayFiveHolder;
+        console.log('$scope.dayFiveDistance: ' + $scope.dayFiveDistance);
+        $scope.daySixDistance = tempDaySixHolder;
+        console.log('$scope.daySixDistance: ' + $scope.daySixDistance);
+        $scope.daySevenDistance = tempDaySevenHolder;
+        console.log('$scope.daySevenDistance: ' + $scope.daySevenDistance);
+
+        $scope.data = [[$scope.dayOneDistance, $scope.dayTwoDistance, $scope.dayThreeDistance,
+          $scope.dayFourDistance, $scope.dayFiveDistance, $scope.daySixDistance,
+          $scope.daySevenDistance]];
+
+        // $scope.data ['1', '2', ]
+
+      }
+    }
+
+    $scope.getWeekDatesForValuesMatch = function(startDate){
+      console.log('getWeekDatesForValuesMatch called with param: ' + startDate);
+      var dayOne = new Date(startDate);
+      // dayOne.setDate(dayOne.getDate() - 6);
+      console.log('dayOne date pre time removal: ' + dayOne);
+
+
+      var dayTwo = new Date(dayOne);
+      dayTwo.setDate(dayTwo.getDate() + 1);
+      console.log('dayTwo date: ' + dayTwo);
+
+
+      var dayThree = new Date(dayTwo);
+      dayThree.setDate(dayThree.getDate() + 1);
+      console.log('dayThree date: ' + dayThree);
+
+      var dayFour = new Date(dayThree);
+      dayFour.setDate(dayFour.getDate() + 1);
+      console.log('dayFour date: ' + dayFour);
+
+      var dayFive = new Date(dayFour);
+      dayFive.setDate(dayFive.getDate() + 1);
+      console.log('dayFive date: ' + dayFive);
+
+      var daySix = new Date(dayFive);
+      daySix.setDate(daySix.getDate() + 1);
+      console.log('daySix date: ' + daySix);
+
+      var daySeven = new Date(daySix);
+      daySeven.setDate(daySeven.getDate() + 1);
+      console.log('daySeven date: ' + daySeven);
+
+      dayOne = $scope.parseDatesForMatch(dayOne);
+      console.log('dayOne after time removal: ' + dayOne);
+
+      dayTwo = $scope.parseDatesForMatch(dayTwo);
+      console.log('dayTwo after time removal: ' + dayTwo);
+
+      dayThree = $scope.parseDatesForMatch(dayThree);
+      console.log('dayThree after time removal: ' + dayThree);
+
+      dayFour = $scope.parseDatesForMatch(dayFour);
+      console.log('dayFour after time removal: ' + dayFour);
+
+      dayFive = $scope.parseDatesForMatch(dayFive);
+      console.log('dayFive after time removal: ' + dayFive);
+
+      daySix = $scope.parseDatesForMatch(daySix);
+      console.log('daySix after time removal: ' + daySix);
+
+      daySeven = $scope.parseDatesForMatch(daySeven);
+      console.log('daySeven after time removal: ' + daySeven);
+
+
+      $scope.matchWeekValues(dayOne, dayTwo, dayThree, dayFour, dayFive, daySix, daySeven);
+
+    }
+
+
+    $scope.getWeekDatesOnLoad = function(){
+      var today = Date.now();
+      console.log('today: ' + today);
+      $scope.endDate = new Date(today);
+      console.log('end date: ' + $scope.endDate);
+      var newDate = new Date($scope.endDate);
+      newDate.setDate(newDate.getDate() - 6);
+      $scope.startDate = new Date(newDate);
+
+      console.log('$scope.end date from getWeekDatesOnLoad: ' + $scope.startDate);
+      $scope.parseDisplayDatesForWeek($scope.startDate, $scope.endDate);
+      $scope.getWeekDatesForValuesMatch($scope.startDate);
+      return $scope.startDate, $scope.endDate;
+    }
+
+
+    $scope.getWeekDatesOnDecrement = function(){
+      console.log('getWeekDatesOnDecrement entered, $scope.startDate value of: ' + $scope.startDate);
+      var newEndDate = new Date($scope.startDate);
+      console.log('newEndDate initialized with value of: ' + newEndDate);
+      newEndDate.setDate(newEndDate.getDate() -1);
+      console.log('newEndDate decremented, value set as: ' + newEndDate);
+      $scope.endDate  = new Date(newEndDate);
+      console.log('$scope.endDate set as : ' + $scope.endDate + ' from $scope.getWeekDatesOnDecrement');
+      var newStartDate = new Date(newEndDate);
+      console.log('newEndDate initialized with value of: ' + newStartDate);
+      newStartDate.setDate(newStartDate.getDate() -6);
+      console.log('newStart date decremented with value of: ' + newStartDate);
+      $scope.startDate = new Date(newStartDate);
+      console.log('$scope.startDate set as: ' + $scope.startDate + ' from $scope.startDate');
+      $scope.parseDisplayDatesForWeek($scope.startDate, $scope.endDate);
+      $scope.getWeekDatesForValuesMatch($scope.startDate);
+      return $scope.startDate, $scope.endDate;
+    }
+
+    $scope.getWeekDatesOnIncrement = function(){
+      var newStartDate = new Date($scope.endDate);
+      console.log('newEndDate initialized with value of: ' + newStartDate);
+      newStartDate.setDate(newStartDate.getDate() +1);
+      console.log('newStart date decremented with value of: ' + newStartDate);
+      $scope.startDate = new Date(newStartDate);
+      console.log('getWeekDatesOnDecrement entered, $scope.startDate value of: ' + $scope.startDate);
+
+      var newEndDate = new Date($scope.startDate);
+      console.log('newEndDate initialized with value of: ' + newEndDate);
+      newEndDate.setDate(newStartDate.getDate() +6);
+      console.log('newEndDate decremented, value set as: ' + newEndDate);
+      $scope.endDate  = new Date(newEndDate);
+      console.log('$scope.endDate set as : ' + $scope.endDate + ' from $scope.getWeekDatesOnDecrement');
+
+      $scope.parseDisplayDatesForWeek($scope.startDate, $scope.endDate);
+      $scope.getWeekDatesForValuesMatch($scope.startDate);
+      return $scope.startDate, $scope.endDate;
+    }
+
+
+
+    $scope.series = ['Series A'];
   });

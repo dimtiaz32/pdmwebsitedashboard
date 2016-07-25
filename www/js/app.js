@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives', 'stripe', 'ngOpenFB', 'angular-storage', 'chart.js','googleplus', 'nvd3'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives', 'stripe', 'ngOpenFB', 'angular-storage', 'chart.js','googleplus'])
 
   .run(function($ionicPlatform, ngFB) {
 
@@ -196,8 +196,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
         url: '/historyDay',
         views: {
           'menuContent':{
-            templateUrl: 'templates/history-day.html'
-            // controller: 'HistoryDayCtrl'
+            templateUrl: 'templates/history-day.html',
+            controller: 'HistoryDayCtrl'
           }
         }
       })

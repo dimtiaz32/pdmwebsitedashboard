@@ -45,3 +45,7 @@ ion-content.sign-up {
 .sign-up .input-label {
   color: #a1a1a1;
 }
+
+.sign-up .item-input {
+  padding: 3px 0 3px 16px;
+}
