@@ -2359,20 +2359,17 @@ angular.module('starter.controllers', ['starter.appServices',
   })
 
 
+.controller('HistoryDayCtrl', function($scope, $rootScope, HistoryAPI){
+
+})
 
 
-
-  .controller('HistoryCtrl', function($scope, $rootScope, HistoryAPI, AuthAPI, $filter) {
-
-
-
-
-
+  .controller('HistoryCtrl', function($scope, $rootScope, $window, HistoryAPI, AuthAPI, $filter) {
 
     $scope.colors = [{
       fillColor: "#00b9be",
       // strokeColor: "#00b9be",
-      highlightFill: "rgb(206, 29, 31)",
+      highlightFill: "rgb(206, 29, 31)"
       // highlightStroke: "rgb(206, 29, 31)"
     }];
 
@@ -2409,10 +2406,13 @@ angular.module('starter.controllers', ['starter.appServices',
       }
     };
 
-    /*CHART NOTE
-    It is very easy to display the bar chart. The labels array is for the days and the data array is for the miles for those days
-    End Chart Configuration
-     */
+
+    $scope.selectDayView = function(bar, evt){
+      console.log(bar, evt);
+      console.log(bar.data[0].labels);
+      $window.location.href = ('#/app/historyDay');
+
+    };
 
     var t = Date.now();
     var today = new Date(t);
@@ -2896,11 +2896,4 @@ angular.module('starter.controllers', ['starter.appServices',
 
 
     $scope.series = ['Series A'];
-
-
-
-
-
-
-
   });

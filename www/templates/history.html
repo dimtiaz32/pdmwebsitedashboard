@@ -15,6 +15,7 @@
           <div class="history-page bubble-box left-bubble-box">
             <p class="history-page label">Money Raised</p>
             <p class="history-page value">${{monthTotalMoneyRaised}}</p>
+            <p class="history-page units">this month</p>
           </div>
 
           <div class="history-page bubble-box center-bubble-box">
@@ -47,7 +48,7 @@
                   chart-series="series"
                   chart-colours="colors"
                   chart-options="options"
-                  chart-click="onClick">
+                  chart-click="selectDayView">
           </canvas>
         </div>
       </ion-slide-page>
