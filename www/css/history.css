@@ -132,7 +132,8 @@
   left: -2.25vw;
   right: -2.25vw;
 }
-.chart-container.chart.bar {
+
+.history-page .chart-container.chart.bar {
   position: absolute;
   border: none;
 }
