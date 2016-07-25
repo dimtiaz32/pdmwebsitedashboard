@@ -7,12 +7,34 @@
   padding-bottom: 15px;
 }
 
-.history-day-page.date-header.item button {
-  position: absolute;
-  top: 7px;
-  left: 4px !important;
-  font-size: 30px;
+  .history-day-page.date-header.item button {
+    position: absolute;
+    top: 7px;
+    left: 4px !important;
+    font-size: 30px;
+  }
+
+.history-day-page.multiple-runs {
+  text-align: center;
+  font-weight: 300;
+  font-size: 1.5em;
+  padding: 10px;
+  background-color: #efefef;
 }
+
+  .history-day-page.multiple-runs ul li {
+    display: inline;
+  }
+
+    .history-day-page.multiple-runs ul li .ion-chevron-left {
+      position: absolute;
+      left: 5px;
+    }
+
+    .history-day-page.multiple-runs ul li .ion-chevron-right {
+      position: absolute;
+      right: 5px;
+    }
 
 p.history-day-page.head {
   font-family: HelveticaNeue-Light;

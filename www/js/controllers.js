@@ -2360,11 +2360,19 @@ angular.module('starter.controllers', ['starter.appServices',
 
 
 .controller('HistoryDayCtrl', function($scope, $rootScope, HistoryAPI){
+  //Can't get pagination to show
+  $scope.slideOptions = {
+    pagination: true,
+    paginationType: 'bullets'
+  };
 
 })
 
 
   .controller('HistoryCtrl', function($scope, $rootScope, $window, HistoryAPI, AuthAPI, $filter) {
+
+    $scope.slideOptions = {pagination: false};
+
 
     $scope.colors = [{
       fillColor: "#00b9be",
