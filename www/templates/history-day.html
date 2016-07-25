@@ -1,82 +1,152 @@
 
-<ion-content class="has-header">
 
-  <div class="item item-button-left item-button-right history-day-page">
-    <button class="button button-icon icon ion-ios-arrow-thin-left"></button>
-    June 4, 2016
-  </div>
 
-  <!-- Space for map image -->
+<!--<ion-header-bar class="bar-stable bar bar-header" align-title="center">-->
+  <!--<button ng-click="$ionicGoBack()" class="button back-button hide buttons  button-clear header-item">-->
+    <!--<i class="icon ion-ios-arrow-back"></i>-->
+    <!--<span class="back-text">-->
+      <!--<span class="default-title">Back</span>-->
+      <!--<span class="previous-title hide"></span>-->
+    <!--</span>-->
+  <!--</button>-->
+  <!--<div class="buttons buttons-left header-item">-->
+    <!--<span class="left-buttons">-->
+      <!--<button class="button button-icon button-clear button-white ion-navicon" menu-toggle="left">-->
+      <!--</button>-->
+    <!--</span>-->
+  <!--</div>-->
+  <!--<div class="title title-center header-item" style="left: 48px; right: 48px;">-->
+    <!--History-->
+  <!--</div>-->
+<!--</ion-header-bar>-->
 
-  <div class="row">
-    <div class="col col-50">
-      <!--Duration-->
-      <p class="history-day-page head">Duration</p>
-      <p class="history-day-page label">1:14:29</p>
-    </div>
-    <div class="history-day-page vertical-line"></div>
-    <div class="col col-50">
-      <!--Distance-->
-      <p class="history-day-page head">Distance</p>
-      <p class="history-day-page label">9.80<span class="history-day-page miles">mi</span> </p>
-    </div>
-  </div>
-  <hr>
-  <div class="row">
-    <div class="col col-50">
-      <!--Pace-->
-      <p class="history-day-page head">Pace</p>
-      <p class="history-day-page label">7:36<span class="history-day-page miles">min/mi</span></p>
-    </div>
-    <div class="history-day-page vertical-line"></div>
-    <div class="col col-50">
-      <!--Funds Raised-->
-      <p class="history-day-page head">Funds Raised</p>
-      <p class="history-day-page label">$4.90</p>
-    </div>
-  </div>
+  <!--<div class="buttons buttons-left header-item">-->
+    <!--<span class="left-buttons">-->
+      <!--<button class="button button-icon button-clear button-white ion-navicon" menu-toggle="left">-->
+      <!--</button>-->
+    <!--</span>-->
+  <!--</div>-->
 
-  <div class="list">
-    <div class="item history-day-page splits">
-      <div class="row">
-        <div class="col-25 history-day-page">Splits</div>
-        <div class="col-25 history-day-page" style="font-size: smaller">Distance</div>
-        <div class="col-25 history-day-page" style="font-size: smaller">Time</div>
-        <div class="col-25 history-day-page" style="font-size: smaller">Pace</div>
-      </div>
-    </div>
-    <div class="item history-day-page splits">
-      <div class="row">
-        <div class="col-25 history-day-page">1</div>
-        <div class="col-25 history-day-page">2.45</div>
-        <div class="col-25 history-day-page">15:23</div>
-        <div class="col-25 history-day-page">7:45</div>
-      </div>
-    </div>
-    <div class="item history-day-page splits">
-      <div class="row">
-        <div class="col-25 history-day-page">2</div>
-        <div class="col-25 history-day-page">2.45</div>
-        <div class="col-25 history-day-page">15:23</div>
-        <div class="col-25 history-day-page">7:45</div>
-      </div>
-    </div>
-    <div class="item history-day-page splits">
-      <div class="row">
-        <div class="col-25 history-day-page">3</div>
-        <div class="col-25 history-day-page">2.45</div>
-        <div class="col-25 history-day-page">15:23</div>
-        <div class="col-25 history-day-page">7:45</div>
-      </div>
-    </div>
-    <div class="item history-day-page splits">
-      <div class="row">
-        <div class="col-25 history-day-page">4</div>
-        <div class="col-25 history-day-page">2.45</div>
-        <div class="col-25 history-day-page">15:23</div>
-        <div class="col-25 history-day-page">7:45</div>
-      </div>
-    </div>
-  </div>
+<!--<ion-nav-bar class=" dark">-->
+  <!--<div class="buttons buttons-left header-item"><span class="left-buttons">-->
+        <!--<button class="button button-icon button-clear button-white ion-navicon" menu-toggle="left">-->
+        <!--</button>-->
+      <!--</span>-->
+  <!--</div>-->
+<!--</ion-nav-bar>-->
 
-</ion-content>
+
+
+
+<ion-view title="History">
+
+  <!--Insert to provide menu if it isnt already there-->
+  <ion-nav-buttons side="primary">
+    <div class="buttons buttons-left header-item">
+      <span class="left-buttons">
+        <button class="button button-icon button-clear button-white ion-navicon" menu-toggle="left">
+        </button>
+      </span>
+    </div>
+  </ion-nav-buttons>
+
+  <ion-content class="history-day-page has-header">
+    <div class="history-day-page date-header item item-button-right item-button-left">
+      <button class="history-day-page date-header button button-icon icon ion-ios-arrow-thin-left"></button>
+      June 4, 2016
+    </div>
+    <div class="history-day-page map" style="height:30vh; width:100%; background-color: grey;">
+      <!-- Space for map image -->
+      MAP GOES HERE
+    </div>
+    <div class="history-day-page multiple-runs">
+      <ul>
+        <li><button class="ion-chevron-left"></button></li>
+        <li ng-click="setMonthArrays(1)">Run 1 of 3</li>
+        <li><button class="ion-chevron-right"></button></li>
+      </ul>
+    </div>
+    <ion-slides on-slide-changed="" options="slideOptions" slider="">
+      <ion-slide-page>
+        <div class="history-day-page">
+          <hr style="margin: 0;">
+          <div class="row">
+            <div class="col col-50">
+              <!--Duration-->
+              <p class="history-day-page head">Duration</p>
+              <p class="history-day-page label">1:14:29</p>
+            </div>
+            <div class="history-day-page vertical-line"></div>
+            <div class="col col-50">
+              <!--Distance-->
+              <p class="history-day-page head">Distance</p>
+              <p class="history-day-page label">9.80<span class="history-day-page miles">mi</span> </p>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col col-50">
+              <!--Pace-->
+              <p class="history-day-page head">Pace</p>
+              <p class="history-day-page label">7:36<span class="history-day-page miles">min/mi</span></p>
+            </div>
+            <div class="history-day-page vertical-line"></div>
+            <div class="col col-50">
+              <!--Funds Raised-->
+              <p class="history-day-page head">Funds Raised</p>
+              <p class="history-day-page label">$4.90</p>
+            </div>
+          </div>
+
+          <hr style="margin:0; height:2px;">
+
+          <div class="list">
+            <div class="item history-day-page splits">
+              <div class="row">
+                <div class="col-25 history-day-page">Splits</div>
+                <div class="col-25 history-day-page" style="font-size: small;">Distance</div>
+                <div class="col-25 history-day-page" style="font-size: small;">Time</div>
+                <div class="col-25 history-day-page" style="font-size: small;">Pace</div>
+              </div>
+            </div>
+            <div class="item history-day-page splits">
+              <div class="row">
+                <div class="col-25 history-day-page">1</div>
+                <div class="col-25 history-day-page">2.45</div>
+                <div class="col-25 history-day-page">15:23</div>
+                <div class="col-25 history-day-page">7:45</div>
+              </div>
+            </div>
+            <div class="item history-day-page splits">
+              <div class="row">
+                <div class="col-25 history-day-page">2</div>
+                <div class="col-25 history-day-page">2.45</div>
+                <div class="col-25 history-day-page">15:23</div>
+                <div class="col-25 history-day-page">7:45</div>
+              </div>
+            </div>
+            <div class="item history-day-page splits">
+              <div class="row">
+                <div class="col-25 history-day-page">3</div>
+                <div class="col-25 history-day-page">2.45</div>
+                <div class="col-25 history-day-page">15:23</div>
+                <div class="col-25 history-day-page">7:45</div>
+              </div>
+            </div>
+            <div class="item history-day-page splits">
+              <div class="row">
+                <div class="col-25 history-day-page">4</div>
+                <div class="col-25 history-day-page">2.45</div>
+                <div class="col-25 history-day-page">15:23</div>
+                <div class="col-25 history-day-page">7:45</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ion-slide-page>
+      <ion-slide-page>
+        Run 2 of 3
+      </ion-slide-page>
+    </ion-slides>
+  </ion-content>
+</ion-view>
