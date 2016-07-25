@@ -30,7 +30,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
     $scope.secondPassword = {
       password:""
-    };a
+    };
 
 
     $scope.verifyPassword = function(){
@@ -2289,110 +2289,47 @@ angular.module('starter.controllers', ['starter.appServices',
 
   .controller('HistoryCtrl', function($scope, $rootScope, HistoryAPI, AuthAPI, $filter) {
 
-    //Angular-nvd3 Chart Configuation
+
+
+
+
+
+
+
+
     $scope.options = {
-        chart: {
-            type: 'historicalBarChart',
-            height: 300,
-            margin : {
-                top: 20,
-                right: 20,
-                bottom: 20,
-                left: 55
-            },
-            x: function(d){return d[0];},
-            y: function(d){return d[1]/100000;},
-            showValues: true,
-            valueFormat: function(d){
-                return d3.format(',.1f')(d);
-            },
-            c0lor: ['#00b9be'],
-            duration: 100,
-            xAxis: {
-                // axisLabel: 'X Axis',
-                tickFormat: function(d) {
-                    return d3.time.format('%m/%d')(new Date(d))
-                },
-                rotateLabels: 0,
-                showMaxMin: false
-            },
-            yAxis: {
-                axisLabel: 'Miles',
-                axisLabelDistance: -10,
-                tickFormat: function(d){
-                    return d3.format(',.1f')(d);
-                }
-            },
-            tooltip: {
-                keyFormatter: function(d) {
-                    return d3.time.format('%x')(new Date(d));
-                }
-            },
-            zoom: {
-                enabled: true,
-                scaleExtent: [1, 10],
-                useFixedDomain: false,
-                useNiceScale: true,
-                horizontalOff: false,
-                verticalOff: true,
-                unzoomEventType: 'dblclick.zoom'
-            }
+      legend: {
+        display: false,
+        position: "left",
+        labels: {
+          fontFamily: "Helvetica Neue",
+          boxWidth: 0
         }
-    };
+      },
 
-    $scope.data = [
-        {
-            "key" : "Quantity" ,
-            "bar": true,
-            "values" : [ [ 1136005200000 , 1271000.0] , [ 1138683600000 , 1271000.0] , [ 1141102800000 , 1271000.0] , [ 1143781200000 , 0] , [ 1146369600000 , 0] , [ 1149048000000 , 0] , [ 1151640000000 , 0] , [ 1154318400000 , 0] , [ 1156996800000 , 0] , [ 1159588800000 , 3899486.0] , [ 1162270800000 , 3899486.0] , [ 1164862800000 , 3899486.0] , [ 1167541200000 , 3564700.0] , [ 1170219600000 , 3564700.0] , [ 1172638800000 , 3564700.0] , [ 1175313600000 , 2648493.0] , [ 1177905600000 , 2648493.0] , [ 1180584000000 , 2648493.0] , [ 1183176000000 , 2522993.0] , [ 1185854400000 , 2522993.0] , [ 1188532800000 , 2522993.0] , [ 1191124800000 , 2906501.0] , [ 1193803200000 , 2906501.0] , [ 1196398800000 , 2906501.0] , [ 1199077200000 , 2206761.0] , [ 1201755600000 , 2206761.0] , [ 1204261200000 , 2206761.0] , [ 1206936000000 , 2287726.0] , [ 1209528000000 , 2287726.0] , [ 1212206400000 , 2287726.0] , [ 1214798400000 , 2732646.0] , [ 1217476800000 , 2732646.0] , [ 1220155200000 , 2732646.0] , [ 1222747200000 , 2599196.0] , [ 1225425600000 , 2599196.0] , [ 1228021200000 , 2599196.0] , [ 1230699600000 , 1924387.0] , [ 1233378000000 , 1924387.0] , [ 1235797200000 , 1924387.0] , [ 1238472000000 , 1756311.0] , [ 1241064000000 , 1756311.0] , [ 1243742400000 , 1756311.0] , [ 1246334400000 , 1743470.0] , [ 1249012800000 , 1743470.0] , [ 1251691200000 , 1743470.0] , [ 1254283200000 , 1519010.0] , [ 1256961600000 , 1519010.0] , [ 1259557200000 , 1519010.0] , [ 1262235600000 , 1591444.0] , [ 1264914000000 , 1591444.0] , [ 1267333200000 , 1591444.0] , [ 1270008000000 , 1543784.0] , [ 1272600000000 , 1543784.0] , [ 1275278400000 , 1543784.0] , [ 1277870400000 , 1309915.0] , [ 1280548800000 , 1309915.0] , [ 1283227200000 , 1309915.0] , [ 1285819200000 , 1331875.0] , [ 1288497600000 , 1331875.0] , [ 1291093200000 , 1331875.0] , [ 1293771600000 , 1331875.0] , [ 1296450000000 , 1154695.0] , [ 1298869200000 , 1154695.0] , [ 1301544000000 , 1194025.0] , [ 1304136000000 , 1194025.0] , [ 1306814400000 , 1194025.0] , [ 1309406400000 , 1194025.0] , [ 1312084800000 , 1194025.0] , [ 1314763200000 , 1244525.0] , [ 1317355200000 , 475000.0] , [ 1320033600000 , 475000.0] , [ 1322629200000 , 475000.0] , [ 1325307600000 , 690033.0] , [ 1327986000000 , 690033.0] , [ 1330491600000 , 690033.0] , [ 1333166400000 , 514733.0] , [ 1335758400000 , 514733.0]]
-        }];
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+            stepSize: 2
+          }
 
+          // scaleLabel: {
+          //   display: true,
+          //   labelString: "Miles",
+          //   fontFamily: "Helvetica Neue",
+          //   fontSize: "16"
+          // }
+        }],
 
-    /*Angular-chart Chart Configuration*/
-    //
-    // $scope.rData = [];
-    //
-    //
-    // $scope.options = {
-    //   legend: {
-    //     display: false,
-    //     position: "absolute",
-    //     bottom: 0,
-    //     labels: {
-    //       fontFamily: "Helvetica Neue",
-    //       boxWidth: 0
-    //     }
-    //   },
-    //
-    //   scales: {
-    //     yAxes: [{
-    //       ticks: {
-    //         beginAtZero: true,
-    //         stepSize: 2,
-    //       },
-    //
-    //       scaleLabel: {
-    //         display: true,
-    //         labelString: "Miles",
-    //         fontFamily: "Helvetica Neue",
-    //         fontSize: "16"
-    //       }
-    //     }],
-    //
-    //     xAxes: [{
-    //       gridLines: {
-    //         display: false
-    //       }
-    //     }]
-    //   }
-    // };
-
-    $scope.onClick = function (bar, evt) {
-      console.log(bar, evt);
-      if (bar[0] != null) {
-        console.log("Bar with value " + $scope.data[0][bar[0]._index] + " clicked");
+        xAxes: [{
+          gridLines: {
+            display: false
+          }
+        }]
       }
     };
+
     /*CHART NOTE
     It is very easy to display the bar chart. The labels array is for the days and the data array is for the miles for those days
     End Chart Configuration
@@ -2413,6 +2350,8 @@ angular.module('starter.controllers', ['starter.appServices',
     //for get runs by month api call
     $scope.distances = [];
     $scope.dates = [];
+    $scope.formattedDatesWithTime = [];
+    $scope.formattedDates = [];
     $scope.seconds = [];
     $scope.minutes = [];
     $scope.paces = [];
@@ -2498,6 +2437,17 @@ angular.module('starter.controllers', ['starter.appServices',
 
           var thisMonthTotalMoneyRaised = $scope.setMonthTotalDistance($scope.moneyRaised);
           console.log('HistoryAPI getByMonth set total money raised value as: ' + thisMonthTotalMoneyRaised);
+
+          console.log('$scope.dates.length: ' + $scope.dates.length);
+          for(var i=0; i< $scope.dates.length; i++){
+            var dateHolder = new Date($scope.dates[i]);
+            console.log('dateHolder: ' + dateHolder);
+            var dateFormatHolder = new Date(dateHolder.toISOString());
+            console.log('dateFormatHolder: ' + dateFormatHolder);
+            $scope.formattedDatesWithTime.push(dateFormatHolder);
+            console.log('formattedDatesWithTime[i]: ' + $scope.formattedDatesWithTime[i]);
+            console.log('formattedDatesWithTime: ' + $scope.formattedDatesWithTime);
+          }
 
 
         })
@@ -2608,6 +2558,59 @@ angular.module('starter.controllers', ['starter.appServices',
         $scope.displayDayThree + ' ' + $scope.displayDayFour + ' ' + $scope.displayDayFive + ' ' +
         $scope.displayDaySix + ' ' + $scope.displayDaySeven);
 
+      $scope.labels = [$scope.displayDayOne,  $scope.displayDayTwo,
+        $scope.displayDayThree, $scope.displayDayFour,
+        $scope.displayDayFive, $scope.displayDaySix, $scope.displayDaySeven];
+
+    }
+
+    $scope.matchWeekValues = function(dayOne, dayTwo, dayThree, dayFour, dayFive, daySix, daySeven){
+      console.log('match week values called with params: ' + dayOne + ' '+ dayTwo+ ' '
+        + dayThree + ' ' + dayFour+ ' ' + dayFive+ ' ' +daySix+ ' ' +daySeven);
+      console.log('$scope.dates: ' +$scope.dates);
+    }
+
+    $scope.removeTimeFromDate = function(date){
+      var tempDate = new Date(date);
+      var splitTempDate = tempDate.toString().split( ' ');
+      console.log('splitTempDate: ' + splitTempDate);
+    }
+
+    $scope.getWeekDatesForValuesMatch = function(startDate){
+      console.log('getWeekDatesForValuesMatch called with param: ' + startDate);
+      var dayOne = new Date(startDate);
+      // dayOne.setDate(dayOne.getDate() - 6);
+      console.log('dayOne date: ' + dayOne);
+      $scope.removeTimeFromDate(dayOne);
+
+      var dayTwo = new Date(dayOne);
+      dayTwo.setDate(dayTwo.getDate() + 1);
+      console.log('dayTwo date: ' + dayTwo);
+
+
+      var dayThree = new Date(dayTwo);
+      dayThree.setDate(dayThree.getDate() + 1);
+      console.log('dayThree date: ' + dayThree);
+
+      var dayFour = new Date(dayThree);
+      dayFour.setDate(dayFour.getDate() + 1);
+      console.log('dayFour date: ' + dayFour);
+
+      var dayFive = new Date(dayFour);
+      dayFive.setDate(dayFive.getDate() + 1);
+      console.log('dayFive date: ' + dayFive);
+
+      var daySix = new Date(dayFive);
+      daySix.setDate(daySix.getDate() + 1);
+      console.log('daySix date: ' + daySix);
+
+      var daySeven = new Date(daySix);
+      daySeven.setDate(daySeven.getDate() + 1);
+      console.log('daySeven date: ' + daySeven);
+
+
+      $scope.matchWeekValues(dayOne, dayTwo, dayThree, dayFour, dayFive, daySix, daySeven);
+
     }
     $scope.getWeekDatesOnLoad = function(){
       var today = Date.now();
@@ -2620,6 +2623,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
       console.log('$scope.end date from getWeekDatesOnLoad: ' + $scope.startDate);
       $scope.parseDisplayDatesForWeek($scope.startDate, $scope.endDate);
+      $scope.getWeekDatesForValuesMatch($scope.startDate);
       return $scope.startDate, $scope.endDate;
     }
 
@@ -2631,6 +2635,15 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.getWeekDatesOnIncrement = function(startDate, endDate){
 
     }
+
+
+
+    $scope.series = ['Series A'];
+
+    $scope.data = [
+      [5, 10, 15, 20]
+    ];
+
 
 
   });
