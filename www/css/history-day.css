@@ -1,6 +1,17 @@
-.item.item-button-left.item-button-right.history-day-page {
+.history-day-page.date-header.item {
   font-family: HelveticaNeue-Light;
   text-align: center;
+  vertical-align: middle;
+  font-size: 1.5em;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.history-day-page.date-header.item button {
+  position: absolute;
+  top: 7px;
+  left: 4px !important;
+  font-size: 30px;
 }
 
 p.history-day-page.head {

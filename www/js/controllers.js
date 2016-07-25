@@ -2409,7 +2409,6 @@ angular.module('starter.controllers', ['starter.appServices',
 
     $scope.selectDayView = function(bar, evt){
       console.log(bar, evt);
-      console.log(bar.data[0].labels);
       $window.location.href = ('#/app/historyDay');
 
     };
