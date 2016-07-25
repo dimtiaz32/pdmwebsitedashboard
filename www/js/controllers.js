@@ -2370,7 +2370,12 @@ angular.module('starter.controllers', ['starter.appServices',
 
 
 
-
+    $scope.colors = [{
+      fillColor: "#00b9be",
+      strokeColor: "#00b9be",
+      highlightFill: "rgb(206, 29, 31)",
+      highlightStroke: "rgb(206, 29, 31)"
+    }];
 
     $scope.options = {
       legend: {
