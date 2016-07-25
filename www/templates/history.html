@@ -48,7 +48,7 @@
 
     <div class="history-page left-bubble-box">
       <p class="history-page label">Money Raised</p>
-      <p class="history-page value">$7.80</p>
+      <p class="history-page value">${{monthTotalMoneyRaised}}</p>
     </div>
 
     <div class="history-page center-bubble-box">
@@ -68,14 +68,14 @@
   <div class="week-buttons-wrapper">
     <div class="row">
       <div class="col col-40" style="text-align: right">
-        <button class="button left-button" ng-click="decrementWeek()"></button>
+        <button class="button left-button" ng-click="getWeekDatesOnDecrement()"></button>
       </div>
       <div class="col col-20 col-center">
         {{displayDayOne}} - {{displayDaySeven}}
 
       </div>
       <div class="history-page col col-40" style="text-align: left">
-        <button class="history-page button right-button"></button>
+        <button class="history-page button right-button" ng-click="getWeekDatesOnIncrement()"></button>
       </div>
     </div>
   </div>
