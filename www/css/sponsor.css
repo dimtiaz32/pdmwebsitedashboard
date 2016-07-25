@@ -1,4 +1,125 @@
-.my-sponsors.item.item-divider {
+.my-sponsors.sponsor-header {
+  background-image: url("../img/account_info-bg.png");
+  background-color: red;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+
+  width: 100%;
+
+
+  text-align: center;
+  display: inline-block;
+}
+
+.my-sponsors.col {
+  background-color: transparent;
+}
+
+.my-sponsors.col.col-50.image {
+  background-image: url("../img/Avatar.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  max-height: 120px;
+  margin: 10px 0;
+}
+
+.my-sponsors.col.col-67 {
+  color: white;
+  font-family: "HelveticaNeue-Light";
+  font-size: 1.5em;
+
+  text-align: right;
+}
+.my-sponsors.col.col-33 {
+  color: white;
+  font-family: "HelveticaNeue-Light";
+  font-size: .65em;
+
+  font-weight: thin;
+  line-height: 100%;
+  text-align: right;
+  padding: 5px 0;
+}
+
+.my-sponsors h2 {
+  font-family: "HelveticaNeue-Light";
+  font-size: 2em;
+
+  color: #fff;
+  text-align: center;
+
+  margin: auto;
+}
+
+.my-pledge .wrapper {
+  width: 100vw;
+  height: 100vh;
+}
+
+.my-sponsors.button.button-small.button-clear.button-PDMLight {
+  color: #00b9be; /*PDMLight color*/
+  font-size: 1em;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.my-sponsors.button.button-clear.button-sponsor-help {
+  color: #00b9be; /*PDMLight color*/
+  font-size: 1em;
+  font-weight: thick;
+  text-align: center;
+  margin: auto;
+}
+
+.my-sponsors hr {
+  background-color: #00b9be;
+  color: #00b9be;
+  padding: none;
+  height: 3px;
+  border: none;
+  margin: 0px;
+}
+
+.my-sponsors h3 {
+  font-family: "HelveticaNeue-Light";
+  font-size: 1.5em;
+  font-weight: thin;
+  text-align: left;
+}
+
+.my-sponsors.col.pledge {
+  text-align: right;
+  line-height: 80%;
+}
+p.pledge.my-sponsors  {
+  font-family: "Helvetica Neue";
+  font-weight: bold;
+  color: black;
+  text-align: right;
+  overflow: visible;
+}
+p.ending-date.my-sponsors  {
+  font-family: "HelveticaNeue-Light";
+  font-weight: thin;
+  font-size: .9em;
+  overflow: visible;
+}
+
+a.my-sponsors.item.item-icon-left {
+  font-family: "HelveticaNeue-Light";
+  height: 100%;
+}
+
+.my-sponsors.cell-vertical-center-text {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+
+/*.my-sponsors.item.item-divider {
   text-align: center;
   font-size: x-large;
   font-weight: normal;
@@ -29,4 +150,4 @@
   background-image:url('../img/bg.jpg');
   background-repeat:no-repeat;
   background-size: 100%;
-}
+}*/

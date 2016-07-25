@@ -446,8 +446,10 @@ angular.module('starter.controllers', ['starter.appServices',
       lapUI.style.width = '275px';
       lapUI.style.height = '50px';
       lapUI.style.zIndex = '10';
-      lapUI.style.marginBottom = '25px';
+      lapUI.style.marginBottom = '20px';
       lapUI.style.textAlign = 'center';
+      lapUI.style.position = 'relative';
+      lapUI.style.bottom = '5px';
       lapUI.title = 'Lap';
       buttonDiv.appendChild(lapUI);
 
@@ -459,6 +461,7 @@ angular.module('starter.controllers', ['starter.appServices',
       lapText.style.lineWidth = '556px';
       lapText.style.paddingLefft = '5px';
       lapText.style.paddingRight = '5px';
+
       lapText.innerHTML = 'Lap';
       lapUI.appendChild(lapText);
 
@@ -492,6 +495,8 @@ angular.module('starter.controllers', ['starter.appServices',
       pauseUI.style.marginBottom = '25px';
       pauseUI.style.textAlign = 'center';
       pauseUI.style.margin = 'inherit auto';
+      pauseUI.style.position = 'relative';
+      pauseUI.style.bottom = '5px';
       pauseUI.title = 'Pause';
       buttonDiv.appendChild(pauseUI);
 
@@ -542,8 +547,10 @@ angular.module('starter.controllers', ['starter.appServices',
       resumeUI.style.width = '275px';
       resumeUI.style.bottom = '25px';
       resumeUI.style.zIndex = '10';
-      resumeUI.style.marginBottom = '25px';
+      resumeUI.style.marginBottom = '20px';
       resumeUI.style.textAlign = 'center';
+      resumeUI.style.position = 'relative';
+      resumeUI.style.bottom = '5px';
       resumeUI.title = 'Lap';
       pausedDiv.appendChild(resumeUI);
 
@@ -589,6 +596,8 @@ angular.module('starter.controllers', ['starter.appServices',
       stopUI.style.zIndex = '10';
       stopUI.style.marginBottom = '25px';
       stopUI.style.textAlign = 'center';
+      stopUI.style.position = 'relative';
+      stopUI.style.bottom = '5px';
       stopUI.title = 'Lap';
       pausedDiv.appendChild(stopUI);
 
@@ -625,7 +634,7 @@ angular.module('starter.controllers', ['starter.appServices',
             { text: 'Cancel' },
             {
               text: '<b>Stop Run</b>',
-              type: 'button-positive',
+              type: 'stop-popup button-positive',
               onTap: function(e) {
                 console.log('%cstop activated', 'color: Teal');
                 return $scope.stopRun();
@@ -761,6 +770,9 @@ angular.module('starter.controllers', ['starter.appServices',
       startUI.style.textAlign = 'center';
       startUI.title = 'Start dreamrun';
       startUI.style.margin = 'inherit auto';
+      startUI.style.position = 'relative';
+      startUI.style.bottom = '5px';
+
       startDiv.appendChild(startUI);
 
       var startText = document.createElement('div');
@@ -779,6 +791,8 @@ angular.module('starter.controllers', ['starter.appServices',
       }
 
       startUI.addEventListener('click', function(){
+
+
 
         $scope.isRunning = !$scope.isRunning;
 
@@ -819,6 +833,9 @@ angular.module('starter.controllers', ['starter.appServices',
       summaryButtonUI.style.marginBottom = '25px';
       summaryButtonUI.style.textAlign = 'center';
       summaryButtonUI.title = 'Pause';
+      summaryButtonUI.style.position = 'relative';
+      summaryButtonUI.style.bottom = '5px';
+
       summaryButtonDiv.appendChild(summaryButtonUI);
 
       var summaryButtonText = document.createElement('div');
@@ -840,6 +857,47 @@ angular.module('starter.controllers', ['starter.appServices',
       summaryButtonUI.addEventListener('click', function(){
         console.log('run summary button clicked');
       });
+    }
+
+    //Center-Map Button
+    $scope.locateControl = function(locateDiv, map){
+
+      var locateUI = document.createElement('img');
+      locateUI.src = "img/locate-me-icon.png";
+      locateUI.style.backgroundColor = '#fff';
+      locateUI.style.color = '#808080';
+      locateUI.style.borderRadius = '50%';
+      locateUI.style.cursor = 'pointer';
+      locateUI.style.width = '45px';
+      locateUI.style.height = '45px';
+      locateUI.style.position = 'absolute';
+      locateUI.style.bottom = '100px';
+      locateUI.style.right = '0';
+      locateUI.style.padding = '10px';
+      locateUI.style.boxShadow = '0 2px 6px rgba(0, 0, 0, .3)';
+      locateDiv.appendChild(locateUI);
+
+      $scope.removeLocateUI = function(){
+        locateDiv.removeChild(locateUI);
+      }
+
+      $scope.addOriginalPositionLocateUI = function(){
+        locateUI.style.position = 'absolute';
+        locateUI.style.bottom = '90px';
+        locateUI.style.left = '72vw';
+        locateDiv.appendChild(locateUI);
+      }
+
+      $scope.addRepositionedLocateUI = function(){
+        locateUI.style.position = 'absolute';
+        locateUI.style.bottom = '170px';
+        locateUI.style.left = '72vw';
+        locateDiv.appendChild(locateUI);
+      }
+
+      locateUI.addEventListener('click', function(){
+        $scope.centerOnMe()
+      })
     }
 
     // //run functions
@@ -1351,6 +1409,15 @@ angular.module('starter.controllers', ['starter.appServices',
       startControlDiv.index = 1;
       map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(startControlDiv);
 
+
+
+      var locateControlDiv = document.createElement('div');
+      var locateControl = $scope.locateControl(locateControlDiv, map);
+
+      locateControlDiv.index = 1;
+      map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(locateControlDiv);
+
+
     };
 
     $scope.startRun  = function(){
@@ -1359,7 +1426,8 @@ angular.module('starter.controllers', ['starter.appServices',
 
       console.log("%cAttempting to remove start button...", 'color: HotPink');
       $scope.removeStartUI();
-
+      $scope.removeLocateUI();
+      $scope.addRepositionedLocateUI();
 
       var buttonControlDiv = document.createElement('div');
       var buttonControl = $scope.runButtonControl(buttonControlDiv, $scope.map);
@@ -1580,6 +1648,8 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.postRun();
       $scope.removeResume();
       $scope.removeStop();
+      $scope.removeLocateUI();
+
       console.log('%c$scope.stopTimer() called', 'color: RoyalBlue');
       $scope.stopTimer();
       $scope.stopLapTimer();
@@ -1587,11 +1657,16 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.stopLapDistance();
       $scope.stopPaceCalculator();
       $scope.stopLapPaceCalculator();
+
+      $scope.addOriginalPositionLocateUI();
+
       var runSummaryButtonControlDiv = document.createElement('div');
       var runSummaryButtonControl = $scope.summaryButtonControl(runSummaryButtonControlDiv, $scope.map);
 
       runSummaryButtonControlDiv.index = 1;
       $scope.map.controls[google.maps.ControlPosition.BOTTOM].push(runSummaryButtonControlDiv);
+
+
     }
 
 
