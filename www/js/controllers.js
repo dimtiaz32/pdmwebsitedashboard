@@ -1790,7 +1790,11 @@ angular.module('starter.controllers', ['starter.appServices',
 
   })
 
-  .controller('AppCtrl', function($rootScope, $scope, $filter, $ionicModal, $timeout, DonationAPI, CharityAPI) {
+  .controller('AppCtrl', function($rootScope, $scope, $filter, $ionicModal, $timeout, DonationAPI, CharityAPI, $ionicNavBarDelegate) {
+
+
+    $ionicNavBarDelegate.showBackButton(false)
+
     $scope.moneyRaised = 0;
 
     $scope.fetchMyPledges = function() {
