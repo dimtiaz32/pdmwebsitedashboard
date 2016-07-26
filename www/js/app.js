@@ -197,7 +197,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
         views: {
           'menuContent':{
             templateUrl: 'templates/history-day.html',
-            controller: 'HistoryCtrl'
+            controller: 'HistoryDayCtrl'
           }
         }
       })

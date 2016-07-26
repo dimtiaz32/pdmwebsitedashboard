@@ -2370,6 +2370,13 @@ angular.module('starter.controllers', ['starter.appServices',
     paginationType: 'bullets'
   };
 
+  $rootScope.setValuesForHistoryDayView = function(distance, duration, pace, moneyRaised){
+    $scope.dayDisplayDistance = distance;
+    $scope.dayDisplayDuration = duration;
+    $scope.dayDisplayPace = pace;
+    $scope.dayDisplayMoneyRaised = moneyRaised;
+  }
+
 })
 
 
@@ -2421,9 +2428,8 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.onClick = function(bar, evt){
       console.log(bar, evt);
       console.log('bar['+0+']: ' + [bar[0].label]);
-      $scope.$broadcast('getDayHistoryValues');
       $scope.matchLabelToDay([bar[0].label]);
-      // $window.location.href = ('#/app/historyDay');
+
 
     };
 
@@ -2822,25 +2828,6 @@ angular.module('starter.controllers', ['starter.appServices',
       for(var i=0; i< $scope.dates.length; i++){
 
         console.log('matchWeekValues: $scope.formattedDates[i]: ' + $scope.formattedDates[i]);
-        //
-        // //step 1:
-        // var tempdatesArrayFormatter =$scope.dates[i];
-        // var tempdatesArrayFormatterSplit = tempdatesArrayFormatter.toString().split('T');
-        // console.log('matchWeekValues: tempdatesArrayFormatter: '  + tempdatesArrayFormatterSplit);
-        // var datesArrayFormatter = tempdatesArrayFormatterSplit[0];
-        // console.log('matchWeekValues: step 1: datesArrayFormatter init: ' + datesArrayFormatter);
-        //
-        // // //step 2:
-        // // datesArrayFormatter.setDate($scope.dates[i]);
-        // // console.log('matchWeekValues: step 2: datesArrayFormatter set, get Date: ' + datesArrayFormatter);
-
-
-        // datesArrayFormatter.setDate(datesArrayFormatter.getDate());
-        // console.log('datesArrayFormatter: ' + datesArrayFormatter);
-        // datesArrayFormatter = datesArrayFormatter.toISOString();
-        // console.log('datesArrayFormatter: ' + datesArrayFormatter);
-        // datesArrayFormatter = $scope.parseJSONDatesForMatch($scope.dates[i]);
-        // console.log('matchWeekValues: datesArrayFormatter: ' + datesArrayFormatter);
 
         if(dayOne == $scope.formattedDates[i]){
           console.log('dayOne matched with datesArrayFormatter at day: ' + dayOne + ' ' + $scope.formattedDates[i]);
@@ -2921,33 +2908,57 @@ angular.module('starter.controllers', ['starter.appServices',
       }
     }
 
+
+    //sets values for day to pass to historyDayCtrl
     $scope.setDayValues = function(date){
       console.log('Entered setDayValues function with date value: ' + date);
-      console.log('setDayValues: $scope.dates: ' + $scope.dates);
+      console.log('setDayValues: $scope.formattedDates: ' + $scope.formattedDates);
+      console.log('setDayValues: $scope.formattedDates.length: ' + $scope.formattedDates.length);
 
-      var counter = 0;
+      // var counter = 0;
 
-      for(var i =0; i<$scope.dates.length; i++){
-        var datesArrayFormatter = new Date($scope.dates[i]);
-        console.log('datesArrayFormatter: ' + datesArrayFormatter);
-        datesArrayFormatter = $scope.parseDatesForMatch(datesArrayFormatter);
-        console.log('setDayValues: datesArrayFormatter: ' + datesArrayFormatter);
-        if(date == datesArrayFormatter){
-          console.log('setDayValues: Date and datesArrayFormatter matched with values of :' + date + ' ' + datesArrayFormatter);
-          console.log('setDayValues: number of runs on ' + date + ': ' + counter);
+      for(var i =0; i<$scope.formattedDates.length; i++){
+
+        if(date == $scope.formattedDates[i]){
+          // console.log('setDayValues: Date and datesArrayFormatter matched with values of :' + date + ' ' + datesArrayFormatter);
+          // console.log('setDayValues: number of runs on ' + date + ': ' + counter);
           // counter++;
+
+          console.log('setDayValues: Date and $scope.formatteddates[i] matched with values: ' + $scope.formattedDates[i] + ' ' + date);
           console.log('setDayValues: $scope.distances[i]: ' + $scope.distances[i]);
           $scope.thisDateRunDistance = $scope.distances[i];
+          console.log('setDayValues: $scope.thisRunDistance: ' + $scope.thisDateRunDistance);
           // var thisRunDateCoords = [];
+
+
           console.log('setDayValues: $scope.minutes[i]: ' + $scope.minutes[i] + ' $scope.seconds[i]' + $scope.seconds[i]);
-          $scope.thisDateRunDuration = $scope.minutes[i] + ':' + $scope.seconds[i];
+          if($scope.seconds[i] < 10){
+            $scope.thisDateRunDuration = $scope.minutes[i] + ':0' + $scope.seconds[i];
+            console.log('setDayValues: $scope.thisDateRunDuration: ' + $scope.thisDateRunDuration);
+          } else {
+            $scope.thisDateRunDuration = $scope.minutes[i] + ':' + $scope.seconds[i];
+            console.log('setDayValues: $scope.thisDateRunDuration: ' + $scope.thisDateRunDuration);
+          }
 
 
+
+
+          console.log('setDayValues: $scope.pace: ' + $scope.paces[i]);
+          $scope.thisDateRunPace = $scope.paces[i];
+          console.log('setDayValues: $scope.thisDateRunPace: ' + $scope.thisDateRunPace);
+
+          console.log('setDayValues: $scope.moneyRaised: ' + $scope.moneyRaised[i]);
+          $scope.thisDateRunMoneyRaised = $scope.moneyRaised[i];
+          console.log('setDayValues: $scope.thisDateRunMoneyRaised: ' + $scope.thisDateRunMoneyRaised);
+          $window.location.href = ('#/app/historyDay');
+          $rootScope.setValuesForHistoryDayView($scope.thisDateRunDistance, $scope.thisDateRunDuration,
+                                                $scope.thisDateRunPace, $scope.thisDateRunMoneyRaised);
 
         }
 
 
       }
+
     }
 
     $scope.getWeekDatesForValuesMatch = function(startDate){
@@ -3025,54 +3036,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
     }
 
-    $scope.matchLabelToDay = function(label){
-      console.log('matchLabelToDay function called with params: ' + label);
-      console.log('Date holders from matchLabel to date= ' +    $scope.dayOneDateNonDisplayHolder +
-        $scope.dayTwoDateNonDisplayHolder +
-        $scope.dayThreeDateNonDisplayHolder +
-        $scope.dayFourDateNonDisplayHolder +
-        $scope.dayFiveDateNonDisplayHolder +
-        $scope.daySixDateNonDisplayHolder +
-        $scope.daySevenDateNonDisplayHolder);
 
-      console.log('displayLabels from matchLabel: ' + $scope.displayDayOne + ' ' + $scope.displayDayTwo + ' ' +
-        $scope.displayDayThree + ' ' + $scope.displayDayFour + ' ' + $scope.displayDayFive + ' ' +
-        $scope.displayDaySix + ' ' + $scope.displayDaySeven);
-
-        if(label == $scope.displayDayOne){
-          console.log('Label matched day one display with values: ' + label + ' ' + $scope.displayDayOne);
-          $scope.setDayValues($scope.dayOneDateNonDisplayHolder);
-
-        }
-        else if(label == $scope.displayDayTwo){
-          console.log('Label matched day two display with values: ' + label + ' ' + $scope.displayDayTwo);
-          $scope.setDayValues($scope.dayTwoDateNonDisplayHolder);
-        }
-        else if(label == $scope.displayDayThree){
-          console.log('Label matched day three display with values: ' + label + ' ' + $scope.displayDayThree);
-          $scope.setDayValues($scope.dayThreeDateNonDisplayHolder);
-        }
-        else if(label == $scope.displayDayFour){
-          console.log('Label matched day four display with values: ' + label + ' ' + $scope.displayDayFour);
-          $scope.setDayValues($scope.dayFourDateNonDisplayHolder);
-        }
-        else if(label == $scope.displayDayFive){
-          console.log('Label matched day five display with values: ' + label + ' ' + $scope.displayDayFive);
-          $scope.setDayValues($scope.dayFiveDateNonDisplayHolder);
-        }
-        else if(label == $scope.displayDaySix){
-          console.log('Label matched day six display with values: ' + label + ' ' + $scope.displayDaySix);
-          $scope.setDayValues($scope.daySixDateNonDisplayHolder);
-        }
-        else if(label == $scope.displayDaySeven){
-          console.log('Label matched day seven display with values: ' + label + ' ' + $scope.displayDaySeven);
-          $scope.setDayValues($scope.daySevenDateNonDisplayHolder);
-        } else {
-          console.log('Error: Could not match dates');
-        }
-
-
-    }
 
 
     $scope.getWeekDatesOnLoad = function(){
@@ -3132,6 +3096,55 @@ angular.module('starter.controllers', ['starter.appServices',
     }
 
 
+    $scope.matchLabelToDay = function(label){
+      console.log('matchLabelToDay function called with params: ' + label);
+      console.log('Date holders from matchLabel to date= ' +    $scope.dayOneDateNonDisplayHolder +
+        $scope.dayTwoDateNonDisplayHolder +
+        $scope.dayThreeDateNonDisplayHolder +
+        $scope.dayFourDateNonDisplayHolder +
+        $scope.dayFiveDateNonDisplayHolder +
+        $scope.daySixDateNonDisplayHolder +
+        $scope.daySevenDateNonDisplayHolder);
 
-    $scope.series = ['Series A'];
+      console.log('displayLabels from matchLabel: ' + $scope.displayDayOne + ' ' + $scope.displayDayTwo + ' ' +
+        $scope.displayDayThree + ' ' + $scope.displayDayFour + ' ' + $scope.displayDayFive + ' ' +
+        $scope.displayDaySix + ' ' + $scope.displayDaySeven);
+
+      if(label == $scope.displayDayOne){
+        console.log('Label matched day one display with values: ' + label + ' ' + $scope.displayDayOne);
+        $scope.setDayValues($scope.dayOneDateNonDisplayHolder);
+
+      }
+      else if(label == $scope.displayDayTwo){
+        console.log('Label matched day two display with values: ' + label + ' ' + $scope.displayDayTwo);
+        $scope.setDayValues($scope.dayTwoDateNonDisplayHolder);
+      }
+      else if(label == $scope.displayDayThree){
+        console.log('Label matched day three display with values: ' + label + ' ' + $scope.displayDayThree);
+        $scope.setDayValues($scope.dayThreeDateNonDisplayHolder);
+      }
+      else if(label == $scope.displayDayFour){
+        console.log('Label matched day four display with values: ' + label + ' ' + $scope.displayDayFour);
+        $scope.setDayValues($scope.dayFourDateNonDisplayHolder);
+      }
+      else if(label == $scope.displayDayFive){
+        console.log('Label matched day five display with values: ' + label + ' ' + $scope.displayDayFive);
+        $scope.setDayValues($scope.dayFiveDateNonDisplayHolder);
+      }
+      else if(label == $scope.displayDaySix){
+        console.log('Label matched day six display with values: ' + label + ' ' + $scope.displayDaySix);
+        $scope.setDayValues($scope.daySixDateNonDisplayHolder);
+      }
+      else if(label == $scope.displayDaySeven){
+        console.log('Label matched day seven display with values: ' + label + ' ' + $scope.displayDaySeven);
+        $scope.setDayValues($scope.daySevenDateNonDisplayHolder);
+      } else {
+        console.log('Error: Could not match dates');
+      }
+
+
+    }
+
+
+    // $scope.series = ['Series A'];
   });
