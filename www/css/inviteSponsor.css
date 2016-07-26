@@ -4,11 +4,16 @@
   font-weight: 200;
   font-size: 2em;
   text-align: center;
-  padding: 4% 2% 2% 2%;
+  padding: 2% 2% 2% 2%;
 }
 
+  .invite-sponsor.header .heading .ion-close-round{
+    position: absolute;
+    left: 10px;
+  }
+
 h2.invite-sponsor {
-  padding: 3% 5% 0 5%;
+  padding: 3% 5% 1% 5%;
   margin: 0;
   /*padding-top: 2%;
   margin-left: 2pt;
@@ -64,5 +69,6 @@ ul.invite-sponsor li {
   top: 10px;
   left: 5%;
   width: 5%;
-  height: auto;
+  height: 50px;
+  width: auto;
 }

@@ -208,8 +208,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
         url: '/historyDay',
         views: {
           'menuContent':{
-            templateUrl: 'templates/history-day.html'
-            // controller: 'HistoryDayCtrl'
+            templateUrl: 'templates/history-day.html',
+            controller: 'HistoryDayCtrl'
           }
         }
       })
