@@ -166,8 +166,8 @@ h2.run-page {
   padding-top: 0;
 }
 
-.run-page.detail {
-  transition: 0.1s all linear;
+.run-page.detail.not-running {
+  transition: 5s all linear;
 }
 
 .run-page.overlay {
