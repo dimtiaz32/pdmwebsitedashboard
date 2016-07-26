@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives', 'stripe', 'ngOpenFB', 'angular-storage', 'chart.js','googleplus'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives', 'stripe', 'ngOpenFB', 'angular-storage', 'chart.js','googleplus','ngCookies'])
 
   .run(function($ionicPlatform, ngFB) {
 
@@ -32,7 +32,19 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
            clientId: '69391540233-4b06qqevu0hc43puqta6ded42lbo1s0v.apps.googleusercontent.com',
            apiKey: 'AIzaSyBPjBC7a_MQp40VadwHeInENsCKnDqxdsw'
          });
-    }])
+  }])
+
+  .config(['$httpProvider', function($httpProvider) {
+      $httpProvider.interceptors.push(function($q, $cookies) {
+          return {
+           'request': function(config) {
+                config.headers['authorization'] = $cookies.get('token');
+                console.log("interceptor called 1: " + config.headers['Token']);
+                return config;
+            }
+          };
+        });
+  }])
 
   .config(function($stateProvider, $urlRouterProvider) {
     $stateProvider

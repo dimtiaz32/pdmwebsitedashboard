@@ -29,19 +29,6 @@ angular.module('starter.charityServices', ['ionic'])
     }, 1999);
   };
 
-  // $rootScope.doRefresh = function(menu){
-  //   if(menu == 1){
-  //
-  //   }
-  // }
-  $rootScope.setToken = function(token){
-    return $window.localStorage.token = token;
-  };
-
-  $rootScope.getToken = function(){
-    return $window.localStorage.token;
-  };
-
   $rootScope.setSelectedCharityName = function(charityName){
     return $window.localStorage.charityName = charityName;
   };
