@@ -80,7 +80,7 @@
             <div class="col col-50">
               <!--Distance-->
               <p class="history-day-page head">Distance</p>
-              <p class="history-day-page label">{{dayDisplayDistance}}<span class="history-day-page miles">mi</span> </p>
+              <p class="history-day-page label">{{dayDisplayDistance.toFixed(2)}}<span class="history-day-page miles">mi</span> </p>
             </div>
           </div>
           <hr>
@@ -94,7 +94,7 @@
             <div class="col col-50">
               <!--Funds Raised-->
               <p class="history-day-page head">Funds Raised</p>
-              <p class="history-day-page label">${{dayDisplayMoneyRaised}}</p>
+              <p class="history-day-page label">${{dayDisplayMoneyRaised.toFixed(2)}}</p>
             </div>
           </div>
 

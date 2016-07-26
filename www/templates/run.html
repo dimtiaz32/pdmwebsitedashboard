@@ -65,7 +65,7 @@
           <div class="run-page verticalLine"></div>
           <div class="run-page col col-50">
             <p class="run-page head">Funds Raised</p>
-            <p class="run-page label">${{moneyCalc}}</p>
+            <p class="run-page label">${{moneyCalc.toFixed(2)}}</p>
           </div>
         </div>
 
@@ -80,7 +80,7 @@
             <div class="run-page verticalLine"></div>
             <div class="run-page col col-50">
               <p class="run-page head">Lap {{lapNumber}} Distance</p>
-              <p class="run-page label">{{lapDistance}}<span class="units">mi</span></p>
+              <p class="run-page label">{{lapDistance.toFixed(2)}}<span class="units">mi</span></p>
             </div>
           </div>
         </div>
