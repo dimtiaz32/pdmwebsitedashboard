@@ -2013,7 +2013,7 @@ angular.module('starter.controllers', ['starter.appServices',
     };
   })
 
-  .controller('MyDonationCtrl',function($rootScope, $scope, $filter, $window, $ionicModal, $cordovaSms, $cordovaSocialSharing,DonationAPI){
+  .controller('MyDonationCtrl',function($rootScope, $scope, $filter, $window, $ionicModal, $cordovaSms, $cordovaSocialSharing,DonationAPI,AuthAPI){
 
     $scope.managePledges = function() {
       $rootScope.$broadcast('fetchMyPledges');
