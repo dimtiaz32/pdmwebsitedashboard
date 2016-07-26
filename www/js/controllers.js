@@ -221,6 +221,7 @@ angular.module('starter.controllers', ['starter.appServices',
           console.log('User id local storage set: ' + $rootScope.getUserId());
           $rootScope.setToken(data.token);
           console.log("token: " + data.token);
+          $rootScope.setAvatar(data.user.avatar);
 
           // console.log(data.user.charityName);
           if(data.user.charityName == undefined || data.user.charityName == ""){
@@ -262,7 +263,8 @@ angular.module('starter.controllers', ['starter.appServices',
               console.log('User id: ' + $rootScope.getUserId());
               $rootScope.setToken(data.token);
               $window.location.href=('#/app/charities');
-
+              $rootScope.setName(data.user.facebook.firstname + ' ' + data.user.facebook.lastname);
+              $rootScope.setAvatar(data.user.facebook.avatar);
             }).error(function(error){
               console.log("AuthAPI.signinByFB failed:" + error);
               $rootScope.hide();
@@ -292,6 +294,8 @@ angular.module('starter.controllers', ['starter.appServices',
                 console.log('User email: ' + $rootScope.getEmail());
                 console.log('User id: ' + $rootScope.getUserId());
                 $rootScope.setToken(data.token);
+                $rootScope.setName(data.user.google.firstname + ' ' + data.user.google.lastname);
+                $rootScope.setAvatar(data.user.google.avatar);
                 $window.location.href=('#/app/charities');
               }).error(function(error){
                 console.log("AuthAPI.signinByFB failed:" + error);
@@ -2025,6 +2029,9 @@ angular.module('starter.controllers', ['starter.appServices',
 
 
   .controller('MyDonationCtrl',function($rootScope, $scope, $filter, $window, $ionicModal, $cordovaSms, $cordovaSocialSharing,DonationAPI,AuthAPI){
+
+    $scope.username = $rootScope.getName();
+    $scope.avatar = $rootScope.getAvatar();
 
     $scope.managePledges = function() {
       $rootScope.$broadcast('fetchMyPledges');

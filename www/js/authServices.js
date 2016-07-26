@@ -108,12 +108,20 @@ angular.module('starter.authServices', ['ngCookies'])
   };
 
   $rootScope.setUserId = function(userId){
-    return $window.localStorage.userId = userId;
+    $window.localStorage.userId = userId;
   };
 
   $rootScope.getUserId = function(){
     return $window.localStorage.userId;
   };
+
+  $rootScope.setAvatar = function(avatar) {
+    $window.localStorage.avatar = avatar;
+  }
+
+  $rootScope.getAvatar = function() {
+    return $window.localStorage.avatar;
+  }
 
   // $rootScope.setCharity = function(charity){
   //   return $window.localStorage.selectedCharity = charity;
