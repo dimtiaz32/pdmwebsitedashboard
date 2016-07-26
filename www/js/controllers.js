@@ -2444,7 +2444,7 @@ angular.module('starter.controllers', ['starter.appServices',
     //for get runs by month api call
     $scope.distances = [];
     $scope.dates = [];
-    $scope.formattedDatesWithTime = [];
+    // $scope.formattedDatesWithTime = [];
     $scope.formattedDates = [];
     $scope.seconds = [];
     $scope.minutes = [];
@@ -2535,13 +2535,33 @@ angular.module('starter.controllers', ['starter.appServices',
             // $scope.formattedDatesWithTime.push(dateFormatHolder);
             // console.log('formattedDatesWithTime[i]: ' + $scope.formattedDatesWithTime[i]);
             // console.log('formattedDatesWithTime: ' + $scope.formattedDatesWithTime);
+            var formattedDatesWithTime = $scope.dates[i];
+            console.log('formattedDatesWithTime: ' + formattedDatesWithTime);
+            var formattedSplitDate1 = formattedDatesWithTime.toString().split('T');
+            console.log('formattedSplitDate: ' + formattedSplitDate1);
+            var formattedSplitDate2 = formattedSplitDate1.toString().split('-');
+            console.log('formattedSplitDate2: ' + formattedSplitDate2);
 
+            var tempFormattedDate = formattedSplitDate2[2].toString().split(',');
+            var formattedDate = tempFormattedDate[0];
+            var tempFormattedMonth = formattedSplitDate2[1];
+            var formattedYear = formattedSplitDate2[0];
+            var formattedTime = tempFormattedDate[1];
+            var formattedMonth = $scope.monthNumberToString(tempFormattedMonth);
+            console.log('formatting of date returns: formattedDate: ' + formattedDate +
+              ' formattedYear: ' +formattedYear   + 'tempFormattedMonth: ' + tempFormattedMonth
+              + 'formattedMonth: ' + formattedMonth + 'formattedTime: ' + formattedTime);
 
-
+            var finalFormattedDate = formattedMonth + ' ' +formattedDate + ' ' + formattedYear;
+            console.log('finalFormattedDate: ' + finalFormattedDate);
+            $scope.formattedDates.push(finalFormattedDate);
+            console.log('$scope.formattedDates: ' + $scope.formattedDates);
           }
 
           console.log('Today value from inside HistoryAPI call: ' + today);
           $scope.getWeekDatesOnLoad();
+
+
 
           console.log('$scope.distanceslength: ' + $scope.distances.length + '$scope.dates.length: ' + $scope.dates.length);
 
@@ -2555,6 +2575,9 @@ angular.module('starter.controllers', ['starter.appServices',
           console.log('HistoryAPI getByMonth set total money raised value as: ' + thisMonthTotalMoneyRaised);
 
           console.log('$scope.dates.length: ' + $scope.dates.length);
+
+
+
           // for(var i=0; i< $scope.dates.length; i++){
           //   var dateHolder = new Date($scope.dates[i]);
           //   console.log('dateHolder: ' + dateHolder);
@@ -2578,6 +2601,62 @@ angular.module('starter.controllers', ['starter.appServices',
     //week stuff
     $scope.startDate;
     $scope.endDate;
+
+    $scope.monthNumberToString = function(month){
+      switch(month){
+        case "01":
+          monthString = "Jan";
+          return monthString;
+          break;
+        case "02":
+          monthString = "Feb";
+          return monthString;
+          break;
+        case "03":
+          monthString = "Mar";
+          return monthString;
+          break;
+        case "04":
+          monthString = "Apr";
+          return monthString;
+          break;
+        case "05":
+          monthString = "May";
+          return monthString;
+          break;
+        case "06":
+          monthString = "Jun";
+          return monthString;
+          break;
+        case "07":
+          monthString = "Jul";
+          return monthString;
+          break;
+        case "08":
+          monthString = "Aug";
+          return monthString;
+          break;
+        case "09":
+          monthString = "Sep";
+          return monthString;
+          break;
+        case "10":
+          monthString = "Oct";
+          return monthString;
+          break;
+        case "11":
+          monthString = "Nov";
+          return monthString;
+          break;
+        case "12":
+          monthString = "Dec";
+          return monthString;
+          break;
+        default:
+          console.log('could not match month number' + month + ' to string')
+          break;
+      }
+    };
 
     $scope.monthToNumber = function(month){
       switch(month){
@@ -2728,8 +2807,10 @@ angular.module('starter.controllers', ['starter.appServices',
         + dayThree + ' ' + dayFour+ ' ' + dayFive+ ' ' +daySix+ ' day seven: ' +daySeven);
       console.log('matchWeekValues: $scope.dates: ' +$scope.dates);
       console.log('matchWeekValues: $scope.dates.length: ' + $scope.dates.length);
-      console.log('matchWeekValues: $scope.formattedDates: ' +$scope.formattedDatesWithTime);
-      console.log('matchWeekValues: $scope.formattedDates.length: ' + $scope.formattedDatesWithTime.length);
+      console.log('matchWeekValues: $scope.formattedDates: ' +$scope.formattedDates);
+      console.log('matchWeekValues: $scope.formattedDates.length: ' + $scope.formattedDates.length);
+
+      console.log('matchWeekValues: $scope.fo')
 
       var tempDayOneHolder = 0;
       var tempDayTwoHolder = 0;
@@ -2740,7 +2821,7 @@ angular.module('starter.controllers', ['starter.appServices',
       var tempDaySevenHolder = 0;
       for(var i=0; i< $scope.dates.length; i++){
 
-        console.log('matchWeekValues: $scope.formattedDatesWithTime[i]: ' + $scope.dates[i]);
+        console.log('matchWeekValues: $scope.formattedDates[i]: ' + $scope.formattedDates[i]);
         //
         // //step 1:
         // var tempdatesArrayFormatter =$scope.dates[i];
@@ -2753,10 +2834,7 @@ angular.module('starter.controllers', ['starter.appServices',
         // // datesArrayFormatter.setDate($scope.dates[i]);
         // // console.log('matchWeekValues: step 2: datesArrayFormatter set, get Date: ' + datesArrayFormatter);
 
-        var datesArrayFormatter = new Date($scope.dates[i]);
-        console.log('matchWeekValues: datesArrayFormatter: ' + datesArrayFormatter);
 
-        datesArrayFormatter = $scope.parseDatesForMatch(datesArrayFormatter);
         // datesArrayFormatter.setDate(datesArrayFormatter.getDate());
         // console.log('datesArrayFormatter: ' + datesArrayFormatter);
         // datesArrayFormatter = datesArrayFormatter.toISOString();
@@ -2764,59 +2842,59 @@ angular.module('starter.controllers', ['starter.appServices',
         // datesArrayFormatter = $scope.parseJSONDatesForMatch($scope.dates[i]);
         // console.log('matchWeekValues: datesArrayFormatter: ' + datesArrayFormatter);
 
-        if(dayOne == datesArrayFormatter){
-          console.log('dayOne matched with datesArrayFormatter at day: ' + dayOne + ' ' + datesArrayFormatter);
+        if(dayOne == $scope.formattedDates[i]){
+          console.log('dayOne matched with datesArrayFormatter at day: ' + dayOne + ' ' + $scope.formattedDates[i]);
           tempDayOneHolder = $scope.distances[i];
           console.log('$scope.distances[i] (dayOne): ' + $scope.distances[i]);
           console.log('tempDayOneHolder: ' + tempDayOneHolder);
           // return $scope.dayOneDistance;
-        } else if(dayTwo == datesArrayFormatter){
-          console.log('dayTwo matched with datesArrayFormatter at day: ' + dayTwo + ' ' + datesArrayFormatter);
+        } else if(dayTwo == $scope.formattedDates[i]){
+          console.log('dayTwo matched with datesArrayFormatter at day: ' + dayTwo + ' ' + $scope.formattedDates[i]);
           tempDayTwoHolder = $scope.distances[i];
           console.log('$scope.distances[i] (dayTwo): ' + $scope.distances[i]);
           console.log('tempDayTwoHolder: ' + tempDayTwoHolder);
           // return $scope.dayTwoDistance;
 
-        } else if(dayThree == datesArrayFormatter){
-          console.log('dayThree matched with datesArrayFormatter at day: ' + dayThree + ' ' + datesArrayFormatter);
+        } else if(dayThree == $scope.formattedDates[i]){
+          console.log('dayThree matched with datesArrayFormatter at day: ' + dayThree + ' ' + $scope.formattedDates[i]);
           tempDayThreeHolder = $scope.distances[i];
           console.log('$scope.distances[i] (dayThree): ' + $scope.distances[i]);
           console.log('tempDayThreeHolder: ' + tempDayThreeHolder);
           // return $scope.dayThreeDistance;
         }
 
-        else if(dayFour == datesArrayFormatter){
-          console.log('dayFour matched with datesArrayFormatter at day: ' + dayFour + ' ' + datesArrayFormatter);
+        else if(dayFour == $scope.formattedDates[i]){
+          console.log('dayFour matched with datesArrayFormatter at day: ' + dayFour + ' ' + $scope.formattedDates[i]);
           tempDayFourHolder = $scope.distances[i];
           console.log('$scope.distances[i] (tempDayFourHolder): ' + $scope.distances[i]);
           console.log('tempDayFourHolder: ' + tempDayFourHolder);
           // return $scope.dayFourDistance;
         }
 
-        else if(dayFive == datesArrayFormatter){
-          console.log('dayFive matched with datesArrayFormatter at day: ' + dayFive + ' ' + datesArrayFormatter);
+        else if(dayFive == $scope.formattedDates[i]){
+          console.log('dayFive matched with datesArrayFormatter at day: ' + dayFive + ' ' + $scope.formattedDates[i]);
           tempDayFiveHolder = $scope.distances[i];
           console.log('$scope.distances[i] (dayFive): ' + $scope.distances[i]);
           console.log('tempDayFiveHolder: ' + tempDayFiveHolder);
           // return $scope.dayFiveDistance;
         }
 
-        else if(daySix == datesArrayFormatter){
-          console.log('daySix matched with datesArrayFormatter at day: ' + daySix + ' ' + datesArrayFormatter);
+        else if(daySix == $scope.formattedDates[i]){
+          console.log('daySix matched with datesArrayFormatter at day: ' + daySix + ' ' + $scope.formattedDates[i]);
           tempDaySixHolder = tempDaySixHolder + $scope.distances[i];
           console.log('matchWeekValues: $scope.distances[i] (daySix): ' + $scope.distances[i]);
           console.log('$tempDaySixHolder ' + tempDaySixHolder);
           // return $scope.daySixDistance;
         }
 
-        else if(daySeven == datesArrayFormatter){
-          console.log('daySeven matched with datesArrayFormatter at day: ' + daySeven + ' ' + datesArrayFormatter);
+        else if(daySeven == $scope.formattedDates[i]){
+          console.log('daySeven matched with datesArrayFormatter at day: ' + daySeven + ' ' + $scope.formattedDates[i]);
           tempDaySevenHolder = $scope.distances[i];
           console.log('matchWeekValues: $scope.distances[i] (daySeven): ' + $scope.distances[i]);
           console.log('tempDaySevenHolder: ' + tempDaySevenHolder);
           // return $scope.daySevenDistance;
         } else {
-          console.log('matchWeekValues: Did not match date: ' + datesArrayFormatter + ' to any of this weeks dates' );
+          console.log('matchWeekValues: Did not match date: ' + $scope.formattedDates[i] + ' to any of this weeks dates' );
         }
 
         $scope.dayOneDistance = tempDayOneHolder;
