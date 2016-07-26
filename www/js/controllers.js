@@ -7,7 +7,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
     'starter.historyServices',
 
-    'starter.runServices','ionic','ngCordova','ngOpenFB', 'chart.js'])
+    'starter.runServices','ionic','ngCordova','ngOpenFB', 'chart.js','ngCookies'])
 
 
   .controller('SignUpCtrl', function($scope, $rootScope, $ionicModal, $timeout, AuthAPI, $window, UserAPI){
@@ -165,9 +165,10 @@ angular.module('starter.controllers', ['starter.appServices',
           }
 
         })
-        .error(function(err){
+        .error(function(err,status){
           console.log('CharityAPI.getOne failed with error: ' + err);
           console.log('Could not retrieve charity information');
+          $rootScope.verifyStatus(status);
         })
 
     }
@@ -190,41 +191,40 @@ angular.module('starter.controllers', ['starter.appServices',
           password: password
         })
         .success(function(data, status, headers, config){
-          var firstName = data.name.first;
-          var lastName = data.name.last;
+          var firstName = data.user.name.first;
+          var lastName = data.user.name.last;
 
           $scope.user.name = firstName + ' ' + lastName;
           console.log('$scope.name set as: ' + $scope.user.name);
           $rootScope.setName($scope.user.name);
           console.log('user name localStorage set to: ' + $rootScope.getName());
 
-          $scope.user.password = data.password;
+          $scope.user.password = data.user.password;
           console.log('$scope.user.password set as: ' + $scope.user.password);
           $rootScope.setPassword($scope.user.password);
 
-          $scope.user.email = data.email;
+          $scope.user.email = data.user.email;
           console.log('$scope.user.email set to: ' + $scope.user.email);
           $rootScope.setEmail($scope.user.email);
           console.log('Email set as: ' + $rootScope.getEmail());
 
-          $scope.user.created = data.created;
+          $scope.user.created = data.user.created;
           console.log('$scope.user.created set as: ' + $scope.user.created);
           $rootScope.setCreatedAt($scope.user.created);
           console.log('createdAt local storage set: ' + $rootScope.getCreatedAt());
 
-          $scope.user.id = data._id;
+          $scope.user.id = data.user._id;
           console.log('$scope.user.id set to: ' + $scope.user.id);
           $rootScope.setUserId($scope.user.id);
           console.log('User id local storage set: ' + $rootScope.getUserId());
+          $rootScope.setToken(data.token);
+          console.log("token: " + data.token);
 
-
-          // console.log(data.charityName);
-          if(data.charityName == undefined || data.charityName == ""){
-
+          // console.log(data.user.charityName);
+          if(data.user.charityName == undefined || data.user.charityName == ""){
             $scope.noCharity = true;
           } else {
-            $scope.setUserCharity(data.charityName);
-
+            $scope.setUserCharity(data.user.charityName);
           }
 
 
@@ -1759,9 +1759,10 @@ angular.module('starter.controllers', ['starter.appServices',
           console.log('saveRun API call returned success');
 
         })
-        .error(function(err){
+        .error(function(err,status){
           console.log(err);
           console.log('Save run API call failed');
+          $rootScope.verifyStatus(status);
         });
     }
 
@@ -1790,7 +1791,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
   })
 
-  .controller('AppCtrl', function($rootScope, $scope, $filter, $ionicModal, $timeout, DonationAPI, CharityAPI) {
+  .controller('AppCtrl', function($rootScope, $scope, $window, $filter, $ionicModal, $timeout, DonationAPI, CharityAPI, AuthAPI) {
     $scope.moneyRaised = 0;
 
     $scope.fetchMyPledges = function() {
@@ -1833,8 +1834,9 @@ angular.module('starter.controllers', ['starter.appServices',
           console.log('$scope.getMoneyRaised per mile: ' + $rootScope.getMoneyRaisedPerMile());
         }
 
-      }).error(function(data, status, headers, config){
-        console.log("Refresh Error~");
+      }).error(function(err, status){
+        console.log("Refresh Error: " + err);
+        $rootScope.verifyStatus(status);
         $rootScope.notify("Oops something went wrong!! Please try again later");
       }).finally(function(){
         console.log("Refresh Finally~");
@@ -1855,8 +1857,9 @@ angular.module('starter.controllers', ['starter.appServices',
           $scope.noPledge = false;
         }
 
-      }).error(function(data, status, headers, config){
-        console.log("Refresh Error~");
+      }).error(function(err, status){
+        console.log("Refresh Error: " + err);
+        $rootScope.verifyStatus(status);
         $rootScope.notify("Oops something went wrong!! Please try again later");
       }).finally(function(){
         console.log("Refresh Finally~");
@@ -1880,6 +1883,12 @@ angular.module('starter.controllers', ['starter.appServices',
 
     $scope.fetchMonthHistory = function(){
       $rootScope.$broadcast('fetchMonthHistory');
+    }
+
+    //log out
+    $scope.logout = function() {
+      $rootScope.removeToken();
+      $window.location.href = "#/auth/signin";
     }
 
   })
@@ -1920,10 +1929,11 @@ angular.module('starter.controllers', ['starter.appServices',
         }
 
       })
-      .error(function(err){
+      .error(function(err,status){
+        console.log("Error retrieving charities");
         $rootScope.hide();
         $rootScope.notify("Something went wrong retrieving the list of charities");
-        console.log("Error retrieving charities");
+        $rootScope.verifyStatus(status);
       });
 
 
@@ -1949,10 +1959,11 @@ angular.module('starter.controllers', ['starter.appServices',
           //$window.location.href=('#/app/run');
           console.log('charity API succeeded in selecting charity');
         })
-        .error(function(err){
+        .error(function(err,status){
           console.log(err);
           console.log('inside select charityAPI failure');
           $rootScope.notify('Error selecting charity');
+          $rootScope.verifyStatus(status);
         });
     }
   })
@@ -1970,7 +1981,7 @@ angular.module('starter.controllers', ['starter.appServices',
   //   };
   // })
 
-  .controller('createCharityCtrl', function($rootScope, CharityAPI, $ionicModal, $window, $scope){
+  .controller('createCharityCtrl', function($rootScope, CharityAPI, $ionicModal, $window, $scope, AuthAPI){
     $scope.charity = {
       name: "",
       description: "",
@@ -2002,14 +2013,15 @@ angular.module('starter.controllers', ['starter.appServices',
           //$rootScope.doRefresh(1);
           $window.location.href = ('#/app/charities');
         })
-        .error(function(data, status, headers, config, err){
+        .error(function(err, status){
           $rootScope.hide();
           $rootScope.notify("Error" + err);
+          $rootScope.verifyStatus(status);
         });
     };
   })
 
-  .controller('MyDonationCtrl',function($rootScope, $scope, $filter, $window, $ionicModal, $cordovaSms, $cordovaSocialSharing,DonationAPI){
+  .controller('MyDonationCtrl',function($rootScope, $scope, $filter, $window, $ionicModal, $cordovaSms, $cordovaSocialSharing,DonationAPI, AuthAPI){
 
     $scope.managePledges = function() {
       $rootScope.$broadcast('fetchMyPledges');
@@ -2096,9 +2108,10 @@ angular.module('starter.controllers', ['starter.appServices',
         }
 
 
-      }).error(function (data, status, headers,config){
+      }).error(function (err, status){
         console.log("Refresh Error~");
         $rootScope.notify("Oops something went wrong!! Please try again later");
+        $rootScope.verifyStatus(status);
       });
       $scope.modal.show($event);
     };
@@ -2161,44 +2174,6 @@ angular.module('starter.controllers', ['starter.appServices',
     };
 
   })
-  .controller('MyPledgesCtrl', function($rootScope, $scope, $filter, DonationAPI) {
-    // $scope.doRefresh = function() {
-    DonationAPI.getAllPledges($rootScope.getToken(), "577525799f1f51030075a292")
-      .success(function (data, status, headers, config) {
-        $scope.list = [];
-        for (var i = 0; i < data.length; i++) {
-          data[i].end_date = $filter('date')(data[i].end_date, "MMM dd yyyy");
-          $scope.list.push(data[i]);
-        }
-        ;
-
-        $scope.donor = {
-          amount: ""
-        };
-
-        $scope.saveMoney = function () {
-
-          var amount = this.donor.amount;
-
-          if (!amount && $scope.active == 'zero') {
-            return false;
-          }
-          if (amount != '') {
-            store.set('donor.amount', amount);
-          }
-          $window.location.href = ('#/app/inviteSponsor/pledge');
-        }
-
-        $scope.saveMoneyWithAmount = function (amount) {
-          store.set('donor.amount', amount);
-        }
-
-      })
-  })
-
-  .controller('MyPledgesCtrl', function($rootScope, $scope, $filter, DonationAPI) {
-
-  })
 
   .controller('InviteSponsorPledgeCtrl', function($scope, $http, store, $window){
 
@@ -2237,7 +2212,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
   })
 
-  .controller('InviteSponsorPaymentCtrl', function($rootScope, $scope, $http, store, DonationAPI, $window){
+  .controller('InviteSponsorPaymentCtrl', function($rootScope, $scope, $http, store, DonationAPI, $window, AuthAPI){
     $scope.user = {
       email: ""
     };
@@ -2262,8 +2237,9 @@ angular.module('starter.controllers', ['starter.appServices',
           userId: '576d5555765c85f11c7f0ca1'
         }).success(function (data){
           $window.location.href = ('#/app/inviteSponsor/end');
-        }).error(function (err){
+        }).error(function (err,status){
           console.log("error: " + err.message);
+          $rootScope.verifyStatus(status);
         });
       }
     }
@@ -2347,13 +2323,14 @@ angular.module('starter.controllers', ['starter.appServices',
           $window.location.href = ('#/app/account');
         })
 
-        .error(function (error) {
+        .error(function (error,status) {
           if (error.error && error.error.code == 11000) {
             $rootScope.notify("This email is already in use");
             console.log("could not register user: email already in use ");
           } else {
             $rootScope.notify("An error has occured. Please try again");
           }
+          $rootScope.verifyStatus(status);
         });
     }
   })
@@ -2533,8 +2510,9 @@ angular.module('starter.controllers', ['starter.appServices',
 
 
         })
-        .error(function(err){
+        .error(function(err,status){
           console.log('HistoryAPI getBYMonth returned error: ' + err);
+          $rootScope.verifyStatus(status);
         });
     // })
 

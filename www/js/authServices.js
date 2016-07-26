@@ -3,14 +3,19 @@
  */
 
 
-angular.module('starter.authServices', [])
+angular.module('starter.authServices', ['ngCookies'])
 
-.factory('AuthAPI', function($rootScope, $http, $window, $ionicLoading){
+.factory('AuthAPI', function($rootScope, $http, $window, $ionicLoading, $cookies){
 
   var base = "http://localhost:5000/";
 
   //var base = "https://dreamrun.herokuapp.com/authentication";
 
+  $rootScope.verifyStatus = function(status) {
+     if (status == "401") {
+       $window.location.href = "#/auth/signin";
+     }
+  }
 
   $rootScope.show = function (text) {
     $rootScope.loading = $ionicLoading.show({
@@ -26,16 +31,16 @@ angular.module('starter.authServices', [])
     $ionicLoading.hide();
   };
   $rootScope.setToken = function(token){
-    return $window.localStorage.token = token;
+    $cookies.put('token', token);
   };
 
   $rootScope.getToken = function(){
     //TODO: TRY PASSING A JSON CALL TO GET TOKEN AND SET IT HERE. MIGHT BE A BAD IDEA SECURITY WISE?
-    return $window.localStorage.token;
+    return $cookies.get('token')
   };
 
-  $rootScope.removeToken = function(token){
-    $window.localStorage.token = '';
+  $rootScope.removeToken = function(){
+    $cookies.put('token', null);
   };
 
 
