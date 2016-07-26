@@ -1398,6 +1398,7 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.mapCreated = function(map){
       $scope.map = map;
 
+
       // var welcomeControlDiv = document.createElement('div');
       // var welcomeControl = $scope.welcomeControl(welcomeControlDiv, map);
       //
@@ -2370,12 +2371,40 @@ angular.module('starter.controllers', ['starter.appServices',
     paginationType: 'bullets'
   };
 
-  $rootScope.setValuesForHistoryDayView = function(distance, duration, pace, moneyRaised){
+  $scope.dayDisplayPath = [];
+
+  $rootScope.setValuesForHistoryDayView = function(distance, duration, pace, moneyRaised, path){
     $scope.dayDisplayDistance = distance;
     $scope.dayDisplayDuration = duration;
     $scope.dayDisplayPace = pace;
     $scope.dayDisplayMoneyRaised = moneyRaised;
+
+    for(var i =0; i< path.length; i++){
+      console.log(path[i]);
+      $scope.dayDisplayPath.push(path[i]);
+      console.log('setValuesForHistoryDayView: $scope.dayDisplayPath[i]: ' +$scope.dayDisplayPath[i]);
+      console.log('setValuesForHistoryDayView: $scope.dayDisplayPath: ' +$scope.dayDisplayPath);
+
+    }
   }
+
+
+
+
+
+  $scope.mapCreated = function(map){
+    $scope.map = map;
+    $scope.options = map.setOptions({zoom: 16});
+
+
+    console.log('setValuesForHistoryDayView: mapCreate path values: ' + $scope.dayDisplayPath)
+    // $scope.runPath = new google.maps.Polyline({
+    //   path: $scope.dayDisplayPath
+    // });
+    // $scope.options.setMap($scope.map);
+  }
+
+
 
 })
 

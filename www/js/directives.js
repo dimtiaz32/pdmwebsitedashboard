@@ -29,7 +29,7 @@ angular.module('starter.directives', [])
             mapTypeId: google.maps.MapTypeId.ROADMAP
           };
 
-          var map = new google.maps.Map($element[0], mapOptions);
+          var map = new google.maps.Map($element[0]);
 
           $scope.onCreate({map: map});
 
