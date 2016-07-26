@@ -14,6 +14,9 @@
 
 .my-sponsors.col {
   background-color: transparent;
+
+  /*TODO: disable margin below after adding image back*/
+  margin: auto;
 }
 
 .my-sponsors.col.col-50.image {
@@ -40,7 +43,7 @@
   font-weight: thin;
   line-height: 100%;
   text-align: right;
-  padding: 5px 0;
+  padding: 5px 20px 5px 0;
 }
 
 .my-sponsors h2 {
