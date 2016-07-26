@@ -24,19 +24,6 @@ angular.module('starter.userServices', [])
     }, 1999);
   };
 
-  // $rootScope.doRefresh = function(menu){
-  //   if(menu == 1){
-  //
-  //   }
-  // }
-  $rootScope.setToken = function(token){
-    return $window.localStorage.token = token;
-  };
-
-  $rootScope.getToken = function(){
-    return $window.localStorage.token;
-  };
-
   //this is a rootscope call so that users charity can be called throughout the app
   $rootScope.setCharity = function(charity){
     return $window.localStorage = charity;
