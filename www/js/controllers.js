@@ -2226,7 +2226,7 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.user = {
       email: ""
     };
-    $scope.updateDonation = function(status, response) {
+    $scope.completeSponsor = function(status, response) {
 
       var email = this.user.email;
       if(!email) {
