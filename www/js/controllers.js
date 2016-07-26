@@ -87,10 +87,12 @@ angular.module('starter.controllers', ['starter.appServices',
           //$rootScope.setCharity(charity);
           $rootScope.setEmail(email);
           console.log("data:" + JSON.stringify(data));
-          var name =data.name.first + data.name.last;
+          var name =data.user.name.first + data.user.name.last;
           console.log('name: ' + name);
 
           $rootScope.setName(name);
+          $rootScope.setToken(data.token);
+          $rootScope.setUserId(data.user._id);
 
           $window.location.href  = ('#/app/charities');
         })
@@ -256,8 +258,9 @@ angular.module('starter.controllers', ['starter.appServices',
               access_token: response.authResponse.accessToken
             }).success(function(data, status, headers, config){
               $rootScope.hide();
-              $rootScope.setUserId(data._id);
+              $rootScope.setUserId(data.user._id);
               console.log('User id: ' + $rootScope.getUserId());
+              $rootScope.setToken(data.token);
               $window.location.href=('#/app/charities');
 
             }).error(function(error){
@@ -284,10 +287,11 @@ angular.module('starter.controllers', ['starter.appServices',
                 access_token: authResult.access_token
               }).success(function(data, status, headers, config){
                 $rootScope.hide();
-                $rootScope.setUserId(data._id);
-                $rootScope.setEmail(data.email);
+                $rootScope.setUserId(data.user._id);
+                $rootScope.setEmail(data.user.email);
                 console.log('User email: ' + $rootScope.getEmail());
                 console.log('User id: ' + $rootScope.getUserId());
+                $rootScope.setToken(data.token);
                 $window.location.href=('#/app/charities');
               }).error(function(error){
                 console.log("AuthAPI.signinByFB failed:" + error);
@@ -1810,14 +1814,9 @@ angular.module('starter.controllers', ['starter.appServices',
     };
 
     $rootScope.$on('fetchMySponsors', function() {
-      DonationAPI.getAllSponsors($rootScope.getToken(),
-        "577525799f1f51030075a291"
-      )
-        .success(function(data, status, headers, config){
+      DonationAPI.getAllSponsors($rootScope.getUserId()).success(function(data, status, headers, config){
         $scope.sponsors = [];
         $scope.moneyRaisedHolder = [];
-
-
 
         if(data.length == 0) {
          return $scope.noSponsor = true;
@@ -1848,7 +1847,7 @@ angular.module('starter.controllers', ['starter.appServices',
     });
 
     $rootScope.$on('fetchMyPledges',function(){
-      DonationAPI.getAllPledges($rootScope.getToken(),"577525799f1f51030075a292").success(function(data, status, headers, config){
+      DonationAPI.getAllPledges($rootScope.getUserId()).success(function(data, status, headers, config){
         $scope.pledges = [];
         for (var i = 0; i < data.length; i++) {
           $scope.pledges.push(data[i]);
@@ -2065,7 +2064,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
     $scope.openModal = function($event) {
       console.log("try open the modal");
-      DonationAPI.inviteSponsor("token",{
+      DonationAPI.inviteSponsor({
         // charity:"5771430bdcba0f275f2a0a5e",
         // userId:"577525799f1f51030075a291"
         //might have to cast these to strings?
@@ -2238,7 +2237,7 @@ angular.module('starter.controllers', ['starter.appServices',
           amount: store.get('donor.amount'),
           months: store.get('donor.months'),
           stripeToken: response.id,
-          userId: '576d5555765c85f11c7f0ca1'
+          userId: $rootScope.getUserId()
         }).success(function (data){
           $window.location.href = ('#/app/inviteSponsor/end');
         }).error(function (err,status){

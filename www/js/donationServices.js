@@ -30,41 +30,33 @@ angular.module('starter.donationServices', ['ionic'])
   };
 
   return{
-    getAllSponsors: function(token,userId){
+    getAllSponsors: function(userId){
       return $http.get(base + 'donations/sponsors', {
         method: 'GET',
         params: {
-          token: token,
           userId:userId
         }
       });
     },
 
-    getAllPledges: function(token,donorId){
+    getAllPledges: function(donorId){
       return $http.get(base + 'donations/pledges',{
         method:'GET',
         params: {
-          token: token,
           donorId: donorId
         }
       });
     },
 
-    inviteSponsor: function(token,form) {
+    inviteSponsor: function(form) {
       return $http.post(base + 'donations/sponsors',form,{
         method:'POST',
-        params: {
-          token: token
-        }
       });
     },
 
-    completeSponsor: function(token,form) {
+    completeSponsor: function(form) {
       return $http.post(base + 'donations/myDonations',form,{
         method:'POST',
-        params: {
-          token: token
-        }
       });
     }
   }
