@@ -30,7 +30,7 @@
             <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="242">
-                  <caret line="2717" column="23" selection-start-line="2717" selection-start-column="0" selection-end-line="2718" selection-end-column="0" />
+                  <caret line="2717" column="33" selection-start-line="2717" selection-start-column="0" selection-end-line="2718" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -39,12 +39,13 @@
           <file leaf-file-name="history-day.html" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/www/templates/history-day.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="371">
-                  <caret line="114" column="58" selection-start-line="114" selection-start-column="58" selection-end-line="114" selection-end-column="58" />
+                <state relative-caret-position="341">
+                  <caret line="112" column="40" selection-start-line="112" selection-start-column="40" selection-end-line="112" selection-end-column="40" />
                   <folding>
                     <element signature="n#style#0;n#div#1;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
                     <element signature="n#style#0;n#hr#0;n#div#0;n#ion-slide-page#0;n#ion-slides#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
                     <element signature="n#style#0;n#hr#2;n#div#0;n#ion-slide-page#0;n#ion-slides#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+                    <marker date="1469651369000" expanded="true" signature="4533:4902" ph="..." />
                   </folding>
                 </state>
               </provider>
@@ -54,11 +55,21 @@
       </split-first>
       <split-second>
         <leaf>
+          <file leaf-file-name="charities.html" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/www/templates/charities.html">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="491">
+                  <caret line="36" column="16" selection-start-line="36" selection-start-column="16" selection-end-line="36" selection-end-column="16" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
           <file leaf-file-name="history-day.css" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/www/css/history-day.css">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="356">
-                  <caret line="84" column="17" selection-start-line="84" selection-start-column="17" selection-end-line="84" selection-end-column="17" />
+                <state relative-caret-position="236">
+                  <caret line="68" column="1" selection-start-line="68" selection-start-column="1" selection-end-line="68" selection-end-column="1" />
                   <folding />
                 </state>
               </provider>
@@ -107,8 +118,8 @@
         <option value="$PROJECT_DIR$/www/css/pledges.css" />
         <option value="$PROJECT_DIR$/www/css/sponsor.css" />
         <option value="$PROJECT_DIR$/www/js/controllers.js" />
-        <option value="$PROJECT_DIR$/www/css/history-day.css" />
         <option value="$PROJECT_DIR$/www/templates/history-day.html" />
+        <option value="$PROJECT_DIR$/www/css/history-day.css" />
       </list>
     </option>
   </component>
@@ -355,12 +366,12 @@
       <workItem from="1469548844495" duration="119000" />
       <workItem from="1469562200310" duration="171000" />
       <workItem from="1469566977445" duration="1532000" />
-      <workItem from="1469631607521" duration="8347000" />
+      <workItem from="1469631607521" duration="11192000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="49817000" />
+    <option name="totallyTimeSpent" value="52662000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1680" y="23" width="1874" height="1057" extended-state="6" />
@@ -450,6 +461,7 @@
             <element signature="n#style#0;n#div#1;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#hr#0;n#div#0;n#ion-slide-page#0;n#ion-slides#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#hr#2;n#div#0;n#ion-slide-page#0;n#ion-slides#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+            <marker date="1469651369000" expanded="true" signature="4533:4902" ph="..." />
           </folding>
         </state>
       </provider>
@@ -565,13 +577,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/charities.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="35" column="70" selection-start-line="35" selection-start-column="70" selection-end-line="35" selection-end-column="70" />
         </state>
       </provider>
     </entry>
@@ -765,28 +770,37 @@
     <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="242">
-          <caret line="2717" column="23" selection-start-line="2717" selection-start-column="0" selection-end-line="2718" selection-end-column="0" />
+          <caret line="2717" column="33" selection-start-line="2717" selection-start-column="0" selection-end-line="2718" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/css/history-day.css">
+    <entry file="file://$PROJECT_DIR$/www/templates/charities.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="356">
-          <caret line="84" column="17" selection-start-line="84" selection-start-column="17" selection-end-line="84" selection-end-column="17" />
+        <state relative-caret-position="491">
+          <caret line="36" column="16" selection-start-line="36" selection-start-column="16" selection-end-line="36" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/templates/history-day.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="371">
-          <caret line="114" column="58" selection-start-line="114" selection-start-column="58" selection-end-line="114" selection-end-column="58" />
+        <state relative-caret-position="341">
+          <caret line="112" column="40" selection-start-line="112" selection-start-column="40" selection-end-line="112" selection-end-column="40" />
           <folding>
             <element signature="n#style#0;n#div#1;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#hr#0;n#div#0;n#ion-slide-page#0;n#ion-slides#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#hr#2;n#div#0;n#ion-slide-page#0;n#ion-slides#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+            <marker date="1469651369000" expanded="true" signature="4533:4902" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/css/history-day.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="68" column="1" selection-start-line="68" selection-start-column="1" selection-end-line="68" selection-end-column="1" />
+          <folding />
         </state>
       </provider>
     </entry>
