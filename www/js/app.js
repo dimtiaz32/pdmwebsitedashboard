@@ -53,7 +53,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
         abstract: true,
         templateUrl: "templates/auth.html"
       })
-
       .state('auth.signin', {
         url:'/signin',
         views: {
