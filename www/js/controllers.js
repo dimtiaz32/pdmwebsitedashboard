@@ -1399,6 +1399,16 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.map = map;
 
 
+      $scope.mapOptions = map.setOptions({
+        center: $scope.myLatLng,
+        zoom: 19,
+        disableDefaultUI: true,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      });
+
+
+
+
       // var welcomeControlDiv = document.createElement('div');
       // var welcomeControl = $scope.welcomeControl(welcomeControlDiv, map);
       //
@@ -1419,7 +1429,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
       locateControlDiv.index = 1;
       map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(locateControlDiv);
-
+      // $scope.mapOptions.setMap($scope.map);
 
     };
 
@@ -1481,6 +1491,7 @@ angular.module('starter.controllers', ['starter.appServices',
       } else{
         var lapSecondsString = $scope.lapSeconds.toString();
         $scope.lapPushSeconds.push(lapSecondsString);
+
       }
       if($scope.lapMinutes == undefined){
         $scope.lapMinutes = 0;
@@ -1691,6 +1702,7 @@ angular.module('starter.controllers', ['starter.appServices',
       console.log('Push run- Money raised amount: ' + $rootScope.getRunMoneyRaisedAmount());
 
 
+      $scope.lap();
       console.log('lapPushNumbers: ' + $scope.lapPushNumbers);
       console.log('lapPushDistances: ' + $scope.lapPushDistances);
       console.log('lapPushSeconds: ' + $scope.lapPushSeconds);
@@ -1730,6 +1742,7 @@ angular.module('starter.controllers', ['starter.appServices',
         }
       }
 
+
       console.log('$scope.lat: ' + $scope.lat);
       console.log('$scope.long: ' + $scope.long);
 
@@ -1742,12 +1755,13 @@ angular.module('starter.controllers', ['starter.appServices',
         pace: $rootScope.getRunPace(),
         User: $rootScope.getUserId(),
         moneyRaised: $rootScope.getRunMoneyRaisedAmount(),
-        lapNumber: $scope.pushLapNumbers,
-        lapDistance: $scope.pushLapDistances,
-        lapSeconds:  $scope.pushLapSeconds,
-        lapMinutes:  $scope.pushLapMinutes,
-        lapPace:  $scope.pushLapPace,
-        path: [{lat: $scope.lat}, {long: $scope.long}]
+        path: {lat: [$scope.lat], long: [$scope.long]},
+        laps: { number: [$scope.lapPushNumbers],
+          distance: [$scope.lapPushDistances],
+          seconds: [$scope.lapPushSeconds],
+          minutes: [$scope.lapPushMinutes],
+          pace: [$scope.lapPushPace]
+        }
 
       }
       console.log('Form Distance: ' + form.distance);
@@ -2341,29 +2355,128 @@ angular.module('starter.controllers', ['starter.appServices',
   })
 
 
-.controller('HistoryDayCtrl', function($scope, $rootScope, HistoryAPI){
+.controller('HistoryDayCtrl', function($scope, $rootScope, $window, HistoryAPI){
   //Can't get pagination to show
   $scope.slideOptions = {
     pagination: true,
     paginationType: 'bullets'
   };
 
-  $scope.dayDisplayPath = [];
+  $scope.back = function(){
+    $window.location.href = ('#/app/history');
+  }
 
-  $rootScope.setValuesForHistoryDayView = function(distance, duration, pace, moneyRaised, path){
+
+  $scope.historyPolyCoords = [];
+  $scope.dayLaps = [];
+  $scope.dayLapsForm = [{
+    number: String,
+    distance: String,
+    seconds: String,
+    minutes: String,
+    pace: String
+  }];
+
+  $rootScope.setValuesForHistoryDayView = function(distance, duration, pace, moneyRaised, path, laps){
     $scope.dayDisplayDistance = distance;
     $scope.dayDisplayDuration = duration;
     $scope.dayDisplayPace = pace;
     $scope.dayDisplayMoneyRaised = moneyRaised;
+    $scope.dayDisplayPath = path;
+    $scope.dayDisplayLaps = laps;
 
-    for(var i =0; i< path.length; i++){
-      console.log(path[i]);
-      $scope.dayDisplayPath.push(path[i]);
-      console.log('setValuesForHistoryDayView: $scope.dayDisplayPath[i]: ' +$scope.dayDisplayPath[i]);
-      console.log('setValuesForHistoryDayView: $scope.dayDisplayPath: ' +$scope.dayDisplayPath);
+    console.log('setValuesForHistoryDayView: path: ' + path);
+    console.log('setValuesForHistoryDayView: $scope.dayDisplayForPath : ' + $scope.dayDisplayPath);
+    console.log('setValuesForHistoryDayView: path.lat: ' + path.lat);
+    console.log('setValuesForHistoryDayView: path.long: '+ path.long);
+    console.log('setValuesForHistoryDayView: $scope.displayForPath.lat : ' + $scope.dayDisplayPath.lat);
+    console.log('setValuesForHistoryDayView: $scope.displayForPath.long: ' +$scope.dayDisplayPath.long);
+    console.log('setValuesForHistoryDayView: $scope.dayDisplayLaps: ' + $scope.dayDisplayLaps);
+    console.log('setValuesForHistoryDayView: $scope.dayDisplayLaps.number: ' + $scope.dayDisplayLaps.number);
+    console.log('setValuesForHistoryDayView: $scope.dayDisplayLaps.number.length: ' + $scope.dayDisplayLaps.number.length);
+    console.log('setValuesForHistoryDayView: $scope.dayDisplayLaps.distance: ' + $scope.dayDisplayLaps.distance);
+    console.log('setValuesForHistoryDayView: $scope.dayDisplayLaps.seconds: ' + $scope.dayDisplayLaps.seconds);
+    console.log('setValuesForHistoryDayView: $scope.dayDisplayLaps.minutes: ' + $scope.dayDisplayLaps.minutes);
+    console.log('setValuesForHistoryDayView: $scope.dayDisplayLaps.pace: ' + $scope.dayDisplayLaps.pace);
+
+    console.log('setValuesForHistoryDayView: $scope.dayDisplayPath.lat.length: ' + $scope.dayDisplayPath.lat.length);
+    var latSplit = $scope.dayDisplayPath.lat.toString().split(',');
+    var longSplit = $scope.dayDisplayPath.long.toString().split(',');
+    console.log('setValuesForHistoryDayView: latSplit: ' + latSplit[0]);
+    console.log('setValuesForHistoryDayView: latSplit.length: ' + latSplit.length);
+    console.log('setValuesForHistoryDayView: longSplit: ' + longSplit[0]);
+
+
+    //string splitter for laps
+    var lapNumberSplit = $scope.dayDisplayLaps.number.toString().split(',');
+    var lapDistancesSplit = $scope.dayDisplayLaps.distance.toString().split(',');
+    var lapSecondsSplit = $scope.dayDisplayLaps.seconds.toString().split(',');
+    var lapMinutesSplit = $scope.dayDisplayLaps.minutes.toString().split(',');
+    var lapPaceSplit = $scope.dayDisplayLaps.pace.toString().split(',');
+    console.log('setValuesForHistoryDayView: lapNumberSplit.length: ' + lapNumberSplit.length);
+
+
+
+    for (var i = 1; i < lapNumberSplit.length; i++) {
+      console.log('setValuesForHistoryDayView: lapNumberSplit['+i+']: ' + lapNumberSplit[i]);
+      console.log('setValuesForHistoryDayView: lapDistancesSplit['+i+']: ' + lapDistancesSplit[i]);
+      console.log('setValuesForHistoryDayView: lapSecondsSplit['+i+']: ' + lapSecondsSplit[i]);
+      console.log('setValuesForHistoryDayView: lapMinutesSplit['+i+']: ' + lapMinutesSplit[i]);
+      console.log('setValuesForHistoryDayView: lapPaceSplit['+i+']: ' + lapPaceSplit[i]);
+
+     $scope.dayLapsForm.push({lap: {number: lapNumberSplit[i], distance: lapDistancesSplit[i],
+       seconds: lapSecondsSplit[i], minutes: lapMinutesSplit[i],
+                            pace: lapPaceSplit[i]}});
+      console.log('setValuesForHistoryDayView: $scope.dayLaps: ' + $scope.dayLapsForm[i].lap.number);
+      console.log('setValuesForHistoryDayView: $scope.dayLaps.length: ' + $scope.dayLapsForm.lap.length);
 
     }
+
+    console.log('setValuesForHistoryDayView: $scope.dayLaps.length: ' + $scope.dayLapsForm.length);
+    $scope.dayLapsForm.shift();
+
+    for(var x = 0; x < $scope.dayLapsForm.length; x++){
+      console.log('setValuesForHistoryDayView: $scope.dayLaps.length: ' + $scope.dayLapsForm.length);
+      $scope.dayLaps.push($scope.dayLapsForm[x+1]);
+      console.log('$scope.dayLaps: ' + $scope.dayLaps);
+      console.log('$scope.dayLaps['+x+']: ' + $scope.dayLaps[x]);
+      console.log('$scope.dayLaps.number: ' + $scope.dayLaps.number);
+    }
+
+
+
+    if(latSplit.length == longSplit.length){
+      for(var i=0; i< latSplit.length; i++){
+        var latCoord = latSplit[i];
+        console.log('setValuesForHistoryDayView: latCoord : ' + latCoord);
+        var longCoord = longSplit[i];
+        console.log('setValuesForHistoryDayView: longCoord : ' + longCoord);
+        var LatLng = new google.maps.LatLng(latCoord, longCoord);
+        console.log('setValuesForHistoryDayView: LatLng : ' + LatLng);
+        $scope.historyPolyCoords.push(LatLng);
+        console.log('setValuesForHistoryDayView: $scope.historyPolycoords: ' + $scope.historyPolyCoords);
+      }
+      $scope.historyRunPath = new google.maps.Polyline({
+        path: $scope.historyPolyCoords,
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
+        strokeWeight: 8
+      });
+      $scope.historyRunPath.setMap($scope.map);
+    } else {
+      $rootScope.notify("Lat,Lng lengths do not match");
+      console.log('setValuesForHistoryDayView: lat,long lengths do not match');
+    }
+
+    // console.log('setValuesForHistoryDayView: $scope.dayDisplayLaps.number: ' + $scope.dayDisplayLaps.number.length);
+    // for(var i=0; i< $scope.dayDisplayLaps.number.length; i++){
+    //   console.log('setValuesForHistoryDayView: $scope.dayDisplayLaps.number: ' + $scope.dayDisplayLaps.number);
+    //
+    //
+    // }
   }
+
+
 
 
 
@@ -2371,14 +2484,14 @@ angular.module('starter.controllers', ['starter.appServices',
 
   $scope.mapCreated = function(map){
     $scope.map = map;
-    $scope.options = map.setOptions({zoom: 16});
+    $scope.mapOptions = map.setOptions({zoom: 14});
 
 
-    console.log('setValuesForHistoryDayView: mapCreate path values: ' + $scope.dayDisplayPath)
+    // console.log('setValuesForHistoryDayView: mapCreate path values: ' + $scope.dayDisplayPath);
     // $scope.runPath = new google.maps.Polyline({
     //   path: $scope.dayDisplayPath
     // });
-    // $scope.options.setMap($scope.map);
+
   }
 
 
@@ -2462,7 +2575,8 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.minutes = [];
     $scope.paces = [];
     $scope.moneyRaised = [];
-
+    $scope.paths = [];
+    $scope.laps = [];
     //for weekViews
     $scope.weekDates = [];
     $scope.dayOneDateNonDisplayHolder;
@@ -2540,13 +2654,21 @@ angular.module('starter.controllers', ['starter.appServices',
             $scope.moneyRaised.push(data[i].moneyRaised);
             console.log('$scope.moneyRaised: ' + $scope.moneyRaised);
 
-            var dateHolder = $scope.dates[i];
-            console.log('dateHolder: ' + dateHolder);
-            // var dateFormatHolder = new Date(dateHolder.toISOString());
-            // console.log('dateFormatHolder: ' + dateFormatHolder);
-            // $scope.formattedDatesWithTime.push(dateFormatHolder);
-            // console.log('formattedDatesWithTime[i]: ' + $scope.formattedDatesWithTime[i]);
-            // console.log('formattedDatesWithTime: ' + $scope.formattedDatesWithTime);
+
+            $scope.paths.push(data[i].path);
+            console.log('$scope.paths: ' + $scope.paths);
+            console.log('$scope.paths['+i+'].lat: ' + $scope.paths[i].lat);
+            console.log('$scope.paths['+i+'].long: ' + $scope.paths[i].long);
+            // for(var x=0; x<$scope.paths.length; x++){
+            //   console.log('$scope.paths['+x+'].lat: ' + $scope.paths[x].lat);
+            //   console.log('$scope.paths['+x+'].long: ' + $scope.paths[x].long);
+            //   console.log('$scope.paths.long: ' + $scope.paths.long);
+            //   console.log('$scope.paths.lat: ' + $scope.paths.lat);
+            // }
+            $scope.laps.push(data[i].laps);
+            console.log('$scope.laps: ' + $scope.laps);
+            console.log('$scope.laps['+i+'].number: ' + $scope.laps[i].number);
+
             var formattedDatesWithTime = $scope.dates[i];
             console.log('formattedDatesWithTime: ' + formattedDatesWithTime);
             var formattedSplitDate1 = formattedDatesWithTime.toString().split('T');
@@ -2573,7 +2695,7 @@ angular.module('starter.controllers', ['starter.appServices',
           console.log('Today value from inside HistoryAPI call: ' + today);
           $scope.getWeekDatesOnLoad();
 
-
+          // console.log('path length: ' + data.path.length);
 
           console.log('$scope.distanceslength: ' + $scope.distances.length + '$scope.dates.length: ' + $scope.dates.length);
 
@@ -2957,9 +3079,19 @@ angular.module('starter.controllers', ['starter.appServices',
           console.log('setDayValues: $scope.moneyRaised: ' + $scope.moneyRaised[i]);
           $scope.thisDateRunMoneyRaised = $scope.moneyRaised[i];
           console.log('setDayValues: $scope.thisDateRunMoneyRaised: ' + $scope.thisDateRunMoneyRaised);
+
+          console.log('setDayValues: $scope.paths: ' + $scope.paths[i]);
+          $scope.thisDateRunPath = $scope.paths[i];
+          console.log('setDayValues: $scope.thisDateRunPath: ' + $scope.thisDateRunPath);
+
+          console.log('setDayValues: $scope.laps['+i+']: ' + $scope.laps[i]);
+          $scope.thisDateRunLaps = $scope.laps[i];
+          console.log('setDayValues: $scope.thisDateRunLaps: ' + $scope.thisDateRunLaps);
+
           $window.location.href = ('#/app/historyDay');
           $rootScope.setValuesForHistoryDayView($scope.thisDateRunDistance, $scope.thisDateRunDuration,
-                                                $scope.thisDateRunPace, $scope.thisDateRunMoneyRaised);
+                                                $scope.thisDateRunPace, $scope.thisDateRunMoneyRaised,
+                                                $scope.thisDateRunPath, $scope.thisDateRunLaps);
 
         }
 

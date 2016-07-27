@@ -22,12 +22,6 @@ angular.module('starter.directives', [])
             alert('Unable to get current location' + error.message);
           });
 
-          var mapOptions = {
-            center: myLatLng,
-            zoom: 19,
-            disableDefaultUI: true,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-          };
 
           var map = new google.maps.Map($element[0]);
 
