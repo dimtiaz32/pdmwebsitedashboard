@@ -123,6 +123,11 @@ angular.module('starter.authServices', ['ngCookies'])
     return $window.localStorage.avatar;
   }
 
+  $rootScope.clearAll = function() {
+      $window.localStorage.clear();
+      $cookies.remove();
+  }
+
   // $rootScope.setCharity = function(charity){
   //   return $window.localStorage.selectedCharity = charity;
   // };

@@ -93,7 +93,7 @@ angular.module('starter.controllers', ['starter.appServices',
           $rootScope.setName(name);
           $rootScope.setToken(data.token);
           $rootScope.setUserId(data.user._id);
-
+          $rootScope.$broadcast("initial");
           $window.location.href  = ('#/app/charities');
         })
         .error(function(error){
@@ -242,8 +242,9 @@ angular.module('starter.controllers', ['starter.appServices',
           // console.log('selectedCharity local storage set: ' + $rootScope.getSelectedCharity());
 
           $rootScope.hide();
-
+          $rootScope.$broadcast("initial");
           $window.location.href=('#/app/run');
+
         })
         .error(function(error){
           $rootScope.hide();
@@ -262,11 +263,12 @@ angular.module('starter.controllers', ['starter.appServices',
               $rootScope.setUserId(data.user._id);
               console.log('User id: ' + $rootScope.getUserId());
               $rootScope.setToken(data.token);
-              $window.location.href=('#/app/charities');
               $rootScope.setName(data.user.facebook.firstname + ' ' + data.user.facebook.lastname);
               console.log("facebook name: " + $rootScope.getName());
               $rootScope.setAvatar(data.user.facebook.avatar);
               console.log("facebook avatar: " + $rootScope.getAvatar());
+              $rootScope.$broadcast("initial");
+              $window.location.href=('#/app/charities');
             }).error(function(error){
               console.log("AuthAPI.signinByFB failed:" + error);
               $rootScope.hide();
@@ -298,6 +300,7 @@ angular.module('starter.controllers', ['starter.appServices',
                 $rootScope.setToken(data.token);
                 $rootScope.setName(data.user.google.firstname + ' ' + data.user.google.lastname);
                 $rootScope.setAvatar(data.user.google.avatar);
+                $rootScope.$broadcast("initial");
                 $window.location.href=('#/app/charities');
               }).error(function(error){
                 console.log("AuthAPI.signinByFB failed:" + error);
@@ -1895,7 +1898,8 @@ angular.module('starter.controllers', ['starter.appServices',
 
     //log out
     $scope.logout = function() {
-      $rootScope.removeToken();
+      $rootScope.clearAll();
+      $rootScope.$broadcast('destroy');
       $window.location.href = "#/auth/signin";
     }
 
@@ -2032,8 +2036,22 @@ angular.module('starter.controllers', ['starter.appServices',
 
   .controller('MyDonationCtrl',function($rootScope, $scope, $filter, $window, $ionicModal, $cordovaSms, $cordovaSocialSharing,DonationAPI,AuthAPI){
 
-    $scope.username = $rootScope.getName();
-    $scope.avatar = $rootScope.getAvatar();
+
+    $rootScope.$on('initial', function(){
+        console.log("---------start donation ctrl initial---------");
+        $scope.username = $rootScope.getName();
+        $scope.avatar = $rootScope.getAvatar();
+        console.log("---------end donation ctrl initial---------");
+    });
+
+    $rootScope.$on('destroy', function(){
+        console.log("---------start donation ctrl destroy---------");
+        $scope.username = undefined;
+        $scope.avatar = undefined;
+        console.log("---------end donation ctrl destroy---------");
+    });
+
+    $rootScope.$broadcast('initial');
 
     $scope.managePledges = function() {
       $rootScope.$broadcast('fetchMyPledges');
@@ -2267,40 +2285,46 @@ angular.module('starter.controllers', ['starter.appServices',
   })
 
   .controller('AccountCtrl', function($rootScope, AuthAPI, UserAPI, $window, $scope) {
-    //refresh on page load?
-    //Profile Picture - edit
-    //Name- cannot edit
-    //Email -edit
-    //Password (hashed)
-    //DOB-cannot edit
 
-    //password should redirect to new page to enter old password/ could have dropdown?
+    $rootScope.$on('initial', function(){
+        console.log("---------start account ctrl initial---------");
+
+        $scope.user = {
+          email: "",
+          name: "",
+          password: "",
+          charity: {},
+          history: [],
+          provider: "",
+          past_donations_from: [],
+          past_donations_to: [],
+          donations_to: [],
+          donations_from: [],
+          past_charities: [],
+          created: Date,
+          updated: Date
+
+        };
+
+        $scope.user.name = $rootScope.getName();
+        console.log('user name set as: ' + $scope.user.name);
+        $scope.user.email = $rootScope.getEmail();
+        console.log('user email set as: '+ $scope.user.email);
+        $scope.user.password = $rootScope.getPassword();
+        console.log('user password set as: ' + $scope.user.password);
 
 
+        console.log("--------end account ctrl initial---------");
+    });
 
-    $scope.user = {
-      email: "",
-      name: "",
-      password: "",
-      charity: {},
-      history: [],
-      provider: "",
-      past_donations_from: [],
-      past_donations_to: [],
-      donations_to: [],
-      donations_from: [],
-      past_charities: [],
-      created: Date,
-      updated: Date
+    $rootScope.$on('destroy', function(){
+        console.log("---------start account ctrl destroy---------");
+        $scope.user = undefined;
+        console.log("---------end account ctrl destroy---------");
+    });
 
-    };
-
-    $scope.user.name = $rootScope.getName();
-    console.log('user name set as: ' + $scope.user.name);
-    $scope.user.email = $rootScope.getEmail();
-    console.log('user email set as: '+ $scope.user.email);
-    $scope.user.password = $rootScope.getPassword();
-    console.log('user password set as: ' + $scope.user.password);
+    // do the initial at first time when the controller load, only just once~
+    $rootScope.$broadcast('initial');
 
     $scope.updateAccount = function () {
       var name = this.account.firstName + ' ' + this.account.lastName;
