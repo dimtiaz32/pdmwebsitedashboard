@@ -14,13 +14,13 @@
 
           <div class="history-page bubble-box left-bubble-box">
             <p class="history-page label">Money Raised</p>
-            <p class="history-page value">${{monthTotalMoneyRaised}}</p>
+            <p class="history-page value">${{monthTotalMoneyRaised.toFixed(2)}}</p>
             <p class="history-page units">this month</p>
           </div>
 
           <div class="history-page bubble-box center-bubble-box">
             <p class="history-page label">Total Distance</p>
-            <p class="history-page value" style="font-size: 8vh;">{{monthTotalDistance}}</p>
+            <p class="history-page value" style="font-size: 8vh;">{{monthTotalDistance.toFixed(2)}}</p>
             <p class="history-page units">miles</p>
           </div>
 
@@ -67,154 +67,154 @@
 
 
 <!--<ion-content class="history-page BarCtrl has-header" scroll="false" ng-controller="HistoryCtrl">-->
-  <!--<div class="history-page month-slide-wrapper">-->
-    <!--<ion-slide-box on-slide-changed="history-page">-->
-      <!--&lt;!&ndash;slideHasChanged($index)&ndash;&gt;-->
-      <!--<ion-slide>-->
-        <!--<div class="history-page month-slide" ng-click="setMonthArrays(1)">January</div>-->
-      <!--</ion-slide>-->
-      <!--<ion-slide>-->
-        <!--<div class="history-page month-slide" ng-click="setMonthArrays(2)">February</div>-->
-      <!--</ion-slide>-->
-      <!--<ion-slide>-->
-        <!--<div class="history-page month-slide" ng-click="setMonthArrays(3)">March</div>-->
-      <!--</ion-slide>-->
-      <!--<ion-slide>-->
-        <!--<div class="history-page month-slide" ng-click="setMonthArrays(4)">April</div>-->
-      <!--</ion-slide>-->
-      <!--<ion-slide>-->
-        <!--<div class="history-page month-slide" ng-click="setMonthArrays(5)">May</div>-->
-      <!--</ion-slide>-->
-      <!--<ion-slide>-->
-        <!--<div class="history-page month-slide" ng-click="setMonthArrays(6)">June</div>-->
-      <!--</ion-slide>-->
-      <!--<ion-slide>-->
-        <!--<div class="history-page month-slide" ng-click="setMonthArrays(7)">July</div>-->
-      <!--</ion-slide>-->
-      <!--<ion-slide>-->
-        <!--<div class="history-page month-slide" ng-click="setMonthArrays(8)">August</div>-->
-      <!--</ion-slide>-->
-      <!--<ion-slide>-->
-        <!--<div class="history-page month-slide" ng-click="setMonthArrays(9)">September</div>-->
-      <!--</ion-slide>-->
-      <!--<ion-slide>-->
-        <!--<div class="history-page month-slide" ng-click="setMonthArrays(10)">October</div>-->
-      <!--</ion-slide>-->
-      <!--<ion-slide>-->
-        <!--<div class="history-page month-slide" ng-click="setMonthArrays(11)">November</div>-->
-      <!--</ion-slide>-->
-      <!--<ion-slide>-->
-        <!--<div class="history-page month-slide" ng-click="setMonthArrays(12)">December</div>-->
-      <!--</ion-slide>-->
-   <!--</ion-slide-box>-->
-  <!--</div>-->
+<!--<div class="history-page month-slide-wrapper">-->
+<!--<ion-slide-box on-slide-changed="history-page">-->
+<!--&lt;!&ndash;slideHasChanged($index)&ndash;&gt;-->
+<!--<ion-slide>-->
+<!--<div class="history-page month-slide" ng-click="setMonthArrays(1)">January</div>-->
+<!--</ion-slide>-->
+<!--<ion-slide>-->
+<!--<div class="history-page month-slide" ng-click="setMonthArrays(2)">February</div>-->
+<!--</ion-slide>-->
+<!--<ion-slide>-->
+<!--<div class="history-page month-slide" ng-click="setMonthArrays(3)">March</div>-->
+<!--</ion-slide>-->
+<!--<ion-slide>-->
+<!--<div class="history-page month-slide" ng-click="setMonthArrays(4)">April</div>-->
+<!--</ion-slide>-->
+<!--<ion-slide>-->
+<!--<div class="history-page month-slide" ng-click="setMonthArrays(5)">May</div>-->
+<!--</ion-slide>-->
+<!--<ion-slide>-->
+<!--<div class="history-page month-slide" ng-click="setMonthArrays(6)">June</div>-->
+<!--</ion-slide>-->
+<!--<ion-slide>-->
+<!--<div class="history-page month-slide" ng-click="setMonthArrays(7)">July</div>-->
+<!--</ion-slide>-->
+<!--<ion-slide>-->
+<!--<div class="history-page month-slide" ng-click="setMonthArrays(8)">August</div>-->
+<!--</ion-slide>-->
+<!--<ion-slide>-->
+<!--<div class="history-page month-slide" ng-click="setMonthArrays(9)">September</div>-->
+<!--</ion-slide>-->
+<!--<ion-slide>-->
+<!--<div class="history-page month-slide" ng-click="setMonthArrays(10)">October</div>-->
+<!--</ion-slide>-->
+<!--<ion-slide>-->
+<!--<div class="history-page month-slide" ng-click="setMonthArrays(11)">November</div>-->
+<!--</ion-slide>-->
+<!--<ion-slide>-->
+<!--<div class="history-page month-slide" ng-click="setMonthArrays(12)">December</div>-->
+<!--</ion-slide>-->
+<!--</ion-slide-box>-->
+<!--</div>-->
 
 
-  <!--<div class="history-page bubble-wrapper">-->
+<!--<div class="history-page bubble-wrapper">-->
 <!--<ion-content class="history-page BarCtrl has-header" ng-controller="HistoryCtrl">-->
-  <!--<div class="history-page month-slide-wrapper">-->
-    <!--<ion-slide-box on-slide-changed="history-page">-->
-      <!--&lt;!&ndash;slideHasChanged($index)&ndash;&gt;-->
-      <!--<ion-slide>-->
-        <!--<div class="history-page month-slide" ng-click="setMonthArrays(1)">January</div>-->
-      <!--</ion-slide>-->
-      <!--<ion-slide>-->
-        <!--<div class="history-page month-slide" ng-click="setMonthArrays(2)">February</div>-->
-      <!--</ion-slide>-->
-      <!--<ion-slide>-->
-        <!--<div class="history-page month-slide" ng-click="setMonthArrays(3)">March</div>-->
-      <!--</ion-slide>-->
-      <!--<ion-slide>-->
-        <!--<div class="history-page month-slide" ng-click="setMonthArrays(4)">April</div>-->
-      <!--</ion-slide>-->
-      <!--<ion-slide>-->
-        <!--<div class="history-page month-slide" ng-click="setMonthArrays(5)">May</div>-->
-      <!--</ion-slide>-->
-      <!--<ion-slide>-->
-        <!--<div class="history-page month-slide" ng-click="setMonthArrays(6)">June</div>-->
-      <!--</ion-slide>-->
-      <!--<ion-slide>-->
-        <!--<div class="history-page month-slide" ng-click="setMonthArrays(7)">July</div>-->
-      <!--</ion-slide>-->
-      <!--<ion-slide>-->
-        <!--<div class="history-page month-slide" ng-click="setMonthArrays(8)">August</div>-->
-      <!--</ion-slide>-->
-      <!--<ion-slide>-->
-        <!--<div class="history-page month-slide" ng-click="setMonthArrays(9)">September</div>-->
-      <!--</ion-slide>-->
-      <!--<ion-slide>-->
-        <!--<div class="history-page month-slide" ng-click="setMonthArrays(10)">October</div>-->
-      <!--</ion-slide>-->
-      <!--<ion-slide>-->
-        <!--<div class="history-page month-slide" ng-click="setMonthArrays(11)">November</div>-->
-      <!--</ion-slide>-->
-      <!--<ion-slide>-->
-        <!--<div class="history-page month-slide" ng-click="setMonthArrays(12)">December</div>-->
-      <!--</ion-slide>-->
-   <!--</ion-slide-box>-->
-  <!--</div>-->
+<!--<div class="history-page month-slide-wrapper">-->
+<!--<ion-slide-box on-slide-changed="history-page">-->
+<!--&lt;!&ndash;slideHasChanged($index)&ndash;&gt;-->
+<!--<ion-slide>-->
+<!--<div class="history-page month-slide" ng-click="setMonthArrays(1)">January</div>-->
+<!--</ion-slide>-->
+<!--<ion-slide>-->
+<!--<div class="history-page month-slide" ng-click="setMonthArrays(2)">February</div>-->
+<!--</ion-slide>-->
+<!--<ion-slide>-->
+<!--<div class="history-page month-slide" ng-click="setMonthArrays(3)">March</div>-->
+<!--</ion-slide>-->
+<!--<ion-slide>-->
+<!--<div class="history-page month-slide" ng-click="setMonthArrays(4)">April</div>-->
+<!--</ion-slide>-->
+<!--<ion-slide>-->
+<!--<div class="history-page month-slide" ng-click="setMonthArrays(5)">May</div>-->
+<!--</ion-slide>-->
+<!--<ion-slide>-->
+<!--<div class="history-page month-slide" ng-click="setMonthArrays(6)">June</div>-->
+<!--</ion-slide>-->
+<!--<ion-slide>-->
+<!--<div class="history-page month-slide" ng-click="setMonthArrays(7)">July</div>-->
+<!--</ion-slide>-->
+<!--<ion-slide>-->
+<!--<div class="history-page month-slide" ng-click="setMonthArrays(8)">August</div>-->
+<!--</ion-slide>-->
+<!--<ion-slide>-->
+<!--<div class="history-page month-slide" ng-click="setMonthArrays(9)">September</div>-->
+<!--</ion-slide>-->
+<!--<ion-slide>-->
+<!--<div class="history-page month-slide" ng-click="setMonthArrays(10)">October</div>-->
+<!--</ion-slide>-->
+<!--<ion-slide>-->
+<!--<div class="history-page month-slide" ng-click="setMonthArrays(11)">November</div>-->
+<!--</ion-slide>-->
+<!--<ion-slide>-->
+<!--<div class="history-page month-slide" ng-click="setMonthArrays(12)">December</div>-->
+<!--</ion-slide>-->
+<!--</ion-slide-box>-->
+<!--</div>-->
 
 
-  <!--<div class="history-page bubble-wrapper">-->
-    <!--<div class="history-page left-bubble-box">-->
-      <!--<p class="history-page label">Money Raised</p>-->
-      <!--<p class="history-page value">$7.80</p>-->
-    <!--</div>-->
-    <!--<div class="history-page center-bubble-box">-->
-      <!--<p class="history-page label">Total Distance</p>-->
-      <!--<p class="history-page value">{{monthTotalDistance}}</p>-->
-      <!--<p class="history-page units">miles</p>-->
-    <!--</div>-->
+<!--<div class="history-page bubble-wrapper">-->
+<!--<div class="history-page left-bubble-box">-->
+<!--<p class="history-page label">Money Raised</p>-->
+<!--<p class="history-page value">$7.80</p>-->
+<!--</div>-->
+<!--<div class="history-page center-bubble-box">-->
+<!--<p class="history-page label">Total Distance</p>-->
+<!--<p class="history-page value">{{monthTotalDistance}}</p>-->
+<!--<p class="history-page units">miles</p>-->
+<!--</div>-->
 
-    <!--<div class="history-page right-bubble-box">-->
-      <!--<p class="history-page label">Average Pace</p>-->
-      <!--<p class="history-page value">{{monthAveragePace}}</p>-->
-      <!--<p class="history-page units">min:mile</p>-->
-    <!--</div>-->
+<!--<div class="history-page right-bubble-box">-->
+<!--<p class="history-page label">Average Pace</p>-->
+<!--<p class="history-page value">{{monthAveragePace}}</p>-->
+<!--<p class="history-page units">min:mile</p>-->
+<!--</div>-->
 
-  <!--</div>-->
+<!--</div>-->
 
-  <!--<div class="week-buttons-wrapper">-->
-    <!--<div class="row">-->
-      <!--<div class="col col-40" style="text-align: right">-->
-        <!--<button class="button left-button" ng-click="decrementWeek()"></button>-->
-      <!--</div>-->
-      <!--<div class="col col-20 col-center">-->
-        <!--{{displayDayOne}} - {{displayDaySeven}}-->
+<!--<div class="week-buttons-wrapper">-->
+<!--<div class="row">-->
+<!--<div class="col col-40" style="text-align: right">-->
+<!--<button class="button left-button" ng-click="decrementWeek()"></button>-->
+<!--</div>-->
+<!--<div class="col col-20 col-center">-->
+<!--{{displayDayOne}} - {{displayDaySeven}}-->
 
-      <!--</div>-->
-      <!--<div class="history-page col col-40" style="text-align: left">-->
-        <!--<button class="history-page button right-button"></button>-->
-      <!--</div>-->
-    <!--</div>-->
-  <!--</div>-->
-
-
+<!--</div>-->
+<!--<div class="history-page col col-40" style="text-align: left">-->
+<!--<button class="history-page button right-button"></button>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
 
 
-  <!--&lt;!&ndash;<div class="history-page card">&ndash;&gt;-->
-  <!--<div class="history-page card">-->
-    <!--<canvas id="bar"-->
-            <!--class="chart chart-bar"-->
-            <!--width="300"-->
-            <!--height="325"-->
-            <!--chart-data="data"-->
-            <!--chart-labels="labels"-->
-            <!--chart-series="series"-->
-            <!--chart-colors="colors"-->
-            <!--chart-options="options"-->
-            <!--chart-click="onClick">-->
-    <!--</canvas>-->
-  <!--</div>-->
-  <!--&lt;!&ndash;</div>&ndash;&gt;-->
 
 
-  <!--&lt;!&ndash;-->
-      <!--<ion-content class="chart-view">-->
-        <!--<div class="card">-->
-          <!--<canvas id="bar" class="chart chart-bar" data="data" labels="labels" legend="true" series="series" options="{showTooltips: false}"></canvas>-->
-        <!--</div>-->
-      <!--</ion-content>-->
-  <!--&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="history-page card">&ndash;&gt;-->
+<!--<div class="history-page card">-->
+<!--<canvas id="bar"-->
+<!--class="chart chart-bar"-->
+<!--width="300"-->
+<!--height="325"-->
+<!--chart-data="data"-->
+<!--chart-labels="labels"-->
+<!--chart-series="series"-->
+<!--chart-colors="colors"-->
+<!--chart-options="options"-->
+<!--chart-click="onClick">-->
+<!--</canvas>-->
+<!--</div>-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;-->
+<!--<ion-content class="chart-view">-->
+<!--<div class="card">-->
+<!--<canvas id="bar" class="chart chart-bar" data="data" labels="labels" legend="true" series="series" options="{showTooltips: false}"></canvas>-->
+<!--</div>-->
+<!--</ion-content>-->
+<!--&ndash;&gt;-->
 
 <!--</ion-content>-->

@@ -87,11 +87,13 @@ angular.module('starter.controllers', ['starter.appServices',
           //$rootScope.setCharity(charity);
           $rootScope.setEmail(email);
           console.log("data:" + JSON.stringify(data));
-          var name =data.name.first + data.name.last;
+          var name =data.user.name.first + data.user.name.last;
           console.log('name: ' + name);
 
           $rootScope.setName(name);
-
+          $rootScope.setToken(data.token);
+          $rootScope.setUserId(data.user._id);
+          $rootScope.$broadcast("initial");
           $window.location.href  = ('#/app/charities');
         })
         .error(function(error){
@@ -219,6 +221,7 @@ angular.module('starter.controllers', ['starter.appServices',
           console.log('User id local storage set: ' + $rootScope.getUserId());
           $rootScope.setToken(data.token);
           console.log("token: " + data.token);
+          $rootScope.setAvatar(data.user.avatar);
 
           // console.log(data.user.charityName);
           if(data.user.charityName == undefined || data.user.charityName == ""){
@@ -239,8 +242,9 @@ angular.module('starter.controllers', ['starter.appServices',
           // console.log('selectedCharity local storage set: ' + $rootScope.getSelectedCharity());
 
           $rootScope.hide();
-
+          $rootScope.$broadcast("initial");
           $window.location.href=('#/app/run');
+
         })
         .error(function(error){
           $rootScope.hide();
@@ -256,10 +260,15 @@ angular.module('starter.controllers', ['starter.appServices',
               access_token: response.authResponse.accessToken
             }).success(function(data, status, headers, config){
               $rootScope.hide();
-              $rootScope.setUserId(data._id);
+              $rootScope.setUserId(data.user._id);
               console.log('User id: ' + $rootScope.getUserId());
+              $rootScope.setToken(data.token);
+              $rootScope.setName(data.user.facebook.firstname + ' ' + data.user.facebook.lastname);
+              console.log("facebook name: " + $rootScope.getName());
+              $rootScope.setAvatar(data.user.facebook.avatar);
+              console.log("facebook avatar: " + $rootScope.getAvatar());
+              $rootScope.$broadcast("initial");
               $window.location.href=('#/app/charities');
-
             }).error(function(error){
               console.log("AuthAPI.signinByFB failed:" + error);
               $rootScope.hide();
@@ -284,10 +293,14 @@ angular.module('starter.controllers', ['starter.appServices',
                 access_token: authResult.access_token
               }).success(function(data, status, headers, config){
                 $rootScope.hide();
-                $rootScope.setUserId(data._id);
-                $rootScope.setEmail(data.email);
+                $rootScope.setUserId(data.user._id);
+                $rootScope.setEmail(data.user.email);
                 console.log('User email: ' + $rootScope.getEmail());
                 console.log('User id: ' + $rootScope.getUserId());
+                $rootScope.setToken(data.token);
+                $rootScope.setName(data.user.google.firstname + ' ' + data.user.google.lastname);
+                $rootScope.setAvatar(data.user.google.avatar);
+                $rootScope.$broadcast("initial");
                 $window.location.href=('#/app/charities');
               }).error(function(error){
                 console.log("AuthAPI.signinByFB failed:" + error);
@@ -1825,14 +1838,9 @@ angular.module('starter.controllers', ['starter.appServices',
     };
 
     $rootScope.$on('fetchMySponsors', function() {
-      DonationAPI.getAllSponsors($rootScope.getToken(),
-        "577525799f1f51030075a291"
-      )
-        .success(function(data, status, headers, config){
+      DonationAPI.getAllSponsors($rootScope.getUserId()).success(function(data, status, headers, config){
         $scope.sponsors = [];
         $scope.moneyRaisedHolder = [];
-
-
 
         if(data.length == 0) {
          return $scope.noSponsor = true;
@@ -1863,7 +1871,7 @@ angular.module('starter.controllers', ['starter.appServices',
     });
 
     $rootScope.$on('fetchMyPledges',function(){
-      DonationAPI.getAllPledges($rootScope.getToken(),"577525799f1f51030075a292").success(function(data, status, headers, config){
+      DonationAPI.getAllPledges($rootScope.getUserId()).success(function(data, status, headers, config){
         $scope.pledges = [];
         for (var i = 0; i < data.length; i++) {
           $scope.pledges.push(data[i]);
@@ -1905,7 +1913,8 @@ angular.module('starter.controllers', ['starter.appServices',
 
     //log out
     $scope.logout = function() {
-      $rootScope.removeToken();
+      $rootScope.clearAll();
+      $rootScope.$broadcast('destroy');
       $window.location.href = "#/auth/signin";
     }
 
@@ -2042,6 +2051,23 @@ angular.module('starter.controllers', ['starter.appServices',
 
   .controller('MyDonationCtrl',function($rootScope, $scope, $filter, $window, $ionicModal, $cordovaSms, $cordovaSocialSharing,DonationAPI,AuthAPI){
 
+
+    $rootScope.$on('initial', function(){
+        console.log("---------start donation ctrl initial---------");
+        $scope.username = $rootScope.getName();
+        $scope.avatar = $rootScope.getAvatar();
+        console.log("---------end donation ctrl initial---------");
+    });
+
+    $rootScope.$on('destroy', function(){
+        console.log("---------start donation ctrl destroy---------");
+        $scope.username = undefined;
+        $scope.avatar = undefined;
+        console.log("---------end donation ctrl destroy---------");
+    });
+
+    $rootScope.$broadcast('initial');
+
     $scope.managePledges = function() {
       $rootScope.$broadcast('fetchMyPledges');
       $window.location.href = "#/app/myPledges";
@@ -2080,7 +2106,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
     $scope.openModal = function($event) {
       console.log("try open the modal");
-      DonationAPI.inviteSponsor("token",{
+      DonationAPI.inviteSponsor({
         // charity:"5771430bdcba0f275f2a0a5e",
         // userId:"577525799f1f51030075a291"
         //might have to cast these to strings?
@@ -2235,7 +2261,7 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.user = {
       email: ""
     };
-    $scope.updateDonation = function(status, response) {
+    $scope.completeSponsor = function(status, response) {
 
       var email = this.user.email;
       if(!email) {
@@ -2253,7 +2279,7 @@ angular.module('starter.controllers', ['starter.appServices',
           amount: store.get('donor.amount'),
           months: store.get('donor.months'),
           stripeToken: response.id,
-          userId: '576d5555765c85f11c7f0ca1'
+          userId: $rootScope.getUserId()
         }).success(function (data){
           $window.location.href = ('#/app/inviteSponsor/end');
         }).error(function (err,status){
@@ -2274,40 +2300,46 @@ angular.module('starter.controllers', ['starter.appServices',
   })
 
   .controller('AccountCtrl', function($rootScope, AuthAPI, UserAPI, $window, $scope) {
-    //refresh on page load?
-    //Profile Picture - edit
-    //Name- cannot edit
-    //Email -edit
-    //Password (hashed)
-    //DOB-cannot edit
 
-    //password should redirect to new page to enter old password/ could have dropdown?
+    $rootScope.$on('initial', function(){
+        console.log("---------start account ctrl initial---------");
+
+        $scope.user = {
+          email: "",
+          name: "",
+          password: "",
+          charity: {},
+          history: [],
+          provider: "",
+          past_donations_from: [],
+          past_donations_to: [],
+          donations_to: [],
+          donations_from: [],
+          past_charities: [],
+          created: Date,
+          updated: Date
+
+        };
+
+        $scope.user.name = $rootScope.getName();
+        console.log('user name set as: ' + $scope.user.name);
+        $scope.user.email = $rootScope.getEmail();
+        console.log('user email set as: '+ $scope.user.email);
+        $scope.user.password = $rootScope.getPassword();
+        console.log('user password set as: ' + $scope.user.password);
 
 
+        console.log("--------end account ctrl initial---------");
+    });
 
-    $scope.user = {
-      email: "",
-      name: "",
-      password: "",
-      charity: {},
-      history: [],
-      provider: "",
-      past_donations_from: [],
-      past_donations_to: [],
-      donations_to: [],
-      donations_from: [],
-      past_charities: [],
-      created: Date,
-      updated: Date
+    $rootScope.$on('destroy', function(){
+        console.log("---------start account ctrl destroy---------");
+        $scope.user = undefined;
+        console.log("---------end account ctrl destroy---------");
+    });
 
-    };
-
-    $scope.user.name = $rootScope.getName();
-    console.log('user name set as: ' + $scope.user.name);
-    $scope.user.email = $rootScope.getEmail();
-    console.log('user email set as: '+ $scope.user.email);
-    $scope.user.password = $rootScope.getPassword();
-    console.log('user password set as: ' + $scope.user.password);
+    // do the initial at first time when the controller load, only just once~
+    $rootScope.$broadcast('initial');
 
     $scope.updateAccount = function () {
       var name = this.account.firstName + ' ' + this.account.lastName;

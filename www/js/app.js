@@ -39,7 +39,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
           return {
            'request': function(config) {
                 config.headers['authorization'] = $cookies.get('token');
-                console.log("interceptor called 1: " + config.headers['Token']);
                 return config;
             }
           };
@@ -53,7 +52,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
         abstract: true,
         templateUrl: "templates/auth.html"
       })
-
       .state('auth.signin', {
         url:'/signin',
         views: {
@@ -134,7 +132,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
       })
 
       .state('app.inviteSponsor-start',{
-        url:'/inviteSponsor/start',
+        url:'/inviteSponsor/start/:requestId',
         views: {
           'menuContent': {
             templateUrl:'templates/inviteSponsor-start.html',
