@@ -3,9 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="d0076dda-8c41-4857-9985-cb57b0305d51" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/css/pledges.css" afterPath="$PROJECT_DIR$/www/css/pledges.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/css/sponsor.css" afterPath="$PROJECT_DIR$/www/css/sponsor.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/myPledges.html" afterPath="$PROJECT_DIR$/www/templates/myPledges.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/css/history-day.css" afterPath="$PROJECT_DIR$/www/css/history-day.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/history-day.html" afterPath="$PROJECT_DIR$/www/templates/history-day.html" />
     </list>
     <ignored path="charities.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,23 +26,25 @@
     <splitter split-orientation="horizontal" split-proportion="0.5">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="pledges.css" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/www/css/pledges.css">
+          <file leaf-file-name="controllers.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="360">
-                  <caret line="47" column="0" selection-start-line="47" selection-start-column="0" selection-end-line="49" selection-end-column="19" />
+                <state relative-caret-position="242">
+                  <caret line="2717" column="23" selection-start-line="2717" selection-start-column="0" selection-end-line="2718" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="myPledges.html" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/www/templates/myPledges.html">
+          <file leaf-file-name="history-day.html" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/www/templates/history-day.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="255">
-                  <caret line="17" column="15" selection-start-line="17" selection-start-column="15" selection-end-line="17" selection-end-column="15" />
+                <state relative-caret-position="371">
+                  <caret line="114" column="58" selection-start-line="114" selection-start-column="58" selection-end-line="114" selection-end-column="58" />
                   <folding>
-                    <element signature="n#style#0;n#span#0;n#button#0;n#ion-nav-buttons#0;n#ion-view#0;n#!!top" expanded="true" />
+                    <element signature="n#style#0;n#div#1;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+                    <element signature="n#style#0;n#hr#0;n#div#0;n#ion-slide-page#0;n#ion-slides#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+                    <element signature="n#style#0;n#hr#2;n#div#0;n#ion-slide-page#0;n#ion-slides#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -53,21 +54,11 @@
       </split-first>
       <split-second>
         <leaf>
-          <file leaf-file-name="sponsor.css" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/www/css/sponsor.css">
+          <file leaf-file-name="history-day.css" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/www/css/history-day.css">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="420">
-                  <caret line="49" column="19" selection-start-line="49" selection-start-column="19" selection-end-line="49" selection-end-column="19" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="mySponsors.html" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/www/templates/mySponsors.html">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="435">
-                  <caret line="29" column="12" selection-start-line="29" selection-start-column="12" selection-end-line="29" selection-end-column="12" />
+                <state relative-caret-position="356">
+                  <caret line="84" column="17" selection-start-line="84" selection-start-column="17" selection-end-line="84" selection-end-column="17" />
                   <folding />
                 </state>
               </provider>
@@ -102,22 +93,22 @@
         <option value="$PROJECT_DIR$/www/js/charityServices.js" />
         <option value="$PROJECT_DIR$/www/templates/run.html" />
         <option value="$PROJECT_DIR$/www/css/history.css" />
-        <option value="$PROJECT_DIR$/www/css/history-day.css" />
         <option value="$PROJECT_DIR$/www/templates/history.html" />
         <option value="$PROJECT_DIR$/www/css/style.css" />
         <option value="$PROJECT_DIR$/www/index.html" />
         <option value="$PROJECT_DIR$/www/templates/menu.html" />
-        <option value="$PROJECT_DIR$/www/templates/history-day.html" />
         <option value="$PROJECT_DIR$/www/templates/accountInfo.html" />
         <option value="$PROJECT_DIR$/www/css/accountinfo.css" />
         <option value="$PROJECT_DIR$/www/css/inviteSponsor.css" />
         <option value="$PROJECT_DIR$/www/templates/inviteSponsor.html" />
-        <option value="$PROJECT_DIR$/www/js/controllers.js" />
         <option value="$PROJECT_DIR$/www/templates/mySponsors.html" />
         <option value="$PROJECT_DIR$/www/templates/auth-signin.html" />
         <option value="$PROJECT_DIR$/www/templates/myPledges.html" />
         <option value="$PROJECT_DIR$/www/css/pledges.css" />
         <option value="$PROJECT_DIR$/www/css/sponsor.css" />
+        <option value="$PROJECT_DIR$/www/js/controllers.js" />
+        <option value="$PROJECT_DIR$/www/css/history-day.css" />
+        <option value="$PROJECT_DIR$/www/templates/history-day.html" />
       </list>
     </option>
   </component>
@@ -364,12 +355,12 @@
       <workItem from="1469548844495" duration="119000" />
       <workItem from="1469562200310" duration="171000" />
       <workItem from="1469566977445" duration="1532000" />
-      <workItem from="1469631607521" duration="6197000" />
+      <workItem from="1469631607521" duration="8347000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="47667000" />
+    <option name="totallyTimeSpent" value="49817000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1680" y="23" width="1874" height="1057" extended-state="6" />
@@ -457,12 +448,8 @@
           <caret line="37" column="12" selection-start-line="37" selection-start-column="12" selection-end-line="37" selection-end-column="12" />
           <folding>
             <element signature="n#style#0;n#div#1;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
-            <element signature="n#div#0;n#ion-slide-page#0;n#ion-slides#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#hr#0;n#div#0;n#ion-slide-page#0;n#ion-slides#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#hr#2;n#div#0;n#ion-slide-page#0;n#ion-slides#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#2;n#div#0;n#ion-slide-page#0;n#ion-slides#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#div#2;n#div#0;n#ion-slide-page#0;n#ion-slides#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#3;n#div#0;n#div#0;n#div#2;n#div#0;n#ion-slide-page#0;n#ion-slides#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -631,13 +618,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/css/history-day.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
@@ -724,22 +704,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/history-day.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="55" column="17" selection-start-line="55" selection-start-column="16" selection-end-line="55" selection-end-column="17" />
-          <folding>
-            <element signature="n#style#0;n#div#1;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
-            <element signature="n#div#0;n#ion-slide-page#0;n#ion-slides#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#hr#0;n#div#0;n#ion-slide-page#0;n#ion-slides#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#hr#2;n#div#0;n#ion-slide-page#0;n#ion-slides#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#2;n#div#0;n#ion-slide-page#0;n#ion-slides#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#div#2;n#div#0;n#ion-slide-page#0;n#ion-slides#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#3;n#div#0;n#div#0;n#div#2;n#div#0;n#ion-slide-page#0;n#ion-slides#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/js/authServices.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -752,14 +716,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="435">
           <caret line="29" column="12" selection-start-line="29" selection-start-column="12" selection-end-line="29" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="347">
-          <caret line="272" column="31" selection-start-line="272" selection-start-column="25" selection-end-line="272" selection-end-column="31" />
           <folding />
         </state>
       </provider>
@@ -792,8 +748,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/www/css/pledges.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="47" column="0" selection-start-line="47" selection-start-column="0" selection-end-line="49" selection-end-column="19" />
+        <state relative-caret-position="480">
+          <caret line="55" column="20" selection-start-line="55" selection-start-column="20" selection-end-line="55" selection-end-column="20" />
           <folding />
         </state>
       </provider>
@@ -803,6 +759,34 @@
         <state relative-caret-position="420">
           <caret line="49" column="19" selection-start-line="49" selection-start-column="19" selection-end-line="49" selection-end-column="19" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="2717" column="23" selection-start-line="2717" selection-start-column="0" selection-end-line="2718" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/css/history-day.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="356">
+          <caret line="84" column="17" selection-start-line="84" selection-start-column="17" selection-end-line="84" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/history-day.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="371">
+          <caret line="114" column="58" selection-start-line="114" selection-start-column="58" selection-end-line="114" selection-end-column="58" />
+          <folding>
+            <element signature="n#style#0;n#div#1;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#hr#0;n#div#0;n#ion-slide-page#0;n#ion-slides#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#hr#2;n#div#0;n#ion-slide-page#0;n#ion-slides#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

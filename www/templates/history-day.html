@@ -102,19 +102,19 @@
           <hr style="margin:0; height:2px;">
 
           <div class="list">
-            <div class="item history-day-page splits">
+            <div class="item history-day-page splits title">
               <div class="row">
-                <div class="col-25 history-day-page">Splits</div>
-                <div class="col-25 history-day-page" style="font-size: small;">Distance</div>
-                <div class="col-25 history-day-page" style="font-size: small;">Time</div>
-                <div class="col-25 history-day-page" style="font-size: small;">Pace</div>
+                <div class="col-25 history-day-page">Lap</div>
+                <div class="col-25 history-day-page">Distance</div>
+                <div class="col-25 history-day-page">Time</div>
+                <div class="col-25 history-day-page">Pace</div>
               </div>
             </div>
-              <div class="item history-day-page splits" >
+              <div class="item history-day-page splits values" >
                 <div class="row" ng-repeat="lap in dayLapsForm">
                   <div class="col-25 history-day-page">{{lap.number}}</div>
                   <div class="col-25 history-day-page">{{lap.distance}}</div>
-                  <div class="col-25 history-day-page"> {{lap.time}}</div>
+                  <div class="col-25 history-day-page">{{lap.time}}</div>
                   <div class="col-25 history-day-page">{{lap.pace}}</div>
                 </div>
               </div>
