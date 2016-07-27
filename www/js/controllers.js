@@ -2372,8 +2372,7 @@ angular.module('starter.controllers', ['starter.appServices',
   $scope.dayLapsForm = [{
     number: String,
     distance: String,
-    seconds: String,
-    minutes: String,
+    time: String,
     pace: String
   }];
 
@@ -2384,6 +2383,8 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.dayDisplayMoneyRaised = moneyRaised;
     $scope.dayDisplayPath = path;
     $scope.dayDisplayLaps = laps;
+
+
 
     console.log('setValuesForHistoryDayView: path: ' + path);
     console.log('setValuesForHistoryDayView: $scope.dayDisplayForPath : ' + $scope.dayDisplayPath);
@@ -2398,6 +2399,8 @@ angular.module('starter.controllers', ['starter.appServices',
     console.log('setValuesForHistoryDayView: $scope.dayDisplayLaps.seconds: ' + $scope.dayDisplayLaps.seconds);
     console.log('setValuesForHistoryDayView: $scope.dayDisplayLaps.minutes: ' + $scope.dayDisplayLaps.minutes);
     console.log('setValuesForHistoryDayView: $scope.dayDisplayLaps.pace: ' + $scope.dayDisplayLaps.pace);
+
+    //split differently -> lap all one object, lap in laps, lap.number
 
     console.log('setValuesForHistoryDayView: $scope.dayDisplayPath.lat.length: ' + $scope.dayDisplayPath.lat.length);
     var latSplit = $scope.dayDisplayPath.lat.toString().split(',');
@@ -2414,34 +2417,47 @@ angular.module('starter.controllers', ['starter.appServices',
     var lapMinutesSplit = $scope.dayDisplayLaps.minutes.toString().split(',');
     var lapPaceSplit = $scope.dayDisplayLaps.pace.toString().split(',');
     console.log('setValuesForHistoryDayView: lapNumberSplit.length: ' + lapNumberSplit.length);
+    console.log('setValuesForHistoryDayView: lapNumberSplit: ' + lapNumberSplit);
+    console.log('setValuesForHistoryDayView: lapDistancesSplit: ' + lapDistancesSplit);
+    console.log('setValuesForHistoryDayView: lapSecondsSplit: ' + lapSecondsSplit);
+    console.log('setValuesForHistoryDayView: lapMinutesSplit: ' + lapMinutesSplit);
+    console.log('setValuesForHistoryDayView: lapPaceSplit: ' + lapPaceSplit);
+    lapNumberSplit.shift();
+    console.log('setValuesForHistoryDayView: lapNumberSplit: ' + lapNumberSplit);
+    console.log('setValuesForHistoryDayView: lapNumberSplit.length: ' + lapNumberSplit.length);
+    lapDistancesSplit.shift();
+    lapSecondsSplit.shift();
+    lapMinutesSplit.shift();
+    lapPaceSplit.shift();
 
 
-
-    for (var i = 1; i < lapNumberSplit.length; i++) {
+    for (var i = 0; i < lapNumberSplit.length; i++) {
       console.log('setValuesForHistoryDayView: lapNumberSplit['+i+']: ' + lapNumberSplit[i]);
       console.log('setValuesForHistoryDayView: lapDistancesSplit['+i+']: ' + lapDistancesSplit[i]);
       console.log('setValuesForHistoryDayView: lapSecondsSplit['+i+']: ' + lapSecondsSplit[i]);
       console.log('setValuesForHistoryDayView: lapMinutesSplit['+i+']: ' + lapMinutesSplit[i]);
       console.log('setValuesForHistoryDayView: lapPaceSplit['+i+']: ' + lapPaceSplit[i]);
 
-     $scope.dayLapsForm.push({lap: {number: lapNumberSplit[i], distance: lapDistancesSplit[i],
-       seconds: lapSecondsSplit[i], minutes: lapMinutesSplit[i],
-                            pace: lapPaceSplit[i]}});
-      console.log('setValuesForHistoryDayView: $scope.dayLaps: ' + $scope.dayLapsForm[i].lap.number);
-      console.log('setValuesForHistoryDayView: $scope.dayLaps.length: ' + $scope.dayLapsForm.lap.length);
+      var time = lapMinutesSplit[i] + ':' + lapSecondsSplit[i];
+      console.log('time: '+ time);
+
+     $scope.dayLapsForm.push( {number: lapNumberSplit[i], distance: lapDistancesSplit[i],
+       time: time,  pace: lapPaceSplit[i]});
+      console.log('setValuesForHistoryDayView: $scope.dayLaps: ' + $scope.dayLapsForm);
+      console.log('setValuesForHistoryDayView: $scope.dayLaps.length: ' + $scope.dayLapsForm);
 
     }
 
     console.log('setValuesForHistoryDayView: $scope.dayLaps.length: ' + $scope.dayLapsForm.length);
-    $scope.dayLapsForm.shift();
+    // $scope.dayLapsForm.shift();
 
-    for(var x = 0; x < $scope.dayLapsForm.length; x++){
-      console.log('setValuesForHistoryDayView: $scope.dayLaps.length: ' + $scope.dayLapsForm.length);
-      $scope.dayLaps.push($scope.dayLapsForm[x+1]);
-      console.log('$scope.dayLaps: ' + $scope.dayLaps);
-      console.log('$scope.dayLaps['+x+']: ' + $scope.dayLaps[x]);
-      console.log('$scope.dayLaps.number: ' + $scope.dayLaps.number);
-    }
+    // for(var x = 0; x < $scope.dayLapsForm.length; x++){
+    //   console.log('setValuesForHistoryDayView: $scope.dayLaps.length: ' + $scope.dayLapsForm.length);
+    //   $scope.dayLaps.push($scope.dayLapsForm[x]);
+    //   console.log('$scope.dayLaps.lap: ' + $scope.dayLaps[x].lap);
+    //   console.log('$scope.dayLaps.lap.number]: ' + $scope.dayLaps[x].number);
+    //   console.log('$scope.dayLaps.number: ' + $scope.dayLaps.lap);
+    // }
 
 
 
@@ -2669,6 +2685,7 @@ angular.module('starter.controllers', ['starter.appServices',
             console.log('$scope.laps: ' + $scope.laps);
             console.log('$scope.laps['+i+'].number: ' + $scope.laps[i].number);
 
+
             var formattedDatesWithTime = $scope.dates[i];
             console.log('formattedDatesWithTime: ' + formattedDatesWithTime);
             var formattedSplitDate1 = formattedDatesWithTime.toString().split('T');
@@ -2694,6 +2711,10 @@ angular.module('starter.controllers', ['starter.appServices',
 
           console.log('Today value from inside HistoryAPI call: ' + today);
           $scope.getWeekDatesOnLoad();
+
+          console.log('setDayValues: $scope.laps pre shift: ' + $scope.laps[0]);
+
+          console.log('setDayValues: $scope.laps post shift: ' + $scope.laps[0]);
 
           // console.log('path length: ' + data.path.length);
 
@@ -3046,6 +3067,8 @@ angular.module('starter.controllers', ['starter.appServices',
 
       // var counter = 0;
 
+
+
       for(var i =0; i<$scope.formattedDates.length; i++){
 
         if(date == $scope.formattedDates[i]){
@@ -3069,6 +3092,7 @@ angular.module('starter.controllers', ['starter.appServices',
             console.log('setDayValues: $scope.thisDateRunDuration: ' + $scope.thisDateRunDuration);
           }
 
+          //
 
 
 

@@ -110,18 +110,14 @@
                 <div class="col-25 history-day-page" style="font-size: small;">Pace</div>
               </div>
             </div>
-            <!--<ion-list>-->
-              <ion-item ng-repeat="number in dayLapsForm">
-                <div class="item history-day-page splits">
-                  <div class="row">
-                    <div class="col-25 history-day-page"> {{number.number}} </div>
-                    <div class="col-25 history-day-page">{{distance}}</div>
-                    <div class="col-25 history-day-page"> {{seconds}}</div>
-                    <div class="col-25 history-day-page">{{pace}}</div>
-                  </div>
+              <div class="item history-day-page splits" >
+                <div class="row" ng-repeat="lap in dayLapsForm">
+                  <div class="col-25 history-day-page">{{lap.number}}</div>
+                  <div class="col-25 history-day-page">{{lap.distance}}</div>
+                  <div class="col-25 history-day-page"> {{lap.time}}</div>
+                  <div class="col-25 history-day-page">{{lap.pace}}</div>
                 </div>
-              </ion-item>
-            <!--</ion-list>-->
+              </div>
           </div>
         </div>
       </ion-slide-page>
