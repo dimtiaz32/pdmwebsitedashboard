@@ -26,24 +26,24 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
     });
   })
 
-// TODO google application id, need to replace whenr release
-.config(['GooglePlusProvider', function(GooglePlusProvider) {
-         GooglePlusProvider.init({
-           clientId: '69391540233-4b06qqevu0hc43puqta6ded42lbo1s0v.apps.googleusercontent.com',
-           apiKey: 'AIzaSyBPjBC7a_MQp40VadwHeInENsCKnDqxdsw'
-         });
+  // TODO google application id, need to replace whenr release
+  .config(['GooglePlusProvider', function(GooglePlusProvider) {
+    GooglePlusProvider.init({
+      clientId: '69391540233-4b06qqevu0hc43puqta6ded42lbo1s0v.apps.googleusercontent.com',
+      apiKey: 'AIzaSyBPjBC7a_MQp40VadwHeInENsCKnDqxdsw'
+    });
   }])
 
   .config(['$httpProvider', function($httpProvider) {
-      $httpProvider.interceptors.push(function($q, $cookies) {
-          return {
-           'request': function(config) {
-                config.headers['authorization'] = $cookies.get('token');
-                console.log("interceptor called 1: " + config.headers['Token']);
-                return config;
-            }
-          };
-        });
+    $httpProvider.interceptors.push(function($q, $cookies) {
+      return {
+        'request': function(config) {
+          config.headers['authorization'] = $cookies.get('token');
+          console.log("interceptor called 1: " + config.headers['Token']);
+          return config;
+        }
+      };
+    });
   }])
 
   .config(function($stateProvider, $urlRouterProvider) {

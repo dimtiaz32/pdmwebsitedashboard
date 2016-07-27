@@ -1,3 +1,5 @@
+
+
 .run-page.overlay {
   box-shadow:0 2px 6px rgba(0, 0, 0, .3);
 }
@@ -164,10 +166,6 @@ h2.run-page {
   text-align: center;
 
   padding-top: 0;
-}
-
-.run-page.detail {
-  transition: 0.1s all linear;
 }
 
 .run-page.overlay {
