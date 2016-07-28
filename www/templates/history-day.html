@@ -40,16 +40,6 @@
 
 <ion-view title="History">
 
-  <!--Insert to provide menu if it isnt already there-->
-  <ion-nav-buttons side="primary">
-    <div class="buttons buttons-left header-item">
-      <span class="left-buttons">
-        <button class="button button-icon button-clear button-white ion-navicon" menu-toggle="left">
-        </button>
-      </span>
-    </div>
-  </ion-nav-buttons>
-
   <ion-content class="history-day-page has-header">
     <div class="history-day-page date-header item item-button-right item-button-left">
       <button class="history-day-page date-header button button-icon icon ion-ios-arrow-thin-left" ng-click="back()"></button>
@@ -101,7 +91,7 @@
 
           <hr style="margin:0; height:2px;">
 
-
+          <div class="list">
             <div class="item history-day-page splits title">
               <div class="row">
                 <div class="col-25 history-day-page">Lap</div>
@@ -110,8 +100,8 @@
                 <div class="col-25 history-day-page">Pace</div>
               </div>
             </div>
-          <div class="list">
-            <div class="item history-day-page splits values" >
+
+            <div class="list-borderless history-day-page splits values" >
               <div class="row" ng-repeat="lap in dayLapsForm">
                 <div class="col-25 history-day-page">{{lap.number}}</div>
                 <div class="col-25 history-day-page">{{lap.distance}}</div>
