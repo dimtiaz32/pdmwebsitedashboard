@@ -70,6 +70,32 @@ hr.history-day-page {
   text-align: center;
 }
 
-.item.history-day-page.splits {
+
+.item.history-day-page.splits  {
   padding: 0;
 }
+
+  .item.history-day-page.splits.title .row{
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .item.history-day-page.splits .col-25.history-day-page {
+    font-family: HelveticaNeue-Light;
+    font-weight: lighter;
+    color: grey;
+    text-align: center;
+  }
+
+    .item.history-day-page.splits.title .col-25.history-day-page{
+      padding: 0;
+      font-size: small;
+      font-weight: 800;
+    }
+
+
+  .item.history-day-page.splits.values .row{
+    margin: 0;
+    /*padding: 7px 0 5px 0;*/
+    border-bottom: 1px solid lightgrey;
+  }
