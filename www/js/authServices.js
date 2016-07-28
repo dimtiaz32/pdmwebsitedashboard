@@ -52,13 +52,13 @@ angular.module('starter.authServices', ['ngCookies'])
     return $window.localStorage.email;
   };
 
-  $rootScope.setName = function(firstName, lastName){
-    return $window.localStorage.name = firstName + ' ' + lastName;
-  };
-
-  $rootScope.getName = function(){
-    return $window.localStorage.name;
-  };
+  // $rootScope.setName = function(firstName, lastName){
+  //   return $window.localStorage.name = firstName + ' ' + lastName;
+  // };
+	//
+  // $rootScope.getName = function(){
+  //   return $window.localStorage.name;
+  // };
 
   $rootScope.setPassword = function(password){
     return $window.localStorage.password = password;

@@ -10,21 +10,26 @@
       </div>
     </div>
     <!-- Switch to onclick spans -->
-    <div class="list">
+    <div class="account list">
       <label class="item item-input">
-        <span class="input-label"> Email </span>
-        <input type="email" ng-model="account.email" placeholder="{{user.email}}">
+        <span class="input-label">Email</span>
+        <input type="email" ng-class="editing" ng-model="user.email" placeholder="{{user.email}}" ng-change="formChanged()" onclick="this.select()">
       </label>
       <label class="item item-input">
         <span class="input-label">Password</span>
-        <input type="password" ng-model="account.password" placeholder="{{user.password}}" ng-click="showConfirmPassword()">
+        <input type="password" ng-model="user.password" placeholder="&bullet; &bullet; &bullet; &bullet; &bullet; &bullet; &bullet; &bullet; &bullet; &bullet;"
+               ng-click="showConfirmPassword()" onclick="this.select()">
       </label>
       <label class="item item-input">
         <span class="input-label">Date of Birth</span>
-        <input type="Date" ng-model="account.dob">
+        <input type="Date" ng-class="editing" ng-model="user.dob" ng-change="formChanged()" onclick="this.select()">
       </label>
+    </div>
     <button class="account button button-full button-positive" ng-click="logout()">
       Logout
+    </button>
+    <button class="account save button button-full button-positive" ng-hide="saveIsHidden" ng-click="save()">
+      Save
     </button>
   </ion-content>
 </ion-view>

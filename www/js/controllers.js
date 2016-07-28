@@ -2404,6 +2404,9 @@ angular.module('starter.controllers', ['starter.appServices',
       })
     }
 
+
+    //TODO: FIX PASSWORD RETURN – CURRENTLY RETURNS 'UNDEFINED'
+    //TODO: GET PASSWORD TO UPDATE ON SERVER
     $scope.showConfirmPassword = function(){
       var confirmPassword = $ionicPopup.show({
         template: '<input type="password" ng-model="popup.currentPasswordHolder">',
@@ -2416,10 +2419,13 @@ angular.module('starter.controllers', ['starter.appServices',
             text: 'Next',
             type: 'button-positive',
             onTap: function(e) {
-              var currentPassword = $rootScope.getPassword()
+              var currentPassword = $rootScope.getPassword();
+              console.log('Current Password: '+ currentPassword);
+              console.log($rootScope.getPassword());
               if (currentPassword != $scope.popup.currentPasswordHolder) {
-                $scope.showAlert('Oops!', "You didn't enter your current password")
-                e.preventDefault()
+                $scope.showAlert('Oops!', "You didn't enter your current password");
+                $scope.popup.currentPasswordHolder = "";
+                e.preventDefault();
               } else if (currentPassword == $scope.popup.currentPasswordHolder) {
                 $scope.popup.currentPasswordHolder = "";
                 $scope.showChangePassword();
@@ -2444,7 +2450,14 @@ angular.module('starter.controllers', ['starter.appServices',
             text: '<b>Change</b>',
             type: 'button-positive',
             onTap: function(e) {
-								if ($scope.popup.password1 == "") {
+								if ($scope.popup.password1 == $scope.popup.password2) {
+                  var newPassword = $scope.popup.password1;
+                  $scope.popup.password1 = "";
+                  $scope.popup.password2 = "";
+                  $scope.showAlert('Yay!','Password changed');
+                  $rootScope.setPassword(newPassword);
+                  console.log($rootScope.getPassword())
+                } else if ($scope.popup.password1 == "") {
                   $scope.showAlert('Oops!',"Don't leave any field blank!");
                   e.preventDefault();
                 } else if ($scope.popup.password1 == "") {
@@ -2456,18 +2469,51 @@ angular.module('starter.controllers', ['starter.appServices',
                   $scope.showAlert('Oops!','Passwords do not match');
                   e.preventDefault();
                 } else {
-                  var newPassword = $scope.popup.password1;
-                  $scope.popup.password1 = "";
-                  $scope.popup.password2 = "";
-                  $scope.showAlert('Yay!','Password changed');
-                  $rootScope.setPassword(newPassword);
-                  console.log($rootScope.getPassword())
+                  $scope.popup.password1="";
+                  $scope.popup.password2="";
+                  $scope.showAlert('Oops!',"You didn't enter passwords correctly");
+                  e.preventDefault();
                 }
             }
           }
         ]
       })
     }
+
+
+    //SAVE CHANGES
+    $scope.saveIsHidden = true;
+
+    $scope.formChanged = function() {
+      console.log("form is changed");
+
+      $scope.editing = 'editing'
+      $scope.saveIsHidden = false;
+    }
+
+    $scope.save = function() {
+      console.log($scope.user.email)
+
+      //TODO: check to see if it a valid email
+      $rootScope.setEmail($scope.user.email)
+
+      //make text gray and hide save button
+      $scope.editing = '';
+      $scope.saveIsHidden = true;
+      //TODO:NEED TO REFRESH SERVER WITH UPDATE
+    }
+
+    //Resetting changes if leave page before saving
+    $scope.$on("$ionicView.leave", function(){
+      console.log('leaving view');
+      console.log($scope.user.email);
+      console.log($rootScope.getEmail());
+      $scope.user.email = $rootScope.getEmail();
+
+      //make text gray and hide save button
+      $scope.editing = '';
+      $scope.saveIsHidden = true;
+    })
 
   })
 
