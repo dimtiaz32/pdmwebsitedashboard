@@ -2530,16 +2530,123 @@ angular.module('starter.controllers', ['starter.appServices',
   }
 
 
-  $scope.historyPolyCoords = [];
-  $scope.dayLaps = [];
-  $scope.dayLapsForm = [{
-    number: String,
-    distance: String,
-    time: String,
-    pace: String
-  }];
 
-  $rootScope.setValuesForHistoryDayView = function(distance, duration, pace, moneyRaised, path, laps){
+  $scope.dayRuns = [];
+  // $scope.dayLapsForm = [{
+  //   number: String,
+  //   distance: String,
+  //   time: String,
+  //   pace: String
+  // }];
+
+  $scope.dayMonthFormatter = function(monthSplit){
+    switch(monthSplit){
+      case "Jan":
+        dayMonth = "January";
+        return dayMonth;
+        break;
+      case "Feb":
+        dayMonth = "Febuary";
+        return dayMonth;
+        break;
+      case "Mar":
+        dayMonth = "March";
+        return dayMonth;
+        break;
+      case "Apr":
+        dayMonth = "April";
+        return dayMonth;
+        break;
+      case "May":
+        dayMonth = "May";
+        return dayMonth;
+        break;
+      case "Jun":
+        dayMonth = "June";
+        return dayMonth;
+        break;
+      case "Jul":
+        dayMonth = "July";
+        return dayMonth;
+        break;
+      case "Aug":
+        dayMonth = "August";
+        return dayMonth;
+        break;
+      case "Sep":
+        dayMonth = "September";
+        return dayMonth;
+        break;
+      case "Oct":
+        dayMonth = "October";
+        return dayMonth;
+        break;
+      case "Nov":
+        dayMonth = "November";
+        return dayMonth;
+        break;
+      case "Dec":
+        dayMonth = "December";
+        return dayMonth;
+        break;
+      default:
+        dayMonth = "";
+        return dayMonth;
+        break;
+    }
+  };
+
+
+  $scope.dayDateFormatter = function(daySplit){
+    switch(daySplit) {
+      case "01":
+        dayDate: "1";
+        return dayDate;
+      case "02":
+        dayDate: "2";
+        return dayDate;
+      case "03":
+        dayDate: "3";
+        return dayDate;
+      case "04":
+        dayDate: "4";
+        return dayDate;
+      case "05":
+        dayDate: "5";
+        return dayDate;
+      case "06":
+        dayDate: "6";
+        return dayDate;
+      case "07":
+        dayDate: "7";
+        return dayDate;
+      case "08":
+        dayDate: "8";
+        return dayDate;
+      case "09":
+        dayDate: "9";
+        return dayDate;
+      default:
+        return daySplit;
+    }
+  };
+
+  $scope.distancePopHolder  = [];
+  $scope.durationPopHolder = [];
+  $scope.pacePopHolder = [];
+  $scope.moneyRaisedPopHolder = [];
+  $scope.pathPopHolder = [];
+  $scope.lapsPopHolder = [];
+
+
+  $scope.selectedRunNumber = 1;
+  $rootScope.setValuesForHistoryDayView = function(date, distance, duration, pace, moneyRaised, path, laps, numberOfRuns){
+
+
+    console.log('setValuesForHistoryDayView: date: ' + date);
+    console.log('setValuesForHistoryDayView: date.length: ' + date.length);
+    console.log('setValuesForHistoryDayView: number of runs: ' + numberOfRuns);
+    $scope.dayUnformattedDisplayDate = date;
     $scope.dayDisplayDistance = distance;
     $scope.dayDisplayDuration = duration;
     $scope.dayDisplayPace = pace;
@@ -2547,112 +2654,183 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.dayDisplayPath = path;
     $scope.dayDisplayLaps = laps;
 
+    $scope.displayTotalNumberOfRuns = numberOfRuns;
+    console.log('display total number of runs set as: ' + $scope.displayTotalNumberOfRuns);
 
 
-    console.log('setValuesForHistoryDayView: path: ' + path);
-    console.log('setValuesForHistoryDayView: $scope.dayDisplayForPath : ' + $scope.dayDisplayPath);
-    console.log('setValuesForHistoryDayView: path.lat: ' + path.lat);
-    console.log('setValuesForHistoryDayView: path.long: '+ path.long);
-    console.log('setValuesForHistoryDayView: $scope.displayForPath.lat : ' + $scope.dayDisplayPath.lat);
-    console.log('setValuesForHistoryDayView: $scope.displayForPath.long: ' +$scope.dayDisplayPath.long);
-    console.log('setValuesForHistoryDayView: $scope.dayDisplayLaps: ' + $scope.dayDisplayLaps);
-    console.log('setValuesForHistoryDayView: $scope.dayDisplayLaps.number: ' + $scope.dayDisplayLaps.number);
-    console.log('setValuesForHistoryDayView: $scope.dayDisplayLaps.number.length: ' + $scope.dayDisplayLaps.number.length);
-    console.log('setValuesForHistoryDayView: $scope.dayDisplayLaps.distance: ' + $scope.dayDisplayLaps.distance);
-    console.log('setValuesForHistoryDayView: $scope.dayDisplayLaps.seconds: ' + $scope.dayDisplayLaps.seconds);
-    console.log('setValuesForHistoryDayView: $scope.dayDisplayLaps.minutes: ' + $scope.dayDisplayLaps.minutes);
-    console.log('setValuesForHistoryDayView: $scope.dayDisplayLaps.pace: ' + $scope.dayDisplayLaps.pace);
-
-    //split differently -> lap all one object, lap in laps, lap.number
-
-    console.log('setValuesForHistoryDayView: $scope.dayDisplayPath.lat.length: ' + $scope.dayDisplayPath.lat.length);
-    var latSplit = $scope.dayDisplayPath.lat.toString().split(',');
-    var longSplit = $scope.dayDisplayPath.long.toString().split(',');
-    console.log('setValuesForHistoryDayView: latSplit: ' + latSplit[0]);
-    console.log('setValuesForHistoryDayView: latSplit.length: ' + latSplit.length);
-    console.log('setValuesForHistoryDayView: longSplit: ' + longSplit[0]);
+    console.log('dayDisplayDistance values: ' + $scope.dayDisplayDistance);
 
 
-    //string splitter for laps
-    var lapNumberSplit = $scope.dayDisplayLaps.number.toString().split(',');
-    var lapDistancesSplit = $scope.dayDisplayLaps.distance.toString().split(',');
-    var lapSecondsSplit = $scope.dayDisplayLaps.seconds.toString().split(',');
-    var lapMinutesSplit = $scope.dayDisplayLaps.minutes.toString().split(',');
-    var lapPaceSplit = $scope.dayDisplayLaps.pace.toString().split(',');
-    console.log('setValuesForHistoryDayView: lapNumberSplit.length: ' + lapNumberSplit.length);
-    console.log('setValuesForHistoryDayView: lapNumberSplit: ' + lapNumberSplit);
-    console.log('setValuesForHistoryDayView: lapDistancesSplit: ' + lapDistancesSplit);
-    console.log('setValuesForHistoryDayView: lapSecondsSplit: ' + lapSecondsSplit);
-    console.log('setValuesForHistoryDayView: lapMinutesSplit: ' + lapMinutesSplit);
-    console.log('setValuesForHistoryDayView: lapPaceSplit: ' + lapPaceSplit);
-    lapNumberSplit.shift();
-    console.log('setValuesForHistoryDayView: lapNumberSplit: ' + lapNumberSplit);
-    console.log('setValuesForHistoryDayView: lapNumberSplit.length: ' + lapNumberSplit.length);
-    lapDistancesSplit.shift();
-    lapSecondsSplit.shift();
-    lapMinutesSplit.shift();
-    lapPaceSplit.shift();
+    var dayDatesplit = $scope.dayUnformattedDisplayDate.toString().split(' ');
+    var monthSplit = dayDatesplit[0];
+    var daySplit = dayDatesplit[1];
+    var yearSplit = dayDatesplit[2];
 
 
-    for (var i = 0; i < lapNumberSplit.length; i++) {
-      console.log('setValuesForHistoryDayView: lapNumberSplit['+i+']: ' + lapNumberSplit[i]);
-      console.log('setValuesForHistoryDayView: lapDistancesSplit['+i+']: ' + lapDistancesSplit[i]);
-      console.log('setValuesForHistoryDayView: lapSecondsSplit['+i+']: ' + lapSecondsSplit[i]);
-      console.log('setValuesForHistoryDayView: lapMinutesSplit['+i+']: ' + lapMinutesSplit[i]);
-      console.log('setValuesForHistoryDayView: lapPaceSplit['+i+']: ' + lapPaceSplit[i]);
 
-      var time = lapMinutesSplit[i] + ':' + lapSecondsSplit[i];
-      console.log('time: '+ time);
 
-     $scope.dayLapsForm.push( {number: lapNumberSplit[i], distance: lapDistancesSplit[i],
-       time: time,  pace: lapPaceSplit[i]});
-      console.log('setValuesForHistoryDayView: $scope.dayLaps: ' + $scope.dayLapsForm);
-      console.log('setValuesForHistoryDayView: $scope.dayLaps.length: ' + $scope.dayLapsForm);
+    console.log('date split for history day view: month: ' + monthSplit + ' daysplit' + daySplit + ' year: ' + yearSplit);
 
+    var dayMonth = $scope.dayMonthFormatter(monthSplit);
+    console.log('dayMonth: '+ dayMonth);
+    var dayDate =  $scope.dayDateFormatter(daySplit);
+    console.log('dayDate: '+ dayDate);
+    $scope.dayDisplayDate = dayMonth + ' ' + dayDate + ', ' + yearSplit;
+
+    for(x=0; x< numberOfRuns; x ++){
+
+      console.log('setValuesForHistoryDayView: path: ' + path);
+      console.log('setValuesForHistoryDayView: $scope.dayDisplayForPath : ' + $scope.dayDisplayPath);
+      console.log('setValuesForHistoryDayView: path.lat: ' + path.lat);
+      console.log('setValuesForHistoryDayView: path.long: '+ path.long);
+      console.log('setValuesForHistoryDayView: $scope.displayForPath.lat : ' + $scope.dayDisplayPath[x].lat);
+      console.log('setValuesForHistoryDayView: $scope.displayForPath.long: ' +$scope.dayDisplayPath[x].long);
+      console.log('setValuesForHistoryDayView: $scope.dayDisplayLaps: ' + $scope.dayDisplayLaps);
+      console.log('setValuesForHistoryDayView: $scope.dayDisplayLaps.number: ' + $scope.dayDisplayLaps[x].number);
+      console.log('setValuesForHistoryDayView: $scope.dayDisplayLaps.number.length: ' + $scope.dayDisplayLaps[x].number.length);
+      console.log('setValuesForHistoryDayView: $scope.dayDisplayLaps.distance: ' + $scope.dayDisplayLaps[x].distance);
+      console.log('setValuesForHistoryDayView: $scope.dayDisplayLaps.seconds: ' + $scope.dayDisplayLaps[x].seconds);
+      console.log('setValuesForHistoryDayView: $scope.dayDisplayLaps.minutes: ' + $scope.dayDisplayLaps[x].minutes);
+      console.log('setValuesForHistoryDayView: $scope.dayDisplayLaps.pace: ' + $scope.dayDisplayLaps[x].pace);
     }
 
-    console.log('setValuesForHistoryDayView: $scope.dayLaps.length: ' + $scope.dayLapsForm.length);
-    // $scope.dayLapsForm.shift();
 
-    // for(var x = 0; x < $scope.dayLapsForm.length; x++){
-    //   console.log('setValuesForHistoryDayView: $scope.dayLaps.length: ' + $scope.dayLapsForm.length);
-    //   $scope.dayLaps.push($scope.dayLapsForm[x]);
-    //   console.log('$scope.dayLaps.lap: ' + $scope.dayLaps[x].lap);
-    //   console.log('$scope.dayLaps.lap.number]: ' + $scope.dayLaps[x].number);
-    //   console.log('$scope.dayLaps.number: ' + $scope.dayLaps.lap);
-    // }
+    $scope.setRunValues = function(runNumber){
+      //split differently -> lap all one object, lap in laps, lap.number
+      var x = runNumber -1;
+      console.log('entered setRunValues with runNumber: ' + runNumber);
+
+      $scope.historyPolyCoords = [];
+
+      $scope.dayLapsForm = [{
+        number: String,
+        distance: String,
+        time: String,
+        pace: String
+      }];
 
 
 
-    if(latSplit.length == longSplit.length){
-      for(var i=0; i< latSplit.length; i++){
-        var latCoord = latSplit[i];
-        console.log('setValuesForHistoryDayView: latCoord : ' + latCoord);
-        var longCoord = longSplit[i];
-        console.log('setValuesForHistoryDayView: longCoord : ' + longCoord);
-        var LatLng = new google.maps.LatLng(latCoord, longCoord);
-        console.log('setValuesForHistoryDayView: LatLng : ' + LatLng);
-        $scope.historyPolyCoords.push(LatLng);
-        console.log('setValuesForHistoryDayView: $scope.historyPolycoords: ' + $scope.historyPolyCoords);
+      $scope.runDisplayDuration = $scope.dayDisplayDuration[x];
+      console.log('runDisplayDuration set as: ' + $scope.runDisplayDuration);
+      $scope.runDisplayDistance = $scope.dayDisplayDistance[x];
+      console.log('runDisplayDistance set as: ' + $scope.runDisplayDistance);
+      $scope.runDisplayPace = $scope.dayDisplayPace[x];
+      console.log('runDisplayPace set as: ' + $scope.runDisplayPace);
+      $scope.runDisplayMoneyRaised = $scope.dayDisplayMoneyRaised[x];
+      console.log('runDisplayMoneyRaised set as: ' + $scope.runDisplayMoneyRaised);
+      $scope.runDisplayPath = $scope.dayDisplayPath[x];
+      console.log('runDisplayMoneyRaised set as: ' + $scope.runDisplayPath);
+
+      console.log('setValuesForHistoryDayView: $scope.dayDisplayPath.lat.length: ' + $scope.dayDisplayPath[x].lat.length);
+      var latSplit = $scope.runDisplayPath.lat.toString().split(',');
+      var longSplit = $scope.runDisplayPath.long.toString().split(',');
+      console.log('setValuesForHistoryDayView: latSplit: ' + latSplit[x]);
+      console.log('setValuesForHistoryDayView: latSplit.length: ' + latSplit.length);
+      console.log('setValuesForHistoryDayView: longSplit: ' + longSplit[x]);
+
+
+      //string splitter for laps
+      var lapNumberSplit = $scope.dayDisplayLaps[x].number.toString().split(',');
+      var lapDistancesSplit = $scope.dayDisplayLaps[x].distance.toString().split(',');
+      var lapSecondsSplit = $scope.dayDisplayLaps[x].seconds.toString().split(',');
+      var lapMinutesSplit = $scope.dayDisplayLaps[x].minutes.toString().split(',');
+      var lapPaceSplit = $scope.dayDisplayLaps[x].pace.toString().split(',');
+
+      lapNumberSplit.shift();
+      lapDistancesSplit.shift();
+      lapSecondsSplit.shift();
+      lapMinutesSplit.shift();
+      lapPaceSplit.shift();
+
+      for (var i = 0; i < lapNumberSplit.length; i++) {
+        console.log('setValuesForHistoryDayView: lapNumberSplit['+i+']: ' + lapNumberSplit[i]);
+        console.log('setValuesForHistoryDayView: lapDistancesSplit['+i+']: ' + lapDistancesSplit[i]);
+        console.log('setValuesForHistoryDayView: lapSecondsSplit['+i+']: ' + lapSecondsSplit[i]);
+        console.log('setValuesForHistoryDayView: lapMinutesSplit['+i+']: ' + lapMinutesSplit[i]);
+        console.log('setValuesForHistoryDayView: lapPaceSplit['+i+']: ' + lapPaceSplit[i]);
+
+        var time = lapMinutesSplit[i] + ':' + lapSecondsSplit[i];
+        console.log('time: '+ time);
+
+        $scope.dayLapsForm.push( {number: lapNumberSplit[i], distance: lapDistancesSplit[i],
+          time: time,  pace: lapPaceSplit[i]});
+        console.log('setValuesForHistoryDayView: $scope.dayLaps: ' + $scope.dayLapsForm);
+        console.log('setValuesForHistoryDayView: $scope.dayLaps.length: ' + $scope.dayLapsForm);
+
       }
-      $scope.historyRunPath = new google.maps.Polyline({
-        path: $scope.historyPolyCoords,
-        strokeColor: '#FF0000',
-        strokeOpacity: 1.0,
-        strokeWeight: 8
-      });
-      $scope.historyRunPath.setMap($scope.map);
-    } else {
-      $rootScope.notify("Lat,Lng lengths do not match");
-      console.log('setValuesForHistoryDayView: lat,long lengths do not match');
+
+      console.log('setValuesForHistoryDayView: $scope.dayLaps.length: ' + $scope.dayLapsForm.length);
+      //
+      // $scope.distancePopHolder  = [];
+      // $scope.durationPopHolder = [];
+      // $scope.pacePopHolder = [];
+      // $scope.moneyRaisedPopHolder = [];
+      // $scope.pathPopHolder = [];
+      // $scope.lapsPopHolder = [];
+
+
+      if(latSplit.length == longSplit.length){
+        for(var i=0; i< latSplit.length; i++){
+          var latCoord = latSplit[i];
+          console.log('setValuesForHistoryDayView: latCoord : ' + latCoord);
+          var longCoord = longSplit[i];
+          console.log('setValuesForHistoryDayView: longCoord : ' + longCoord);
+          var LatLng = new google.maps.LatLng(latCoord, longCoord);
+          console.log('setValuesForHistoryDayView: LatLng : ' + LatLng);
+          $scope.historyPolyCoords.push(LatLng);
+          console.log('setValuesForHistoryDayView: $scope.historyPolycoords: ' + $scope.historyPolyCoords);
+
+        }
+        $scope.historyRunPath = new google.maps.Polyline({
+          path: $scope.historyPolyCoords,
+          strokeColor: '#ff0000',
+          strokeOpacity: 1.0,
+          strokeWeight: 8
+        });
+        $scope.historyRunPath.setMap($scope.map);
+
+      } else {
+        $rootScope.notify("Lat,Lng lengths do not match");
+        console.log('setValuesForHistoryDayView: lat,long lengths do not match');
+      }
+
     }
 
-    // console.log('setValuesForHistoryDayView: $scope.dayDisplayLaps.number: ' + $scope.dayDisplayLaps.number.length);
-    // for(var i=0; i< $scope.dayDisplayLaps.number.length; i++){
-    //   console.log('setValuesForHistoryDayView: $scope.dayDisplayLaps.number: ' + $scope.dayDisplayLaps.number);
-    //
-    //
-    // }
+
+    $scope.setRunValues($scope.selectedRunNumber);
+    console.log('setRunValues called with run number: ' + $scope.selectedRunNumber+ ' on page load' );
+
+
+
+
+    $scope.incrementRunNumber = function(){
+      console.log('incrementRunNumber function called');
+      if ($scope.selectedRunNumber < numberOfRuns){
+        console.log('selectedRunNumber": ' + $scope.selectedRunNumber);
+        $scope.selectedRunNumber++;
+        console.log('incremented selectedRunNumber: ' + $scope.selectedRunNumber);
+        $scope.historyRunPath.setPath([]);
+        $scope.setRunValues($scope.selectedRunNumber);
+      }
+      console.log('incremented selectedRunNumber: ' + $scope.selectedRunNumber);
+    }
+    $scope.decrementRunNumber = function(){
+      console.log('decrementRunNumber function called');
+      if ($scope.selectedRunNumber >1){
+        console.log('selectedRunNumber": ' + $scope.selectedRunNumber);
+        $scope.selectedRunNumber =  $scope.selectedRunNumber-1;
+        console.log('decremented selectedRunNumber: ' + $scope.selectedRunNumber);
+        $scope.historyRunPath.setPath([]);
+        $scope.setRunValues($scope.selectedRunNumber);
+      }
+      console.log('decremented selectedRunNumber: ' + $scope.selectedRunNumber);
+    }
+
+
+
+
+
   }
 
 
@@ -2663,7 +2841,11 @@ angular.module('starter.controllers', ['starter.appServices',
 
   $scope.mapCreated = function(map){
     $scope.map = map;
-    $scope.mapOptions = map.setOptions({zoom: 14});
+    $scope.mapOptions = map.setOptions({
+      zoom: 15,
+      disableDefaultUI: true,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
 
 
     // console.log('setValuesForHistoryDayView: mapCreate path values: ' + $scope.dayDisplayPath);
@@ -2722,7 +2904,7 @@ angular.module('starter.controllers', ['starter.appServices',
         }]
       }
     };
-
+    //
     $scope.onClick = function(bar, evt){
       console.log(bar, evt);
       console.log('bar['+0+']: ' + [bar[0].label]);
@@ -2808,6 +2990,18 @@ angular.module('starter.controllers', ['starter.appServices',
       return $scope.monthTotalMoneyRaised;
     }
 
+    $scope.getNumberOfRuns = function(date){
+      var counter = 0;
+      for (var i=0; i< $scope.formattedDates.length; i++){
+        if(date = $scope.formattedDates[i]){
+          counter++;
+          console.log('get number of runs counter: ' + counter);
+        }
+      }
+      console.log('final count for number of runs: ' + counter);
+      return counter;
+    }
+
     // $rootScope.$on('fetchMonthHistory', function(){
       HistoryAPI.getByMonth($rootScope.getUserId(), todayMonth)
         .success(function(data, status, headers, config) {
@@ -2875,11 +3069,6 @@ angular.module('starter.controllers', ['starter.appServices',
           console.log('Today value from inside HistoryAPI call: ' + today);
           $scope.getWeekDatesOnLoad();
 
-          console.log('setDayValues: $scope.laps pre shift: ' + $scope.laps[0]);
-
-          console.log('setDayValues: $scope.laps post shift: ' + $scope.laps[0]);
-
-          // console.log('path length: ' + data.path.length);
 
           console.log('$scope.distanceslength: ' + $scope.distances.length + '$scope.dates.length: ' + $scope.dates.length);
 
@@ -3138,44 +3327,82 @@ angular.module('starter.controllers', ['starter.appServices',
       var tempDayFiveHolder = 0;
       var tempDaySixHolder = 0;
       var tempDaySevenHolder = 0;
-      for(var i=0; i< $scope.dates.length; i++){
+
+      var counterOne =  0;
+      var counterTwo = 0;
+      var counterThree =  0;
+      var counterFour =  0;
+      var counterFive = 0;
+      var counterSix =  0;
+      var counterSeven =  0;
+
+
+
+      // var counterOne =  $scope.getNumberOfRuns(dayOne);
+      // console.log('number of Runs: counterOne ' + counterOne);
+      // var counterTwo = $scope.getNumberOfRuns(dayTwo);
+      // console.log('number of Runs: counterTwo ' + counterTwo);
+      // var counterThree =  $scope.getNumberOfRuns(dayThree);
+      // console.log('number of Runs: counterThree ' + counterThree);
+      // var counterFour =  $scope.getNumberOfRuns(dayFour);
+      // console.log('number of Runs: counterFour ' + counterFour);
+      // var counterFive =  $scope.getNumberOfRuns(dayFive);
+      // console.log('number of Runs: counterFive ' + counterFive);
+      // var counterSix =  $scope.getNumberOfRuns(daySix);
+      // console.log('number of Runs: counterSix ' + counterSix);
+      // var counterSeven =  $scope.getNumberOfRuns(daySeven);
+      // console.log('number of Runs: counterSeven ' + counterSeven);
+
+
+
+      for(var i=0; i< $scope.formattedDates.length; i++){
 
         console.log('matchWeekValues: $scope.formattedDates[i]: ' + $scope.formattedDates[i]);
 
         if(dayOne == $scope.formattedDates[i]){
           console.log('dayOne matched with datesArrayFormatter at day: ' + dayOne + ' ' + $scope.formattedDates[i]);
-          tempDayOneHolder = $scope.distances[i];
+          tempDayOneHolder = tempDayOneHolder + $scope.distances[i];
           console.log('$scope.distances[i] (dayOne): ' + $scope.distances[i]);
           console.log('tempDayOneHolder: ' + tempDayOneHolder);
+          counterOne++;
+          console.log('counterOne: ' + counterOne);
           // return $scope.dayOneDistance;
         } else if(dayTwo == $scope.formattedDates[i]){
           console.log('dayTwo matched with datesArrayFormatter at day: ' + dayTwo + ' ' + $scope.formattedDates[i]);
-          tempDayTwoHolder = $scope.distances[i];
+          tempDayTwoHolder = tempDayTwoHolder + $scope.distances[i];
           console.log('$scope.distances[i] (dayTwo): ' + $scope.distances[i]);
           console.log('tempDayTwoHolder: ' + tempDayTwoHolder);
+          counterTwo++;
+          console.log('counterTwo: ' + counterTwo);
           // return $scope.dayTwoDistance;
 
         } else if(dayThree == $scope.formattedDates[i]){
           console.log('dayThree matched with datesArrayFormatter at day: ' + dayThree + ' ' + $scope.formattedDates[i]);
-          tempDayThreeHolder = $scope.distances[i];
+          tempDayThreeHolder = tempDayThreeHolder + $scope.distances[i];
           console.log('$scope.distances[i] (dayThree): ' + $scope.distances[i]);
           console.log('tempDayThreeHolder: ' + tempDayThreeHolder);
+          counterThree++;
+          console.log('counterThree: ' + counterThree);
           // return $scope.dayThreeDistance;
         }
 
         else if(dayFour == $scope.formattedDates[i]){
           console.log('dayFour matched with datesArrayFormatter at day: ' + dayFour + ' ' + $scope.formattedDates[i]);
-          tempDayFourHolder = $scope.distances[i];
+          tempDayFourHolder = tempDayFourHolder + $scope.distances[i];
           console.log('$scope.distances[i] (tempDayFourHolder): ' + $scope.distances[i]);
           console.log('tempDayFourHolder: ' + tempDayFourHolder);
+          counterFour++;
+          console.log('counterFour: ' + counterFour);
           // return $scope.dayFourDistance;
         }
 
         else if(dayFive == $scope.formattedDates[i]){
           console.log('dayFive matched with datesArrayFormatter at day: ' + dayFive + ' ' + $scope.formattedDates[i]);
-          tempDayFiveHolder = $scope.distances[i];
+          tempDayFiveHolder = tempDayFiveHolder + $scope.distances[i];
           console.log('$scope.distances[i] (dayFive): ' + $scope.distances[i]);
           console.log('tempDayFiveHolder: ' + tempDayFiveHolder);
+          counterFive++;
+          console.log('counterFive: ' + counterFive);
           // return $scope.dayFiveDistance;
         }
 
@@ -3184,41 +3411,51 @@ angular.module('starter.controllers', ['starter.appServices',
           tempDaySixHolder = tempDaySixHolder + $scope.distances[i];
           console.log('matchWeekValues: $scope.distances[i] (daySix): ' + $scope.distances[i]);
           console.log('$tempDaySixHolder ' + tempDaySixHolder);
+          counterSix++;
+          console.log('counterSix: ' + counterSix);
           // return $scope.daySixDistance;
         }
 
         else if(daySeven == $scope.formattedDates[i]){
           console.log('daySeven matched with datesArrayFormatter at day: ' + daySeven + ' ' + $scope.formattedDates[i]);
-          tempDaySevenHolder = $scope.distances[i];
+          tempDaySevenHolder = tempDaySevenHolder + $scope.distances[i];
           console.log('matchWeekValues: $scope.distances[i] (daySeven): ' + $scope.distances[i]);
           console.log('tempDaySevenHolder: ' + tempDaySevenHolder);
+          counterSeven++;
+          console.log('counterSeven: ' + counterSeven);
           // return $scope.daySevenDistance;
         } else {
           console.log('matchWeekValues: Did not match date: ' + $scope.formattedDates[i] + ' to any of this weeks dates' );
         }
 
-        $scope.dayOneDistance = tempDayOneHolder;
-        console.log('$scope.dayOneDistance: ' + $scope.dayOneDistance);
-        $scope.dayTwoDistance = tempDayTwoHolder;
-        console.log('$scope.dayTwoDistance: ' + $scope.dayTwoDistance);
-        $scope.dayThreeDistance = tempDayThreeHolder;
-        console.log('$scope.dayThreeDistance: ' + $scope.dayThreeDistance);
-        $scope.dayFourDistance = tempDayFourHolder;
-        console.log('$scope.dayFourDistance: ' + $scope.dayFourDistance);
-        $scope.dayFiveDistance = tempDayFiveHolder;
-        console.log('$scope.dayFiveDistance: ' + $scope.dayFiveDistance);
-        $scope.daySixDistance = tempDaySixHolder;
-        console.log('matchWeekValues:$scope.daySixDistance: ' + $scope.daySixDistance);
-        $scope.daySevenDistance = tempDaySevenHolder;
-        console.log('matchWeekValues:  $scope.daySevenDistance: ' + $scope.daySevenDistance);
 
-        $scope.data = [[$scope.dayOneDistance, $scope.dayTwoDistance, $scope.dayThreeDistance,
-          $scope.dayFourDistance, $scope.dayFiveDistance, $scope.daySixDistance,
-          $scope.daySevenDistance]];
-
-        // $scope.data ['1', '2', ]
 
       }
+      console.log('counterFive final: ' + counterFive);
+
+
+      $scope.dayOneDistance = tempDayOneHolder;
+      console.log('$scope.dayOneDistance: ' + $scope.dayOneDistance);
+      $scope.dayTwoDistance = tempDayTwoHolder;
+      console.log('$scope.dayTwoDistance: ' + $scope.dayTwoDistance);
+      $scope.dayThreeDistance = tempDayThreeHolder;
+      console.log('$scope.dayThreeDistance: ' + $scope.dayThreeDistance);
+      $scope.dayFourDistance = tempDayFourHolder;
+      console.log('$scope.dayFourDistance: ' + $scope.dayFourDistance);
+      $scope.dayFiveDistance = tempDayFiveHolder;
+      console.log('$scope.dayFiveDistance: ' + $scope.dayFiveDistance);
+      $scope.daySixDistance = tempDaySixHolder;
+      console.log('matchWeekValues:$scope.daySixDistance: ' + $scope.daySixDistance);
+      $scope.daySevenDistance = tempDaySevenHolder;
+      console.log('matchWeekValues:  $scope.daySevenDistance: ' + $scope.daySevenDistance);
+
+      $scope.data = [[$scope.dayOneDistance, $scope.dayTwoDistance, $scope.dayThreeDistance,
+        $scope.dayFourDistance, $scope.dayFiveDistance, $scope.daySixDistance,
+        $scope.daySevenDistance]];
+
+
+
+
     }
 
 
@@ -3228,7 +3465,16 @@ angular.module('starter.controllers', ['starter.appServices',
       console.log('setDayValues: $scope.formattedDates: ' + $scope.formattedDates);
       console.log('setDayValues: $scope.formattedDates.length: ' + $scope.formattedDates.length);
 
-      // var counter = 0;
+      $scope.thisDateRunDistance = [];
+      $scope.thisDateRunDuration = [];
+      $scope.thisDateRunPace = [];
+      $scope.thisDateRunMoneyRaised = [];
+      $scope.thisDateRunLaps = [];
+      $scope.thisDateRunPath = [];
+
+      var counter = 0;
+
+
 
 
 
@@ -3241,49 +3487,48 @@ angular.module('starter.controllers', ['starter.appServices',
 
           console.log('setDayValues: Date and $scope.formatteddates[i] matched with values: ' + $scope.formattedDates[i] + ' ' + date);
           console.log('setDayValues: $scope.distances[i]: ' + $scope.distances[i]);
-          $scope.thisDateRunDistance = $scope.distances[i];
+          $scope.thisDateRunDistance.push($scope.distances[i]);
           console.log('setDayValues: $scope.thisRunDistance: ' + $scope.thisDateRunDistance);
           // var thisRunDateCoords = [];
 
 
           console.log('setDayValues: $scope.minutes[i]: ' + $scope.minutes[i] + ' $scope.seconds[i]' + $scope.seconds[i]);
           if($scope.seconds[i] < 10){
-            $scope.thisDateRunDuration = $scope.minutes[i] + ':0' + $scope.seconds[i];
+            // $scope.thisDateRunDuration = $scope.minutes[i] + ':0' + $scope.seconds[i];
+            $scope.thisDateRunDuration.push($scope.minutes[i] + ':0' + $scope.seconds[i]);
             console.log('setDayValues: $scope.thisDateRunDuration: ' + $scope.thisDateRunDuration);
           } else {
-            $scope.thisDateRunDuration = $scope.minutes[i] + ':' + $scope.seconds[i];
+            $scope.thisDateRunDuration.push($scope.minutes[i] + ':' + $scope.seconds[i]);
             console.log('setDayValues: $scope.thisDateRunDuration: ' + $scope.thisDateRunDuration);
           }
 
           //
 
-
-
           console.log('setDayValues: $scope.pace: ' + $scope.paces[i]);
-          $scope.thisDateRunPace = $scope.paces[i];
+          $scope.thisDateRunPace.push($scope.paces[i]);
           console.log('setDayValues: $scope.thisDateRunPace: ' + $scope.thisDateRunPace);
 
           console.log('setDayValues: $scope.moneyRaised: ' + $scope.moneyRaised[i]);
-          $scope.thisDateRunMoneyRaised = $scope.moneyRaised[i];
+          $scope.thisDateRunMoneyRaised.push($scope.moneyRaised[i]);
           console.log('setDayValues: $scope.thisDateRunMoneyRaised: ' + $scope.thisDateRunMoneyRaised);
 
           console.log('setDayValues: $scope.paths: ' + $scope.paths[i]);
-          $scope.thisDateRunPath = $scope.paths[i];
+          $scope.thisDateRunPath.push($scope.paths[i]);
           console.log('setDayValues: $scope.thisDateRunPath: ' + $scope.thisDateRunPath);
 
           console.log('setDayValues: $scope.laps['+i+']: ' + $scope.laps[i]);
-          $scope.thisDateRunLaps = $scope.laps[i];
+          $scope.thisDateRunLaps.push($scope.laps[i]);
           console.log('setDayValues: $scope.thisDateRunLaps: ' + $scope.thisDateRunLaps);
-
-          $window.location.href = ('#/app/historyDay');
-          $rootScope.setValuesForHistoryDayView($scope.thisDateRunDistance, $scope.thisDateRunDuration,
-                                                $scope.thisDateRunPace, $scope.thisDateRunMoneyRaised,
-                                                $scope.thisDateRunPath, $scope.thisDateRunLaps);
-
+          counter++;
         }
 
 
       }
+
+      $window.location.href = ('#/app/historyDay');
+      $rootScope.setValuesForHistoryDayView(date, $scope.thisDateRunDistance, $scope.thisDateRunDuration,
+        $scope.thisDateRunPace, $scope.thisDateRunMoneyRaised,
+        $scope.thisDateRunPath, $scope.thisDateRunLaps, counter);
 
     }
 
@@ -3438,7 +3683,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
       if(label == $scope.displayDayOne){
         console.log('Label matched day one display with values: ' + label + ' ' + $scope.displayDayOne);
-        $scope.setDayValues($scope.dayOneDateNonDisplayHolder);
+        $scope.setDayValues($scope.dayTwoDateNonDisplayHolder);
 
       }
       else if(label == $scope.displayDayTwo){
@@ -3467,7 +3712,6 @@ angular.module('starter.controllers', ['starter.appServices',
       } else {
         console.log('Error: Could not match dates');
       }
-
 
     }
 

@@ -27,9 +27,18 @@ angular.module('starter.authServices', ['ngCookies'])
     });
   };
 
-  $rootScope.hide = function () {
+  $rootScope.hide = function(){
     $ionicLoading.hide();
   };
+
+  $rootScope.notify = function(text){
+    $rootScope.show(text);
+    $window.setTimeout(function(){
+      $rootScope.hide();
+    }, 1999);
+  };
+
+
   $rootScope.setToken = function(token){
     $cookies.put('token', token);
   };
@@ -141,12 +150,7 @@ angular.module('starter.authServices', ['ngCookies'])
   //   $window.location.href = '#/auth/signin';
   // };
 
-  $rootScope.notify = function (text) {
-    $rootScope.show(text);
-    $window.setTimeout(function () {
-      $rootScope.hide();
-    }, 1999);
-  };
+
 
 
   return {
