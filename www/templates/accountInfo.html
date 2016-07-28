@@ -17,13 +17,12 @@
       </label>
       <label class="item item-input">
         <span class="input-label">Password</span>
-        <input type="password" ng-model="account.password" placeholder="{{user.password}}">
+        <input type="password" ng-model="account.password" placeholder="{{user.password}}" ng-click="showConfirmPassword()">
       </label>
       <label class="item item-input">
         <span class="input-label">Date of Birth</span>
         <input type="Date" ng-model="account.dob">
       </label>
-    </div>
     <button class="account button button-full button-positive" ng-click="logout()">
       Logout
     </button>

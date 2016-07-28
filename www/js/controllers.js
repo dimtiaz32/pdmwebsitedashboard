@@ -2299,7 +2299,7 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.amount = store.get('donor.amount');
   })
 
-  .controller('AccountCtrl', function($rootScope, AuthAPI, UserAPI, $window, $scope) {
+  .controller('AccountCtrl', function($rootScope, AuthAPI, UserAPI, $window, $scope, $ionicPopup) {
 
     $rootScope.$on('initial', function(){
         console.log("---------start account ctrl initial---------");
@@ -2384,10 +2384,95 @@ angular.module('starter.controllers', ['starter.appServices',
           $rootScope.verifyStatus(status);
         });
     }
+
+
+    //CHANGE PASSWORD
+    $scope.popup = {
+      currentPasswordHolder: "",
+      password1: "",
+      password2: ""
+    }
+
+    $scope.showAlert = function(title, text){
+      var alertMessage = $ionicPopup.show({
+        title: title,
+        template: '<p style="text-align: center;">'+text+'</p>',
+        buttons: [{
+          text: '<b>Close</b>',
+          type: 'button-positive',
+        }]
+      })
+    }
+
+    $scope.showConfirmPassword = function(){
+      var confirmPassword = $ionicPopup.show({
+        template: '<input type="password" ng-model="popup.currentPasswordHolder">',
+        title: 'Change password',
+        subTitle: 'Enter current password',
+        scope: $scope,
+        buttons: [
+          { text: 'Cancel' },
+          {
+            text: 'Next',
+            type: 'button-positive',
+            onTap: function(e) {
+              var currentPassword = $rootScope.getPassword()
+              if (currentPassword != $scope.popup.currentPasswordHolder) {
+                $scope.showAlert('Oops!', "You didn't enter your current password")
+                e.preventDefault()
+              } else if (currentPassword == $scope.popup.currentPasswordHolder) {
+                $scope.popup.currentPasswordHolder = "";
+                $scope.showChangePassword();
+              }
+            }
+          }
+        ]
+      })
+    }
+
+    $scope.showChangePassword = function(){
+      var changePassword = $ionicPopup.show({
+        template: '<input type="password" ng-model="popup.password1" placeholder="New password">' +
+                  '<div style="padding: 5px 0;"></div>' +
+                  '<input type="password" ng-model="popup.password2" placeholder="Confirm new password">',
+        title: 'Change password',
+        // subTitle: 'subtitle',
+        scope: $scope,
+        buttons: [
+          { text: 'Cancel' },
+          {
+            text: '<b>Change</b>',
+            type: 'button-positive',
+            onTap: function(e) {
+								if ($scope.popup.password1 == "") {
+                  $scope.showAlert('Oops!',"Don't leave any field blank!");
+                  e.preventDefault();
+                } else if ($scope.popup.password1 == "") {
+                  $scope.showAlert('Oops!',"Don't leave any field blank!");
+                  e.preventDefault();
+                } else if ($scope.popup.password1 != $scope.popup.password2) {
+                  $scope.popup.password1="";
+                  $scope.popup.password2="";
+                  $scope.showAlert('Oops!','Passwords do not match');
+                  e.preventDefault();
+                } else {
+                  var newPassword = $scope.popup.password1;
+                  $scope.popup.password1 = "";
+                  $scope.popup.password2 = "";
+                  $scope.showAlert('Yay!','Password changed');
+                  $rootScope.setPassword(newPassword);
+                  console.log($rootScope.getPassword())
+                }
+            }
+          }
+        ]
+      })
+    }
+
   })
 
 
-.controller('HistoryDayCtrl', function($scope, $rootScope, $window, HistoryAPI){
+  .controller('HistoryDayCtrl', function($scope, $rootScope, $window, HistoryAPI){
   //Can't get pagination to show
   $scope.slideOptions = {
     pagination: true,
