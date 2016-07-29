@@ -1,3 +1,4 @@
+
 .animated-detail {
   margin: 0 !important;
   position: relative;
@@ -11,8 +12,34 @@
 
 .animated-detail.active {
   opacity: 1;
-  height: 20vh;
+  height: 25vh;
 }
+
+
+
+.animated-run-detail {
+  line-height: 20px;
+  opacity: 1;
+  padding: 10px;
+  background: white;
+}
+
+.animated-run-detail.ng-hide-add, .animate-show.ng-hide-remove {
+  transition: all linear 0.2s;
+}
+
+.animated-run-detail.ng-hide-add-active,
+.animated-run-detail.ng-hide-remove-active {
+  /* the transition is defined in the active class */
+  transition: .25s linear all;
+}
+
+.animated-run-detail.ng-hide {
+  line-height: 0;
+  opacity: 0;
+  padding: 0 10px;
+}
+
 
 .run-page.overlay {
   box-shadow:0 2px 6px rgba(0, 0, 0, .3);
