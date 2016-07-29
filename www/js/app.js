@@ -132,7 +132,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
       })
 
       .state('app.inviteSponsor-start',{
-        url:'/inviteSponsor/start/:requestId',
+        url:'/inviteSponsor/start',
         views: {
           'menuContent': {
             templateUrl:'templates/inviteSponsor-start.html',
