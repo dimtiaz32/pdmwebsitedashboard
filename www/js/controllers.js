@@ -7,7 +7,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
     'starter.historyServices',
 
-    'starter.runServices','ionic','ngCordova','ngOpenFB', 'chart.js','ngCookies'])
+    'starter.runServices','ionic','ngCordova','ngOpenFB', 'chart.js','ngCookies', 'ionic.contrib.drawer.vertical'])
 
 
   .controller('SignUpCtrl', function($scope, $rootScope, $ionicModal, $timeout, AuthAPI, $window, UserAPI){
@@ -367,7 +367,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
   // })
 
-  .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI, CharityAPI, $ionicPopup,  AuthAPI){
+  .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI, CharityAPI, $ionicPopup, AuthAPI, $ionicModal){
     //CONSOLE LOGGING COLORS:
 
     //UI-INTERACTIONS: TEAL
@@ -396,7 +396,6 @@ angular.module('starter.controllers', ['starter.appServices',
     //(L)DISTANCE: MEDIUMPURPLE
     //(L)PACE: DarkGoldenRod
 
-
     $scope.user =  {
       name: ""
     };
@@ -411,6 +410,7 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.user.name = $rootScope.getName();
 
     $scope.isDetailDisplayed = false;
+    $scope.isRunDetailDisplayed = false;
     $scope.isHistoryDetailDisplayed = true;
     $scope.isRunning = false;
     $scope.isPaused = false;

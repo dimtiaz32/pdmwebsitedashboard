@@ -1,4 +1,18 @@
+.animated-detail {
+  margin: 0 !important;
+  position: relative;
+  top: 0;
+  z-index: 9999;
+  /*-webkit-transition: height .25s ease-in-out;*/
+  transition: all .25s ease-in-out;
+  opacity: 0;
+  height: 0;
+}
 
+.animated-detail.active {
+  opacity: 1;
+  height: 20vh;
+}
 
 .run-page.overlay {
   box-shadow:0 2px 6px rgba(0, 0, 0, .3);
