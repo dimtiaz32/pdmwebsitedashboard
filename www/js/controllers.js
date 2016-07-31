@@ -1938,17 +1938,58 @@ angular.module('starter.controllers', ['starter.appServices',
 
     console.log('$rootScope.getSelectedCharityName: ' + $rootScope.getSelectedCharityName());
 
-    // $rootScope.$on('fetchSelectedCharity', function(){
-    //   //TODO: FETCH, SERVER FOR USER SELECTED CHARITY, UI FOR ID PARAMS
-    //   CharityAPI.getSelectedCharity()
-    // });
-
     $scope.moneyRaised = $rootScope.getMoneyRaisedPerMile();
 
     if($scope.charityName == undefined){
       $scope.noCharity = true;
       console.log('noCharityValue: ' + $scope.noCharity);
     }
+
+    $scope.pastCharities = [];
+    $scope.charityListInformation = [{charity: String, moneyRaised: String}];
+
+    HistoryAPI.getAll($rootScope.getUserId())
+      .success(function(data, status, headers, config){
+        console.log('inside historyAPI get all success call');
+        for(var i=0; i< data.length; i++){
+          console.log('data['+i+'].charity: ' + data[i].charity);
+          if($scope.pastCharities.indexOf(data[i].charity) !== -1){
+            console.log('pastCharities array already contains: ' + data[i].charity);
+          } else {
+            $scope.pastCharities.push(data[i].charity);
+          }
+        }
+        console.log('$scope.pastCharities.length: ' + $scope.pastCharities.length);
+        for(var i=0; i< $scope.pastCharities.length; i++){
+          $scope.charity = $scope.pastCharities[i];
+          console.log('$scope.pastCharities[i]: ' + $scope.pastCharities[i]);
+          for(var x=0; x<data.length; x++){
+            if($scope.charity = data[x].charity){
+              console.log('data[i].charity: ' + data[x].charity + ' data['+x+']' + data[x].moneyRaised);
+              $scope.thisCharityMoneyRaised =  $scope.thisCharityMoneyRaised + data[x].moneyRaised;
+              console.log('$scope.thisCharityMoneyRaised: ' + $scope.thisCharityMoneyRaised);
+              if($scope.thisCharityMoneyRaised == undefined || $scope.charity == undefined ||
+              $scope.thisCharityMoneyRaised == "NaN" || $scope.charity == "NaN"){
+                console.log('$scope.thisCharityMoneyRaised or $scope.charity is undefined');
+              } else {
+                $scope.charityListInformation.push($scope.charity, $scope.thisCharityMoneyRaised);
+                console.log('$scope.charityListInformation: ' + $scope.charityListInformation);
+                console.log('$scope.charityListInformation.length: ' + $scope.charityListInformation.length);
+                // console.log('$scope.charityListInformation['+x+']: ' + $scope.charityListInformation[x]);
+                console.log('$scope.charityListInformation['+x+'].charity: ' + $scope.charityListInformation.charity);
+                console.log('$scope.charityListInformation['+x+'].moneyRaised: ' + $scope.charityListInformation.moneyRaised);
+              }
+
+            }
+          }
+        }
+      })
+      .error(function(err){
+        console.log('History API call getAll failed');
+      });
+
+
+    //TODO: ADD MONEY RAISED CALL FOR EACH SELECTED CHARITY
 
     CharityAPI.getAll()
       .success(function(data, status, headers, config){
@@ -1970,6 +2011,8 @@ angular.module('starter.controllers', ['starter.appServices',
       });
 
 
+
+
     $scope.selectCharity = function(charityName){
 
       var email = $rootScope.getEmail();
@@ -1979,20 +2022,21 @@ angular.module('starter.controllers', ['starter.appServices',
       console.log('charityNameString:' +charityNameString);
       $rootScope.removeSelectedCharityName();
 
+      var today = new Date();
+      console.log('today: ' + today);
+      var todaySplitter = today.toString().split(' ');
+      var charityMonth =  todaySplitter[1];
+      console.log('charityMonth: ' + charityMonth);
 
 
-
-
-
+      $scope.pastCharity = [];
+      $scope.selectedCharityTotalMoneyRaised = 0;
+      $scope.selectedCharityMonthMoneyRaised  = 0;
       //var newCharity = charity.toString();
 
       console.log($rootScope.getUserId());
       CharityAPI.selectCharity($rootScope.getUserId(), {charityName: charityNameString})
         .success(function(data, status, headers, config){
-          HistoryAPI.getCharityHistory($rootScope.getUserId(), {charity: charityNameString})
-            .success(function(data, status, headers, config){
-
-            })
           console.log('charityNameString from API success: ' + charityNameString);
           $scope.charityName = charityNameString;
 
@@ -2002,6 +2046,43 @@ angular.module('starter.controllers', ['starter.appServices',
           console.log('inside select charityAPI success');
           //$window.location.href=('#/app/run');
           console.log('charity API succeeded in selecting charity');
+
+          console.log('charityNameString: ' + charityNameString);
+          console.log('user id: ' + $rootScope.getUserId());
+
+          //TODO: ADD DATE FOR MONTH MONEY DETERMINANT
+          HistoryAPI.getCharityHistory($rootScope.getUserId(), charityNameString)
+            .success(function(cData, status, headers, config){
+              console.log('charityNameString, History API success: ' + charityNameString);
+              for(var i=0; i< cData.length; i++){
+                console.log('cData[i].charity:  ' + cData[i].charity);
+                if(charityNameString = cData[i].charity){
+                  console.log('charityNameString and cData['+i+'] matched with: ' + charityNameString + ' ' + cData[i].charity);
+                  $scope.selectedCharityTotalMoneyRaised = $scope.selectedCharityTotalMoneyRaised + cData[i].moneyRaised;
+
+                  console.log('cData['+i+'].month: ' + cData[i].month);
+                  if(charityMonth = cData[i].month){
+                    console.log('charityMonth and cData['+i+'] matched with: ' + charityMonth + ' ' + cData[i].month);
+                    $scope.selectedCharityMonthMoneyRaised = cData[i].moneyRaised;
+                  }
+
+                }
+
+
+
+              }
+
+            })
+            .error(function(err){
+              console.log('getCharityHistory API call failure');
+            });
+
+          $scope.displaySelectedTotalMoneyRaised = $scope.selectedCharityTotalMoneyRaised;
+          console.log('$scope.displaySelectedTotalMoneyRaised: ' + $scope.displaySelectedTotalMoneyRaised);
+          $scope.displaySelectedCharityMonthMoneyRaised = $scope.selectedCharityMonthMoneyRaised;
+          console.log('$scope.displaySelectedCharityMonthMoneyRaised: ' + $scope.displaySelectedCharityMonthMoneyRaised);
+
+
 
         })
         .error(function(err,status){

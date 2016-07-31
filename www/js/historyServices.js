@@ -48,10 +48,19 @@ angular.module('starter.historyServices', [])
       });
     },
     getCharityHistory: function(userId, charityName){
-      return $http.get(base+'history/charity', charityName, {
+      return $http.get(base+'history/charity', {
         method: 'GET',
         params: {
-          user: userId
+          userId: userId,
+          charityName: charityName
+        }
+      });
+    },
+    getPastCharities: function(userId){
+      return $http.get(base+'history/charities', {
+        method: 'GET',
+        params: {
+          userId: userId
         }
       });
     }
