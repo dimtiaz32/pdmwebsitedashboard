@@ -45,7 +45,15 @@ angular.module('starter.historyServices', [])
           user: user,
           month: month
         }
-      })
+      });
+    },
+    getCharityHistory: function(userId, charityName){
+      return $http.get(base+'history/charity', charityName, {
+        method: 'GET',
+        params: {
+          user: userId
+        }
+      });
     }
   }
 

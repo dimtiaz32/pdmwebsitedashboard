@@ -1772,6 +1772,7 @@ angular.module('starter.controllers', ['starter.appServices',
         pace: $rootScope.getRunPace(),
         User: $rootScope.getUserId(),
         moneyRaised: $rootScope.getRunMoneyRaisedAmount(),
+        charity: $rootScope.getSelectedCharityName(),
         path: {lat: [$scope.lat], long: [$scope.long]},
         laps: { number: [$scope.lapPushNumbers],
           distance: [$scope.lapPushDistances],
@@ -1927,7 +1928,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
 
 
-  .controller('CharitiesCtrl', function($rootScope, $timeout, $ionicModal, $window, $scope, CharityAPI, AuthAPI){
+  .controller('CharitiesCtrl', function($rootScope, $timeout, $ionicModal, $window, $scope, CharityAPI, HistoryAPI, AuthAPI){
 
     $scope.isDetailDisplayed = false;
     $scope.charityName  = $rootScope.getSelectedCharityName();
@@ -1988,6 +1989,10 @@ angular.module('starter.controllers', ['starter.appServices',
       console.log($rootScope.getUserId());
       CharityAPI.selectCharity($rootScope.getUserId(), {charityName: charityNameString})
         .success(function(data, status, headers, config){
+          HistoryAPI.getCharityHistory($rootScope.getUserId(), {charity: charityNameString})
+            .success(function(data, status, headers, config){
+
+            })
           console.log('charityNameString from API success: ' + charityNameString);
           $scope.charityName = charityNameString;
 
