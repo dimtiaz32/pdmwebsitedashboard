@@ -368,6 +368,7 @@ angular.module('starter.controllers', ['starter.appServices',
   // })
 
   .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI, CharityAPI, $ionicPopup, AuthAPI, $ionicModal){
+
     //CONSOLE LOGGING COLORS:
 
     //UI-INTERACTIONS: TEAL
@@ -396,6 +397,7 @@ angular.module('starter.controllers', ['starter.appServices',
     //(L)DISTANCE: MEDIUMPURPLE
     //(L)PACE: DarkGoldenRod
 
+
     $scope.user =  {
       name: ""
     };
@@ -410,7 +412,9 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.user.name = $rootScope.getName();
 
     $scope.isDetailDisplayed = false;
+
     $scope.isRunDetailDisplayed = false;
+
     $scope.isHistoryDetailDisplayed = true;
     $scope.isRunning = false;
     $scope.isPaused = false;
@@ -1823,6 +1827,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
     // $ionicNavBarDelegate.showBackButton(false)
 
+
     $scope.moneyRaised = 0;
 
     $scope.fetchMyPledges = function() {
@@ -2179,27 +2184,31 @@ angular.module('starter.controllers', ['starter.appServices',
 
   })
 
-  .controller('InviteSponsorStartCtrl', function($scope, $location, store, DonationAPI){
-      store.set("requestId", $location.search().id);
+  .controller('InviteSponsorStartCtrl', function($scope, $location, store, DonationAPI) {
+    store.set("requestId", $location.search().id);
 
-      DonationAPI.getUserByRequestId($location.search().id).success(function(data){
-          if(data.name) {
-              store.set("recipient.name", data.name.first + " " + data.name.last);
-          } else if (data.facebook){
-              store.set("recipient.name", data.facebook.firstname + " " + data.facebook.lastname);
-          } else if (data.google){
-              store.set("recipient.name", data.google.firstname + " " + data.google.lastname);
-          } else {
-             console.log("illegle url!");
-             throw new Error("illegle url");
-          }
+    DonationAPI.getUserByRequestId($location.search().id).success(function (data) {
+      if (data.name) {
+        store.set("recipient.name", data.name.first + " " + data.name.last);
+      } else if (data.facebook) {
+        store.set("recipient.name", data.facebook.firstname + " " + data.facebook.lastname);
+      } else if (data.google) {
+        store.set("recipient.name", data.google.firstname + " " + data.google.lastname);
+      } else {
+        console.log("illegle url!");
+        throw new Error("illegle url");
+      }
 
-          $scope.name = store.get('recipient.name');
+      $scope.name = store.get('recipient.name');
 
-      }).error(function(err){
-          console.log("err:" + err);
-          throw err;
-      });
+    }).error(function (err) {
+      console.log("err:" + err);
+      throw err;
+    });
+  })
+
+
+  .controller('MyPledgesCtrl',function($rootScope, $scope, $filter, $window, DonationAPI){
 
   })
 
@@ -2210,6 +2219,7 @@ angular.module('starter.controllers', ['starter.appServices',
     };
 
     $scope.name = store.get('recipient.name');
+
 
     $scope.saveName = function() {
 
@@ -2231,6 +2241,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
     $scope.active = 'zero';
     $scope.name = store.get('recipient.name');
+
     $scope.setActive = function (type) {
       $scope.active = type;
     };
@@ -2260,13 +2271,13 @@ angular.module('starter.controllers', ['starter.appServices',
          store.set('donor.amount', amount);
       }
 
-
   })
 
   .controller('InviteSponsorPledgeCtrl', function($scope, $http, store, $window){
 
     $scope.active = 'zero';
     $scope.name = store.get('recipient.name');
+
     $scope.setActive = function(type) {
       $scope.active = type;
     };
@@ -2297,11 +2308,17 @@ angular.module('starter.controllers', ['starter.appServices',
 
   })
 
+
+  .controller('InviteSponsorStartCtrl', function($scope){
+
+  })
+
   .controller('InviteSponsorPaymentCtrl', function($rootScope, $scope, $http, store, DonationAPI, $window, AuthAPI){
     $scope.user = {
       email: ""
     };
     $scope.name = store.get('recipient.name');
+
     $scope.completeSponsor = function(status, response) {
 
       var email = this.user.email;
@@ -2326,6 +2343,7 @@ angular.module('starter.controllers', ['starter.appServices',
           $window.location.href = ('#/app/inviteSponsor/end');
         }).error(function (err,status){
           console.log("error: " + err);
+
           $rootScope.verifyStatus(status);
         });
       }
@@ -2565,7 +2583,7 @@ angular.module('starter.controllers', ['starter.appServices',
   //Can't get pagination to show
   $scope.slideOptions = {
     pagination: true,
-    paginationType: 'bullets',
+    paginationType: 'bullets'
   };
 
   $scope.back = function(){
@@ -2941,7 +2959,6 @@ angular.module('starter.controllers', ['starter.appServices',
       strokeColor: "#00b9be",
       highlightStroke: "rgb(206, 29, 31)",
       highlightFill: "rgb(206, 29, 31)"
-      // highlightFill: "#fff"
     }];
 
     $scope.options = {
@@ -2966,7 +2983,7 @@ angular.module('starter.controllers', ['starter.appServices',
             display: true,
             labelString: "Miles",
             fontFamily: "Helvetica Neue",
-            fontSize: "16",
+            fontSize: "16"
           }
         }],
 
@@ -3805,5 +3822,6 @@ angular.module('starter.controllers', ['starter.appServices',
   })
 
   .controller('PastRacesCtrl', function($scope) {
+
 
   });

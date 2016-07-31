@@ -4,7 +4,6 @@
       <h3>Every mile raises ${{moneyRaised}} for</h3>
       <hr class="charity-page">
       <h1>{{charityName}}</h1>
-
       <div class="charity-page charity-detail" ng-show="isDetailDisplayed">
         <hr class="charity-page">
         <ion-item class="charity-page charity-detail item-thumbnail-left">
@@ -27,12 +26,10 @@
           </div>
         </ion-item>
       </div>
-
       <button class="charity-page button-slide"
         ng-class="isDetailDisplayed ? 'button-slide-down' : 'button-slide-up'"
         ng-click="isDetailDisplayed = !isDetailDisplayed">
       </button>
-
     </div>
   </div>
     <ion-list class="charity-page charity-list" show-delete="shouldShowDelete" show-reorder="shouldShowReorder" can-swipe="listCanSwipe">

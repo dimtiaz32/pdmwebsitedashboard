@@ -135,6 +135,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
         url:'/inviteSponsor/start',
         views: {
           'app-sponsors': {
+        url:'/inviteSponsor/start/:requestId',
             templateUrl:'templates/inviteSponsor-start.html',
             controller:'InviteSponsorStartCtrl'
           }
@@ -309,9 +310,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
       });
 
     // if none of the above states are matched, use this as the fallback
-    // $urlRouterProvider.otherwise('/auth/signin');
-    $urlRouterProvider.otherwise('/app/run');
-
+    $urlRouterProvider.otherwise('/auth/signin');
+    // $urlRouterProvider.otherwise('/app/run');
 
     Stripe.setPublishableKey('pk_test_AcHwMgfwhswjYGUhawRw0her');
 
