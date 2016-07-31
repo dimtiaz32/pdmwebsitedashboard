@@ -1,0 +1,68 @@
+.account.list {
+  margin-bottom: 0;
+}
+
+.account.background.background-image {
+  width: 100%;
+  height: 70px;
+  background-image: url("../img/account_info-bg.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+/*TODO: after re-enabling user img, uncomment following css: .account.user.image > img */
+/*.account.user.user-image > img {*/
+  /*height: 70px;*/
+  /*width: auto;*/
+  /*border-radius: 50%;*/
+  /*float:left;*/
+  /*!*margin: 35px 15px 35px 35px;*!*/
+  /*transform: translate(35px, 35px);*/
+  /*-ms-transform: translate(35px, 35px);*/
+  /*-webkit-transform: translate(35px, 35px);*/
+/*}*/
+
+.account.user.user-name {
+  /*TODO: after re-enabling user image, set "text-align: right;" and "padding: 40px 35px 0 100px;"*/
+  text-align: center;
+  /*text-align: right;*/
+  font-size: 32px;
+  padding-top: 12px;
+  /*padding: 40px 35px 0 110px;*/
+  color: #fff;
+  line-height: normal;
+}
+
+.account.button.button-full {
+  background-color: #ed2024
+}
+
+  .account.button.button-full.save {
+    background-color: #00b9be;
+  }
+
+.account.list input {
+  color: #888;
+}
+
+  .account.list input.editing {
+    color: #000;
+  }
+
+/*input {
+  text-align: right;
+}
+
+.name {
+  background-image: url("../img/account_info-bg.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+h1 {
+  text-align: right;
+  vertical-align: middle;
+  color: white;
+  font-weight: 100;
+  float:right;
+}*/

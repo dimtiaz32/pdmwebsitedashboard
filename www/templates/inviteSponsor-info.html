@@ -1,0 +1,58 @@
+<ion-view view-title="sponsors">
+  <!--
+  <ion-header-bar class="bar-positive">
+     <h1 class="title">Become a Sponsor</h1>
+  </ion-header-bar>
+  <ion-content class="has-header padding" ng-controller="SponsorsInfoCtrl">
+      <div class="list">
+        <label class="item item-input">
+        <span class="input-label">FN</span>
+        <input type="text" ng-model="user.firstname" size="20" placeholder="first name" >
+        </label>
+        <label class="item item-input">
+        <span class="input-label">LN</span>
+        <input type="text" ng-model="user.lastname" size="20" placeholder="last name" >
+        </label>
+      </div>
+      <a href="#/app/sponsors/amount" ng-click='saveName()'>Next</a>
+  </ion-content>
+-->
+
+  <ion-content class="has-header padding bg" ng-controller="InviteSponsorInfoCtrl">
+
+    <div class="card">
+
+      <div class="item item-divider">
+        Sponsor {{ name }}!
+        <i class="icon icon-left ion-home"></i>
+      </div>
+
+      <div class="item item-text-wrap">
+        <h1>Payment Information</h1>
+
+        <div class="item item-input-inset">
+          <label class="item-input-wrapper">
+            <i class="icon ion-ios-home" style="color: #00b9be;"></i>
+            <input type="text" ng-model="user.firstname" placeholder="first name">
+          </label>
+        </div>
+        <div class="item item-input-inset">
+          <label class="item-input-wrapper">
+            <i class="icon ion-ios-home" style="color: #00b9be;"></i>
+            <input type="text" ng-model="user.lastname" placeholder="last name">
+          </label>
+        </div>
+        <p style="color: #808080">Please enter as appears on your credit/debit card.</p>
+      </div>
+
+      <div class="item item-divider">
+        <button class="button button-full button-assertive"
+                style="color: white; font-size: x-large; font-weight: normal;"
+                ng-click='saveName()'>Next</button>
+      </div>
+
+    </div>
+
+  </ion-content>
+
+</ion-view>

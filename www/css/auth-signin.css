@@ -1,0 +1,82 @@
+ion-content.sign-in{
+  background-color: #00b9be;
+}
+
+.sign-in .logo-image {
+  display: block;
+  margin: 0 auto 0 auto;
+  width: 20%;
+  height: auto;
+}
+
+.sign-in .logo-title {
+  color: #fff;
+  text-align: center;
+  font-size: 3em;
+  font-weight: 200;
+  margin-bottom: 0;
+  padding: 0;
+
+}
+
+.sign-in .logo-title span {
+  font-weight: 500;
+}
+
+.sign-in .logo-subtitle {
+  padding: 0 0 7% 0;
+  margin: 0 0 0 0;
+  color: #fff;
+  text-align: center;
+  position: relative;
+  left: 7%;
+  font-size: 1.25em;
+  font-weight: 300;
+}
+
+.sign-in .input-label {
+  color: #a1a1a1;
+  padding-left: 16px;
+}
+
+.sign-in .button {
+  background-color: #01999d;
+  margin: 0 0 5px 0;
+}
+
+  .sign-in .button:hover {
+    border: none;
+  }
+
+.sign-in .forgot-password {
+  background-color: #00b9be;
+  text-align: center;
+  display: inline-block;
+}
+
+  .sign-in .forgot-password:hover {
+    background-color: transparent;
+  }
+
+/*create account and sign in buttons*/
+.sign-in.options li{
+  background-color: transparent;
+  display: inline;
+  float: left;
+}
+
+/*SOCIAL MEDIA LOGINS*/
+.sign-in.social.button{
+  width:100%;
+  background-color: #00b9be;
+  padding: 0;
+  border: 0;
+  margin: 0;
+}
+
+.sign-in.social.button img {
+  width:60%;
+  height: auto;
+  z-index: 10;
+
+}

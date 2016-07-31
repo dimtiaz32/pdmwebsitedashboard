@@ -1,0 +1,86 @@
+.activity-page .spacer {
+  padding: 10px;
+}
+
+ion-content.activity-page {
+  background-color: #efefef;
+}
+
+ion-list.activity-page {
+}
+
+ion-item.activity-page {
+  height: 50vw;
+  padding: 0;
+
+  margin-bottom: 2px;
+
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+  .activity-page.charities-banner .charity-banner {
+    background-position: center;
+    background-image: url('../img/account_info-bg.png');
+    padding: 16px;
+    color: #fff;
+  }
+
+    .activity-page.charities-banner .charity-banner .charity-name {
+      font-size: xx-large;
+      font-weight: 300;
+    }
+
+    .activity-page.charities-banner .charity-banner .detail-title {
+      font-size: medium;
+      font-weight: 600;
+
+    }
+
+    .activity-page.charities-banner .charity-banner .detail {
+      -ms-word-wrap: break-word;
+      word-wrap: break-word;
+
+      white-space: normal;
+    }
+
+
+      .activity-page.charities-banner .charity-banner .detail .funds {
+        text-align: left;
+        font-size: xx-large;
+      }
+
+      .activity-page.charities-banner .charity-banner .detail .impact {
+        text-align: left;
+        font-size: medium;
+      }
+
+
+  .activity-page.goal-stats {
+    padding: 16px;
+
+    -ms-word-wrap: break-word;
+    word-wrap: break-word;
+    white-space: normal;
+  }
+
+    .activity-page.goal-stats .row .col:first-child{
+      border-right: 1px solid #ccc;
+    }
+
+
+ion-item.activity-page.week-graph {
+  position: relative;
+}
+
+  .activity-page.week-graph {
+    background: #00c4ca;
+    background: linear-gradient(#00c4ca, #00686D); /* Standard syntax */
+  }
+
+    .activity-page.week-graph canvas{
+      position: absolute;
+      bottom: 0;
+      padding: 0 4px;
+    }

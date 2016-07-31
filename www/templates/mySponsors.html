@@ -1,0 +1,59 @@
+<ion-view view-title="Sponsors" ng-controller="MyDonationCtrl">
+    <ion-nav-buttons side="right" >
+        <button class="my-sponsors button button-clear button-positive" ng-click="openModal($event)">
+          <span class="ion-person-add" style="color: #fff;font-size: 22px;"></span>
+        </button>
+    </ion-nav-buttons>
+    <ion-content class="my-sponsors has-header" >
+      <ion-refresher ng-hide="noSponsor" pulling-text="Pull to refresh..." on-refresh="doRefresh('fetchMySponsors')"></ion-refresher>
+      <div class="my-sponsors wrapper">
+        <div class="my-sponsors sponsor-header">
+          <div class="my-sponsors row row-center">
+            <!--TODO: Renable user image-->
+            <!--<div class="my-sponsors col col-50 image">-->
+              <!--<img src="{{ avatar }}"></img>-->
+            <!--</div>-->
+            <div class="my-sponsors username col col-50">
+              <h2>{{ username }}</h2>
+            </div>
+
+            <div class="my-sponsors row row-center">
+              <div class="my-sponsors col col-67">$252.24</div>
+              <div class="my-sponsors col col-33">raised for charity</div>
+              <div class="my-sponsors row">
+                <!--<div class="my-sponsors col">-->
+                  <!--<button class="my-sponsors button button-small button-clear button-PDMLight" ng-click="managePledges()">Manage my pledges</button>-->
+                <!--</div>-->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="my-sponsors row row-center">
+          <div class="my-sponsors col">
+            <h3>My Sponsors</h3>
+          </div>
+          <div class="my-sponsors col pledge">
+            <p class="my-sponsors pledge">Pledge</p>
+            <p class="my-sponsors ending-date">ending date</p>
+          </div>
+        </div>
+        <hr>
+        <div class="my-sponsors list">
+          <!-- use this template for all the cells. Add this class below for sponsor image: item-icon-left-->
+          <a class="my-sponsors item" ng-repeat="sponsor in sponsors">
+            <span class="my-sponsors cell-vertical-center-text"> {{ sponsor.donor.firstName }} {{sponsor.donor.lastName}}</span>
+              <span class="my-sponsors item-note">
+                <p class="my-sponsors pledge">{{ formateCurreny(sponsor.per_mile_donation) }}/mile</p>
+                <p class="my-sponsors ending-date">{{ formateDate(sponsor.end_date) }}</p>
+              </span>
+          </a>
+        </div>
+        <span ng-show="noData">
+            No Sponsor now.
+        </span>
+        <button class="my-sponsors button button-block button-clear button-sponsor-help">Need Help Getting Sponsors?</button>
+      </div>
+      </div>
+    </ion-content>
+</ion-view>

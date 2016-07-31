@@ -1,0 +1,224 @@
+
+
+<ion-view view-title="Run" ng-controller="RunCtrl" class="has-header"> <!--ng-controller="RunCtrl"-->
+  <!--<ion-header-bar class="bar-stable" >-->
+  <!--<h1 class="title">Run</h1>-->
+  <!--</ion-header-bar>-->
+
+  <ion-content scroll="false">
+
+    <map on-create="mapCreated(map)"></map>
+    <div id="capture"></div>
+
+    <!--DropDown stuff-->
+
+    <div class="run-page overlay">
+
+      <div class="run-page detail" ng-show="!isRunning">
+
+        <p class="run-page header"> Welcome {{user.name}}</p>
+        <hr class="run-page">
+        <p style="color: #00b9be" class="run-page detail-head" ng-show="noSponsor">Every mile raises ${{moneyRaised}} for</p>
+        <a class="run-page no-sponsor detail-head" href="#/app/mySponsors"><p class="run-page no-sponsor detail-head" ng-show="!noSponsor" >Invite sponsors to start fundraising</p></a>
+        <hr class="run-page">
+        <p class="run-page header" ng-show="noCharity">{{charityName}}</p>
+        <a class="run-page no-charity header" href="#/app/charities"><p class="run-page no-charity header" ng-show="!noCharity">Select a charity</p></a>
+
+        <div class="animated-detail" ng-class="{'active':isDetailDisplayed}">
+
+          <hr class="full" style="height: 2px;">
+          <span class="run-page head">This Week</span>
+          <p class="run-page label">$17.20 <span class="units">raised </span>34 miles<span class="units"> run for charity</span></p>
+          <hr class="full">
+          <span class="run-page head">This Month</span>
+          <p class="run-page label">$50.10 <span class="units">raised </span>432 miles<span class="units"> run for charity</span></p>
+
+        </div>
+
+        <button class="run-page button-slide"
+                ng-class="isDetailDisplayed ? 'button-slide-down' : 'button-slide-up'"
+                ng-click="isDetailDisplayed = !isDetailDisplayed">
+        </button>
+
+      </div>
+
+
+      <div class="run-page detail" ng-show="isRunning">
+        <div class="run-page row">
+          <div class="run-page col col-50">
+            <p class="run-page head">Duration</p>
+            <p class="run-page label">{{minutes}}:{{seconds}}<span class="units">min:sec</span></p>
+          </div>
+          <div class="run-page verticalLine"></div>
+          <div class="run-page col col-50">
+            <p class="run-page head">Distance</p>
+            <p class="run-page label">{{distance.toFixed(2)}}<span class="units">mi</span></p>
+          </div>
+        </div>
+
+        <hr class="run-page">
+
+        <div class="run-page row">
+          <div class="run-page col col-50">
+            <p class="run-page head">Pace</p>
+            <p class="run-page label">{{pace.toFixed(2)}}<span class="units">min/mi</span></p>
+          </div>
+          <div class="run-page verticalLine"></div>
+          <div class="run-page col col-50">
+            <p class="run-page head">Funds Raised</p>
+            <p class="run-page label">${{moneyCalc.toFixed(2)}}</p>
+          </div>
+        </div>
+
+
+        <div ng-show="isRunDetailDisplayed" class="animated-run-detail">
+          <hr>
+          <div class="run-page row">
+            <div class="run-page col col-50">
+              <p class="run-page head">Lap {{lapNumber}} Duration</p>
+              <p class="run-page label">{{lapMinutes}}:{{lapSeconds}}<span class="units">min:sec</span></p>
+            </div>
+            <div class="run-page verticalLine"></div>
+            <div class="run-page col col-50">
+              <p class="run-page head">Lap {{lapNumber}} Distance</p>
+              <p class="run-page label">{{lapDistance.toFixed(2)}}<span class="units">mi</span></p>
+            </div>
+          </div>
+        </div>
+
+        <button class="run-page button-slide"
+                ng-class="isRunDetailDisplayed ? 'button-slide-down' : 'button-slide-up'"
+                ng-click="isRunDetailDisplayed = !isRunDetailDisplayed">
+        </button>
+
+      </div>
+
+
+    </div>
+
+
+  </ion-content>
+
+  <!-- <ion-footer-bar class="run-page bar-stable">
+    <a ng-click="centerOnMe()" class="button button-icon icon ion-navigate"></a>
+  </ion-footer-bar> -->
+
+
+
+  <!-- These are the buttons that control the run-->
+  <!--
+      <button class="button button-large button-start"
+              ng-show="!isRunning"
+              ng-click="toggleRun()">
+        Start My DREAMRUN
+      </button>
+      <button class="button button-large button-lap"
+              ng-show="isRunning"
+              ng-click="lapBtnTapped()">
+        {{!isPaused ? "Lap" : "Resume"}}
+      </button>
+      <button ng-class="isPaused ? 'button button-large button-pause-red' : 'button button-large button-pause'"
+              ng-show="isRunning" ng-click="pause()">
+        {{isPaused ? "Slide to Stop" : "Pause"}}
+      </button>
+  -->
+
+  <!--End of buttons that control the run-->
+
+
+
+  <!--<div ng-show="isDetailDisplayed"></div>-->
+
+  <!--<div class="button button-assertive">Start Dreamrun</div> -->
+
+
+  <!--<div ng-show="!isRunning">
+  <!--<h2>Welcome, Jane Doe</h2>
+  <!--<hr>
+  <!--<p style="color: #00b9be" class="detail-head">Every mile raises $0.50 for</p>
+  <!--<h2>Teens Run DC</h2>
+  <!--<div ng-show="isDetailDisplayed">
+  <!--<hr>
+  <!--<span class="head">This week</span>
+  <!--<p class="label">$17.20<span class="units"> raised and</span> 34 miles <span class="units">run for charity</span></p>
+  <!--<hr>
+  <!--<span class="head">This month</span>
+  <!--<p class="label">$50.10<span class="units"> raised and</span> 100 miles <span class="units">run for charity</span></p>
+  <!--</div>
+  <!--<button class="button-slide"
+  <!--ng-class="isDetailDisplayed ? 'button-slide-down' : 'button-slide-up'"
+  <!--ng-click="isDetailDisplayed = !isDetailDisplayed">
+  <!--</button>
+  <!--</div>-->
+
+  <!--<div ng-show="isRunning">-->
+  <!--<div class="row">-->
+  <!--<div class="col col-50">-->
+  <!--<p class="head">Duration</p>-->
+  <!--<p class="label">23:24<span class="units">min:sec</span></p>-->
+  <!--</div>-->
+  <!--<div class="verticalLine"></div>-->
+  <!--<div class="col col-50">-->
+  <!--<p class="head">Distance</p>-->
+  <!--<p class="label">2.86<span class="units">mi</span></p>-->
+  <!--</div>-->
+  <!--</div>-->
+
+  <!--<hr>-->
+
+  <!--<div class="row">-->
+  <!--<div class="col col-50">-->
+  <!--<p class="head">Pace</p>-->
+  <!--<p class="label">8:11<span class="units">min/mi</span></p>-->
+  <!--</div>-->
+  <!--<div class="verticalLine"></div>-->
+  <!--<div class="col col-50">-->
+  <!--<p class="head">Funds Raised</p>-->
+  <!--<p class="label">$3.57</p>-->
+  <!--</div>-->
+  <!--</div>-->
+
+
+  <!--<div ng-show="isDetailDisplayed">-->
+  <!--<hr>-->
+  <!--<div class="row">-->
+  <!--<div class="col col-50">-->
+  <!--<p class="head">Lap 2 Duration</p>-->
+  <!--<p class="label">2:45<span class="units">min:sec</span></p>-->
+  <!--</div>-->
+  <!--<div class="verticalLine"></div>-->
+  <!--<div class="col col-50">-->
+  <!--<p class="head">Lap 2 Distance</p>-->
+  <!--<p class="label">1.23<span class="units">mi</span></p>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--<button class="button-slide"-->
+  <!--ng-class="isDetailDisplayed ? 'button-slide-down' : 'button-slide-up'"-->
+  <!--ng-click="isDetailDisplayed = !isDetailDisplayed">-->
+  <!--</button>-->
+  <!--</div>-->
+
+  <!--<button class="button button-large button-start"-->
+  <!--ng-show="!isRunning"-->
+  <!--ng-click="toggleRun()">-->
+  <!--Start My DREAMRUN-->
+  <!--</button>-->
+
+  <!--<button class="button button-large button-lap"-->
+  <!--ng-show="isRunning"-->
+  <!--ng-click="lapBtnTapped()">-->
+  <!--{{!isPaused ? "Lap" : "Resume"}}-->
+  <!--</button>-->
+
+  <!--<button ng-class="isPaused ? 'button button-large button-pause-red' : 'button button-large button-pause'"-->
+  <!--ng-show="isRunning" ng-click="pause()">-->
+  <!--{{isPaused ? "Slide to Stop" : "Pause"}}-->
+  <!--</button>-->
+
+  <!--<div id="map" data-tap-disabled="true"></div>-->
+
+  <!--</ion-content>-->
+
+
+</ion-view>

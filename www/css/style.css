@@ -1,0 +1,94 @@
+/*Get rid of tab bars in sign-in and sign-up pages*/
+  .auth .tab-nav.tabs{
+    display: none;
+    background-color: #00b9be;
+  }
+
+  .auth.tabs-icon-top.pane.tabs-bottom.tabs-standard {
+    background-color: #00b9be;
+  }
+
+  /*.auth.tabs-icon-top.pane.tabs-bottom.tabs-standard .tab-nav.tabs {
+     background-color: #00b9be;
+     display: none;
+   }*/
+/*^^^WILL AFFECT ALL TAB BARS*/
+
+
+.ion-chevron-right, .ion-chevron-left {
+  background-color: transparent;
+  border: none;
+}
+
+.popup {
+  border-radius: 8px !important;
+}
+
+  .popup input {
+    padding: 5px;
+  }
+
+  .popup .popup-buttons .button-default {
+  }
+
+  .popup .popup-buttons .button-positive {
+    color: #fff;
+    background-color: #00b9be;
+  }
+
+.nav-bar-block, .bar {
+  background-color: #00b9be !important;
+}
+
+.bar.bar-positive {
+  background-image: none;
+}
+
+.button-white {
+  color: #ffffff !important;
+}
+
+.title {
+  color: #ffffff !important;
+  font-weight: 500 !important;
+  color: white !important;
+  text-align: center !important;
+}
+
+.side-menu.title {
+  font-weight: 300 !important;
+}
+
+.side-menu.title span {
+  font-weight: 500 !important;
+}
+
+.toggle input:checked + .track {
+  border-color: #00b9be !important;
+  background-color: #00b9be !important;
+}
+
+h1, h2, h3, p, span, button, ion-item, ion-content, .title {
+  font-family: "Helvetica Neue";
+}
+
+
+map {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.scroll {
+  height:100%;
+}
+
+.button.back-button {
+  color: white !important;
+}
+
+hr {
+  border: none;
+  height: 1px;
+  background-color: #ccc;
+  margin: 0 5% 0 5%;
+}

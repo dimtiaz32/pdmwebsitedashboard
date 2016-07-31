@@ -1,0 +1,112 @@
+<ion-view view-title="Activity">
+  <ion-nav-buttons side="right">
+    <button class="my-sponsors button button-clear button-positive" ng-click="viewHistory()">
+        <span class="ion-ios-list-outline" style="color: #fff;font-size: 22px;"></span>
+    </button>
+  </ion-nav-buttons>
+  <ion-content class="activity-page">
+
+    <ion-list class="activity-page">
+      <ion-item class="activity-page charities-banner">
+        <ion-slides>
+
+          <!--TODO: change background image based on charity in the history.css using charities.css-->
+          <ion-slide-page class="charity-banner">
+            <div class="charity-name">
+              Teens Run DC
+            </div>
+            <div class="spacer">
+            </div>
+            <div class="detail-title row">
+              Impact
+            </div>
+            <div class="detail row">
+              <div class="funds col col-50 col-center">
+                $400 <span class="units" style="font-size: small">raised</span>
+              </div>
+              <div class="impact col col-50 col-center">
+                40 students put through college
+              </div>
+
+            </div>
+
+          </ion-slide-page>
+
+          <ion-slide-page class="charity-banner">
+              <div class="charity-name">
+                Back on my Feet
+              </div>
+          </ion-slide-page>
+
+          <ion-slide-page class="charity-banner">
+            <div class="charity-name">
+              Girls on the Run DC
+            </div>
+          </ion-slide-page>
+
+
+
+        </ion-slides>
+
+      </ion-item>
+
+      <ion-item class="activity-page goal-stats">
+        <ion-slides option="slideOptions">
+
+          <ion-slide-page>
+            <div class="goal-stats day row">
+              <div class="col col-50 col-center">
+                Running Goal Day with radius graph
+                USE ANGULAR MATERIAL PROGRESS CIRCLE
+
+              </div>
+
+              <div class="col col-50 col-center">
+                Fundraising Goal Day with radius graph
+              </div>
+
+            </div>
+          </ion-slide-page>
+
+          <ion-slide-page>
+            <div class="goal-stats week row">
+              <div class="col col-50 col-center">
+                Running Goal Week with radius graph
+              </div>
+
+              <div class="col col-50 col-center">
+                Fundraising Goal Week with radius graph
+              </div>
+
+            </div>
+          </ion-slide-page>
+
+        </ion-slides>
+      </ion-item>
+
+      <!--TODO: New Chart with swipeable bars-->
+      <ion-item class="activity-page week-graph">
+
+          <canvas id="bar"
+                  class="chart chart-bar"
+                  width="300"
+                  height="150"
+                  chart-data="data"
+                  chart-labels="labels"
+                  chart-series="series"
+                  chart-colours="colors"
+                  chart-options="options"
+                  chart-click="onClick">
+          </canvas>
+
+      </ion-item>
+
+      <ion-item class="activity-page summary">
+        <!--USE ANGULAR MATERIAL PROGRESS BAR-->
+        <div linear-chart chart-data="salesData"></div>
+
+      </ion-item>
+
+    </ion-list>
+  </ion-content>
+</ion-view>
