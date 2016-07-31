@@ -5,7 +5,7 @@
 
 angular.module('starter.donationServices', ['ionic'])
 .factory('DonationAPI', function($rootScope, $http, $ionicLoading, $window){
-  var base = "http://localhost:5000/";
+  var base = "https://dreamrun.herokuapp.com/";
 
   //everything up until return should be put in a main API
   $rootScope.show = function(text){
@@ -57,6 +57,15 @@ angular.module('starter.donationServices', ['ionic'])
     completeSponsor: function(form) {
       return $http.post(base + 'donations/myDonations',form,{
         method:'POST',
+      });
+    },
+
+    getUserByRequestId: function(requestId) {
+      return $http.get(base + 'donations/requests',{
+        method:'GET',
+        params: {
+          requestId: requestId
+        }
       });
     }
   }

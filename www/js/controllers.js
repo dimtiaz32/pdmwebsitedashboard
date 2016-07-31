@@ -368,6 +368,10 @@ angular.module('starter.controllers', ['starter.appServices',
   // })
 
   .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI, CharityAPI, $ionicPopup, AuthAPI, $ionicModal){
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9cedc4019199a73732bb7e131923c85bf2b828bd
     //CONSOLE LOGGING COLORS:
 
     //UI-INTERACTIONS: TEAL
@@ -410,7 +414,13 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.user.name = $rootScope.getName();
 
     $scope.isDetailDisplayed = false;
+<<<<<<< HEAD
     $scope.isRunDetailDisplayed = false;
+=======
+
+    $scope.isRunDetailDisplayed = false;
+
+>>>>>>> 9cedc4019199a73732bb7e131923c85bf2b828bd
     $scope.isHistoryDetailDisplayed = true;
     $scope.isRunning = false;
     $scope.isPaused = false;
@@ -1821,7 +1831,8 @@ angular.module('starter.controllers', ['starter.appServices',
 
   .controller('AppCtrl', function($rootScope, $scope, $window, $filter, $ionicModal, $timeout, DonationAPI, CharityAPI, AuthAPI, $ionicNavBarDelegate) {
 
-    $ionicNavBarDelegate.showBackButton(false)
+    // $ionicNavBarDelegate.showBackButton(false)
+
 
     $scope.moneyRaised = 0;
 
@@ -2179,10 +2190,31 @@ angular.module('starter.controllers', ['starter.appServices',
 
   })
 
+  .controller('InviteSponsorStartCtrl', function($scope, $location, store, DonationAPI) {
+    store.set("requestId", $location.search().id);
+
+    DonationAPI.getUserByRequestId($location.search().id).success(function (data) {
+      if (data.name) {
+        store.set("recipient.name", data.name.first + " " + data.name.last);
+      } else if (data.facebook) {
+        store.set("recipient.name", data.facebook.firstname + " " + data.facebook.lastname);
+      } else if (data.google) {
+        store.set("recipient.name", data.google.firstname + " " + data.google.lastname);
+      } else {
+        console.log("illegle url!");
+        throw new Error("illegle url");
+      }
+
+      $scope.name = store.get('recipient.name');
+
+    }).error(function (err) {
+      console.log("err:" + err);
+      throw err;
+    });
+  })
 
 
   .controller('MyPledgesCtrl',function($rootScope, $scope, $filter, $window, DonationAPI){
-
 
   })
 
@@ -2191,6 +2223,10 @@ angular.module('starter.controllers', ['starter.appServices',
       firstname: "",
       lastname: ""
     };
+
+    $scope.name = store.get('recipient.name');
+
+
     $scope.saveName = function() {
 
       var firstname = this.user.firstname;
@@ -2210,6 +2246,7 @@ angular.module('starter.controllers', ['starter.appServices',
   .controller('InviteSponsorAmountCtrl', function($scope, $http, store, $window) {
 
     $scope.active = 'zero';
+    $scope.name = store.get('recipient.name');
 
     $scope.setActive = function (type) {
       $scope.active = type;
@@ -2218,11 +2255,35 @@ angular.module('starter.controllers', ['starter.appServices',
       return type === $scope.active;
     };
 
+    $scope.donor = {
+          amount: ""
+      };
+
+
+      $scope.saveMoney = function() {
+
+        var amount = this.donor.amount;
+
+        if(!amount && $scope.active == 'zero') {
+          return false;
+        }
+        if (amount != '') {
+            store.set('donor.amount', amount);
+        }
+        $window.location.href = ('#/app/inviteSponsor/pledge');
+      }
+
+      $scope.saveMoneyWithAmount = function(amount) {
+         store.set('donor.amount', amount);
+      }
+
   })
 
   .controller('InviteSponsorPledgeCtrl', function($scope, $http, store, $window){
 
     $scope.active = 'zero';
+    $scope.name = store.get('recipient.name');
+
     $scope.setActive = function(type) {
       $scope.active = type;
     };
@@ -2253,6 +2314,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
   })
 
+
   .controller('InviteSponsorStartCtrl', function($scope){
 
   })
@@ -2261,6 +2323,8 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.user = {
       email: ""
     };
+    $scope.name = store.get('recipient.name');
+
     $scope.completeSponsor = function(status, response) {
 
       var email = this.user.email;
@@ -2279,11 +2343,13 @@ angular.module('starter.controllers', ['starter.appServices',
           amount: store.get('donor.amount'),
           months: store.get('donor.months'),
           stripeToken: response.id,
-          userId: $rootScope.getUserId()
+          userId: $rootScope.getUserId(),
+          requestId: store.get('requestId')
         }).success(function (data){
           $window.location.href = ('#/app/inviteSponsor/end');
         }).error(function (err,status){
-          console.log("error: " + err.message);
+          console.log("error: " + err);
+
           $rootScope.verifyStatus(status);
         });
       }
@@ -2297,6 +2363,7 @@ angular.module('starter.controllers', ['starter.appServices',
   .controller('InviteSponsorEndCtrl', function($scope, $http, store){
     $scope.months = store.get('donor.months');
     $scope.amount = store.get('donor.amount');
+    $scope.name = store.get('recipient.name');
   })
 
   .controller('AccountCtrl', function($rootScope, AuthAPI, UserAPI, $window, $scope, $ionicPopup) {
@@ -2859,17 +2926,45 @@ angular.module('starter.controllers', ['starter.appServices',
 
 })
 
+  .controller('HistoryListCtrl', function ($scope, $rootScope, $window) {
 
-  .controller('HistoryCtrl', function($scope, $rootScope, $window, HistoryAPI, AuthAPI, $filter) {
 
-    $scope.slideOptions = {pagination: false};
+
+  })
+
+  .controller('HistoryCtrl', function($scope, $rootScope, $window, HistoryAPI, $ionicSlideBoxDelegate, AuthAPI, $filter) {
+
+    $scope.viewHistory = function(){
+      $window.location.href = ('#/app/historyList');
+    }
+
+     //D3 testing
+    $scope.salesData = [
+      {hour: 1,sales: 54},
+      {hour: 2,sales: 66},
+      {hour: 3,sales: 77},
+      {hour: 4,sales: 70},
+      {hour: 5,sales: 60},
+      {hour: 6,sales: 63},
+      {hour: 7,sales: 55},
+      {hour: 8,sales: 47},
+      {hour: 9,sales: 55},
+      {hour: 10,sales: 30}
+    ];
+
+
+    //SLIDER PROPERTIES
+    $scope.slideOptions = {
+      pagination: true,
+      loop: false
+    };
 
 
     $scope.colors = [{
       fillColor: "#00b9be",
-      // strokeColor: "#00b9be",
+      strokeColor: "#00b9be",
+      highlightStroke: "rgb(206, 29, 31)",
       highlightFill: "rgb(206, 29, 31)"
-      // highlightStroke: "rgb(206, 29, 31)"
     }];
 
     $scope.options = {
@@ -2877,8 +2972,9 @@ angular.module('starter.controllers', ['starter.appServices',
         display: false,
         position: "left",
         labels: {
+          display: true,
           fontFamily: "Helvetica Neue",
-          boxWidth: 0
+          boxWidth: 0,
         }
       },
 
@@ -3717,4 +3813,21 @@ angular.module('starter.controllers', ['starter.appServices',
 
 
     // $scope.series = ['Series A'];
+  })
+
+  .controller('RacesCtrl', function($scope) {
+
+  })
+
+  .controller('MyRacesCtrl', function($scope) {
+
+  })
+
+  .controller('FindRacesCtrl', function($scope) {
+
+  })
+
+  .controller('PastRacesCtrl', function($scope) {
+
+
   });

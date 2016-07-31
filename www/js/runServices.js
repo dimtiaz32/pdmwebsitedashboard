@@ -3,7 +3,7 @@
  */
 angular.module('starter.runServices', ['ionic'])
 .factory('RunAPI', function($rootScope, $http, $ionicLoading, $window){
-  var base = "http://localhost:5000/";
+  var base = "https://dreamrun.herokuapp.com/";
 
   $rootScope.show = function(text){
     $rootScope.loading = $ionicLoading.show({

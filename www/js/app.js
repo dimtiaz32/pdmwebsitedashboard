@@ -84,7 +84,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
       .state('app.run', {
         url:'/run',
         views: {
-          'menuContent': {
+          'app-run': {
             templateUrl: 'templates/run.html',
             controller:'RunCtrl'
           }
@@ -94,7 +94,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
       .state('app.accountInfo', {
         url: '/accountInfo',
         views: {
-          'menuContent': {
+          'app-account': {
             templateUrl: 'templates/accountInfo.html',
             controller: 'AccountCtrl'
           }
@@ -104,7 +104,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
       .state('app.charities', {
         url: '/charities',
         views: {
-          'menuContent': {
+          'app-charities': {
             templateUrl: 'templates/charities.html',
             controller: 'CharitiesCtrl'
           }
@@ -114,7 +114,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
       .state('app.createCharity',{
         url:'/createCharity',
         views: {
-          'menuContent':{
+          'app-charities':{
             templateUrl:'templates/createCharity.html',
             controller: 'createCharityCtrl'
           }
@@ -124,7 +124,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
       .state('app.mySponsors',{
         url:'/mySponsors',
         views:{
-          'menuContent':{
+          'app-sponsors':{
             templateUrl:'templates/mySponsors.html',
             controller: 'MyDonationCtrl'
           }
@@ -132,9 +132,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
       })
 
       .state('app.inviteSponsor-start',{
-        url:'/inviteSponsor/start/:requestId',
+        url:'/inviteSponsor/start',
         views: {
-          'menuContent': {
+          'app-sponsors': {
+        url:'/inviteSponsor/start/:requestId',
             templateUrl:'templates/inviteSponsor-start.html',
             controller:'InviteSponsorStartCtrl'
           }
@@ -144,7 +145,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
       .state('app.inviteSponsor-info',{
         url:'/inviteSponsor/info',
         views: {
-          'menuContent': {
+          'app-sponsors': {
             templateUrl:'templates/inviteSponsor-info.html',
             controller:'InviteSponsorInfoCtrl'
           }
@@ -154,7 +155,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
       .state('app.inviteSponsor-amount',{
         url:'/inviteSponsor/amount',
         views: {
-          'menuContent': {
+          'app-sponsors': {
             templateUrl:'templates/inviteSponsor-amount.html',
             controller:'InviteSponsorAmountCtrl'
           }
@@ -164,7 +165,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
       .state('app.inviteSponsor-pledge', {
         url:'/inviteSponsor/pledge',
         views: {
-          'menuContent': {
+          'app-sponsors': {
             templateUrl:'templates/inviteSponsor-pledge.html',
             controller:'InviteSponsorPledgeCtrl'
           }
@@ -174,7 +175,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
       .state('app.inviteSponsor-payment',{
         url:'/inviteSponsor/payment',
         views: {
-          'menuContent': {
+          'app-sponsors': {
             templateUrl:'templates/inviteSponsor-payment.html',
             controller:'InviteSponsorPaymentCtrl'
           }
@@ -184,7 +185,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
       .state('app.inviteSponsor-end',{
         url:'/inviteSponsor/end',
         views:{
-          'menuContent': {
+          'app-sponsors': {
             templateUrl:'templates/inviteSponsor-end.html',
             controller:'InviteSponsorEndCtrl'
           }
@@ -194,9 +195,19 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
       .state('app.history', {
         url: '/history',
         views: {
-          'menuContent': {
+          'app-history': {
             templateUrl: 'templates/history.html',
             controller: 'HistoryCtrl'
+          }
+        }
+      })
+
+      .state('app.historyList', {
+        url: '/historyList',
+        views: {
+          'app-history': {
+            templateUrl: 'templates/historyList.html',
+            controller: 'HistoryListCtrl'
           }
         }
       })
@@ -205,7 +216,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
       .state('app.historyDay', {
         url: '/historyDay',
         views: {
-          'menuContent':{
+          'app-history':{
             templateUrl: 'templates/history-day.html',
             controller: 'HistoryDayCtrl'
           }
@@ -214,7 +225,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
       .state('app.myPledges',{
         url:'/myPledges',
         views:{
-          'menuContent':{
+          'app-sponsors':{
             templateUrl:'templates/myPledges.html',
             controller: 'MyDonationCtrl'
           }
@@ -256,9 +267,51 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
             controller: 'PlaylistCtrl'
           }
         }
+      })
+
+      .state('app.races', {
+        url: '/races',
+        views: {
+          'app-races': {
+            templateUrl: 'templates/races.html',
+            contoller: 'RacesCtrl'
+          }
+        }
+      })
+
+      .state('app.myRaces', {
+        url: '/races/myRaces',
+        views: {
+          'app-races': {
+            templateUrl: 'templates/myRaces.html',
+            controller: 'MyRacesCtrl'
+          }
+        }
+      })
+
+      .state('app.findRaces', {
+        url: '/races/findRaces',
+        views: {
+          'app-races': {
+            templateUrl: 'templates/findRaces.html',
+            controller: 'FindRacesCtrl'
+          }
+        }
+      })
+
+      .state('app.pastRaces', {
+        url: '/races/pastRaces',
+        views: {
+          'app-races': {
+            templateUrl: 'templates/pastRaces.html',
+            controller: 'PastRacesCtrl'
+          }
+        }
       });
+
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/auth/signin');
+    // $urlRouterProvider.otherwise('/auth/signin');
+    $urlRouterProvider.otherwise('/app/run');
 
     Stripe.setPublishableKey('pk_test_AcHwMgfwhswjYGUhawRw0her');
 
