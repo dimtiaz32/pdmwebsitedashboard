@@ -45,6 +45,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
         });
   }])
 
+  .config(['$ionicConfigProvider', function($ionicConfigProvider) {
+
+    $ionicConfigProvider.tabs.position('bottom');
+
+  }])
+
   .config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('auth', {

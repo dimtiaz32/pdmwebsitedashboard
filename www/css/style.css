@@ -1,4 +1,51 @@
-/*Get rid of tab bars in sign-in and sign-up pages*/
+/*Custom Tabs*/
+a.run-tab.tab-item i {
+  content: url("../img/PDM-logo-teal.svg");
+  padding: 3px 1px 1px 1px;
+}
+
+  a.run-tab.tab-item.tab-item-active i {
+    content: url("../img/PDM-logo-white.svg");
+  }
+
+
+ion-tabs{
+}
+.tabs, .tabs-striped .tabs {
+  background-color: #fff;
+  background-image: none;
+  border: none;
+  padding: 0;
+}
+
+.tab-item {
+  border-left: 1px solid #efefef;
+  border-right: 1px solid #efefef;
+  border-top: 1px solid #efefef;
+}
+
+ion-tabs.tabs-color-active-positive .tab-item,
+ion-tabs.tabs-striped.tabs-color-active-positive .tab-item {
+  color: #00b9be;
+}
+
+ion-tabs.tabs-color-active-positive .tab-item.tab-item-active,
+ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.tab-item-active {
+  color: #fff;
+  background-color: #00b9be;
+  border-color: #efefef;
+}
+
+ion-tabs.tabs-color-active-positive .tab-item.activated,
+ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.tab-item-active, ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.active, ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.activated {
+  color: #efefef;
+  border-color: #efefef;
+}
+
+/*^^^*/
+
+
+/*Get rid of sign-in and sign-up tab bars*/
   .auth .tab-nav.tabs{
     display: none;
     background-color: #00b9be;
@@ -8,41 +55,17 @@
     background-color: #00b9be;
   }
 
-
-  .pane{
+  [name=auth-signin] .pane{
     background-color: #00b9be;
   }
 
+  [name=auth-signup] .pane{
+    background-color: #00b9be;
+}
 /*^^^*/
 
 
-ion-tabs{
-}
-  .tabs {
-    background-color: #fff;
-    background-image: none;
-    border: none;
-    padding: 0;
-  }
 
-  .tab-item {
-    border-left: 1px solid #efefef;
-    border-right: 1px solid #efefef;
-    border-top: 1px solid #efefef;
-  }
-
-  ion-tabs.tabs-color-active-positive .tab-item {
-    color: #00b9be;
-  }
-
-    ion-tabs.tabs-color-active-positive .tab-item.tab-item-active {
-      color: #fff;
-      background-color: #00b9be;
-    }
-
-    ion-tabs.tabs-color-active-positive .tab-item.activated {
-      color: #efefef;
-    }
 
 
 
