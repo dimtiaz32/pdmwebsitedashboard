@@ -1,12 +1,13 @@
-<ion-view view-title="Run" ng-controller="RunCtrl"> <!--ng-controller="RunCtrl"-->
+<ion-view view-title="Run" ng-controller="RunCtrl">
+  <!--ng-controller="RunCtrl"-->
+
   <!--<ion-header-bar class="bar-stable" >-->
   <!--<h1 class="title">Run</h1>-->
   <!--</ion-header-bar>-->
 
   <ion-content scroll="false">
-
-
     <map id="map" on-create="mapCreated(map)"></map>
+
     <div id="capture"></div>
 
     <!--DropDown stuff-->
@@ -23,8 +24,8 @@
         <p class="run-page header" ng-show="noCharity">{{charityName}}</p>
         <a class="run-page no-charity header" href="#/app/charities"><p class="run-page no-charity header" ng-show="!noCharity">Select a charity</p></a>
 
+        <div class="animated-detail" ng-class="{'active':isDetailDisplayed}">
 
-        <div ng-show="isDetailDisplayed">
 
           <hr class="full" style="height: 2px;">
           <span class="run-page head">This Week</span>
@@ -32,15 +33,16 @@
           <hr class="full">
           <span class="run-page head">This Month</span>
           <p class="run-page label">$50.10 <span class="units">raised </span>432 miles<span class="units"> run for charity</span></p>
+
         </div>
 
+        <button class="run-page button-slide"
+                ng-class="isDetailDisplayed ? 'button-slide-down' : 'button-slide-up'"
+                ng-click="isDetailDisplayed = !isDetailDisplayed">
+        </button>
 
       </div>
 
-      <button class="run-page button-slide"
-              ng-class="isDetailDisplayed ? 'button-slide-down' : 'button-slide-up'"
-              ng-click="isDetailDisplayed = !isDetailDisplayed">
-      </button>
 
       <div class="run-page detail" ng-show="isRunning">
         <div class="run-page row">
@@ -70,7 +72,9 @@
         </div>
 
 
-        <div class="run-page detail" ng-show="isDetailDisplayed">
+
+        <div ng-show="isRunDetailDisplayed" class="animated-run-detail">
+
           <hr>
           <div class="run-page row">
             <div class="run-page col col-50">
@@ -84,13 +88,16 @@
             </div>
           </div>
         </div>
+
         <button class="run-page button-slide"
-                ng-class="isDetailDisplayed ? 'button-slide-down' : 'button-slide-up'"
-                ng-click="isDetailDisplayed = !isDetailDisplayed">
+                ng-class="isRunDetailDisplayed ? 'button-slide-down' : 'button-slide-up'"
+                ng-click="isRunDetailDisplayed = !isRunDetailDisplayed">
         </button>
+
       </div>
+
+
     </div>
-    <!--End Dropdown-->
 
   </ion-content>
 

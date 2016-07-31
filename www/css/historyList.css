@@ -1,0 +1,16 @@
+.workout-page {
+
+}
+
+.workout-page .workouts .workout {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+  .workout-page .workouts .workout .top.row {
+    padding-bottom: 0;
+  }
+
+  .workout-page .workouts .workout .bottom.row {
+    padding-top: 0;
+  }

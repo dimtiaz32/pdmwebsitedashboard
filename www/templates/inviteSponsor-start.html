@@ -1,27 +1,20 @@
 <ion-view view-title="Sponsors">
-    <!--
-        <ion-content ng-controller="SponsorsCtrl">
-          <!-- The content of the page
-          <h1 class="title">Sponsor Yesh!</h1>
-          <a href="#/app/sponsors/info">Start!</a>
-        </ion-content>
-    -->
 
     <ion-content class="has-header padding" ng-controller="InviteSponsorStartCtrl">
 
       <div class="card">
 
         <div class="item item-divider">
-          Sponsor Yesh!
+          Sponsor {{ name }}!
           <i class="icon icon-left ion-home"></i>
         </div>
 
         <div class="item item-text-wrap">
-
           <p style="font-size: x-large">How does it work?</p>
           <br>
 
-          <p>1) Yesh is using the DreamRun to track his running and raise money for charity.
+          <p>1) {{ name }} is using the DreamRun to track his running and raise money for charity.
+
             <br><br>
             2) He aksed you to support his training and a charity he cares about by pledging 10¢ or more to a charity for every
             mile he runs.

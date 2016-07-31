@@ -58,6 +58,15 @@ angular.module('starter.donationServices', ['ionic'])
       return $http.post(base + 'donations/myDonations',form,{
         method:'POST',
       });
+    },
+
+    getUserByRequestId: function(requestId) {
+      return $http.get(base + 'donations/requests',{
+        method:'GET',
+        params: {
+          requestId: requestId
+        }
+      });
     }
   }
 });

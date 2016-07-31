@@ -29,8 +29,6 @@ angular.module('starter.historyServices', [])
     }, 1999);
   };
 
-
-
   return {
     getAll: function(user){
       return $http.get(base+'history/', {

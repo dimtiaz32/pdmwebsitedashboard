@@ -1,30 +1,33 @@
-<ion-content class="sign-in has-header" scroll="false">
-  <div class="sign-in logo">
-    <img class="sign-in logo-image" ng-src="img/PDM logo.png">
-    <h1 class="sign-in logo-title">DREAM<span>RUN</span></h1>
-    <h2 class="sign-in logo-subtitle">by Project Dream Miles</h2>
-  </div>
-  <div class="sign-in list">
-    <label class="sign-in item item-input">
-      <span class="sign-in input-label">Email</span>
-      <input type="text" ng-model="user.email">
-    </label>
-    <label class="sign-in item item-input">
-      <span class="sign-in input-label">Password</span>
-      <input type="password" ng-model="user.password">
-    </label>
-    <button class="sign-in login button button-full button-positive" ng-click="login()">
-      Sign in
-    </button>
+<ion-view view-title="">
+  <ion-content class="sign-in" scroll="false" hide-nav-bar="true">
+    <div class="sign-in logo">
+      <img class="sign-in logo-image" ng-src="img/PDM logo.png">
+      <h1 class="sign-in logo-title">DREAM<span>RUN</span></h1>
+      <h2 class="sign-in logo-subtitle">by Project Dream Miles</h2>
+    </div>
+    <div class="sign-in list">
+      <label class="sign-in item item-input">
+        <span class="sign-in input-label">Email</span>
+        <input type="text" ng-model="user.email">
+      </label>
+      <label class="sign-in item item-input">
+        <span class="sign-in input-label">Password</span>
+        <input type="password" ng-model="user.password">
+      </label>
+      <button class="sign-in login button button-full button-positive" ng-click="login()">
+        Sign in
+      </button>
 
-    <button class="sign-in register button button-full button-positive" onclick="window.location.href = '#/auth/signup'">
-      Create Account
-    </button>
-    <button class="sign-in forgot-password button button-full button-positive" ng-click="showConfirmPassword()">
-      Forgot Password
-    </button>
-    <div class="sign-in social-wrap">
-      <button class="sign-in social facebook button" ng-click="signinByFB()"><img ng-src="img/facebook-login.png"></button>
-      <button class="sign-in social google button" ng-click="signinByGoogle()"><img ng-src="img/google-login.png"></button>
+      <button class="sign-in register button button-full button-positive" onclick="window.location.href = '#/auth/signup'">
+        Create Account
+      </button>
+      <button class="sign-in forgot-password button button-full button-positive" ng-click="showConfirmPassword()">
+        Forgot Password
+      </button>
+      <div class="sign-in social-wrap">
+        <button class="sign-in social facebook button" ng-click="signinByFB()"><img ng-src="img/facebook-login.png"></button>
+        <button class="sign-in social google button" ng-click="signinByGoogle()"><img ng-src="img/google-login.png"></button>
+      </div>
     </div>
   </ion-content>
+</ion-view>

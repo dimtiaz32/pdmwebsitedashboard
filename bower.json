@@ -8,7 +8,8 @@
   "dependencies": {
     "ng-cordova-oauth": "^0.2.10",
     "angular-chart.js": "^0.10.2",
-    "Chart.js": "npm:chart.js#^2.1.6"
+    "Chart.js": "npm:chart.js#^2.1.6",
+    "d3": "^4.1.1"
   },
   "resolutions": {
     "Chart.js": "~1.1.1"
