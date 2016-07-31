@@ -6,7 +6,7 @@
 angular.module('starter.historyServices', [])
 
 .factory('HistoryAPI', function($ionicLoading, $rootScope, $http, $window){
-  var base = '"https://dreamrun.herokuapp.com/"';
+  var base = "https://dreamrun.herokuapp.com/";
 
   $rootScope.show = function(text){
     $rootScope.loading = $ionicLoading.show({

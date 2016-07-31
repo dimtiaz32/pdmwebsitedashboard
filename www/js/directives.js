@@ -12,7 +12,7 @@ angular.module('starter.directives', [])
         onCreate: '&'
       },
       link: function($scope, $element, $attr){
-        function initialize(){
+        $scope.initialize= function(){
 
           var myLatLng = navigator.geolocation.getCurrentPosition(function(pos){
             console.log('Centering on position on map initilization');
@@ -35,9 +35,9 @@ angular.module('starter.directives', [])
         }
 
         if(document.readyState === "complete"){
-          initialize();
+          $scope.initialize();
         } else {
-          google.maps.event.addDomListener(window, 'load', initialize);
+          google.maps.event.addDomListener(window, 'load', $scope.initialize);
         }
       }
     }
