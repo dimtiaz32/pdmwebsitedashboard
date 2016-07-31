@@ -1,4 +1,9 @@
-.races.featured-containter {
+.races a {
+  text-decoration: none;
+}
+
+.races.featured-container {
+
   height: 25%;
   widht:100%;
 
