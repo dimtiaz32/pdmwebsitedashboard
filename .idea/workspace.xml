@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d0076dda-8c41-4857-9985-cb57b0305d51" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/.idea/workspace.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="charities.iws" />
@@ -470,12 +468,12 @@
       <workItem from="1469901247486" duration="6720000" />
       <workItem from="1469912306186" duration="681000" />
       <workItem from="1469913355393" duration="6480000" />
-      <workItem from="1469930780308" duration="532000" />
+      <workItem from="1469930780308" duration="612000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="109771000" />
+    <option name="totallyTimeSpent" value="109851000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1680" y="23" width="1873" height="1057" extended-state="6" />
