@@ -1975,7 +1975,10 @@ angular.module('starter.controllers', ['starter.appServices',
       console.log('email: ' + email);
       console.log('charity: ' + charityName);
       var charityNameString = charityName.toString();
-      $rootScope.setSelectedCharity(charityNameString);
+      console.log('charityNameString:' +charityNameString);
+      $rootScope.removeSelectedCharityName();
+
+
 
 
 
@@ -1985,11 +1988,16 @@ angular.module('starter.controllers', ['starter.appServices',
       console.log($rootScope.getUserId());
       CharityAPI.selectCharity($rootScope.getUserId(), {charityName: charityNameString})
         .success(function(data, status, headers, config){
+          console.log('charityNameString from API success: ' + charityNameString);
+          $scope.charityName = charityNameString;
+
+          $rootScope.setSelectedCharityName(charityNameString);
           console.log('charity: ' + $rootScope.getSelectedCharity());
           console.log('attempting to update user\'s selected charity');
           console.log('inside select charityAPI success');
           //$window.location.href=('#/app/run');
           console.log('charity API succeeded in selecting charity');
+
         })
         .error(function(err,status){
           console.log(err);

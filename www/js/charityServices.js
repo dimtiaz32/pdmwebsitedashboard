@@ -35,6 +35,11 @@ angular.module('starter.charityServices', ['ionic'])
   $rootScope.getSelectedCharityName = function(){
     return $window.localStorage.charityName;
   };
+  $rootScope.removeSelectedCharityName = function(){
+    return $window.localStorage.charityName = "";
+  };
+
+
   $rootScope.setSelectedCharityDescription = function(charityDescription){
     return $window.localStorage.charityDescription = charityDescription;
   };
