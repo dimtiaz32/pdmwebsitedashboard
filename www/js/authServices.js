@@ -7,7 +7,7 @@ angular.module('starter.authServices', ['ngCookies'])
 
 .factory('AuthAPI', function($rootScope, $http, $window, $ionicLoading, $cookies){
 
-  var base = "http://localhost:5000/";
+  var base = "https://dreamrun.herokuapp.com/";
 
   //var base = "https://dreamrun.herokuapp.com/authentication";
 
