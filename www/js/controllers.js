@@ -368,10 +368,7 @@ angular.module('starter.controllers', ['starter.appServices',
   // })
 
   .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI, CharityAPI, $ionicPopup, AuthAPI, $ionicModal){
-<<<<<<< HEAD
-=======
 
->>>>>>> 9cedc4019199a73732bb7e131923c85bf2b828bd
     //CONSOLE LOGGING COLORS:
 
     //UI-INTERACTIONS: TEAL
@@ -414,13 +411,10 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.user.name = $rootScope.getName();
 
     $scope.isDetailDisplayed = false;
-<<<<<<< HEAD
-    $scope.isRunDetailDisplayed = false;
-=======
+
 
     $scope.isRunDetailDisplayed = false;
 
->>>>>>> 9cedc4019199a73732bb7e131923c85bf2b828bd
     $scope.isHistoryDetailDisplayed = true;
     $scope.isRunning = false;
     $scope.isPaused = false;
