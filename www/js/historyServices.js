@@ -56,14 +56,14 @@ angular.module('starter.historyServices', [])
         }
       });
     },
-    getPastCharities: function(userId){
-      return $http.get(base+'history/charities', {
-        method: 'GET',
-        params: {
-          userId: userId
-        }
-      });
-    }
+    // getPastCharities: function(userId){
+    //   return $http.get(base+'history/charities', {
+    //     method: 'GET',
+    //     params: {
+    //       userId: userId
+    //     }
+    //   });
+    // }
   }
 
 });
