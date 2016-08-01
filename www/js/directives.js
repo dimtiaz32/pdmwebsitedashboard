@@ -122,6 +122,8 @@ angular.module('starter.directives', [])
       template:"<svg></svg>",
       link: function(scope, elem, attrs){
 
+        var data = scope[attrs.progressData];
+
         var colors =  {
           'incomplete':'#ff8d00',
           'complete': '#00b9be'
@@ -131,19 +133,29 @@ angular.module('starter.directives', [])
         var border = 5;
         var padding = 30;
         var startPercent = 0;
-        var endPercent = .90;
+        var endPercent = data;
 
         var twoPi = Math.PI * 2;
-        var formatPercent = d3.format('.0%');
+        // var formatPercent = d3.format('.0%');
         var boxSize = (radius + padding) * 2;
 
         var count = Math.abs((endPercent - startPercent) / 0.01);
         var step = endPercent < startPercent ? -0.01 : 0.01;
 
+        var d3 = $window.d3;
+        var rawSvg = elem.find("svg");
+        var svg = d3.select(rawSvg);
+
+        console.log(d3)
+
         var arc = d3.svg.arc()
           .startAngle(0)
           .innerRadius(radius)
           .outerRadius(radius - border);
+
+        console.log(arc)
+
+
 
       }
     };

@@ -56,7 +56,23 @@
           <ion-slide-page>
             <div class="goal-stats day row">
               <div class="dist-day-goal col col-50 col-center">
-                <div radial-progress chart-data="progressData.distance"></div>
+
+                <round-progress
+                  max="max"
+                  current="current"
+                  color="#45ccce"
+                  bgcolor="#eaeaea"
+                  radius="100"
+                  stroke="20"
+                  semi="true"
+                  rounded="true"
+                  clockwise="false"
+                  responsive="false"
+                  duration="800"
+                  animation="easeInOutQuart"
+                  animation-delay="0"></round-progress>
+
+                <!--<div radial-progress chart-data="progressData"></div>-->
 
                 Running Goal Day with radius graph
                 USE ANGULAR MATERIAL PROGRESS CIRCLE
