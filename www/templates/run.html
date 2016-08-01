@@ -18,7 +18,7 @@
 
     <div class="run-page overlay">
 
-      <div class="run-page detail" ng-show="!isRunning">
+      <div class="run-page detail" on-swipe-down="swipeGestureDetail('swipe-down')" on-swipe-up="swipeGestureDetail('swipe-up')" ng-show="!isRunning">
 
         <p class="run-page header"> Welcome {{user.name}}</p>
         <hr class="run-page">
@@ -41,13 +41,13 @@
 
         <button class="run-page button-slide"
                 ng-class="isDetailDisplayed ? 'button-slide-down' : 'button-slide-up'"
-                ng-click="isDetailDisplayed = !isDetailDisplayed">
+                ng-click="toggleDetail()">
         </button>
 
       </div>
 
 
-      <div class="run-page detail" ng-show="isRunning">
+      <div class="run-page detail" ng-show="isRunning" on-swipe-up="swipeGestureRunDetail('swipe-up')" on-swipe-down="swipeGestureRunDetail('swipe-down')">
         <div class="run-page row">
           <div class="run-page col col-50">
             <p class="run-page head">Duration</p>
@@ -74,11 +74,7 @@
           </div>
         </div>
 
-
-
-
         <div ng-show="isRunDetailDisplayed" class="animated-run-detail">
-
 
           <hr>
           <div class="run-page row">
@@ -96,7 +92,7 @@
 
         <button class="run-page button-slide"
                 ng-class="isRunDetailDisplayed ? 'button-slide-down' : 'button-slide-up'"
-                ng-click="isRunDetailDisplayed = !isRunDetailDisplayed">
+                ng-click="toggleRunDetail()">
         </button>
 
       </div>
