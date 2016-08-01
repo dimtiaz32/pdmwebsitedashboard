@@ -401,6 +401,33 @@ angular.module('starter.controllers', ['starter.appServices',
       name: ""
     };
 
+    $scope.isDetailDisplayed = false;
+    $scope.isRunDetailDisplayed = false;
+
+    $scope.swipeGestureDetail = function(gesture) {
+      if (gesture == 'swipe-down') {
+        $scope.isDetailDisplayed = true;
+      } else if (gesture == 'swipe-up') {
+        $scope.isDetailDisplayed = false;
+      }
+    };
+
+    $scope.swipeGestureRunDetail = function (gesture) {
+      if (gesture == 'swipe-down') {
+        $scope.isRunDetailDisplayed = true;
+      } else if (gesture == 'swipe-up') {
+        $scope.isRunDetailDisplayed = false;
+      }
+    };
+
+    $scope.toggleDetail = function() {
+      $scope.isDetailDisplayed = !$scope.isDetailDisplayed;
+    };
+
+    $scope.toggleRunDetail = function() {
+      $scope.isRunDetailDisplayed = !$scope.isRunDetailDisplayed;
+    };
+
     $scope.charityName = $rootScope.getSelectedCharityName();
     console.log('Run charityName: ' + $scope.charityName);
 
@@ -409,11 +436,6 @@ angular.module('starter.controllers', ['starter.appServices',
 
 
     $scope.user.name = $rootScope.getName();
-
-    $scope.isDetailDisplayed = false;
-
-
-    $scope.isRunDetailDisplayed = false;
 
     $scope.isHistoryDetailDisplayed = true;
     $scope.isRunning = false;
@@ -2178,7 +2200,7 @@ angular.module('starter.controllers', ['starter.appServices',
   })
 
 
-  .controller('MyDonationCtrl',function($rootScope, $scope, $filter, $window, $ionicModal, $cordovaSms, $cordovaSocialSharing,DonationAPI,AuthAPI){
+  .controller('MyDonationCtrl',function($rootScope, $scope, $filter, $window, $ionicModal, $cordovaSms, $cordovaSocialSharing,DonationAPI,AuthAPI, CLIENT_HOST){
 
 
     $rootScope.$on('initial', function(){
@@ -2242,7 +2264,8 @@ angular.module('starter.controllers', ['starter.appServices',
         charity: $rootScope.getSelectedCharityId(),
         userId: $rootScope.getUserId()
       }).success(function (data, status, headers, config){
-        $scope.data = data;
+        $scope.inviteUrl = CLIENT_HOST + "#/app/inviteSponsor/start?id=" + data.code;
+        console.log("local data:" + $scope.inviteUrl);
         // $scope.shareBySMS = function() {
         //   console.log("sms share begin")
         //   $cordovaSocialSharing.shareViaSMS("aaaaa", "0612345678,0687654321").then(function(result) {
@@ -2344,7 +2367,6 @@ angular.module('starter.controllers', ['starter.appServices',
 
     $scope.name = store.get('recipient.name');
 
-
     $scope.saveName = function() {
 
       var firstname = this.user.firstname;
@@ -2394,7 +2416,6 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.saveMoneyWithAmount = function(amount) {
          store.set('donor.amount', amount);
       }
-
   })
 
   .controller('InviteSponsorPledgeCtrl', function($scope, $http, store, $window){
@@ -2432,11 +2453,6 @@ angular.module('starter.controllers', ['starter.appServices',
 
   })
 
-
-  .controller('InviteSponsorStartCtrl', function($scope){
-
-  })
-
   .controller('InviteSponsorPaymentCtrl', function($rootScope, $scope, $http, store, DonationAPI, $window, AuthAPI){
     $scope.user = {
       email: ""
@@ -2467,7 +2483,6 @@ angular.module('starter.controllers', ['starter.appServices',
           $window.location.href = ('#/app/inviteSponsor/end');
         }).error(function (err,status){
           console.log("error: " + err);
-
           $rootScope.verifyStatus(status);
         });
       }
