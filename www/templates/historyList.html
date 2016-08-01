@@ -1,33 +1,35 @@
 <ion-view view-title="Workouts">
   <ion-content class="workout-page">
     <ion-list class="workouts list">
-
-      <a class="workout item item-icon-left item-icon-right">
+      <div ng-repeat="run in listRuns">
+      <a class="workout item item-icon-left item-icon-right" ng-click="selectedDate(run.Date, run.id)">
 
         <i class="icon material-icons" style="font-size: x-large;">directions_run</i>
         <div class="top row" style="font-size: small; font-weight: 600;">
           <div class="col col-20">
-            7/29/2016
+           {{run.Date}}
           </div>
           <div class="col col-20 col-offset-10">
-            Teens Run DC
+            {{run.Charity}}
           </div>
         </div>
         <div class="bottom row" style="font-size: small;">
           <div class="col">
-            00:33:32
+            {{run.Duration}}
           </div>
           <div class="col">
-            4.9 mi
+            {{run.Distance}}mi
           </div>
           <div class="col">
-            7:34 min/mi
+            {{run.Pace | number: 2 }}min/mi
+          </div>
+          <div class="col">
+            {{run.id | number: 2 }}min/mi
           </div>
         </div>
-
         <i class="icon ion-ios-arrow-right" style="font-size: large;"></i>
       </a>
-
+      </div>
     </ion-list>
   </ion-content>
 </ion-view>

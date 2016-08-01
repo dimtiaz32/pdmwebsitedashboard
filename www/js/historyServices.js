@@ -47,6 +47,16 @@ angular.module('starter.historyServices', [])
         }
       });
     },
+    getByDay: function(userId, month, day){
+      return $http.get(base+'history/day', {
+        method: 'GET',
+        params: {
+          userId: userId,
+          month: month,
+          day: day
+        }
+      });
+    },
     getCharityHistory: function(userId, charityName){
       return $http.get(base+'history/charity', {
         method: 'GET',

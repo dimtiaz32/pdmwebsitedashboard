@@ -208,15 +208,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
         }
       })
 
-      .state('app.historyList', {
-        url: '/historyList',
-        views: {
-          'app-history': {
-            templateUrl: 'templates/historyList.html',
-            controller: 'HistoryListCtrl'
-          }
-        }
-      })
+
 
       /*-------*/
       .state('app.historyDay', {
@@ -225,6 +217,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
           'app-history':{
             templateUrl: 'templates/history-day.html',
             controller: 'HistoryDayCtrl'
+          }
+        }
+      })
+      .state('app.historyList', {
+        url: '/historyList',
+        views: {
+          'app-history': {
+            templateUrl: 'templates/historyList.html',
+            controller: 'HistoryListCtrl'
           }
         }
       })

@@ -50,13 +50,6 @@
       <!--MAP GOES HERE-->
       <map on-create="mapCreated(map)"></map>
     </div>
-    <div class="history-day-page multiple-runs">
-      <ul>
-        <li><button class="ion-chevron-left" ng-click="decrementRunNumber()"></button></li>
-        <li ng-click="setMonthArrays(1)">Run {{selectedRunNumber}} of {{displayTotalNumberOfRuns}}</li>
-        <li><button class="ion-chevron-right" ng-click="incrementRunNumber()"> </button></li>
-      </ul>
-    </div>
     <ion-slides on-slide-changed="" options="slideOptions" slider="">
       <ion-slide-page>
         <div class="history-day-page">
@@ -65,13 +58,13 @@
             <div class="col col-50">
               <!--Duration-->
               <p class="history-day-page head">Duration</p>
-              <p class="history-day-page label">{{runDisplayDuration}}</p>
+              <p class="history-day-page label">{{dayDisplayDuration}}</p>
             </div>
             <div class="history-day-page vertical-line"></div>
             <div class="col col-50">
               <!--Distance-->
               <p class="history-day-page head">Distance</p>
-              <p class="history-day-page label">{{runDisplayDistance.toFixed(2)}}<span class="history-day-page miles">mi</span> </p>
+              <p class="history-day-page label">{{dayDisplayDistance.toFixed(2)}}<span class="history-day-page miles">mi</span> </p>
             </div>
           </div>
           <hr>
@@ -79,13 +72,13 @@
             <div class="col col-50">
               <!--Pace-->
               <p class="history-day-page head">Pace</p>
-              <p class="history-day-page label">{{runDisplayPace.toFixed(2)}}<span class="history-day-page miles">min/mi</span></p>
+              <p class="history-day-page label">{{dayDisplayPace.toFixed(2)}}<span class="history-day-page miles">min/mi</span></p>
             </div>
             <div class="history-day-page vertical-line"></div>
             <div class="col col-50">
               <!--Funds Raised-->
               <p class="history-day-page head">Funds Raised</p>
-              <p class="history-day-page label">${{runDisplayMoneyRaised.toFixed(2)}}</p>
+              <p class="history-day-page label">${{dayDisplayMoneyRaised.toFixed(2)}}</p>
             </div>
           </div>
 
