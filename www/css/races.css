@@ -1,9 +1,4 @@
-.races a {
-  text-decoration: none;
-}
-
-.races.featured-container {
-
+.races.featured-containter {
   height: 25%;
   widht:100%;
 
@@ -29,25 +24,27 @@ h1.featured-race {
   padding-top: 5px;
 }
 
-p.races.featured-race-detail {
+p.races.featured-race-detail,
+p.races.races-detail {
   font-family: "HelveticaNeue-Light";
   font-size: small;
   color: white;
-  padding-left: 5px;
+  padding-left: 10px;
+  margin-bottom: 0;
 }
 
-h1.find-races,
-h1.past-races {
+h1.races {
   font-family: "Helvetica Neue";
   font-weight: 200;
   font-size: xx-large;
-  padding-left: 5px;
+  padding-left: 10px;
   color: white;
 }
 
 .races.my-races-container {
   height: 25%;
   width: 100%;
+  overflow: auto;
   margin-bottom: 1px;
 
   border-radius: 5px;
@@ -133,7 +130,8 @@ h1.my-races {
   font-family: "Helvetica Neue";
   font-weight: 200;
   font-size: x-large;
-  padding-left: 5px;
+  padding-left: 10px;
+  padding-top: 5px;
   color: white;
 }
 
@@ -141,8 +139,8 @@ p.races.my-races-detail {
   font-family: "HelveticaNeue-Light";
   font-size: small;
   color: white;
-  padding-left: 5px;
-  padding-top: 0;
+  padding-left: 10px;
+  margin-bottom: auto;
 }
 
 
@@ -164,13 +162,13 @@ span.races.find-race-detail {
 
 /*Find Races*/
 .races.find-races-filter-container {
-  height: 15%;
+  height: 10%;
   width: 100%;
 
   border-radius: 5px;
   margin-bottom: 1px;
 
-  background-color: grey;
+  background-color: white;
 }
 
 p.find-races.filter-head {
@@ -178,18 +176,23 @@ p.find-races.filter-head {
   font-size: larger;
   padding-left: 5px;
   padding-top: 5px;
-  color: white;
+  color: #00b9be;
 }
 
 select.find-races.select-city,
 select.find-races.select-month,
 select.find-races.select-distance {
   font-family: "HelveticaNeue-Light";
-  color: white;
+  color: #00b9be;
   border: thin;
   border-style: solid;
-  border-color: white;
-  background-color: grey;
+  border-color: #00b9be;
 
   margin-left: 5px;
+  margin-top: 10px;
+
+}
+
+a.races {
+  text-decoration: none;
 }
