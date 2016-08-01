@@ -368,6 +368,7 @@ angular.module('starter.controllers', ['starter.appServices',
   // })
 
   .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI, CharityAPI, $ionicPopup, AuthAPI, $ionicModal){
+
     //CONSOLE LOGGING COLORS:
 
     //UI-INTERACTIONS: TEAL
@@ -410,7 +411,10 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.user.name = $rootScope.getName();
 
     $scope.isDetailDisplayed = false;
+
+
     $scope.isRunDetailDisplayed = false;
+
     $scope.isHistoryDetailDisplayed = true;
     $scope.isRunning = false;
     $scope.isPaused = false;
@@ -1768,6 +1772,7 @@ angular.module('starter.controllers', ['starter.appServices',
         pace: $rootScope.getRunPace(),
         User: $rootScope.getUserId(),
         moneyRaised: $rootScope.getRunMoneyRaisedAmount(),
+        charity: $rootScope.getSelectedCharityName(),
         path: {lat: [$scope.lat], long: [$scope.long]},
         laps: { number: [$scope.lapPushNumbers],
           distance: [$scope.lapPushDistances],
@@ -1821,7 +1826,8 @@ angular.module('starter.controllers', ['starter.appServices',
 
   .controller('AppCtrl', function($rootScope, $scope, $window, $filter, $ionicModal, $timeout, DonationAPI, CharityAPI, AuthAPI, $ionicNavBarDelegate) {
 
-    $ionicNavBarDelegate.showBackButton(false)
+    // $ionicNavBarDelegate.showBackButton(false)
+
 
     $scope.moneyRaised = 0;
 
@@ -1922,7 +1928,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
 
 
-  .controller('CharitiesCtrl', function($rootScope, $timeout, $ionicModal, $window, $scope, CharityAPI, AuthAPI){
+  .controller('CharitiesCtrl', function($rootScope, $timeout, $ionicModal, $window, $scope, CharityAPI, HistoryAPI, AuthAPI){
 
     $scope.isDetailDisplayed = false;
     $scope.charityName  = $rootScope.getSelectedCharityName();
@@ -1932,11 +1938,6 @@ angular.module('starter.controllers', ['starter.appServices',
 
     console.log('$rootScope.getSelectedCharityName: ' + $rootScope.getSelectedCharityName());
 
-    // $rootScope.$on('fetchSelectedCharity', function(){
-    //   //TODO: FETCH, SERVER FOR USER SELECTED CHARITY, UI FOR ID PARAMS
-    //   CharityAPI.getSelectedCharity()
-    // });
-
     $scope.moneyRaised = $rootScope.getMoneyRaisedPerMile();
 
     if($scope.charityName == undefined){
@@ -1944,16 +1945,89 @@ angular.module('starter.controllers', ['starter.appServices',
       console.log('noCharityValue: ' + $scope.noCharity);
     }
 
+    $scope.pastCharities = [];
+    $scope.pastCharityMoneyRaised = [];
+
+    $scope.charityHistoryCall = function(){
+      HistoryAPI.getAll($rootScope.getUserId())
+        .success(function(data, status, headers, config){
+          console.log('inside historyAPI get all success call');
+          console.log('run data legnth: ' + data.length);
+          for(var i=0; i< data.length; i++){
+            console.log('data['+i+'].charity: ' + data[i].charity);
+            var charityIndex = $scope.pastCharities.indexOf(data[i].charity);
+            console.log('charityIndex: ' + charityIndex);
+            if(charityIndex == -1){
+              $scope.pastCharities.push(data[i].charity);
+              $scope.pastCharityMoneyRaised.push(data[i].moneyRaised);
+              console.log('$scope.pastCharities['+i+']:' + $scope.pastCharities[i]);
+              console.log('$scope.pastCharityMoneyRaised['+i+']: ' + $scope.pastCharityMoneyRaised[i]);
+            } else {
+              console.log('pastMoneyRaised array before addition: ' + $scope.pastCharityMoneyRaised);
+              console.log(data[i].charity + ' is already in pastCharitiesArray');
+              console.log('data['+i+'].moneyRaised: ' + data[i].moneyRaised);
+              $scope.pastCharityMoneyRaised[charityIndex] = $scope.pastCharityMoneyRaised[charityIndex] + data[i].moneyRaised;
+              console.log('$scope.pastCharityMoneyRaised['+charityIndex+'] post addition: ' + $scope.pastCharityMoneyRaised[charityIndex]);
+            }
+            // $scope.pastCharities.push(data[i].charity);
+            // $scope.pastCharitiesMoneyRaised.push(data[i].moneyRaised);
+            // if($scope.pastCharities.indexOf(data[i].charity) !== -1){
+            //   console.log('pastCharities array already contains: ' + data[i].charity);
+            // } else {
+            //   $scope.pastCharities.push(data[i].charity);
+            // }
+          }
+          console.log('$scope.pastCharities.length: ' + $scope.pastCharities.length);
+          return $scope.pastCharities;
+          // for(var i=0; i< $scope.pastCharities.length; i++){
+          //   $scope.charity = $scope.pastCharities[i];
+          //   console.log('$scope.pastCharities[i]: ' + $scope.pastCharities[i]);
+          //   for(var x=0; x<data.length; x++){
+          //     if($scope.charity = data[x].charity){
+          //       console.log('data[i].charity: ' + data[x].charity + ' data['+x+']' + data[x].moneyRaised);
+          //       $scope.thisCharityMoneyRaised =  $scope.thisCharityMoneyRaised + data[x].moneyRaised;
+          //       console.log('$scope.thisCharityMoneyRaised: ' + $scope.thisCharityMoneyRaised);
+          //       if($scope.thisCharityMoneyRaised == undefined || $scope.charity == undefined ||
+          //       $scope.thisCharityMoneyRaised == "NaN" || $scope.charity == "NaN"){
+          //         console.log('$scope.thisCharityMoneyRaised or $scope.charity is undefined');
+          //       } else {
+          //         $scope.charityListInformation.push($scope.charity, $scope.thisCharityMoneyRaised);
+          //         console.log('$scope.charityListInformation: ' + $scope.charityListInformation);
+          //         console.log('$scope.charityListInformation.length: ' + $scope.charityListInformation.length);
+          //         // console.log('$scope.charityListInformation['+x+']: ' + $scope.charityListInformation[x]);
+          //         console.log('$scope.charityListInformation['+x+'].charity: ' + $scope.charityListInformation.charity);
+          //         console.log('$scope.charityListInformation['+x+'].moneyRaised: ' + $scope.charityListInformation.moneyRaised);
+          //       }
+          //
+          //     }
+          //   }
+          // }
+        })
+        .error(function(err){
+          console.log('History API call getAll failed');
+        });
+    }
+
+
+
+    //TODO: ADD MONEY RAISED CALL FOR EACH SELECTED CHARITY
+
     CharityAPI.getAll()
       .success(function(data, status, headers, config){
 
         console.log("API call getAll succeeded");
 
         $scope.charities = [];
+        var pastCharities = $scope.charityHistoryCall();
+        console.log('pastCharities: ' + $scope.pastCharities);
+        console.log('pastCharitiesMoneyRaised: ' + $scope.pastCharitiesMoneyRaised);
+
 
         for(var i = 0; i < data.length; i++){
           $scope.charities.push(data[i]);
         }
+
+
 
       })
       .error(function(err,status){
@@ -1964,27 +2038,82 @@ angular.module('starter.controllers', ['starter.appServices',
       });
 
 
+    $scope.getSelectedCharityMoneySplits = function(charityNameString){
+      //TODO: ADD DATE FOR MONTH MONEY DETERMINANT
+      $scope.selectedCharityTotalMoneyRaised = 0;
+      $scope.selectedCharityMonthMoneyRaised  = 0;
+      HistoryAPI.getCharityHistory($rootScope.getUserId(), charityNameString)
+        .success(function(cData, status, headers, config){
+          console.log('charityNameString, History API success: ' + charityNameString);
+          for(var i=0; i< cData.length; i++){
+            console.log('cData[i].charity:  ' + cData[i].charity);
+            if(charityNameString = cData[i].charity){
+              console.log('charityNameString and cData['+i+'] matched with: ' + charityNameString + ' ' + cData[i].charity);
+              $scope.selectedCharityTotalMoneyRaised = $scope.selectedCharityTotalMoneyRaised + cData[i].moneyRaised;
+
+              console.log('cData['+i+'].month: ' + cData[i].month);
+              if(charityMonth = cData[i].month){
+                console.log('charityMonth and cData['+i+'] matched with: ' + charityMonth + ' ' + cData[i].month);
+                $scope.selectedCharityMonthMoneyRaised = $scope.selectedCharityMonthMoneyRaised +  cData[i].moneyRaised;
+              }
+            }
+          }
+
+          $scope.displaySelectedTotalMoneyRaised = $scope.selectedCharityTotalMoneyRaised;
+          console.log('$scope.displaySelectedTotalMoneyRaised: ' + $scope.displaySelectedTotalMoneyRaised);
+          $scope.displaySelectedCharityMonthMoneyRaised = $scope.selectedCharityMonthMoneyRaised;
+          console.log('$scope.displaySelectedCharityMonthMoneyRaised: ' + $scope.displaySelectedCharityMonthMoneyRaised);
+        })
+        .error(function(err){
+          console.log('getCharityHistory API call failure');
+        });
+
+    }
+
+
+
+
     $scope.selectCharity = function(charityName){
 
       var email = $rootScope.getEmail();
       console.log('email: ' + email);
       console.log('charity: ' + charityName);
       var charityNameString = charityName.toString();
-      $rootScope.setSelectedCharity(charityNameString);
+      console.log('charityNameString:' +charityNameString);
+      $rootScope.removeSelectedCharityName();
+      $scope.getSelectedCharityMoneySplits(charityNameString);
+
+      var today = new Date();
+      console.log('today: ' + today);
+      var todaySplitter = today.toString().split(' ');
+      var charityMonth =  todaySplitter[1];
+      console.log('charityMonth: ' + charityMonth);
 
 
-
+      $scope.pastCharity = [];
 
       //var newCharity = charity.toString();
 
       console.log($rootScope.getUserId());
       CharityAPI.selectCharity($rootScope.getUserId(), {charityName: charityNameString})
         .success(function(data, status, headers, config){
+          console.log('charityNameString from API success: ' + charityNameString);
+          $scope.charityName = charityNameString;
+
+          $rootScope.setSelectedCharityName(charityNameString);
           console.log('charity: ' + $rootScope.getSelectedCharity());
           console.log('attempting to update user\'s selected charity');
           console.log('inside select charityAPI success');
           //$window.location.href=('#/app/run');
           console.log('charity API succeeded in selecting charity');
+
+          console.log('charityNameString: ' + charityNameString);
+          console.log('user id: ' + $rootScope.getUserId());
+
+
+
+
+
         })
         .error(function(err,status){
           console.log(err);
@@ -2179,27 +2308,31 @@ angular.module('starter.controllers', ['starter.appServices',
 
   })
 
-  .controller('InviteSponsorStartCtrl', function($scope, $location, store, DonationAPI){
-      store.set("requestId", $location.search().id);
+  .controller('InviteSponsorStartCtrl', function($scope, $location, store, DonationAPI) {
+    store.set("requestId", $location.search().id);
 
-      DonationAPI.getUserByRequestId($location.search().id).success(function(data){
-          if(data.name) {
-              store.set("recipient.name", data.name.first + " " + data.name.last);
-          } else if (data.facebook){
-              store.set("recipient.name", data.facebook.firstname + " " + data.facebook.lastname);
-          } else if (data.google){
-              store.set("recipient.name", data.google.firstname + " " + data.google.lastname);
-          } else {
-             console.log("illegle url!");
-             throw new Error("illegle url");
-          }
+    DonationAPI.getUserByRequestId($location.search().id).success(function (data) {
+      if (data.name) {
+        store.set("recipient.name", data.name.first + " " + data.name.last);
+      } else if (data.facebook) {
+        store.set("recipient.name", data.facebook.firstname + " " + data.facebook.lastname);
+      } else if (data.google) {
+        store.set("recipient.name", data.google.firstname + " " + data.google.lastname);
+      } else {
+        console.log("illegle url!");
+        throw new Error("illegle url");
+      }
 
-          $scope.name = store.get('recipient.name');
+      $scope.name = store.get('recipient.name');
 
-      }).error(function(err){
-          console.log("err:" + err);
-          throw err;
-      });
+    }).error(function (err) {
+      console.log("err:" + err);
+      throw err;
+    });
+  })
+
+
+  .controller('MyPledgesCtrl',function($rootScope, $scope, $filter, $window, DonationAPI){
 
   })
 
@@ -2231,6 +2364,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
     $scope.active = 'zero';
     $scope.name = store.get('recipient.name');
+
     $scope.setActive = function (type) {
       $scope.active = type;
     };
@@ -2259,14 +2393,13 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.saveMoneyWithAmount = function(amount) {
          store.set('donor.amount', amount);
       }
-
-
   })
 
   .controller('InviteSponsorPledgeCtrl', function($scope, $http, store, $window){
 
     $scope.active = 'zero';
     $scope.name = store.get('recipient.name');
+
     $scope.setActive = function(type) {
       $scope.active = type;
     };
@@ -2302,6 +2435,7 @@ angular.module('starter.controllers', ['starter.appServices',
       email: ""
     };
     $scope.name = store.get('recipient.name');
+
     $scope.completeSponsor = function(status, response) {
 
       var email = this.user.email;
@@ -2902,17 +3036,47 @@ angular.module('starter.controllers', ['starter.appServices',
 
 })
 
+  .controller('HistoryListCtrl', function ($scope, $rootScope, $window) {
 
-  .controller('HistoryCtrl', function($scope, $rootScope, $window, HistoryAPI, AuthAPI, $filter) {
 
-    $scope.slideOptions = {pagination: false};
+
+  })
+
+  .controller('HistoryCtrl', function($scope, $rootScope, $window, HistoryAPI, $ionicSlideBoxDelegate, AuthAPI, $filter) {
+
+    $scope.viewHistory = function(){
+      $window.location.href = ('#/app/historyList');
+    };
+
+    $scope.progressData = '.50';
+
+     //D3 testing
+    $scope.salesData = [
+      {hour: 1,sales: 54},
+      {hour: 2,sales: 66},
+      {hour: 3,sales: 77},
+      {hour: 4,sales: 70},
+      {hour: 5,sales: 60},
+      {hour: 6,sales: 63},
+      {hour: 7,sales: 55},
+      {hour: 8,sales: 47},
+      {hour: 9,sales: 55},
+      {hour: 10,sales: 30}
+    ];
+
+
+    //SLIDER PROPERTIES
+    $scope.slideOptions = {
+      pagination: true,
+      loop: false
+    };
 
 
     $scope.colors = [{
       fillColor: "#00b9be",
-      // strokeColor: "#00b9be",
+      strokeColor: "#00b9be",
+      highlightStroke: "rgb(206, 29, 31)",
       highlightFill: "rgb(206, 29, 31)"
-      // highlightStroke: "rgb(206, 29, 31)"
     }];
 
     $scope.options = {
@@ -2920,8 +3084,9 @@ angular.module('starter.controllers', ['starter.appServices',
         display: false,
         position: "left",
         labels: {
+          display: true,
           fontFamily: "Helvetica Neue",
-          boxWidth: 0
+          boxWidth: 0,
         }
       },
 
@@ -3760,4 +3925,21 @@ angular.module('starter.controllers', ['starter.appServices',
 
 
     // $scope.series = ['Series A'];
+  })
+
+  .controller('RacesCtrl', function($scope) {
+
+  })
+
+  .controller('MyRacesCtrl', function($scope) {
+
+  })
+
+  .controller('FindRacesCtrl', function($scope) {
+
+  })
+
+  .controller('PastRacesCtrl', function($scope) {
+
+
   });

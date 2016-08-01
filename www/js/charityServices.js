@@ -5,7 +5,7 @@
 
 angular.module('starter.charityServices', ['ionic'])
 .factory('CharityAPI', function($rootScope, $http, $ionicLoading, $window){
-  var base = "http://localhost:5000/";
+  var base = "https://dreamrun.herokuapp.com/";
 
   //everything up until return should be put in a main API
   $rootScope.show = function(text){
@@ -35,6 +35,11 @@ angular.module('starter.charityServices', ['ionic'])
   $rootScope.getSelectedCharityName = function(){
     return $window.localStorage.charityName;
   };
+  $rootScope.removeSelectedCharityName = function(){
+    return $window.localStorage.charityName = "";
+  };
+
+
   $rootScope.setSelectedCharityDescription = function(charityDescription){
     return $window.localStorage.charityDescription = charityDescription;
   };

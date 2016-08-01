@@ -6,7 +6,7 @@
 angular.module('starter.historyServices', [])
 
 .factory('HistoryAPI', function($ionicLoading, $rootScope, $http, $window){
-  var base = 'http://localhost:5000/';
+  var base = "https://dreamrun.herokuapp.com/";
 
   $rootScope.show = function(text){
     $rootScope.loading = $ionicLoading.show({
@@ -29,8 +29,6 @@ angular.module('starter.historyServices', [])
     }, 1999);
   };
 
-
-
   return {
     getAll: function(user){
       return $http.get(base+'history/', {
@@ -47,8 +45,25 @@ angular.module('starter.historyServices', [])
           user: user,
           month: month
         }
-      })
-    }
+      });
+    },
+    getCharityHistory: function(userId, charityName){
+      return $http.get(base+'history/charity', {
+        method: 'GET',
+        params: {
+          userId: userId,
+          charityName: charityName
+        }
+      });
+    },
+    // getPastCharities: function(userId){
+    //   return $http.get(base+'history/charities', {
+    //     method: 'GET',
+    //     params: {
+    //       userId: userId
+    //     }
+    //   });
+    // }
   }
 
 });

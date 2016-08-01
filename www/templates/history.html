@@ -1,220 +1,130 @@
-<ion-view view-title="History">
+<ion-view view-title="Activity">
+  <ion-nav-buttons side="right">
+    <button class="my-sponsors button button-clear button-positive" ng-click="viewHistory()">
+        <span class="ion-ios-list-outline" style="color: #fff;font-size: 22px;"></span>
+    </button>
+  </ion-nav-buttons>
+  <ion-content class="activity-page">
 
-  <ion-content scroll="false">
-    <ion-slides on-slide-changed="history-page" options="slideOptions" slider="">
-      <ion-slide-page class="history-page">
-        <div class="header">
-          <ul>
-            <li><button class="ion-chevron-left"></button></li>
-            <li><h1 ng-click="setMonthArrays(1)">January</h1></li>
-            <li><button class="ion-chevron-right"></button></li>
-          </ul>
-        </div>
-        <div class="history-page bubble-wrapper">
+    <ion-list class="activity-page">
+      <ion-item class="activity-page charities-banner">
+        <ion-slides>
 
-          <div class="history-page bubble-box left-bubble-box">
-            <p class="history-page label">Money Raised</p>
-            <p class="history-page value">${{monthTotalMoneyRaised}}</p>
-            <p class="history-page units">this month</p>
-          </div>
+          <!--TODO: change background image based on charity in the history.css using charities.css-->
+          <ion-slide-page class="charity-banner">
+            <div class="charity-name">
+              Teens Run DC
+            </div>
+            <div class="spacer">
+            </div>
+            <div class="detail-title row">
+              Impact
+            </div>
+            <div class="detail row">
+              <div class="funds col col-50 col-center">
+                $400 <span class="units" style="font-size: small">raised</span>
+              </div>
+              <div class="impact col col-50 col-center">
+                40 students put through college
+              </div>
 
-          <div class="history-page bubble-box center-bubble-box">
-            <p class="history-page label">Total Distance</p>
-            <p class="history-page value" style="font-size: 8vh;">{{monthTotalDistance.toFixed(1)}}</p>
-            <p class="history-page units">miles</p>
-          </div>
+            </div>
 
-          <div class="history-page bubble-box right-bubble-box">
-            <p class="history-page label">Average Pace</p>
-            <p class="history-page value">{{monthAveragePace.toFixed(2)}}</p>
-            <p class="history-page units">min:mile</p>
-          </div>
-        </div>
-        <div class="spacer"></div>
-        <div class="week-nav">
-          <ul>
-            <li><button class="ion-chevron-left" ng-click="getWeekDatesOnDecrement()"></button></li>
-            <li>{{displayDayOne}} - {{displayDaySeven}}</li>
-            <li><button class="ion-chevron-right" ng-click="getWeekDatesOnIncrement()"></button></li>
-          </ul>
-        </div>
-        <div class="history-page card">
+          </ion-slide-page>
+
+          <ion-slide-page class="charity-banner">
+              <div class="charity-name">
+                Back on my Feet
+              </div>
+          </ion-slide-page>
+
+          <ion-slide-page class="charity-banner">
+            <div class="charity-name">
+              Girls on the Run DC
+            </div>
+          </ion-slide-page>
+
+
+
+        </ion-slides>
+
+      </ion-item>
+
+      <ion-item class="activity-page goal-stats">
+        <ion-slides option="slideOptions">
+
+          <ion-slide-page>
+            <div class="goal-stats day row">
+              <div class="dist-day-goal col col-50 col-center">
+
+                <round-progress
+                  max="max"
+                  current="current"
+                  color="#45ccce"
+                  bgcolor="#eaeaea"
+                  radius="100"
+                  stroke="20"
+                  semi="true"
+                  rounded="true"
+                  clockwise="false"
+                  responsive="false"
+                  duration="800"
+                  animation="easeInOutQuart"
+                  animation-delay="0"></round-progress>
+
+                <!--<div radial-progress chart-data="progressData"></div>-->
+
+                Running Goal Day with radius graph
+                USE ANGULAR MATERIAL PROGRESS CIRCLE
+
+              </div>
+
+              <div class="col col-50 col-center">
+                Fundraising Goal Day with radius graph
+              </div>
+
+            </div>
+          </ion-slide-page>
+
+          <ion-slide-page>
+            <div class="goal-stats week row">
+              <div class="col col-50 col-center">
+                Running Goal Week with radius graph
+              </div>
+
+              <div class="col col-50 col-center">
+                Fundraising Goal Week with radius graph
+              </div>
+
+            </div>
+          </ion-slide-page>
+
+        </ion-slides>
+      </ion-item>
+
+      <!--TODO: New Chart with swipeable bars-->
+      <ion-item class="activity-page week-graph">
+
           <canvas id="bar"
                   class="chart chart-bar"
                   width="300"
-                  height="290"
+                  height="150"
                   chart-data="data"
                   chart-labels="labels"
                   chart-series="series"
                   chart-colours="colors"
                   chart-options="options"
-                  chart-click="onClick"
-          >
+                  chart-click="onClick">
           </canvas>
 
+      </ion-item>
 
+      <ion-item class="activity-page summary">
+        <!--USE ANGULAR MATERIAL PROGRESS BAR-->
+        <div linear-chart chart-data="salesData"></div>
 
-        </div>
-      </ion-slide-page>
+      </ion-item>
 
-      <ion-slide-page class="history-page">
-        Next Month
-      </ion-slide-page>
-
-    </ion-slides>
+    </ion-list>
   </ion-content>
 </ion-view>
-
-
-<!--<ion-content class="history-page BarCtrl has-header" scroll="false" ng-controller="HistoryCtrl">-->
-<!--<div class="history-page month-slide-wrapper">-->
-<!--<ion-slide-box on-slide-changed="history-page">-->
-<!--&lt;!&ndash;slideHasChanged($index)&ndash;&gt;-->
-<!--<ion-slide>-->
-<!--<div class="history-page month-slide" ng-click="setMonthArrays(1)">January</div>-->
-<!--</ion-slide>-->
-<!--<ion-slide>-->
-<!--<div class="history-page month-slide" ng-click="setMonthArrays(2)">February</div>-->
-<!--</ion-slide>-->
-<!--<ion-slide>-->
-<!--<div class="history-page month-slide" ng-click="setMonthArrays(3)">March</div>-->
-<!--</ion-slide>-->
-<!--<ion-slide>-->
-<!--<div class="history-page month-slide" ng-click="setMonthArrays(4)">April</div>-->
-<!--</ion-slide>-->
-<!--<ion-slide>-->
-<!--<div class="history-page month-slide" ng-click="setMonthArrays(5)">May</div>-->
-<!--</ion-slide>-->
-<!--<ion-slide>-->
-<!--<div class="history-page month-slide" ng-click="setMonthArrays(6)">June</div>-->
-<!--</ion-slide>-->
-<!--<ion-slide>-->
-<!--<div class="history-page month-slide" ng-click="setMonthArrays(7)">July</div>-->
-<!--</ion-slide>-->
-<!--<ion-slide>-->
-<!--<div class="history-page month-slide" ng-click="setMonthArrays(8)">August</div>-->
-<!--</ion-slide>-->
-<!--<ion-slide>-->
-<!--<div class="history-page month-slide" ng-click="setMonthArrays(9)">September</div>-->
-<!--</ion-slide>-->
-<!--<ion-slide>-->
-<!--<div class="history-page month-slide" ng-click="setMonthArrays(10)">October</div>-->
-<!--</ion-slide>-->
-<!--<ion-slide>-->
-<!--<div class="history-page month-slide" ng-click="setMonthArrays(11)">November</div>-->
-<!--</ion-slide>-->
-<!--<ion-slide>-->
-<!--<div class="history-page month-slide" ng-click="setMonthArrays(12)">December</div>-->
-<!--</ion-slide>-->
-<!--</ion-slide-box>-->
-<!--</div>-->
-
-
-<!--<div class="history-page bubble-wrapper">-->
-<!--<ion-content class="history-page BarCtrl has-header" ng-controller="HistoryCtrl">-->
-<!--<div class="history-page month-slide-wrapper">-->
-<!--<ion-slide-box on-slide-changed="history-page">-->
-<!--&lt;!&ndash;slideHasChanged($index)&ndash;&gt;-->
-<!--<ion-slide>-->
-<!--<div class="history-page month-slide" ng-click="setMonthArrays(1)">January</div>-->
-<!--</ion-slide>-->
-<!--<ion-slide>-->
-<!--<div class="history-page month-slide" ng-click="setMonthArrays(2)">February</div>-->
-<!--</ion-slide>-->
-<!--<ion-slide>-->
-<!--<div class="history-page month-slide" ng-click="setMonthArrays(3)">March</div>-->
-<!--</ion-slide>-->
-<!--<ion-slide>-->
-<!--<div class="history-page month-slide" ng-click="setMonthArrays(4)">April</div>-->
-<!--</ion-slide>-->
-<!--<ion-slide>-->
-<!--<div class="history-page month-slide" ng-click="setMonthArrays(5)">May</div>-->
-<!--</ion-slide>-->
-<!--<ion-slide>-->
-<!--<div class="history-page month-slide" ng-click="setMonthArrays(6)">June</div>-->
-<!--</ion-slide>-->
-<!--<ion-slide>-->
-<!--<div class="history-page month-slide" ng-click="setMonthArrays(7)">July</div>-->
-<!--</ion-slide>-->
-<!--<ion-slide>-->
-<!--<div class="history-page month-slide" ng-click="setMonthArrays(8)">August</div>-->
-<!--</ion-slide>-->
-<!--<ion-slide>-->
-<!--<div class="history-page month-slide" ng-click="setMonthArrays(9)">September</div>-->
-<!--</ion-slide>-->
-<!--<ion-slide>-->
-<!--<div class="history-page month-slide" ng-click="setMonthArrays(10)">October</div>-->
-<!--</ion-slide>-->
-<!--<ion-slide>-->
-<!--<div class="history-page month-slide" ng-click="setMonthArrays(11)">November</div>-->
-<!--</ion-slide>-->
-<!--<ion-slide>-->
-<!--<div class="history-page month-slide" ng-click="setMonthArrays(12)">December</div>-->
-<!--</ion-slide>-->
-<!--</ion-slide-box>-->
-<!--</div>-->
-
-
-<!--<div class="history-page bubble-wrapper">-->
-<!--<div class="history-page left-bubble-box">-->
-<!--<p class="history-page label">Money Raised</p>-->
-<!--<p class="history-page value">$7.80</p>-->
-<!--</div>-->
-<!--<div class="history-page center-bubble-box">-->
-<!--<p class="history-page label">Total Distance</p>-->
-<!--<p class="history-page value">{{monthTotalDistance}}</p>-->
-<!--<p class="history-page units">miles</p>-->
-<!--</div>-->
-
-<!--<div class="history-page right-bubble-box">-->
-<!--<p class="history-page label">Average Pace</p>-->
-<!--<p class="history-page value">{{monthAveragePace}}</p>-->
-<!--<p class="history-page units">min:mile</p>-->
-<!--</div>-->
-
-<!--</div>-->
-
-<!--<div class="week-buttons-wrapper">-->
-<!--<div class="row">-->
-<!--<div class="col col-40" style="text-align: right">-->
-<!--<button class="button left-button" ng-click="decrementWeek()"></button>-->
-<!--</div>-->
-<!--<div class="col col-20 col-center">-->
-<!--{{displayDayOne}} - {{displayDaySeven}}-->
-
-<!--</div>-->
-<!--<div class="history-page col col-40" style="text-align: left">-->
-<!--<button class="history-page button right-button"></button>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-
-
-
-
-<!--&lt;!&ndash;<div class="history-page card">&ndash;&gt;-->
-<!--<div class="history-page card">-->
-<!--<canvas id="bar"-->
-<!--class="chart chart-bar"-->
-<!--width="300"-->
-<!--height="325"-->
-<!--chart-data="data"-->
-<!--chart-labels="labels"-->
-<!--chart-series="series"-->
-<!--chart-colors="colors"-->
-<!--chart-options="options"-->
-<!--chart-click="onClick">-->
-<!--</canvas>-->
-<!--</div>-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-
-
-<!--&lt;!&ndash;-->
-<!--<ion-content class="chart-view">-->
-<!--<div class="card">-->
-<!--<canvas id="bar" class="chart chart-bar" data="data" labels="labels" legend="true" series="series" options="{showTooltips: false}"></canvas>-->
-<!--</div>-->
-<!--</ion-content>-->
-<!--&ndash;&gt;-->
-
-<!--</ion-content>-->

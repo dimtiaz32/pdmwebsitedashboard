@@ -1,13 +1,17 @@
 
 
-<ion-view view-title="Run" ng-controller="RunCtrl" class="has-header"> <!--ng-controller="RunCtrl"-->
+
+<!--<ion-view view-title="Run" ng-controller="RunCtrl" class="has-header"> &lt;!&ndash;ng-controller="RunCtrl"&ndash;&gt;-->
+
+<ion-view view-title="Run" ng-controller="RunCtrl">
+  <!--ng-controller="RunCtrl"-->
+
   <!--<ion-header-bar class="bar-stable" >-->
   <!--<h1 class="title">Run</h1>-->
   <!--</ion-header-bar>-->
 
   <ion-content scroll="false">
-
-    <map on-create="mapCreated(map)"></map>
+    <map id="map" on-create="mapCreated(map)"></map>
     <div id="capture"></div>
 
     <!--DropDown stuff-->
@@ -71,7 +75,11 @@
         </div>
 
 
+
+
         <div ng-show="isRunDetailDisplayed" class="animated-run-detail">
+
+
           <hr>
           <div class="run-page row">
             <div class="run-page col col-50">
@@ -95,7 +103,6 @@
 
 
     </div>
-
 
   </ion-content>
 
