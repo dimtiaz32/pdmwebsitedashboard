@@ -3026,9 +3026,7 @@ angular.module('starter.controllers', ['starter.appServices',
       $window.location.href = ('#/app/historyList');
     };
 
-    $scope.progressData = {
-      'distance':'.50'
-    };
+    $scope.progressData = '.50';
 
      //D3 testing
     $scope.salesData = [
