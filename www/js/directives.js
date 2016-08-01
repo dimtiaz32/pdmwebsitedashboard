@@ -115,4 +115,36 @@ angular.module('starter.directives', [])
         drawLineChart();
       }
     };
+  })
+  .directive('radialProgress', function($window){
+    return{
+      restrict:'EA',
+      template:"<svg></svg>",
+      link: function(scope, elem, attrs){
+
+        var colors =  {
+          'incomplete':'#ff8d00',
+          'complete': '#00b9be'
+        }
+
+        var radius = 100;
+        var border = 5;
+        var padding = 30;
+        var startPercent = 0;
+        var endPercent = .90;
+
+        var twoPi = Math.PI * 2;
+        var formatPercent = d3.format('.0%');
+        var boxSize = (radius + padding) * 2;
+
+        var count = Math.abs((endPercent - startPercent) / 0.01);
+        var step = endPercent < startPercent ? -0.01 : 0.01;
+
+        var arc = d3.svg.arc()
+          .startAngle(0)
+          .innerRadius(radius)
+          .outerRadius(radius - border);
+
+      }
+    };
   });

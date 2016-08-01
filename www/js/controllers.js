@@ -2943,7 +2943,11 @@ angular.module('starter.controllers', ['starter.appServices',
 
     $scope.viewHistory = function(){
       $window.location.href = ('#/app/historyList');
-    }
+    };
+
+    $scope.progressData = {
+      'distance':'.50'
+    };
 
      //D3 testing
     $scope.salesData = [
