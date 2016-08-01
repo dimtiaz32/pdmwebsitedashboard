@@ -2366,7 +2366,6 @@ angular.module('starter.controllers', ['starter.appServices',
 
     $scope.name = store.get('recipient.name');
 
-
     $scope.saveName = function() {
 
       var firstname = this.user.firstname;
@@ -2416,7 +2415,6 @@ angular.module('starter.controllers', ['starter.appServices',
       $scope.saveMoneyWithAmount = function(amount) {
          store.set('donor.amount', amount);
       }
-
   })
 
   .controller('InviteSponsorPledgeCtrl', function($scope, $http, store, $window){
@@ -2454,11 +2452,6 @@ angular.module('starter.controllers', ['starter.appServices',
 
   })
 
-
-  .controller('InviteSponsorStartCtrl', function($scope){
-
-  })
-
   .controller('InviteSponsorPaymentCtrl', function($rootScope, $scope, $http, store, DonationAPI, $window, AuthAPI){
     $scope.user = {
       email: ""
@@ -2489,7 +2482,6 @@ angular.module('starter.controllers', ['starter.appServices',
           $window.location.href = ('#/app/inviteSponsor/end');
         }).error(function (err,status){
           console.log("error: " + err);
-
           $rootScope.verifyStatus(status);
         });
       }
