@@ -2178,7 +2178,7 @@ angular.module('starter.controllers', ['starter.appServices',
   })
 
 
-  .controller('MyDonationCtrl',function($rootScope, $scope, $filter, $window, $ionicModal, $cordovaSms, $cordovaSocialSharing,DonationAPI,AuthAPI){
+  .controller('MyDonationCtrl',function($rootScope, $scope, $filter, $window, $ionicModal, $cordovaSms, $cordovaSocialSharing,DonationAPI,AuthAPI, CLIENT_HOST){
 
 
     $rootScope.$on('initial', function(){
@@ -2242,7 +2242,8 @@ angular.module('starter.controllers', ['starter.appServices',
         charity: $rootScope.getSelectedCharityId(),
         userId: $rootScope.getUserId()
       }).success(function (data, status, headers, config){
-        $scope.data = data;
+        $scope.inviteUrl = CLIENT_HOST + "#/app/inviteSponsor/start?id=" + data.code;
+        console.log("local data:" + $scope.inviteUrl);
         // $scope.shareBySMS = function() {
         //   console.log("sms share begin")
         //   $cordovaSocialSharing.shareViaSMS("aaaaa", "0612345678,0687654321").then(function(result) {
