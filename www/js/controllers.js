@@ -401,6 +401,33 @@ angular.module('starter.controllers', ['starter.appServices',
       name: ""
     };
 
+    $scope.isDetailDisplayed = false;
+    $scope.isRunDetailDisplayed = false;
+
+    $scope.swipeGestureDetail = function(gesture) {
+      if (gesture == 'swipe-down') {
+        $scope.isDetailDisplayed = true;
+      } else if (gesture == 'swipe-up') {
+        $scope.isDetailDisplayed = false;
+      }
+    };
+
+    $scope.swipeGestureRunDetail = function (gesture) {
+      if (gesture == 'swipe-down') {
+        $scope.isRunDetailDisplayed = true;
+      } else if (gesture == 'swipe-up') {
+        $scope.isRunDetailDisplayed = false;
+      }
+    };
+
+    $scope.toggleDetail = function() {
+      $scope.isDetailDisplayed = !$scope.isDetailDisplayed;
+    };
+
+    $scope.toggleRunDetail = function() {
+      $scope.isRunDetailDisplayed = !$scope.isRunDetailDisplayed;
+    };
+
     $scope.charityName = $rootScope.getSelectedCharityName();
     console.log('Run charityName: ' + $scope.charityName);
 
@@ -409,11 +436,6 @@ angular.module('starter.controllers', ['starter.appServices',
 
 
     $scope.user.name = $rootScope.getName();
-
-    $scope.isDetailDisplayed = false;
-
-
-    $scope.isRunDetailDisplayed = false;
 
     $scope.isHistoryDetailDisplayed = true;
     $scope.isRunning = false;
