@@ -58,16 +58,55 @@ ion-item.activity-page {
 
 
   .activity-page.goal-stats {
-    padding: 16px;
+    border: 8px solid transparent;
 
     -ms-word-wrap: break-word;
     word-wrap: break-word;
     white-space: normal;
   }
 
+    .activity-page.goal-stats .row .col{
+      position: relative;
+    }
+
+      .activity-page.goal-stats .row .col .heading{
+        position: absolute;
+      }
+
     .activity-page.goal-stats .row .col:first-child{
       border-right: 1px solid #ccc;
     }
+
+      .activity-page.goal-stats .row .label{
+         position: absolute;
+         top: 50%;
+         bottom: auto;
+         left: 50%;
+         transform: translateY(-50%) translateX(-50%);
+
+         color: #000;
+         font-weight: 200;
+         line-height: 1;
+         font-size: 4vh;
+         text-align: center;
+       }
+
+        .activity-page.goal-stats .row .label span {
+          font-size: 2.5vh;
+          font-weight: 400;
+          color: #777;
+        }
+
+
+      .activity-page.goal-stats .row .round-progress-wrapper{
+      }
+
+      .activity-page.goal-stats .row svg.round-progress{
+        display:block;
+        margin: auto;
+        padding: 20px;
+      }
+
 
 
 ion-item.activity-page.week-graph {
@@ -84,3 +123,6 @@ ion-item.activity-page.week-graph {
       bottom: 0;
       padding: 0 4px;
     }
+
+
+

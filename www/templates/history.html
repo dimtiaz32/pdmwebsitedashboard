@@ -56,31 +56,53 @@
           <ion-slide-page>
             <div class="goal-stats day row">
               <div class="dist-day-goal col col-50 col-center">
+                <div class="heading">Daily Goals</div>
+                <div class="label">
+                  {{ currentDayDistance }} mi
+                  <br>
+                  <span class="goal">{{ maxDayDistance }} mi</span>
+                </div>
 
                 <round-progress
-                  max="max"
-                  current="current"
-                  color="#45ccce"
+                  max="maxDayDistance"
+                  current="currentDayDistance"
+                  color="{{ getColor() }}"
                   bgcolor="#eaeaea"
-                  radius="100"
-                  stroke="20"
-                  semi="true"
+                  radius="40"
+                  stroke="5"
+                  semi="false"
                   rounded="true"
-                  clockwise="false"
-                  responsive="false"
+                  clockwise="true"
+                  responsive="true"
                   duration="800"
                   animation="easeInOutQuart"
                   animation-delay="0"></round-progress>
 
-                <!--<div radial-progress chart-data="progressData"></div>-->
-
-                Running Goal Day with radius graph
-                USE ANGULAR MATERIAL PROGRESS CIRCLE
 
               </div>
 
               <div class="col col-50 col-center">
-                Fundraising Goal Day with radius graph
+
+                <div class="label">
+                  ${{ currentDayFunds }}
+                  <br>
+                  <span class="goal">${{ maxDayFunds }}</span>
+                </div>
+
+                <round-progress
+                  max="maxDayFunds"
+                  current="currentDayFunds"
+                  color="{{ getColor() }}"
+                  bgcolor="#eaeaea"
+                  radius="40"
+                  stroke="5"
+                  semi="false"
+                  rounded="true"
+                  clockwise="true"
+                  responsive="true"
+                  duration="800"
+                  animation="easeInOutQuart"
+                  animation-delay="0"></round-progress>
               </div>
 
             </div>
@@ -89,11 +111,53 @@
           <ion-slide-page>
             <div class="goal-stats week row">
               <div class="col col-50 col-center">
-                Running Goal Week with radius graph
+                <div class="heading">Weekly Goals</div>
+
+                <div class="label">
+                  {{ currentWeekDistance }} mi
+                  <br>
+                  <span class="goal">{{ maxWeekDistance }} mi</span>
+                </div>
+
+
+                <round-progress
+                  max="maxWeekDistance"
+                  current="currentWeekDistance"
+                  color="{{ getColor() }}"
+                  bgcolor="#eaeaea"
+                  radius="40"
+                  stroke="5"
+                  semi="false"
+                  rounded="true"
+                  clockwise="true"
+                  responsive="true"
+                  duration="800"
+                  animation="easeInOutQuart"
+                  animation-delay="0"></round-progress>
               </div>
 
               <div class="col col-50 col-center">
-                Fundraising Goal Week with radius graph
+
+                <div class="label">
+                  ${{ currentWeekFunds }}
+                  <br>
+                  <span class="goal">${{ maxWeekFunds }}</span>
+                </div>
+
+                <round-progress
+                  max="maxWeekFunds"
+                  current="currentWeekFunds"
+                  color="{{ getColor() }}"
+                  bgcolor="#eaeaea"
+                  radius="40"
+                  stroke="5"
+                  semi="false"
+                  rounded="true"
+                  clockwise="true"
+                  responsive="true"
+                  duration="800"
+                  animation="easeInOutQuart"
+                  animation-delay="0"></round-progress>
               </div>
 
             </div>

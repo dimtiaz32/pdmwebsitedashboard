@@ -7,7 +7,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
     'starter.historyServices',
 
-    'starter.runServices','ionic','ngCordova','ngOpenFB', 'chart.js','ngCookies', 'ionic.contrib.drawer.vertical'])
+    'starter.runServices','ionic','ngCordova','ngOpenFB', 'chart.js','ngCookies', 'ionic.contrib.drawer.vertical', 'angular-svg-round-progressbar'])
 
 
   .controller('SignUpCtrl', function($scope, $rootScope, $ionicModal, $timeout, AuthAPI, $window, UserAPI){
@@ -3050,15 +3050,33 @@ angular.module('starter.controllers', ['starter.appServices',
 
   })
 
-  .controller('HistoryCtrl', function($scope, $rootScope, $window, HistoryAPI, $ionicSlideBoxDelegate, AuthAPI, $filter) {
+  .controller('HistoryCtrl', function($scope, $rootScope, $window, HistoryAPI, $ionicSlideBoxDelegate, AuthAPI, $filter, roundProgressService, $timeout) {
 
     $scope.viewHistory = function(){
+
       $window.location.href = ('#/app/historyList');
     };
 
-    $scope.progressData = '.50';
 
-     //D3 testing
+    //progress bar
+    $scope.getColor = function(){
+      return '#00b9be';
+    }
+
+    $scope.maxDayDistance = 1;
+    $scope.currentDayDistance = 1;
+
+    $scope.maxDayFunds = 1;
+    $scope.currentDayFunds= .3;
+
+    $scope.maxWeekDistance = 63;
+    $scope.currentWeekDistance = 35;
+
+    $scope.maxWeekFunds =100;
+    $scope.currentWeekFunds= 130;
+
+
+    //D3 testing
     $scope.salesData = [
       {hour: 1,sales: 54},
       {hour: 2,sales: 66},
