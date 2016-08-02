@@ -125,7 +125,7 @@ angular.module('starter.accountController', ['starter.appServices',
           type: 'button-positive',
         }]
       })
-    }
+    };
 
 
     //TODO: FIX PASSWORD RETURN – CURRENTLY RETURNS 'UNDEFINED'
@@ -157,7 +157,7 @@ angular.module('starter.accountController', ['starter.appServices',
           }
         ]
       })
-    }
+    };
 
     $scope.showChangePassword = function(){
       var changePassword = $ionicPopup.show({

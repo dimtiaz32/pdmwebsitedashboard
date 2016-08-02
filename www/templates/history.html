@@ -49,20 +49,23 @@
       </ion-item>
 
       <ion-item class="activity-page goal-stats">
+
         <ion-slides options="options" slider="data.slider">
 
           <ion-slide-page>
             <div class="goal-stats day row">
+              <div class="goal-settings ion-trophy" ng-click="showSetDayGoal()" style="z-index: 10"></div>
               <div class="dist-day-goal col col-50 col-center">
+
                 <div class="heading">Daily Goals</div>
                 <div class="label">
                   {{ currentDayDistance }} mi
                   <br>
-                  <span class="goal">{{ maxDayDistance }} mi</span>
+                  <span class="goal">{{ goalDayDistance }} mi</span>
                 </div>
 
                 <round-progress
-                  max="maxDayDistance"
+                  max="goalDayDistance"
                   current="currentDayDistance"
                   color="{{ getColor() }}"
                   bgcolor="#eaeaea"
@@ -82,13 +85,13 @@
               <div class="col col-50 col-center">
 
                 <div class="label">
-                  ${{ currentDayFunds }}
+                  ${{ currentDayFunds | number: 2  }}
                   <br>
-                  <span class="goal">${{ maxDayFunds }}</span>
+                  <span class="goal">${{ goalDayFunds | number: 2 }}</span>
                 </div>
 
                 <round-progress
-                  max="maxDayFunds"
+                  max="goalDayFunds"
                   current="currentDayFunds"
                   color="{{ getColor() }}"
                   bgcolor="#eaeaea"
@@ -107,6 +110,7 @@
           </ion-slide-page>
 
           <ion-slide-page>
+            <div class="goal-settings ion-trophy" ng-click="showSetDayGoal()" style="z-index: 10"></div>
             <div class="goal-stats week row">
               <div class="col col-50 col-center">
                 <div class="heading">Weekly Goals</div>
@@ -114,12 +118,12 @@
                 <div class="label">
                   {{ currentWeekDistance }} mi
                   <br>
-                  <span class="goal">{{ maxWeekDistance }} mi</span>
+                  <span class="goal">{{ goalWeekDistance }} mi</span>
                 </div>
 
 
                 <round-progress
-                  max="maxWeekDistance"
+                  max="goalWeekDistance"
                   current="currentWeekDistance"
                   color="{{ getColor() }}"
                   bgcolor="#eaeaea"
@@ -137,13 +141,13 @@
               <div class="col col-50 col-center">
 
                 <div class="label">
-                  ${{ currentWeekFunds }}
+                  ${{ currentWeekFunds | number: 2  }}
                   <br>
-                  <span class="goal">${{ maxWeekFunds }}</span>
+                  <span class="goal">${{ goalWeekFunds | number: 2  }}</span>
                 </div>
 
                 <round-progress
-                  max="maxWeekFunds"
+                  max="goalWeekFunds"
                   current="currentWeekFunds"
                   color="{{ getColor() }}"
                   bgcolor="#eaeaea"

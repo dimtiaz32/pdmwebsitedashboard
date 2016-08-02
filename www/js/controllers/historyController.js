@@ -22,6 +22,7 @@ angular.module('starter.historyController', ['starter.appServices',
 
 
   .controller('HistoryDayCtrl', function($scope, $rootScope, $window, HistoryAPI){
+
     //Can't get pagination to show
     $scope.slideOptions = {
       pagination: true,
@@ -293,7 +294,7 @@ angular.module('starter.historyController', ['starter.appServices',
 
   })
 
-  .controller('HistoryListCtrl', function ($scope, $rootScope, $window, HistoryAPI, ngRoute, $ionicSlideBoxDelegate, AuthAPI, $filter) {
+  .controller('HistoryListCtrl', function ($scope, $rootScope, $window, HistoryAPI, $ionicSlideBoxDelegate, AuthAPI, $filter) {
     //date in mm/dd/yyyy format
     //charity
     //duration
@@ -524,7 +525,7 @@ angular.module('starter.historyController', ['starter.appServices',
 
   })
 
-  .controller('HistoryCtrl', function($scope, $rootScope, $window, HistoryAPI, $ionicSlideBoxDelegate, AuthAPI, $filter, roundProgressService, $timeout) {
+  .controller('HistoryCtrl', function($scope, $rootScope, $window, HistoryAPI, $ionicSlideBoxDelegate, AuthAPI, $filter, roundProgressService, $timeout, $ionicPopup) {
 
     $scope.viewHistory = function(){
 
@@ -588,19 +589,80 @@ angular.module('starter.historyController', ['starter.appServices',
       return '#00b9be';
     }
 
-    $scope.maxDayDistance = 1;
+    $scope.goalDayDistance = 1;
     $scope.currentDayDistance = 1;
 
-    $scope.maxDayFunds = 1;
+    $scope.goalDayFunds = 1;
     $scope.currentDayFunds= .3;
 
-    $scope.maxWeekDistance = 63;
+    $scope.goalWeekDistance = 63;
     $scope.currentWeekDistance = 35;
 
-    $scope.maxWeekFunds =100;
+    $scope.goalWeekFunds =100;
     $scope.currentWeekFunds= 130;
 
+    //Change goal popups
 
+    $scope.showAlert = function(title, text){
+      var alertMessage = $ionicPopup.show({
+        title: title,
+        template: '<p style="text-align: center;">'+text+'</p>',
+        buttons: [{
+          text: '<b>Close</b>',
+          type: 'button-positive',
+        }]
+      })
+    }
+
+    $scope.goalPopup = {
+      goalDayDistance: "",
+      goalDayFunds: "",
+      goalWeekDistance: "",
+      goalWeekFunds: "",
+      goalYearFunds: ""
+    }
+
+    $scope.showSetDayGoal = function(){
+      var setGoal = $ionicPopup.show({
+        template: '<input type="number" ng-model="goalPopup.goalDayDistance" placeholder="{{goalDayDistance}} miles/day" autofocus>'+
+                  '<div style="padding: 5px 0;"></div>'+
+                  '<input type="number" ng-model="goalPopup.goalDayFunds" placeholder="${{goalDayFunds | number: 2 }}/day">',
+        title: 'Change Daily Goals',
+        subTitle: 'Enter only numbers',
+        scope: $scope,
+        buttons: [
+          {text: 'Cancel'},
+          {
+            text: 'Set',
+            type: 'button-positive',
+            onTap: function(e) {
+              var goalDayDistance = $scope.goalPopup.goalDayDistance;
+              var goalDayFunds = $scope.goalPopup.goalDayFunds;
+
+              $scope.goalPopup.goalDayDistance = "";
+              $scope.goalPopup.goalDayFunds = "";
+
+              if (goalDayDistance != "") {
+                $scope.goalDayDistance = goalDayDistance;
+                console.log('new goal for dist')
+              } else {
+                console.log('NO new goal for dist')
+              }
+              if (goalDayFunds != "") {
+                $scope.goalDayFunds= goalDayFunds;
+                console.log('new goal for funds')
+              } else {
+                console.log('NO new goal for funds')
+              }
+            }
+          }
+        ]
+      });
+    }
+
+
+
+    //graph stuff
     $scope.colors = [{
       fillColor: "#00b9be",
       strokeColor: "#00b9be",
@@ -646,10 +708,7 @@ angular.module('starter.historyController', ['starter.appServices',
       console.log(bar, evt);
       console.log('bar['+0+']: ' + [bar[0].label]);
       $scope.matchLabelToDay([bar[0].label]);
-
-
     };
-
 
 
     var t = Date.now();
