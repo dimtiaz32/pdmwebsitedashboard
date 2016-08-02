@@ -11,7 +11,8 @@
     "Chart.js": "npm:chart.js#^2.1.6",
     "d3": "^4.1.1",
     "radial-progress-chart": "^0.0.3",
-    "angular-svg-round-progressbar": "^0.4.6"
+    "angular-svg-round-progressbar": "^0.4.6",
+    "ngprogress": "^1.1.3"
   },
   "resolutions": {
     "Chart.js": "~1.1.1"

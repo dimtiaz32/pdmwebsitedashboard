@@ -3073,7 +3073,7 @@ angular.module('starter.controllers', ['starter.appServices',
     };
 
 
-    //progress bar
+    //progress circles
     $scope.getColor = function(){
       return '#00b9be';
     }
@@ -3089,6 +3089,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
     $scope.maxWeekFunds =100;
     $scope.currentWeekFunds= 130;
+
 
 
     //D3 testing
