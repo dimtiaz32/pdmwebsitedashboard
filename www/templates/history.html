@@ -8,7 +8,7 @@
 
     <ion-list class="activity-page">
       <ion-item class="activity-page charities-banner">
-        <ion-slides options="options" slider="data.slider">
+        <ion-slides options="slideOptions" slider="data.slider">
 
           <!--TODO: change background image based on charity in the history.css using charities.css-->
           <ion-slide-page class="charity-banner">
@@ -110,7 +110,7 @@
           </ion-slide-page>
 
           <ion-slide-page>
-            <div class="goal-settings ion-trophy" ng-click="showSetDayGoal()" style="z-index: 10"></div>
+            <div class="goal-settings ion-trophy" ng-click="showSetWeekGoal()" style="z-index: 10"></div>
             <div class="goal-stats week row">
               <div class="col col-50 col-center">
                 <div class="heading">Weekly Goals</div>
@@ -187,7 +187,8 @@
 
       <ion-item class="activity-page summary">
         <h1>2016 Challenge</h1>
-        <h2>Raise {{yearlyGoal | number: 2}} in 2016: <span style="color: #00b9be"> {{daysLeftInYear}} days left</span></h2>
+        <div class="year-settings ion-trophy" ng-click="showSetYearGoal()" style="z-index: 10"></div>
+        <h2>Raise ${{yearlyGoal | number: 2}} in 2016: <span style="color: #00b9be"> {{daysLeftInYear()}} days left</span></h2>
         <div class="row">
          <h3 class="col">Progress</h3>
          <h3 class="col avg">${{progressWeekAvg | number: 2}}/week</h3>

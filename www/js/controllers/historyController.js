@@ -23,7 +23,6 @@ angular.module('starter.historyController', ['starter.appServices',
 
   .controller('HistoryDayCtrl', function($scope, $rootScope, $window, HistoryAPI){
 
-    //Can't get pagination to show
     $scope.slideOptions = {
       pagination: true,
       paginationType: 'bullets'
@@ -534,7 +533,7 @@ angular.module('starter.historyController', ['starter.appServices',
 
 
     //Slider stuffs
-    $scope.options = {
+    $scope.slideOptions = {
       loop: true,
       effect: 'fade',
       speed: 500,
@@ -561,28 +560,39 @@ angular.module('starter.historyController', ['starter.appServices',
     $scope.yearlyFunds = 118;
     $scope.yearlyGoal = 201.60;
 
-    $scope.today = new Date();
-    $scope.yearEnd = new Date($scope.today.getFullYear(), 11, 31);
-    $scope.yearBegin = new Date(new Date().getFullYear(), 0, 1);
-    console.log($scope.yearBegin);
+    $scope.yearlyPace = "";
+    $scope.progressVal = "";
+    $scope.paceBunnyVal = "";
 
-    //one day in millisecs
-    $scope.oneDay = 1000*60*60*24;
-    $scope.daysInYearTotal = Math.ceil(($scope.yearEnd.getTime() - $scope.yearBegin.getTime())/$scope.oneDay);
-    console.log($scope.daysInYearTotal + " Days in 2016");
-    $scope.daysLeftInYear = Math.ceil(($scope.yearEnd.getTime() - $scope.today.getTime())/$scope.oneDay);
-    console.log($scope.daysLeftInYear + " Days left in the year");
+    $scope.progressWeekAvg =  "";
+    $scope.paceBunnyWeekAvg = "";
 
-    $scope.yearlyPace = (($scope.daysInYearTotal-$scope.daysLeftInYear)/$scope.daysInYearTotal) * $scope.yearlyGoal;
+    $scope.daysLeftInYear = function(){
+      var today = new Date();
+      var yearEnd = new Date(today.getFullYear(), 11, 31);
+      var yearBegin = new Date(new Date().getFullYear(), 0, 1);
+      console.log(yearBegin);
 
-    $scope.progressVal = 100*($scope.yearlyFunds/$scope.yearlyGoal);
-    $scope.paceBunnyVal = 100*($scope.yearlyPace/$scope.yearlyGoal);
+      var oneDay = 1000*60*60*24;
 
-    $scope.progressWeekAvg =  7*($scope.yearlyFunds/($scope.daysInYearTotal-$scope.daysLeftInYear));
-    console.log($scope.progressWeekAvg);
-    $scope.paceBunnyWeekAvg = 7*($scope.yearlyGoal/$scope.daysInYearTotal);
-    console.log($scope.paceBunnyWeekAvg);
+      var daysLeftInYear = Math.ceil((yearEnd.getTime() - today.getTime())/oneDay);
+      console.log(daysLeftInYear + " Days left in the year");
 
+      return daysLeftInYear;
+    }
+
+    $scope.paceBunnySetter = function(){
+      $scope.yearlyPace = ((365-$scope.daysLeftInYear())/365) * $scope.yearlyGoal;
+      $scope.progressVal = 100*($scope.yearlyFunds/$scope.yearlyGoal);
+      $scope.paceBunnyVal = 100*($scope.yearlyPace/$scope.yearlyGoal);
+
+      $scope.progressWeekAvg =  7*($scope.yearlyFunds/(365-$scope.daysLeftInYear()));
+      console.log($scope.progressWeekAvg);
+      $scope.paceBunnyWeekAvg = 7*($scope.yearlyGoal/365);
+      console.log($scope.paceBunnyWeekAvg);
+    }
+
+    $scope.paceBunnySetter();
 
     //progress circles
     $scope.getColor = function(){
@@ -601,8 +611,8 @@ angular.module('starter.historyController', ['starter.appServices',
     $scope.goalWeekFunds =100;
     $scope.currentWeekFunds= 130;
 
-    //Change goal popups
 
+    //Change goal popups
     $scope.showAlert = function(title, text){
       var alertMessage = $ionicPopup.show({
         title: title,
@@ -650,6 +660,73 @@ angular.module('starter.historyController', ['starter.appServices',
               }
               if (goalDayFunds != "") {
                 $scope.goalDayFunds= goalDayFunds;
+                console.log('new goal for funds')
+              } else {
+                console.log('NO new goal for funds')
+              }
+            }
+          }
+        ]
+      });
+    }
+
+    $scope.showSetWeekGoal = function(){
+      var setGoal = $ionicPopup.show({
+        template: '<input type="number" ng-model="goalPopup.goalWeekDistance" placeholder="{{goalWeekDistance}} miles/week" autofocus>'+
+        '<div style="padding: 5px 0;"></div>'+
+        '<input type="number" ng-model="goalPopup.goalWeekFunds" placeholder="${{goalWeekFunds | number: 2 }}/week">',
+        title: 'Change Daily Goals',
+        subTitle: 'Enter only numbers',
+        scope: $scope,
+        buttons: [
+          {text: 'Cancel'},
+          {
+            text: 'Set',
+            type: 'button-positive',
+            onTap: function(e) {
+              var goalWeekDistance = $scope.goalPopup.goalWeekDistance;
+              var goalWeekFunds = $scope.goalPopup.goalWeekFunds;
+
+              $scope.goalPopup.goalWeekDistance = "";
+              $scope.goalPopup.goalWeekFunds = "";
+
+              if (goalWeekDistance != "") {
+                $scope.goalWeekDistance = goalWeekDistance;
+                console.log('new goal for dist')
+              } else {
+                console.log('NO new goal for dist')
+              }
+              if (goalWeekFunds != "") {
+                $scope.goalWeekFunds= goalWeekFunds;
+                console.log('new goal for funds')
+              } else {
+                console.log('NO new goal for funds')
+              }
+            }
+          }
+        ]
+      });
+    }
+
+    $scope.showSetYearGoal = function(){
+      var setGoal = $ionicPopup.show({
+        template: '<input type="number" ng-model="goalPopup.goalYearFunds" placeholder="${{yearlyGoal | number: 2 }}/year" autofocus>',
+        title: 'Change Daily Goals',
+        subTitle: 'Enter only numbers',
+        scope: $scope,
+        buttons: [
+          {text: 'Cancel'},
+          {
+            text: 'Set',
+            type: 'button-positive',
+            onTap: function(e) {
+              var goalYearFunds = $scope.goalPopup.goalYearFunds;
+
+              $scope.goalPopup.goalYearFunds = "";
+
+              if (goalYearFunds != "") {
+                $scope.yearlyGoal = goalYearFunds;
+                $scope.paceBunnySetter();
                 console.log('new goal for funds')
               } else {
                 console.log('NO new goal for funds')

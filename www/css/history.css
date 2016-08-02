@@ -10,7 +10,7 @@ ion-list.activity-page {
 }
 
 ion-item.activity-page {
-  height: 200px;
+  height: 50vw;
   padding: 0;
 
   margin-bottom: 2px;
@@ -137,6 +137,7 @@ ion-item.activity-page.week-graph {
 ion-item.activity-page.summary {
   position: relative;
   padding: 16px;
+  height: 200px;
 }
 
 .activity-page.summary .col, .activity-page.summary .row {
@@ -147,6 +148,11 @@ ion-item.activity-page.summary {
     text-align: right;
   }
 
+  .activity-page.summary .year-settings {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+  }
 .activity-page.summary h1{
     font-size: x-large;
     font-weight: 200;
