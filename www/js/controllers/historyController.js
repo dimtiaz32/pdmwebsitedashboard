@@ -15,7 +15,8 @@ angular.module('starter.historyController', ['starter.appServices',
   'chart.js',
   'ngCordova','ngOpenFB','ngCookies',
   'ionic.contrib.drawer.vertical',
-  'angular-svg-round-progressbar'])
+  'angular-svg-round-progressbar',
+  'Tek.progressBar'])
 
 
 
@@ -531,6 +532,29 @@ angular.module('starter.historyController', ['starter.appServices',
     };
 
 
+    //Slider stuffs
+    $scope.options = {
+      loop: true,
+      effect: 'fade',
+      speed: 500,
+    }
+
+    $scope.$on("$ionicSlides.sliderInitialized", function(event, data){
+      // data.slider is the instance of Swiper
+      $scope.slider = data.slider;
+    });
+
+    $scope.$on("$ionicSlides.slideChangeStart", function(event, data){
+      console.log('Slide change is beginning');
+    });
+
+    $scope.$on("$ionicSlides.slideChangeEnd", function(event, data){
+      // note: the indexes are 0-based
+      $scope.activeIndex = data.slider.activeIndex;
+      $scope.previousIndex = data.slider.previousIndex;
+    });
+
+
     //progress bar
     //TODO: Set yearlyFunds and yearlyGoal using user's data
     $scope.yearlyFunds = 118;
@@ -575,14 +599,6 @@ angular.module('starter.historyController', ['starter.appServices',
 
     $scope.maxWeekFunds =100;
     $scope.currentWeekFunds= 130;
-
-
-
-    //SLIDER PROPERTIES
-    $scope.slideOptions = {
-      pagination: true,
-      loop: false
-    };
 
 
     $scope.colors = [{
