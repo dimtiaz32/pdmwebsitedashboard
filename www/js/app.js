@@ -321,6 +321,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
     $urlRouterProvider.otherwise('/auth/signin');
     // $urlRouterProvider.otherwise('/app/run');
 
-    Stripe.setPublishableKey('pk_test_AcHwMgfwhswjYGUhawRw0her');
+    Stripe.setPublishableKey('pk_test_U5LiYvbQvafjstjzow9RjSzg');
 
   });
