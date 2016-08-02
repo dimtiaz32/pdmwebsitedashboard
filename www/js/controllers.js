@@ -7,7 +7,7 @@ angular.module('starter.controllers', ['starter.appServices',
 
     'starter.historyServices',
 
-    'starter.runServices','ionic','ngCordova','ngOpenFB', 'chart.js','ngCookies', 'ionic.contrib.drawer.vertical', 'angular-svg-round-progressbar'])
+    'starter.runServices','ionic','ngCordova','ngOpenFB', 'chart.js','ngCookies', 'ionic.contrib.drawer.vertical', 'angular-svg-round-progressbar', 'Tek.progressBar'])
 
 
   .controller('SignUpCtrl', function($scope, $rootScope, $ionicModal, $timeout, AuthAPI, $window, UserAPI){
@@ -3073,6 +3073,34 @@ angular.module('starter.controllers', ['starter.appServices',
     };
 
 
+    //progress bar
+    //TODO: Set yearlyFunds and yearlyGoal using user's data
+    $scope.yearlyFunds = 118;
+    $scope.yearlyGoal = 201.60;
+
+      $scope.today = new Date();
+      $scope.yearEnd = new Date($scope.today.getFullYear(), 11, 31);
+      $scope.yearBegin = new Date(new Date().getFullYear(), 0, 1);
+      console.log($scope.yearBegin);
+
+      //one day in millisecs
+      $scope.oneDay = 1000*60*60*24;
+      $scope.daysInYearTotal = Math.ceil(($scope.yearEnd.getTime() - $scope.yearBegin.getTime())/$scope.oneDay);
+      console.log($scope.daysInYearTotal + " Days in 2016");
+      $scope.daysLeftInYear = Math.ceil(($scope.yearEnd.getTime() - $scope.today.getTime())/$scope.oneDay);
+      console.log($scope.daysLeftInYear + " Days left in the year");
+
+     $scope.yearlyPace = (($scope.daysInYearTotal-$scope.daysLeftInYear)/$scope.daysInYearTotal) * $scope.yearlyGoal;
+
+     $scope.progressVal = 100*($scope.yearlyFunds/$scope.yearlyGoal);
+     $scope.paceBunnyVal = 100*($scope.yearlyPace/$scope.yearlyGoal);
+
+    $scope.progressWeekAvg =  7*($scope.yearlyFunds/($scope.daysInYearTotal-$scope.daysLeftInYear));
+    console.log($scope.progressWeekAvg);
+    $scope.paceBunnyWeekAvg = 7*($scope.yearlyGoal/$scope.daysInYearTotal);
+    console.log($scope.paceBunnyWeekAvg);
+
+
     //progress circles
     $scope.getColor = function(){
       return '#00b9be';
@@ -3090,21 +3118,6 @@ angular.module('starter.controllers', ['starter.appServices',
     $scope.maxWeekFunds =100;
     $scope.currentWeekFunds= 130;
 
-
-
-    //D3 testing
-    $scope.salesData = [
-      {hour: 1,sales: 54},
-      {hour: 2,sales: 66},
-      {hour: 3,sales: 77},
-      {hour: 4,sales: 70},
-      {hour: 5,sales: 60},
-      {hour: 6,sales: 63},
-      {hour: 7,sales: 55},
-      {hour: 8,sales: 47},
-      {hour: 9,sales: 55},
-      {hour: 10,sales: 30}
-    ];
 
 
     //SLIDER PROPERTIES
