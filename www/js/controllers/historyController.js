@@ -1,6 +1,7 @@
-
-
-angular.module('starter.appController', ['starter.appServices',
+/**
+ * Created by dev on 8/2/16.
+ */
+angular.module('starter.historyController', ['starter.appServices',
   'starter.charityServices',
   'starter.authServices',
   'starter.runServices',
@@ -19,496 +20,277 @@ angular.module('starter.appController', ['starter.appServices',
 
 
 
-  .controller('AccountCtrl', function($rootScope, AuthAPI, UserAPI, $window, $scope, $ionicPopup) {
+  .controller('HistoryDayCtrl', function($scope, $rootScope, $window, HistoryAPI){
+    //Can't get pagination to show
+    $scope.slideOptions = {
+      pagination: true,
+      paginationType: 'bullets'
+    };
 
-    $rootScope.$on('initial', function(){
-        console.log("---------start account ctrl initial---------");
-
-        $scope.user = {
-          email: "",
-          name: "",
-          password: "",
-          charity: {},
-          history: [],
-          provider: "",
-          past_donations_from: [],
-          past_donations_to: [],
-          donations_to: [],
-          donations_from: [],
-          past_charities: [],
-          created: Date,
-          updated: Date
-
-        };
-
-        $scope.user.name = $rootScope.getName();
-        console.log('user name set as: ' + $scope.user.name);
-        $scope.user.email = $rootScope.getEmail();
-        console.log('user email set as: '+ $scope.user.email);
-        $scope.user.password = $rootScope.getPassword();
-        console.log('user password set as: ' + $scope.user.password);
+    // $scope.back = function(){
+    //   $window.location.href = ('#/app/history');
+    // }
 
 
-        console.log("--------end account ctrl initial---------");
-    });
 
-    $rootScope.$on('destroy', function(){
-        console.log("---------start account ctrl destroy---------");
-        $scope.user = undefined;
-        console.log("---------end account ctrl destroy---------");
-    });
+    $scope.dayRuns = [];
+    // $scope.dayLapsForm = [{
+    //   number: String,
+    //   distance: String,
+    //   time: String,
+    //   pace: String
+    // }];
 
-    // do the initial at first time when the controller load, only just once~
-    $rootScope.$broadcast('initial');
-
-    $scope.updateAccount = function () {
-      var name = this.account.firstName + ' ' + this.account.lastName;
-      var proPic = this.account.profilePicture;
-      var email = this.account.email;
-      var password = this.account.password;
-      var dob = this.account.dob;
-      var created = this.account.created;
-      var updated = this.account.updated;
-
-
-      //only checking for fields that can be changed
-      //profile picture can be deleted since it is not necessary
-
-
-      if (!email) {
-        $rootScope.show('Email field cannot be empty');
-        console.log('Email field was empty');
-      } else if (!password) {
-        $rootScope.show('Password field cannot be empty');
-        console.log('Password field was empty');
+    $scope.dayMonthFormatter = function(monthSplit){
+      switch(monthSplit){
+        case "Jan":
+          dayMonth = "January";
+          return dayMonth;
+          break;
+        case "Feb":
+          dayMonth = "Febuary";
+          return dayMonth;
+          break;
+        case "Mar":
+          dayMonth = "March";
+          return dayMonth;
+          break;
+        case "Apr":
+          dayMonth = "April";
+          return dayMonth;
+          break;
+        case "May":
+          dayMonth = "May";
+          return dayMonth;
+          break;
+        case "Jun":
+          dayMonth = "June";
+          return dayMonth;
+          break;
+        case "Jul":
+          dayMonth = "July";
+          return dayMonth;
+          break;
+        case "Aug":
+          dayMonth = "August";
+          return dayMonth;
+          break;
+        case "Sep":
+          dayMonth = "September";
+          return dayMonth;
+          break;
+        case "Oct":
+          dayMonth = "October";
+          return dayMonth;
+          break;
+        case "Nov":
+          dayMonth = "November";
+          return dayMonth;
+          break;
+        case "Dec":
+          dayMonth = "December";
+          return dayMonth;
+          break;
+        default:
+          dayMonth = "";
+          return dayMonth;
+          break;
       }
-
-      console.log('Email and password fields verified, attempting to save account changes...');
-      $rootScope.notify('Saving changes to your account');
-      AccountAPI.saveAccount({
-        email: email,
-        password: password
-      }).success(function (data, headers, config, status) {
-
-          $rootScope.hide();
-          $window.location.href = ('#/app/account');
-        })
-
-        .error(function (error,status) {
-          if (error.error && error.error.code == 11000) {
-            $rootScope.notify("This email is already in use");
-            console.log("could not register user: email already in use ");
-          } else {
-            $rootScope.notify("An error has occured. Please try again");
-          }
-          $rootScope.verifyStatus(status);
-        });
-    }
+    };
 
 
-    //CHANGE PASSWORD
-    $scope.popup = {
-      currentPasswordHolder: "",
-      password1: "",
-      password2: ""
-    }
+    $scope.dayDateFormatter = function(daySplit){
+      switch(daySplit) {
+        case "01":
+          dayDate: "1";
+          return dayDate;
+        case "02":
+          dayDate: "2";
+          return dayDate;
+        case "03":
+          dayDate: "3";
+          return dayDate;
+        case "04":
+          dayDate: "4";
+          return dayDate;
+        case "05":
+          dayDate: "5";
+          return dayDate;
+        case "06":
+          dayDate: "6";
+          return dayDate;
+        case "07":
+          dayDate: "7";
+          return dayDate;
+        case "08":
+          dayDate: "8";
+          return dayDate;
+        case "09":
+          dayDate: "9";
+          return dayDate;
+        default:
+          return daySplit;
+      }
+    };
 
-    $scope.showAlert = function(title, text){
-      var alertMessage = $ionicPopup.show({
-        title: title,
-        template: '<p style="text-align: center;">'+text+'</p>',
-        buttons: [{
-          text: '<b>Close</b>',
-          type: 'button-positive',
-        }]
-      })
-    }
+    $scope.distancePopHolder  = [];
+    $scope.durationPopHolder = [];
+    $scope.pacePopHolder = [];
+    $scope.moneyRaisedPopHolder = [];
+    $scope.pathPopHolder = [];
+    $scope.lapsPopHolder = [];
 
-
-    //TODO: FIX PASSWORD RETURN – CURRENTLY RETURNS 'UNDEFINED'
-    //TODO: GET PASSWORD TO UPDATE ON SERVER
-    $scope.showConfirmPassword = function(){
-      var confirmPassword = $ionicPopup.show({
-        template: '<input type="password" ng-model="popup.currentPasswordHolder">',
-        title: 'Change password',
-        subTitle: 'Enter current password',
-        scope: $scope,
-        buttons: [
-          { text: 'Cancel' },
-          {
-            text: 'Next',
-            type: 'button-positive',
-            onTap: function(e) {
-              var currentPassword = $rootScope.getPassword();
-              console.log('Current Password: '+ currentPassword);
-              console.log($rootScope.getPassword());
-              if (currentPassword != $scope.popup.currentPasswordHolder) {
-                $scope.showAlert('Oops!', "You didn't enter your current password");
-                $scope.popup.currentPasswordHolder = "";
-                e.preventDefault();
-              } else if (currentPassword == $scope.popup.currentPasswordHolder) {
-                $scope.popup.currentPasswordHolder = "";
-                $scope.showChangePassword();
-              }
-            }
-          }
-        ]
-      })
-    }
-
-    $scope.showChangePassword = function(){
-      var changePassword = $ionicPopup.show({
-        template: '<input type="password" ng-model="popup.password1" placeholder="New password">' +
-                  '<div style="padding: 5px 0;"></div>' +
-                  '<input type="password" ng-model="popup.password2" placeholder="Confirm new password">',
-        title: 'Change password',
-        // subTitle: 'subtitle',
-        scope: $scope,
-        buttons: [
-          { text: 'Cancel' },
-          {
-            text: '<b>Change</b>',
-            type: 'button-positive',
-            onTap: function(e) {
-								if ($scope.popup.password1 == $scope.popup.password2) {
-                  var newPassword = $scope.popup.password1;
-                  $scope.popup.password1 = "";
-                  $scope.popup.password2 = "";
-                  $scope.showAlert('Yay!','Password changed');
-                  $rootScope.setPassword(newPassword);
-                  console.log($rootScope.getPassword())
-                } else if ($scope.popup.password1 == "") {
-                  $scope.showAlert('Oops!',"Don't leave any field blank!");
-                  e.preventDefault();
-                } else if ($scope.popup.password1 == "") {
-                  $scope.showAlert('Oops!',"Don't leave any field blank!");
-                  e.preventDefault();
-                } else if ($scope.popup.password1 != $scope.popup.password2) {
-                  $scope.popup.password1="";
-                  $scope.popup.password2="";
-                  $scope.showAlert('Oops!','Passwords do not match');
-                  e.preventDefault();
-                } else {
-                  $scope.popup.password1="";
-                  $scope.popup.password2="";
-                  $scope.showAlert('Oops!',"You didn't enter passwords correctly");
-                  e.preventDefault();
-                }
-            }
-          }
-        ]
-      })
-    }
-
-
-    //SAVE CHANGES
-    $scope.saveIsHidden = true;
-
-    $scope.formChanged = function() {
-      console.log("form is changed");
-
-      $scope.editing = 'editing'
-      $scope.saveIsHidden = false;
-    }
-
-    $scope.save = function() {
-      console.log($scope.user.email)
-
-      //TODO: check to see if it a valid email
-      $rootScope.setEmail($scope.user.email)
-
-      //make text gray and hide save button
-      $scope.editing = '';
-      $scope.saveIsHidden = true;
-      //TODO:NEED TO REFRESH SERVER WITH UPDATE
-    }
-
-    //Resetting changes if leave page before saving
-    $scope.$on("$ionicView.leave", function(){
-      console.log('leaving view');
-      console.log($scope.user.email);
-      console.log($rootScope.getEmail());
-      $scope.user.email = $rootScope.getEmail();
-
-      //make text gray and hide save button
-      $scope.editing = '';
-      $scope.saveIsHidden = true;
-    })
-
-  })
-
-
-.controller('HistoryDayCtrl', function($scope, $rootScope, $window, HistoryAPI){
-  //Can't get pagination to show
-  $scope.slideOptions = {
-    pagination: true,
-    paginationType: 'bullets'
-  };
-
-  // $scope.back = function(){
-  //   $window.location.href = ('#/app/history');
-  // }
-
-
-
-  $scope.dayRuns = [];
-  // $scope.dayLapsForm = [{
-  //   number: String,
-  //   distance: String,
-  //   time: String,
-  //   pace: String
-  // }];
-
-  $scope.dayMonthFormatter = function(monthSplit){
-    switch(monthSplit){
-      case "Jan":
-        dayMonth = "January";
-        return dayMonth;
-        break;
-      case "Feb":
-        dayMonth = "Febuary";
-        return dayMonth;
-        break;
-      case "Mar":
-        dayMonth = "March";
-        return dayMonth;
-        break;
-      case "Apr":
-        dayMonth = "April";
-        return dayMonth;
-        break;
-      case "May":
-        dayMonth = "May";
-        return dayMonth;
-        break;
-      case "Jun":
-        dayMonth = "June";
-        return dayMonth;
-        break;
-      case "Jul":
-        dayMonth = "July";
-        return dayMonth;
-        break;
-      case "Aug":
-        dayMonth = "August";
-        return dayMonth;
-        break;
-      case "Sep":
-        dayMonth = "September";
-        return dayMonth;
-        break;
-      case "Oct":
-        dayMonth = "October";
-        return dayMonth;
-        break;
-      case "Nov":
-        dayMonth = "November";
-        return dayMonth;
-        break;
-      case "Dec":
-        dayMonth = "December";
-        return dayMonth;
-        break;
-      default:
-        dayMonth = "";
-        return dayMonth;
-        break;
-    }
-  };
+    // $rootScope.setValuesForHistoryDayView = function(date, distance, duration, pace, moneyRaised, path, laps){
+    //
+    //
+    //   // $scope.dayUnformattedDisplayDate = date;
+    //   $scope.dayDisplayDate = date;
+    //   $scope.dayDisplayDistance = distance;
+    //   $scope.dayDisplayDuration = duration;
+    //   $scope.dayDisplayPace = pace;
+    //   $scope.dayDisplayMoneyRaised = moneyRaised;
+    //   $scope.dayDisplayPath = path;
+    //   $scope.dayDisplayLaps = laps;
+    //
+    //
+    //
+    //
+    //   console.log('dayDisplayDistance values: ' + $scope.dayDisplayDistance);
+    //     //split differently -> lap all one object, lap in laps, lap.number
+    //
+    //
+    //     $scope.historyPolyCoords = [];
+    //
+    //     $scope.dayLapsForm = [{
+    //       number: String,
+    //       distance: String,
+    //       time: String,
+    //       pace: String
+    //     }];
+    //
+    //
+    //     console.log('$dayDisplayPath.lat.length: ' + $scope.dayDisplayPath.lat.length);
+    //
+    //    console.log('setValuesForHistoryDayView: $scope.dayDisplayPath.lat.length: ' + $scope.dayDisplayPath[x].lat.length);
+    //    var latSplit = $scope.runDisplayPath.lat.toString().split(',');
+    //    var longSplit = $scope.runDisplayPath.long.toString().split(',');
+    //    console.log('setValuesForHistoryDayView: latSplit: ' + latSplit[x]);
+    //    console.log('setValuesForHistoryDayView: latSplit.length: ' + latSplit.length);
+    //    console.log('setValuesForHistoryDayView: longSplit: ' + longSplit);
+    //
+    //
+    //    console.log('$scope.dayDisplayLaps.length: ' + $scope.dayDisplayLaps.length);
+    //
+    //    //string splitter for laps
+    //    var lapNumberSplit = $scope.dayDisplayLaps.number.toString().split(',');
+    //    var lapDistancesSplit = $scope.dayDisplayLaps.distance.toString().split(',');
+    //    var lapSecondsSplit = $scope.dayDisplayLaps.seconds.toString().split(',');
+    //    var lapMinutesSplit = $scope.dayDisplayLaps.minutes.toString().split(',');
+    //    var lapPaceSplit = $scope.dayDisplayLaps.pace.toString().split(',');
+    //    lapNumberSplit.shift();
+    //    lapDistancesSplit.shift();
+    //    lapSecondsSplit.shift();
+    //    lapMinutesSplit.shift();
+    //    lapPaceSplit.shift();
+    //
+    //
+    //
+    //     for (var i = 0; i < lapNumberSplit.length; i++) {
+    //       console.log('setValuesForHistoryDayView: lapNumberSplit['+i+']: ' + lapNumberSplit[i]);
+    //       console.log('setValuesForHistoryDayView: lapDistancesSplit['+i+']: ' + lapDistancesSplit[i]);
+    //       console.log('setValuesForHistoryDayView: lapSecondsSplit['+i+']: ' + lapSecondsSplit[i]);
+    //       console.log('setValuesForHistoryDayView: lapMinutesSplit['+i+']: ' + lapMinutesSplit[i]);
+    //       console.log('setValuesForHistoryDayView: lapPaceSplit['+i+']: ' + lapPaceSplit[i]);
+    //
+    //       var time = lapMinutesSplit[i] + ':' + lapSecondsSplit[i];
+    //       console.log('time: '+ time);
+    //
+    //       $scope.dayLapsForm.push( {number: lapNumberSplit[i], distance: lapDistancesSplit[i],
+    //         time: time,  pace: lapPaceSplit[i]});
+    //       console.log('setValuesForHistoryDayView: $scope.dayLaps: ' + $scope.dayLapsForm);
+    //       console.log('setValuesForHistoryDayView: $scope.dayLaps.length: ' + $scope.dayLapsForm);
+    //
+    //     }
+    //
+    //     console.log('setValuesForHistoryDayView: $scope.dayLaps.length: ' + $scope.dayLapsForm.length);
+    //     //
+    //     // $scope.distancePopHolder  = [];
+    //     // $scope.durationPopHolder = [];
+    //     // $scope.pacePopHolder = [];
+    //     // $scope.moneyRaisedPopHolder = [];
+    //     // $scope.pathPopHolder = [];
+    //     // $scope.lapsPopHolder = [];
+    //
+    //
+    //     if(latSplit.length == longSplit.length){
+    //       for(var i=0; i< latSplit.length; i++){
+    //         var latCoord = latSplit[i];
+    //         console.log('setValuesForHistoryDayView: latCoord : ' + latCoord);
+    //         var longCoord = longSplit[i];
+    //         console.log('setValuesForHistoryDayView: longCoord : ' + longCoord);
+    //         var LatLng = new google.maps.LatLng(latCoord, longCoord);
+    //         console.log('setValuesForHistoryDayView: LatLng : ' + LatLng);
+    //         $scope.historyPolyCoords.push(LatLng);
+    //         console.log('setValuesForHistoryDayView: $scope.historyPolycoords: ' + $scope.historyPolyCoords);
+    //
+    //       }
+    //       $scope.historyRunPath = new google.maps.Polyline({
+    //         path: $scope.historyPolyCoords,
+    //         strokeColor: '#ff0000',
+    //         strokeOpacity: 1.0,
+    //         strokeWeight: 8
+    //       });
+    //       $scope.historyRunPath.setMap($scope.map);
+    //
+    //     } else {
+    //       $rootScope.notify("Lat,Lng lengths do not match");
+    //       console.log('setValuesForHistoryDayView: lat,long lengths do not match');
+    //     }
+    // };
 
 
-  $scope.dayDateFormatter = function(daySplit){
-    switch(daySplit) {
-      case "01":
-        dayDate: "1";
-        return dayDate;
-      case "02":
-        dayDate: "2";
-        return dayDate;
-      case "03":
-        dayDate: "3";
-        return dayDate;
-      case "04":
-        dayDate: "4";
-        return dayDate;
-      case "05":
-        dayDate: "5";
-        return dayDate;
-      case "06":
-        dayDate: "6";
-        return dayDate;
-      case "07":
-        dayDate: "7";
-        return dayDate;
-      case "08":
-        dayDate: "8";
-        return dayDate;
-      case "09":
-        dayDate: "9";
-        return dayDate;
-      default:
-        return daySplit;
-    }
-  };
+    $rootScope.$on('setDayValues', function(){
+      console.log('setDayValuesBroadcast entered');
+      var date = $rootScope.getDayHistoryValues.date;
+      var distance = $rootScope.getDayHistoryValues.distance;
+      var duration = $rootScope.getDayHistoryValues.duration;
+      var pace = $rootScope.getDayHistoryValues.pace;
+      var moneyRaised = $rootScope.getDayHistoryValues.moneyRaised;
+      var path = $rootScope.getDayHistoryValues.path;
+      var laps = $rootScope.getDayHistoryValues.laps;
 
-  $scope.distancePopHolder  = [];
-  $scope.durationPopHolder = [];
-  $scope.pacePopHolder = [];
-  $scope.moneyRaisedPopHolder = [];
-  $scope.pathPopHolder = [];
-  $scope.lapsPopHolder = [];
-
-  // $rootScope.setValuesForHistoryDayView = function(date, distance, duration, pace, moneyRaised, path, laps){
-  //
-  //
-  //   // $scope.dayUnformattedDisplayDate = date;
-  //   $scope.dayDisplayDate = date;
-  //   $scope.dayDisplayDistance = distance;
-  //   $scope.dayDisplayDuration = duration;
-  //   $scope.dayDisplayPace = pace;
-  //   $scope.dayDisplayMoneyRaised = moneyRaised;
-  //   $scope.dayDisplayPath = path;
-  //   $scope.dayDisplayLaps = laps;
-  //
-  //
-  //
-  //
-  //   console.log('dayDisplayDistance values: ' + $scope.dayDisplayDistance);
-  //     //split differently -> lap all one object, lap in laps, lap.number
-  //
-  //
-  //     $scope.historyPolyCoords = [];
-  //
-  //     $scope.dayLapsForm = [{
-  //       number: String,
-  //       distance: String,
-  //       time: String,
-  //       pace: String
-  //     }];
-  //
-  //
-  //     console.log('$dayDisplayPath.lat.length: ' + $scope.dayDisplayPath.lat.length);
-  //
-  //    console.log('setValuesForHistoryDayView: $scope.dayDisplayPath.lat.length: ' + $scope.dayDisplayPath[x].lat.length);
-  //    var latSplit = $scope.runDisplayPath.lat.toString().split(',');
-  //    var longSplit = $scope.runDisplayPath.long.toString().split(',');
-  //    console.log('setValuesForHistoryDayView: latSplit: ' + latSplit[x]);
-  //    console.log('setValuesForHistoryDayView: latSplit.length: ' + latSplit.length);
-  //    console.log('setValuesForHistoryDayView: longSplit: ' + longSplit);
-  //
-  //
-  //    console.log('$scope.dayDisplayLaps.length: ' + $scope.dayDisplayLaps.length);
-  //
-  //    //string splitter for laps
-  //    var lapNumberSplit = $scope.dayDisplayLaps.number.toString().split(',');
-  //    var lapDistancesSplit = $scope.dayDisplayLaps.distance.toString().split(',');
-  //    var lapSecondsSplit = $scope.dayDisplayLaps.seconds.toString().split(',');
-  //    var lapMinutesSplit = $scope.dayDisplayLaps.minutes.toString().split(',');
-  //    var lapPaceSplit = $scope.dayDisplayLaps.pace.toString().split(',');
-  //    lapNumberSplit.shift();
-  //    lapDistancesSplit.shift();
-  //    lapSecondsSplit.shift();
-  //    lapMinutesSplit.shift();
-  //    lapPaceSplit.shift();
-  //
-  //
-  //
-  //     for (var i = 0; i < lapNumberSplit.length; i++) {
-  //       console.log('setValuesForHistoryDayView: lapNumberSplit['+i+']: ' + lapNumberSplit[i]);
-  //       console.log('setValuesForHistoryDayView: lapDistancesSplit['+i+']: ' + lapDistancesSplit[i]);
-  //       console.log('setValuesForHistoryDayView: lapSecondsSplit['+i+']: ' + lapSecondsSplit[i]);
-  //       console.log('setValuesForHistoryDayView: lapMinutesSplit['+i+']: ' + lapMinutesSplit[i]);
-  //       console.log('setValuesForHistoryDayView: lapPaceSplit['+i+']: ' + lapPaceSplit[i]);
-  //
-  //       var time = lapMinutesSplit[i] + ':' + lapSecondsSplit[i];
-  //       console.log('time: '+ time);
-  //
-  //       $scope.dayLapsForm.push( {number: lapNumberSplit[i], distance: lapDistancesSplit[i],
-  //         time: time,  pace: lapPaceSplit[i]});
-  //       console.log('setValuesForHistoryDayView: $scope.dayLaps: ' + $scope.dayLapsForm);
-  //       console.log('setValuesForHistoryDayView: $scope.dayLaps.length: ' + $scope.dayLapsForm);
-  //
-  //     }
-  //
-  //     console.log('setValuesForHistoryDayView: $scope.dayLaps.length: ' + $scope.dayLapsForm.length);
-  //     //
-  //     // $scope.distancePopHolder  = [];
-  //     // $scope.durationPopHolder = [];
-  //     // $scope.pacePopHolder = [];
-  //     // $scope.moneyRaisedPopHolder = [];
-  //     // $scope.pathPopHolder = [];
-  //     // $scope.lapsPopHolder = [];
-  //
-  //
-  //     if(latSplit.length == longSplit.length){
-  //       for(var i=0; i< latSplit.length; i++){
-  //         var latCoord = latSplit[i];
-  //         console.log('setValuesForHistoryDayView: latCoord : ' + latCoord);
-  //         var longCoord = longSplit[i];
-  //         console.log('setValuesForHistoryDayView: longCoord : ' + longCoord);
-  //         var LatLng = new google.maps.LatLng(latCoord, longCoord);
-  //         console.log('setValuesForHistoryDayView: LatLng : ' + LatLng);
-  //         $scope.historyPolyCoords.push(LatLng);
-  //         console.log('setValuesForHistoryDayView: $scope.historyPolycoords: ' + $scope.historyPolyCoords);
-  //
-  //       }
-  //       $scope.historyRunPath = new google.maps.Polyline({
-  //         path: $scope.historyPolyCoords,
-  //         strokeColor: '#ff0000',
-  //         strokeOpacity: 1.0,
-  //         strokeWeight: 8
-  //       });
-  //       $scope.historyRunPath.setMap($scope.map);
-  //
-  //     } else {
-  //       $rootScope.notify("Lat,Lng lengths do not match");
-  //       console.log('setValuesForHistoryDayView: lat,long lengths do not match');
-  //     }
-  // };
-
-
-  $rootScope.$on('setDayValues', function(){
-    console.log('setDayValuesBroadcast entered');
-    var date = $rootScope.getDayHistoryValues.date;
-    var distance = $rootScope.getDayHistoryValues.distance;
-    var duration = $rootScope.getDayHistoryValues.duration;
-    var pace = $rootScope.getDayHistoryValues.pace;
-    var moneyRaised = $rootScope.getDayHistoryValues.moneyRaised;
-    var path = $rootScope.getDayHistoryValues.path;
-    var laps = $rootScope.getDayHistoryValues.laps;
-
-    console.log('setDayValues, rootScope returned values of: ' +
-      'date: ' + date +
+      console.log('setDayValues, rootScope returned values of: ' +
+        'date: ' + date +
         'distance: ' + distance +
         'duration: ' + duration +
         'pace: ' + pace +
         'moneyRaised: ' + moneyRaised +
         'path: '  + path +
         'laps: ' + laps
-    );
+      );
 
-  });
-
-
-  $scope.mapCreated = function(map){
-    $scope.map = map;
-    $scope.mapOptions = map.setOptions({
-      zoom: 15,
-      disableDefaultUI: true,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
     });
 
 
-    // console.log('setValuesForHistoryDayView: mapCreate path values: ' + $scope.dayDisplayPath);
-    // $scope.runPath = new google.maps.Polyline({
-    //   path: $scope.dayDisplayPath
-    // });
+    $scope.mapCreated = function(map){
+      $scope.map = map;
+      $scope.mapOptions = map.setOptions({
+        zoom: 15,
+        disableDefaultUI: true,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      });
 
-  }
+
+      // console.log('setValuesForHistoryDayView: mapCreate path values: ' + $scope.dayDisplayPath);
+      // $scope.runPath = new google.maps.Polyline({
+      //   path: $scope.dayDisplayPath
+      // });
+
+    }
 
 
 
-})
+  })
 
   .controller('HistoryListCtrl', function ($scope, $rootScope, $window, HistoryAPI, ngRoute, $ionicSlideBoxDelegate, AuthAPI, $filter) {
     //date in mm/dd/yyyy format
@@ -662,7 +444,7 @@ angular.module('starter.appController', ['starter.appServices',
 
           $scope.listRuns.push({Date: date, Charity:charity,
             Distance: distance, Duration: duration,
-                              Pace: pace, laps: laps, Path: path, id: id, moneyRaised: moneyRaised});
+            Pace: pace, laps: laps, Path: path, id: id, moneyRaised: moneyRaised});
           console.log('$scope.listRuns['+i+'].date: '+ $scope.listRuns[i].Date);
           console.log('$scope.listRuns['+i+'].charity: '+ $scope.listRuns[i].Charity);
           console.log('$scope.listRuns['+i+'].distance: '+ $scope.listRuns[i].Distance);
@@ -750,6 +532,34 @@ angular.module('starter.appController', ['starter.appServices',
 
 
     //progress bar
+    //TODO: Set yearlyFunds and yearlyGoal using user's data
+    $scope.yearlyFunds = 118;
+    $scope.yearlyGoal = 201.60;
+
+    $scope.today = new Date();
+    $scope.yearEnd = new Date($scope.today.getFullYear(), 11, 31);
+    $scope.yearBegin = new Date(new Date().getFullYear(), 0, 1);
+    console.log($scope.yearBegin);
+
+    //one day in millisecs
+    $scope.oneDay = 1000*60*60*24;
+    $scope.daysInYearTotal = Math.ceil(($scope.yearEnd.getTime() - $scope.yearBegin.getTime())/$scope.oneDay);
+    console.log($scope.daysInYearTotal + " Days in 2016");
+    $scope.daysLeftInYear = Math.ceil(($scope.yearEnd.getTime() - $scope.today.getTime())/$scope.oneDay);
+    console.log($scope.daysLeftInYear + " Days left in the year");
+
+    $scope.yearlyPace = (($scope.daysInYearTotal-$scope.daysLeftInYear)/$scope.daysInYearTotal) * $scope.yearlyGoal;
+
+    $scope.progressVal = 100*($scope.yearlyFunds/$scope.yearlyGoal);
+    $scope.paceBunnyVal = 100*($scope.yearlyPace/$scope.yearlyGoal);
+
+    $scope.progressWeekAvg =  7*($scope.yearlyFunds/($scope.daysInYearTotal-$scope.daysLeftInYear));
+    console.log($scope.progressWeekAvg);
+    $scope.paceBunnyWeekAvg = 7*($scope.yearlyGoal/$scope.daysInYearTotal);
+    console.log($scope.paceBunnyWeekAvg);
+
+
+    //progress circles
     $scope.getColor = function(){
       return '#00b9be';
     }
@@ -766,20 +576,6 @@ angular.module('starter.appController', ['starter.appServices',
     $scope.maxWeekFunds =100;
     $scope.currentWeekFunds= 130;
 
-
-    //D3 testing
-    $scope.salesData = [
-      {hour: 1,sales: 54},
-      {hour: 2,sales: 66},
-      {hour: 3,sales: 77},
-      {hour: 4,sales: 70},
-      {hour: 5,sales: 60},
-      {hour: 6,sales: 63},
-      {hour: 7,sales: 55},
-      {hour: 8,sales: 47},
-      {hour: 9,sales: 55},
-      {hour: 10,sales: 30}
-    ];
 
 
     //SLIDER PROPERTIES
@@ -878,18 +674,18 @@ angular.module('starter.appController', ['starter.appServices',
       $scope.monthTotalDistance;
       var distanceSum = 0;
       console.log('Distances.length: ' + distances.length);
-       for(var i= 0; i<distances.length; i++){
-         distanceSum = distanceSum +  distances[i];
-         console.log('monthTotal distance calculation: ' + distanceSum);
-       }
-       $scope.monthTotalDistance = distanceSum;
-       console.log('$scope.setMonthTotalDistance returning a total distance value of: ' + $scope.monthTotalDistance);
-       return $scope.monthTotalDistance;
+      for(var i= 0; i<distances.length; i++){
+        distanceSum = distanceSum +  distances[i];
+        console.log('monthTotal distance calculation: ' + distanceSum);
+      }
+      $scope.monthTotalDistance = distanceSum;
+      console.log('$scope.setMonthTotalDistance returning a total distance value of: ' + $scope.monthTotalDistance);
+      return $scope.monthTotalDistance;
     }
 
     $scope.setMonthAveragePace = function(paces){
       $scope.monthAveragePace;
-       var paceSum = 0;
+      var paceSum = 0;
       console.log('Paces.length: ' + paces.length);
       for(var i = 0; i< paces.length; i++){
         paceSum = paceSum + paces[i];
@@ -928,105 +724,105 @@ angular.module('starter.appController', ['starter.appServices',
     // }
 
     // $rootScope.$on('fetchMonthHistory', function(){
-      HistoryAPI.getByMonth($rootScope.getUserId(), todayMonth)
-        .success(function(data, status, headers, config) {
-          console.log('HistoryAPI getByMonth successfully called');
-          for (var i = 0; i < data.length; i++) {
-            $scope.distances.push(data[i].distance);
-            console.log('$scope.distances[i]: ' + $scope.distances[i]);
-            // console.log('$scope.distances: ' + $scope.distances);
+    HistoryAPI.getByMonth($rootScope.getUserId(), todayMonth)
+      .success(function(data, status, headers, config) {
+        console.log('HistoryAPI getByMonth successfully called');
+        for (var i = 0; i < data.length; i++) {
+          $scope.distances.push(data[i].distance);
+          console.log('$scope.distances[i]: ' + $scope.distances[i]);
+          // console.log('$scope.distances: ' + $scope.distances);
 
 
-            $scope.dates.push(data[i].date);
-            console.log('$scope.dates: ' + $scope.dates[i]);
+          $scope.dates.push(data[i].date);
+          console.log('$scope.dates: ' + $scope.dates[i]);
 
-            $scope.seconds.push(data[i].seconds);
-            console.log('$scope.seconds: ' + $scope.seconds);
+          $scope.seconds.push(data[i].seconds);
+          console.log('$scope.seconds: ' + $scope.seconds);
 
-            $scope.minutes.push(data[i].minutes);
-            console.log('$scope.minutes: ' + $scope.minutes);
+          $scope.minutes.push(data[i].minutes);
+          console.log('$scope.minutes: ' + $scope.minutes);
 
-            $scope.paces.push(data[i].pace);
-            console.log('$scope.pace: '+ $scope.paces);
+          $scope.paces.push(data[i].pace);
+          console.log('$scope.pace: '+ $scope.paces);
 
-            $scope.moneyRaised.push(data[i].moneyRaised);
-            console.log('$scope.moneyRaised: ' + $scope.moneyRaised);
-
-
-            $scope.paths.push(data[i].path);
-            console.log('$scope.paths: ' + $scope.paths);
-            console.log('$scope.paths['+i+'].lat: ' + $scope.paths[i].lat);
-            console.log('$scope.paths['+i+'].long: ' + $scope.paths[i].long);
-            // for(var x=0; x<$scope.paths.length; x++){
-            //   console.log('$scope.paths['+x+'].lat: ' + $scope.paths[x].lat);
-            //   console.log('$scope.paths['+x+'].long: ' + $scope.paths[x].long);
-            //   console.log('$scope.paths.long: ' + $scope.paths.long);
-            //   console.log('$scope.paths.lat: ' + $scope.paths.lat);
-            // }
-            $scope.laps.push(data[i].laps);
-            console.log('$scope.laps: ' + $scope.laps);
-            console.log('$scope.laps['+i+'].number: ' + $scope.laps[i].number);
+          $scope.moneyRaised.push(data[i].moneyRaised);
+          console.log('$scope.moneyRaised: ' + $scope.moneyRaised);
 
 
-            var formattedDatesWithTime = $scope.dates[i];
-            console.log('formattedDatesWithTime: ' + formattedDatesWithTime);
-            var formattedSplitDate1 = formattedDatesWithTime.toString().split('T');
-            console.log('formattedSplitDate: ' + formattedSplitDate1);
-            var formattedSplitDate2 = formattedSplitDate1.toString().split('-');
-            console.log('formattedSplitDate2: ' + formattedSplitDate2);
-
-            var tempFormattedDate = formattedSplitDate2[2].toString().split(',');
-            var formattedDate = tempFormattedDate[0];
-            var tempFormattedMonth = formattedSplitDate2[1];
-            var formattedYear = formattedSplitDate2[0];
-            var formattedTime = tempFormattedDate[1];
-            var formattedMonth = $scope.monthNumberToString(tempFormattedMonth);
-            console.log('formatting of date returns: formattedDate: ' + formattedDate +
-              ' formattedYear: ' +formattedYear   + 'tempFormattedMonth: ' + tempFormattedMonth
-              + 'formattedMonth: ' + formattedMonth + 'formattedTime: ' + formattedTime);
-
-            var finalFormattedDate = formattedMonth + ' ' +formattedDate + ' ' + formattedYear;
-            console.log('finalFormattedDate: ' + finalFormattedDate);
-            $scope.formattedDates.push(finalFormattedDate);
-            console.log('$scope.formattedDates: ' + $scope.formattedDates);
-          }
-
-          console.log('Today value from inside HistoryAPI call: ' + today);
-          $scope.getWeekDatesOnLoad();
-
-
-          console.log('$scope.distanceslength: ' + $scope.distances.length + '$scope.dates.length: ' + $scope.dates.length);
-
-          var thisMonthTotalDistance = $scope.setMonthTotalDistance($scope.distances);
-          console.log('HistoryAPI getByMonth set total distance value as: ' + thisMonthTotalDistance);
-
-          var thisMonthAveragePace = $scope.setMonthAveragePace($scope.paces);
-          console.log('HistoryAPI getByMonth set average pace as: ' + thisMonthAveragePace);
-
-          var thisMonthTotalMoneyRaised = $scope.setMonthTotalMoneyRaised($scope.moneyRaised);
-          console.log('HistoryAPI getByMonth set total money raised value as: ' + thisMonthTotalMoneyRaised);
-
-          console.log('$scope.dates.length: ' + $scope.dates.length);
-
-
-
-          // for(var i=0; i< $scope.dates.length; i++){
-          //   var dateHolder = new Date($scope.dates[i]);
-          //   console.log('dateHolder: ' + dateHolder);
-          //   var dateFormatHolder = new Date(dateHolder.toISOString());
-          //   console.log('dateFormatHolder: ' + dateFormatHolder);
-          //   $scope.formattedDatesWithTime.push(dateFormatHolder);
-          //   console.log('formattedDatesWithTime[i]: ' + $scope.formattedDatesWithTime[i]);
-          //   console.log('formattedDatesWithTime: ' + $scope.formattedDatesWithTime);
+          $scope.paths.push(data[i].path);
+          console.log('$scope.paths: ' + $scope.paths);
+          console.log('$scope.paths['+i+'].lat: ' + $scope.paths[i].lat);
+          console.log('$scope.paths['+i+'].long: ' + $scope.paths[i].long);
+          // for(var x=0; x<$scope.paths.length; x++){
+          //   console.log('$scope.paths['+x+'].lat: ' + $scope.paths[x].lat);
+          //   console.log('$scope.paths['+x+'].long: ' + $scope.paths[x].long);
+          //   console.log('$scope.paths.long: ' + $scope.paths.long);
+          //   console.log('$scope.paths.lat: ' + $scope.paths.lat);
           // }
+          $scope.laps.push(data[i].laps);
+          console.log('$scope.laps: ' + $scope.laps);
+          console.log('$scope.laps['+i+'].number: ' + $scope.laps[i].number);
+
+
+          var formattedDatesWithTime = $scope.dates[i];
+          console.log('formattedDatesWithTime: ' + formattedDatesWithTime);
+          var formattedSplitDate1 = formattedDatesWithTime.toString().split('T');
+          console.log('formattedSplitDate: ' + formattedSplitDate1);
+          var formattedSplitDate2 = formattedSplitDate1.toString().split('-');
+          console.log('formattedSplitDate2: ' + formattedSplitDate2);
+
+          var tempFormattedDate = formattedSplitDate2[2].toString().split(',');
+          var formattedDate = tempFormattedDate[0];
+          var tempFormattedMonth = formattedSplitDate2[1];
+          var formattedYear = formattedSplitDate2[0];
+          var formattedTime = tempFormattedDate[1];
+          var formattedMonth = $scope.monthNumberToString(tempFormattedMonth);
+          console.log('formatting of date returns: formattedDate: ' + formattedDate +
+            ' formattedYear: ' +formattedYear   + 'tempFormattedMonth: ' + tempFormattedMonth
+            + 'formattedMonth: ' + formattedMonth + 'formattedTime: ' + formattedTime);
+
+          var finalFormattedDate = formattedMonth + ' ' +formattedDate + ' ' + formattedYear;
+          console.log('finalFormattedDate: ' + finalFormattedDate);
+          $scope.formattedDates.push(finalFormattedDate);
+          console.log('$scope.formattedDates: ' + $scope.formattedDates);
+        }
+
+        console.log('Today value from inside HistoryAPI call: ' + today);
+        $scope.getWeekDatesOnLoad();
+
+
+        console.log('$scope.distanceslength: ' + $scope.distances.length + '$scope.dates.length: ' + $scope.dates.length);
+
+        var thisMonthTotalDistance = $scope.setMonthTotalDistance($scope.distances);
+        console.log('HistoryAPI getByMonth set total distance value as: ' + thisMonthTotalDistance);
+
+        var thisMonthAveragePace = $scope.setMonthAveragePace($scope.paces);
+        console.log('HistoryAPI getByMonth set average pace as: ' + thisMonthAveragePace);
+
+        var thisMonthTotalMoneyRaised = $scope.setMonthTotalMoneyRaised($scope.moneyRaised);
+        console.log('HistoryAPI getByMonth set total money raised value as: ' + thisMonthTotalMoneyRaised);
+
+        console.log('$scope.dates.length: ' + $scope.dates.length);
 
 
 
-        })
-        .error(function(err,status){
-          console.log('HistoryAPI getBYMonth returned error: ' + err);
-          $rootScope.verifyStatus(status);
-        });
+        // for(var i=0; i< $scope.dates.length; i++){
+        //   var dateHolder = new Date($scope.dates[i]);
+        //   console.log('dateHolder: ' + dateHolder);
+        //   var dateFormatHolder = new Date(dateHolder.toISOString());
+        //   console.log('dateFormatHolder: ' + dateFormatHolder);
+        //   $scope.formattedDatesWithTime.push(dateFormatHolder);
+        //   console.log('formattedDatesWithTime[i]: ' + $scope.formattedDatesWithTime[i]);
+        //   console.log('formattedDatesWithTime: ' + $scope.formattedDatesWithTime);
+        // }
+
+
+
+      })
+      .error(function(err,status){
+        console.log('HistoryAPI getBYMonth returned error: ' + err);
+        $rootScope.verifyStatus(status);
+      });
     // })
 
 
@@ -1642,28 +1438,4 @@ angular.module('starter.appController', ['starter.appServices',
 
 
     // $scope.series = ['Series A'];
-  })
-
-  .controller('RacesCtrl', function($scope) {
-    //date of race
-    //distance(s)
-    //CharityPartners
-    //Logo
-    //B-g img
-    //description
-    //race updates/notifications
-
-  })
-
-  .controller('MyRacesCtrl', function($scope) {
-
-  })
-
-  .controller('FindRacesCtrl', function($scope) {
-
-  })
-
-  .controller('PastRacesCtrl', function($scope) {
-
-
   });

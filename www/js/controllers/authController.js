@@ -351,7 +351,7 @@ angular.module('starter.authController', ['starter.appServices',
       })
     }
 
-  });
+  })
 
 // .controller('SignOutCtrl', function($scope, $rootScope, $localStorage, $timeout, AuthAPI, $window){
 //   $scope.logout = function(){
@@ -374,3 +374,4 @@ angular.module('starter.authController', ['starter.appServices',
 
 
 // })
+

@@ -125,4 +125,57 @@ ion-item.activity-page.week-graph {
     }
 
 
+ion-item.activity-page.summary {
+  position: relative;
+  padding: 16px;
+}
+
+.activity-page.summary .col, .activity-page.summary .row {
+  padding: 0;
+}
+
+  .activity-page.summary .col.avg {
+    text-align: right;
+  }
+
+.activity-page.summary h1{
+    font-size: xx-large;
+    font-weight: 200;
+    margin-bottom: 0;
+  }
+
+  .activity-page.summary h2{
+    font-weight: 800;
+    /*font-size: x-large;*/
+    margin-bottom: 10px;
+  }
+
+    .activity-page.summary tek-progress-bar.my-progress .progress .progress-bar {
+      background-color: #00b9be;
+      position: relative;
+      height: 20px;
+      border-radius: 3px;
+
+      font-size: small;
+      vertical-align: top;
+      padding-left: 5px;
+      color: white;
+      font-weight: 600;
+
+      margin-bottom: 10px;
+    }
+
+    .activity-page.summary tek-progress-bar.my-pace-bunny .progress .progress-bar {
+      background-color: orange;
+      position: relative;
+      height: 20px;
+      border-radius: 3px;
+
+      font-size: small;
+      vertical-align: top;
+      padding-left: 5px;
+      color: white;
+      font-weight: 600;
+    }
+
 

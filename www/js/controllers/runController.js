@@ -22,6 +22,7 @@ angular.module('starter.runController', ['starter.appServices',
   .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI, CharityAPI, $ionicPopup, AuthAPI, $ionicModal){
 
     //CONSOLE LOGGING COLORS:
+
     //UI-INTERACTIONS: TEAL
     //UI-CHANGES: GREEN
     //RUN STATE CHANGE: HOTPINK
@@ -34,6 +35,7 @@ angular.module('starter.runController', ['starter.appServices',
     //(L)TIMER: BLUE
     //(L)DISTANCE: MEDIUMPURPLE
     //(L)PACE: DarkGoldenRod
+
     //UI-INTERACTIONS: TEAL
     //UI-CHANGES: GREEN
     //RUN STATE CHANGE: HOTPINK

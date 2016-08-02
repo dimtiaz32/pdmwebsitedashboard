@@ -19,17 +19,17 @@ angular.module('starter.myDonationController', ['starter.appServices',
   'angular-svg-round-progressbar'])
 
 
-  .controller('MyDonationCtrl',function($rootScope, $scope, $filter, $window, $ionicModal, $cordovaSms, $cordovaSocialSharing,DonationAPI,AuthAPI, CLIENT_HOST){
+  .controller('MyDonationCtrl',function($rootScope, $scope, $filter, $window, $ionicModal, $cordovaSms, $cordovaSocialSharing,DonationAPI,AuthAPI, CLIENT_HOST) {
 
 
-    $rootScope.$on('initial', function(){
+    $rootScope.$on('initial', function () {
       console.log("---------start donation ctrl initial---------");
       $scope.username = $rootScope.getName();
       $scope.avatar = $rootScope.getAvatar();
       console.log("---------end donation ctrl initial---------");
     });
 
-    $rootScope.$on('destroy', function(){
+    $rootScope.$on('destroy', function () {
       console.log("---------start donation ctrl destroy---------");
       $scope.username = undefined;
       $scope.avatar = undefined;
@@ -38,29 +38,29 @@ angular.module('starter.myDonationController', ['starter.appServices',
 
     $rootScope.$broadcast('initial');
 
-    $scope.managePledges = function() {
+    $scope.managePledges = function () {
       $rootScope.$broadcast('fetchMyPledges');
       $window.location.href = "#/app/myPledges";
     }
 
-    $scope.manageSponsors = function() {
+    $scope.manageSponsors = function () {
       $rootScope.$broadcast('fetchMySponsors');
       $window.location.href = "#/app/mySponsors";
     }
 
-    $scope.doRefresh = function(fetchType) {
+    $scope.doRefresh = function (fetchType) {
       console.log("fetchType:" + fetchType);
       $rootScope.$broadcast(fetchType);
     }
 
-    $scope.formateDate = function(date) {
-      return $filter('date')(date,"MMM dd yyyy");
+    $scope.formateDate = function (date) {
+      return $filter('date')(date, "MMM dd yyyy");
     }
 
-    $scope.formateCurreny = function(amount) {
+    $scope.formateCurreny = function (amount) {
       var realAmount = parseInt(amount);
 
-      if(realAmount < 100) {
+      if (realAmount < 100) {
         return amount + " ¢";
       } else {
         return realAmount / 100 + " $";
@@ -68,13 +68,13 @@ angular.module('starter.myDonationController', ['starter.appServices',
 
     }
 
-    $ionicModal.fromTemplateUrl('templates/inviteSponsor.html',{
+    $ionicModal.fromTemplateUrl('templates/inviteSponsor.html', {
       scope: $scope
-    }).then(function(modal){
+    }).then(function (modal) {
       $scope.modal = modal;
     });
 
-    $scope.openModal = function($event) {
+    $scope.openModal = function ($event) {
       console.log("try open the modal");
       DonationAPI.inviteSponsor({
         // charity:"5771430bdcba0f275f2a0a5e",
@@ -82,7 +82,7 @@ angular.module('starter.myDonationController', ['starter.appServices',
         //might have to cast these to strings?
         charity: $rootScope.getSelectedCharityId(),
         userId: $rootScope.getUserId()
-      }).success(function (data, status, headers, config){
+      }).success(function (data, status, headers, config) {
         $scope.inviteUrl = CLIENT_HOST + "#/app/inviteSponsor/start?id=" + data.code;
         console.log("local data:" + $scope.inviteUrl);
         // $scope.shareBySMS = function() {
@@ -93,38 +93,38 @@ angular.module('starter.myDonationController', ['starter.appServices',
         //       console.log("sms share failure");
         //   });
         // }
-        $scope.shareByMail = function() {
+        $scope.shareByMail = function () {
           console.log("email share begin")
-          $cordovaSocialSharing.shareViaEmail("aaa", "bbb", "", "", "", "").then(function(result) {
+          $cordovaSocialSharing.shareViaEmail("aaa", "bbb", "", "", "", "").then(function (result) {
             console.log("email share success");
-          }, function(err) {
+          }, function (err) {
             console.log("email share failure");
           });
         }
 
-        $scope.shareBySMS = function(){
+        $scope.shareBySMS = function () {
           console.log("begin share by sms");
           $cordovaSms.send("", "Pledge link: " + data)
-            .then(function() {
+            .then(function () {
               console.log('share sms success');
-            }, function(error) {
+            }, function (error) {
               console.log('share sms failure');
               console.log(error);
             });
         }
 
-        $scope.shareByFB = function() {
+        $scope.shareByFB = function () {
           console.log("begin share by facebook");
-          $cordovaSocialSharing.shareViaFacebook(data, null, data).then(function(result) {
+          $cordovaSocialSharing.shareViaFacebook(data, null, data).then(function (result) {
             console.log('share facebook success');
-          }, function(err) {
+          }, function (err) {
             console.log('share facebook failure');
             console.log(err);
           });
         }
 
 
-      }).error(function (err, status){
+      }).error(function (err, status) {
         console.log("Refresh Error~");
         $rootScope.notify("Oops something went wrong!! Please try again later");
         $rootScope.verifyStatus(status);
@@ -132,20 +132,19 @@ angular.module('starter.myDonationController', ['starter.appServices',
       $scope.modal.show($event);
     };
 
-    $scope.closeModal = function() {
+    $scope.closeModal = function () {
       $scope.modal.hide();
     };
 
-    $scope.$on('$destroy', function(){
+    $scope.$on('$destroy', function () {
       $scope.modal.remove();
     });
 
-    $scope.$on('modal.hidden',function(){
+    $scope.$on('modal.hidden', function () {
       console.log("execute modal.hidden");
     });
 
-    $scope.$on('modal.removed', function(){
+    $scope.$on('modal.removed', function () {
       console.log("execute modal.removed");
     });
-
   });
