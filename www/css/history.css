@@ -10,7 +10,7 @@ ion-list.activity-page {
 }
 
 ion-item.activity-page {
-  height: 50vw;
+  height: 200px;
   padding: 0;
 
   margin-bottom: 2px;
@@ -111,11 +111,12 @@ ion-item.activity-page {
 
 ion-item.activity-page.week-graph {
   position: relative;
+  height: 50vw;
 }
 
   .activity-page.week-graph {
-    background: #00c4ca;
-    background: linear-gradient(#00c4ca, #00686D); /* Standard syntax */
+    background: #efefef;
+    /*background: linear-gradient(#00c4ca, #00686D); !* Standard syntax *!*/
   }
 
     .activity-page.week-graph canvas{
@@ -139,15 +140,15 @@ ion-item.activity-page.summary {
   }
 
 .activity-page.summary h1{
-    font-size: xx-large;
+    font-size: x-large;
     font-weight: 200;
-    margin-bottom: 0;
+    margin-bottom: 5px;
   }
 
   .activity-page.summary h2{
     font-weight: 800;
     /*font-size: x-large;*/
-    margin-bottom: 10px;
+    margin-bottom: 20px;
   }
 
     .activity-page.summary tek-progress-bar.my-progress .progress .progress-bar {
