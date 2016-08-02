@@ -188,13 +188,13 @@
         <h2>Raise {{yearlyGoal | number: 2}} in 2016: <span style="color: #00b9be"> {{daysLeftInYear}} days left</span></h2>
         <div class="row">
          <h3 class="col">Progress</h3>
-         <h3 class="col avg">Avg: ${{progressWeekAvg | number: 2}}/week</h3>
+         <h3 class="col avg">${{progressWeekAvg | number: 2}}/week</h3>
         </div>
         <tek-progress-bar class="my-progress" ng-model="progressVal">${{yearlyFunds | number: 2}}</tek-progress-bar>
 
         <div class="row">
           <h3 class="col">Pace Bunny</h3>
-          <h3 class="col avg">Avg: ${{paceBunnyWeekAvg | number: 2}}/week</h3>
+          <h3 class="col avg">${{paceBunnyWeekAvg | number: 2}}/week</h3>
         </div>
         <tek-progress-bar class="my-pace-bunny" ng-model="paceBunnyVal">${{yearlyPace | number: 2}}</tek-progress-bar>
       </ion-item>

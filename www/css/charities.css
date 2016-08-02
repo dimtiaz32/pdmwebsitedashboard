@@ -1,6 +1,6 @@
-.charity-page.charity-header, .charity-page.charity-detail ion-item {
+.charity-page.charity-header, .charity-page.charity-detail ion-item:first-child {
   border-bottom: 2px solid #00b9be;
-  z-index: 2px;
+  z-index: 2;
 }
 
 .charity-page.charity-header h3 {
