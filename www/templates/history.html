@@ -4,9 +4,11 @@
         <span class="ion-ios-list-outline" style="color: #fff;font-size: 22px;"></span>
     </button>
   </ion-nav-buttons>
-  <ion-content class="activity-page">
 
+  <ion-content class="activity-page">
+    <ion-refresher pulling-text="Updating history..." on-refresh="doRefresh('fetchMonthHistory')"></ion-refresher>
     <ion-list class="activity-page">
+
       <ion-item class="activity-page charities-banner">
         <ion-slides options="slideOptions" slider="data.slider">
 
