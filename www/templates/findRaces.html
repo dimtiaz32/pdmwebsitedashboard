@@ -1,8 +1,8 @@
-<ion-view view-title="Find Races">
+<ion-view view-title="Find Races" class="has-header">
   <ion-content>
 
     <div class="races find-races-filter-container">
-
+<!--
       <select class="find-races select-city">
         <option value="" disabled selected hidden>Location</option>
         <option>Baltimore</option>
@@ -34,7 +34,38 @@
         <option>15k</option>
         <option>20k</option>
       </select>
+
+      -->
+
+
+
     </div>
+
+    <div ng-controller="FindRacesCtrl as ctrl" layout="column" ng-cloak>
+      <md-contact-chips
+        ng-model="ctrl.cities"
+        md-contacts="ctrl.cityQuerySearch($query)"
+        md-contact-name="name"
+        md-require-match="true"
+        md-highlight-flags="i"
+        filter-selected="ctrl.filterSelected"
+        placeholder="Enter a city"
+        secondary-placeholder="Enter another city">
+      </md-contact-chips>
+      <br>
+      <md-contact-chips
+        ng-model="ctrl.distances"
+        md-contacts="ctrl.distanceQuerySearch($query)"
+        md-contact-name="name"
+        md-require-match="true"
+        md-highlight-flags="i"
+        filter-selected="ctrl.filterSelected"
+        placeholder="Enter a distance"
+        secondary-placeholder="Enter another distance">
+      </md-contact-chips>
+    </div>
+
+    <button class="button button-full" style="background-color: #00b9be; color: white">Search</button>
 
     <div class="races tile-container-two">
       <div class="races gradient">
