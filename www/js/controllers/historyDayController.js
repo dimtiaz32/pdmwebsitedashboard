@@ -18,6 +18,6 @@ angular.module('starter.historyDayController', [
   'angular-svg-round-progressbar',
   'Tek.progressBar'])
 
-  .controller('HistoryDayController', function($scope, $rootScope, $window, HistoryAPI, $ionicSlideBoxDelegate, AuthAPI, $filter, roundProgressService, $timeout, $ionicPopup){
+  .controller('HistoryDayCtrl', function($scope, $rootScope, $window, HistoryAPI, $ionicSlideBoxDelegate, AuthAPI, $filter, roundProgressService, $timeout, $ionicPopup){
     console.log('history day controller entered with run id: ' + $rootScope.dayRunId);
   });
