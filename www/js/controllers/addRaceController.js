@@ -24,37 +24,62 @@ angular.module('starter.addRaceController', [
    date: "",
    name: "",
    distances: "",
+   keywords: "",
    charityPartners: "",
    description: "",
    isFeatured: ""
  };
 
+
+
  $scope.createRace = function(){
+   $scope.keyWords = [];
+   keyWordSplit = $scope.race.keywords.toString().split(',');
+   console.log('keyWord length: ' + keyWordSplit.length);
+   for(var i = 0; i < keyWordSplit.length; i++){
+     $scope.keyWords.push(keyWordSplit[i]);
+     console.log('keyWordSplit['+i+']: ' + keyWordSplit[i]);
+     $scope.keyWords[i];
+   }
    var date = this.race.date;
    var name = this.race.name;
    var distances = this.race.distances;
+   var keywords = $scope.keyWords;
    var charityPartners = this.race.charityPartners;
    var description = this.race.description;
-   var isFeatured = this.race.isFeatured;
+
+   console.log('$scope.race.isFeatured: ' +$scope.race.isFeatured);
+
+   if($scope.race.isFeatured == "true"){
+     var isFeatured = true;
+   } else {
+     var isFeatured = false;
+   }
+   // var isFeatured = this.race.isFeatured;
+
+   console.log('isFeatured: ' + isFeatured);
 
    $rootScope.show('Please wait.. creating race');
 
-   var form = {
+
+   RaceAPI.addRace({
      date: date,
      name: name,
      distances: distances,
+     keyWords: keywords,
      charityPartners: charityPartners,
-     description: descriptions,
-     created: Date.now()
-   };
+     description: description,
+     isFeatured: isFeatured
 
-   RaceAPI.addRace(form)
+   })
      .success(function(data, status, headers, config){
         console.log('race successfully saved');
-       console.log('race values: ' + data.date +' ' + data.name);
+        console.log(status);
+       $rootScope.hide();
      })
      .error(function(err){
        console.log('Race API add race function failure with error: ' + err);
+       $rootScope.hide();
 
      })
 
