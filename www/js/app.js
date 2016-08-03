@@ -6,6 +6,7 @@
 
 angular.module('starter', ['ionic',
   'starter.accountController',
+  'starter.addRaceController',
   'starter.authController',
   'starter.appController',
   'starter.charityController',
@@ -16,7 +17,14 @@ angular.module('starter', ['ionic',
   'starter.myDonationController',
   'starter.raceController',
   'starter.runController',
-  'starter.directives', 'stripe', 'ngOpenFB', 'angular-storage', 'chart.js','googleplus','ngCookies', 'angular-svg-round-progressbar'])
+  'starter.directives',
+  'stripe', 'ngOpenFB',
+  'angular-storage',
+  'chart.js','googleplus',
+  'ngCookies',
+  'angular-svg-round-progressbar',
+  'ion-datetime-picker'
+])
 
   .run(function($ionicPlatform, ngFB) {
 
@@ -288,8 +296,17 @@ angular.module('starter', ['ionic',
             controller: 'PastRacesCtrl'
           }
         }
-      });
+      })
 
+    .state('app.createRace', {
+      url: '/races/createRace',
+      views: {
+        'app-races': {
+          templateUrl: 'templates/addRace.html',
+          controller: 'AddRaceCtrl'
+        }
+      }
+    });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/auth/signin');
     // $urlRouterProvider.otherwise('/app/run');

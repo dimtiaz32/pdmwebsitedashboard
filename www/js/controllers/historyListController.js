@@ -43,9 +43,11 @@ angular.module('starter.historyListController', [
     $rootScope.$broadcast('fetchAllHistory');
 
     $scope.selectedRun= function(id){
-      console.log('selectedDate entered with id: ' + id);
       $rootScope.setRunIdDayView(id);
+      console.log('selectedDate entered with id: ' + id);
+      $rootScope.fetchRunId();
       $window.location.href = ('#/app/historyDay');
+
 
 
 

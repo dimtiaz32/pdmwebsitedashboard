@@ -18,7 +18,7 @@ angular.module('starter.raceController', ['starter.appServices',
   'angular-svg-round-progressbar'])
 
 
-  .controller('RacesCtrl', function($scope) {
+  .controller('RacesCtrl', function($scope, $window, RaceAPI) {
     //date of race
     //distance(s)
     //CharityPartners
@@ -26,6 +26,11 @@ angular.module('starter.raceController', ['starter.appServices',
     //B-g img
     //description
     //race updates/notifications
+
+    $scope.createRacePage = function() {
+      console.log('create race page clicked');
+      $window.location.href = ('#/app/races/createRace');
+    };
 
   })
 
