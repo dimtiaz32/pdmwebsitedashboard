@@ -151,18 +151,18 @@ ion-item.activity-page.summary {
   .activity-page.summary .year-settings {
     position: absolute;
     right: 20px;
-    top: 15px;
+    top: 20px;
   }
 .activity-page.summary h1{
     font-size: x-large;
     font-weight: 200;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
   }
 
   .activity-page.summary h2{
-    font-weight: 800;
+    font-weight: 500;
     /*font-size: x-large;*/
-    margin-bottom: 20px;
+    margin-bottom: 15px;
   }
 
     .activity-page.summary tek-progress-bar.my-progress .progress .progress-bar {

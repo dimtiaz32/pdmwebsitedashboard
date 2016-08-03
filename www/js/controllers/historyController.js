@@ -62,15 +62,12 @@ angular.module('starter.historyController', [
 
     $scope.daysLeftInYear = function(){
       var today = new Date();
-      console.log('today: ' + today);
       var yearEnd = new Date(today.getFullYear(), 11, 31);
       var yearBegin = new Date(new Date().getFullYear(), 0, 1);
-      console.log(yearBegin);
 
       var oneDay = 1000*60*60*24;
 
       var daysLeftInYear = Math.ceil((yearEnd.getTime() - today.getTime())/oneDay);
-      console.log(daysLeftInYear + " Days left in the year");
 
       return daysLeftInYear;
     }
@@ -82,9 +79,7 @@ angular.module('starter.historyController', [
         $scope.paceBunnyVal = 100*($scope.yearlyPace/$scope.yearlyGoal);
 
         $scope.progressWeekAvg =  7*($scope.yearlyFunds/(365-$scope.daysLeftInYear()));
-        console.log($scope.progressWeekAvg);
         $scope.paceBunnyWeekAvg = 7*($scope.yearlyGoal/365);
-        console.log($scope.paceBunnyWeekAvg);
 
     });
 
