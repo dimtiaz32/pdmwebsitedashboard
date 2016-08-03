@@ -29,43 +29,10 @@ angular.module('starter.historyServices', [])
       $rootScope.hide();
     }, 1999);
   };
-  //
-  // $rootScope.clearHistoryDayValues = function(){
-  //   return {
-  //     date: $window.localStorage.hDayDate = "",
-  //     distance: $window.localStorage.hDayDistance = "",
-  //     duration: $window.localStorage.hDayDuration = "",
-  //     pace: $window.localStorage.hDayPace = "",
-  //     moneyRaised: $window.localStorage.hDayMoneyRaised = "",
-  //     path: $window.localStorage.hDayPath = "",
-  //     laps: $window.localStorage.hDaylaps = ""
-  //   }
-  // }
-  // $rootScope.setHistoryDayValues = function(date, distance, duration, pace, moneyRaised,
-  //                                   path, laps){
-  //   return {
-  //     date: $window.localStorage.hDayDate = date,
-  //     distance: $window.localStorage.hDayDistance = distance,
-  //     duration: $window.localStorage.hDayDuration = duration,
-  //     pace: $window.localStorage.hDayPace = pace,
-  //     moneyRaised: $window.localStorage.hDayMoneyRaised = moneyRaised,
-  //     path: $window.localStorage.hDayPath = path,
-  //     laps: $window.localStorage.hDaylaps = laps
-  //   }
-  // }
-  // $rootScope.getDayHistoryValues = function(){
-  //   return {
-  //     date: $window.localStorage.hDayDate,
-  //     distance: $window.localStorage.hDayDistance,
-  //     duration: $window.localStorage.hDayDuration,
-  //     pace: $window.localStorage.hDayPace,
-  //     moneyRaised: $window.localStorage.hDayMoneyRaised,
-  //     path: $window.localStorage.hDayPath,
-  //     laps: $window.localStorage.hDaylaps
-  //   }
-  // }
 
-
+  $rootScope.setRunIdDayView = function(id){
+    $rootScope.dayRunId = id;
+  };
 
   return {
 
