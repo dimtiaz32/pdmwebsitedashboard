@@ -50,6 +50,7 @@ angular.module('starter.historyController', [
 
     //progress bar
     //TODO: Set yearlyFunds and yearlyGoal using user's data
+
     $scope.yearlyFunds = 118;
     $scope.yearlyGoal = 201.60;
 
@@ -218,7 +219,7 @@ angular.module('starter.historyController', [
 
               if (goalYearFunds != "") {
                 $scope.yearlyGoal = goalYearFunds;
-                $scope.paceBunnySetter();
+                $rootScope.$broadcast('paceBunnySetter');
                 console.log('new goal for funds')
               } else {
                 console.log('NO new goal for funds')
