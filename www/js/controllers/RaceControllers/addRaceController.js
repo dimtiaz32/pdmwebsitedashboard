@@ -27,6 +27,7 @@ angular.module('starter.addRaceController', [
    keywords: "",
    charityPartners: "",
    description: "",
+   city: "",
    isFeatured: ""
  };
 
@@ -47,7 +48,7 @@ angular.module('starter.addRaceController', [
    var keywords = $scope.keyWords;
    var charityPartners = this.race.charityPartners;
    var description = this.race.description;
-
+   var city = this.race.city;
    console.log('$scope.race.isFeatured: ' +$scope.race.isFeatured);
 
    if($scope.race.isFeatured == "true"){
@@ -69,19 +70,26 @@ angular.module('starter.addRaceController', [
      keyWords: keywords,
      charityPartners: charityPartners,
      description: description,
+     city: city,
      isFeatured: isFeatured
 
    })
-     .success(function(data, status, headers, config){
-        console.log('race successfully saved');
-        console.log(status);
-       $rootScope.hide();
-     })
-     .error(function(err){
-       console.log('Race API add race function failure with error: ' + err);
-       $rootScope.hide();
+   .success(function(data, status, headers, config){
+      console.log('race successfully saved');
+      console.log(status);
+     $rootScope.hide();
+   })
+   .error(function(err){
+     console.log('Race API add race function failure with error: ' + err);
+     $rootScope.hide();
 
-     })
+   });
+
+   $scope.selectRace = function(id){
+     console.log('select race entered with id: ' + id);
+     $rootScope.setRaceId(id);
+     $window.location.href = ('#/app/raceProfile');
+   }
 
 
 

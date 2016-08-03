@@ -15,15 +15,21 @@ angular.module('starter', ['ionic',
   'starter.historyDayController',
   'starter.inviteSponsorController',
   'starter.myDonationController',
-  'starter.raceController',
   'starter.runController',
+  'starter.addRaceController',
+  'starter.findRacesController',
+  'starter.myRacesController',
+  'starter.pastRacesController',
+  'starter.raceProfileController',
+  'starter.raceController',
   'starter.directives',
   'stripe', 'ngOpenFB',
   'angular-storage',
   'chart.js','googleplus',
   'ngCookies',
   'angular-svg-round-progressbar',
-  'ion-datetime-picker'
+  'ion-datetime-picker',
+  'ngMaterial'
 ])
 
   .run(function($ionicPlatform, ngFB) {
@@ -263,13 +269,13 @@ angular.module('starter', ['ionic',
         views: {
           'app-races': {
             templateUrl: 'templates/races.html',
-            contoller: 'RacesCtrl'
+            controller: 'RacesCtrl'
           }
         }
       })
 
       .state('app.myRaces', {
-        url: '/races/myRaces',
+        url: '/myRaces',
         views: {
           'app-races': {
             templateUrl: 'templates/myRaces.html',
@@ -279,7 +285,7 @@ angular.module('starter', ['ionic',
       })
 
       .state('app.findRaces', {
-        url: '/races/findRaces',
+        url: '/findRaces',
         views: {
           'app-races': {
             templateUrl: 'templates/findRaces.html',
@@ -289,7 +295,7 @@ angular.module('starter', ['ionic',
       })
 
       .state('app.pastRaces', {
-        url: '/races/pastRaces',
+        url: '/pastRaces',
         views: {
           'app-races': {
             templateUrl: 'templates/pastRaces.html',
@@ -299,14 +305,23 @@ angular.module('starter', ['ionic',
       })
 
     .state('app.createRace', {
-      url: '/races/createRace',
+      url: '/createRace',
       views: {
         'app-races': {
           templateUrl: 'templates/addRace.html',
           controller: 'AddRaceCtrl'
         }
       }
-    });
+    })
+      .state('app.raceProfile', {
+        url:'/raceProfile',
+        views: {
+          'app-races': {
+            templateUrl:'templates/raceProfile.html',
+            controller: 'RaceProfileCtrl'
+          }
+        }
+      });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/auth/signin');
     // $urlRouterProvider.otherwise('/app/run');

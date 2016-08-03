@@ -23,6 +23,17 @@
   height: auto;
   background-color: transparent;
   border: none;
+
+  transition: 0.09s all linear;
+}
+
+.charity-page.charity-detail.ng-hide {
+  line-height: 0px;
+}
+
+.charity-page.charity-detail.ng-hide-add,
+.charity-page.charity-detail.ng-hide-remove {
+  display: block !important;
 }
 
   .charity-page.charity-detail.item-thumbnail-left.item {
@@ -84,12 +95,9 @@ button.charity-page.button-slide-up {
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
-  background-color: transparent;;
+  background-color: white;
   border: none;
   display: block;
-
-  position: relative;
-  bottom: 2px;
 
   width: 100%;
   height: 0.8vh;
@@ -102,11 +110,13 @@ button.charity-page.button-slide-down {
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
-  background-color: transparent;;
+  background-color: white;
   border: none;
+  display: block;
 
   width: 100%;
-  height: 1.75vh;
+  height: 1.5vh;
+
   margin-bottom: 3px;
 }
 

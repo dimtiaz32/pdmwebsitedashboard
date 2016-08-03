@@ -29,9 +29,40 @@ angular.module('starter.raceServices', [])
       }, 1999);
     };
 
+
+    $rootScope.setRaceId = function(id){
+      $rootScope.selectedRaceId = id;
+    };
+
     return {
       addRace: function(form){
         return $http.post(base+'races/addRace', form);
+      },
+      getFeaturedRaces: function(feat){
+        return $http.get(base+'races/featured', {
+          method: 'GET',
+          params: {
+            feat: feat
+          }
+        });
+      },
+      getRaceById: function(id){
+        return $http.get(base+'races/raceId', {
+          method: 'GET',
+          params: {
+            id: id
+          }
+        });
+      },
+      joinRace: function(userId, raceId){
+        console.log('userId: ' + userId);
+        console.log('raceAPI raceId: ' + raceId);
+        return $http.put(base+'races/users', userId, {
+          method: 'PUT',
+          params: {
+            raceId: raceId
+          }
+        });
       }
     }
   });

@@ -195,6 +195,14 @@ select.find-races.select-distance {
 
 }
 
+.chip {
+  color: #00b9be;
+}
+
+strong {
+  padding-right: 5px;
+}
+
 a.races {
   text-decoration: none;
 }
