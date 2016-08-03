@@ -146,32 +146,36 @@ angular.module('starter.charityController', ['starter.appServices',
 
 
 
-  //TODO: ADD MONEY RAISED CALL FOR EACH SELECTED CHARITY
 
-  CharityAPI.getAll()
-    .success(function(data, status, headers, config){
+  $rootScope.$on('fetchAllCharities', function(){
+    CharityAPI.getAll()
+      .success(function(data, status, headers, config){
 
-      console.log("API call getAll succeeded");
+        console.log("API call getAll succeeded");
 
-      $scope.charities = [];
-      var pastCharities = $scope.charityHistoryCall();
-      console.log('pastCharities: ' + $scope.pastCharities);
-      console.log('pastCharitiesMoneyRaised: ' + $scope.pastCharitiesMoneyRaised);
-
-
-      for(var i = 0; i < data.length; i++){
-        $scope.charities.push(data[i]);
-      }
+        $scope.charities = [];
+        var pastCharities = $scope.charityHistoryCall();
+        console.log('pastCharities: ' + $scope.pastCharities);
+        console.log('pastCharitiesMoneyRaised: ' + $scope.pastCharitiesMoneyRaised);
 
 
+        for(var i = 0; i < data.length; i++){
+          $scope.charities.push(data[i]);
+        }
 
-    })
-    .error(function(err,status){
-      console.log("Error retrieving charities");
-      $rootScope.hide();
-      $rootScope.notify("Something went wrong retrieving the list of charities");
-      $rootScope.verifyStatus(status);
-    });
+
+
+      })
+      .error(function(err,status){
+        console.log("Error retrieving charities");
+        $rootScope.hide();
+        $rootScope.notify("Something went wrong retrieving the list of charities");
+        $rootScope.verifyStatus(status);
+      });
+  });
+
+  $rootScope.$broadcast('fetchAllCharities');
+
 
 
   $scope.getSelectedCharityMoneySplits = function(charityNameString){
