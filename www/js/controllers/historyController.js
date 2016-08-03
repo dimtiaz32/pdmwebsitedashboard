@@ -86,7 +86,10 @@ angular.module('starter.historyController', [
         $scope.paceBunnyWeekAvg = 7*($scope.yearlyGoal/365);
         console.log($scope.paceBunnyWeekAvg);
       }
+
+      $scope.paceBunnySetter();
     });
+
 
     $rootScope.$broadcast('paceBunnySetter');
 
