@@ -19,14 +19,20 @@ angular.module('starter.charityController', ['starter.appServices',
   'angular-svg-round-progressbar'])
 
 
-
-
-
-
-
-
 .controller('CharitiesCtrl', function($rootScope, $timeout, $ionicModal, $window, $scope, CharityAPI, HistoryAPI, AuthAPI){
 
+  $scope.isCharityDetailDisplayed = false;
+  $scope.swipeGestureCharityDetail = function(swipe) {
+    if (swipe == 'swipe-up') {
+      $scope.isCharityDetailDisplayed = false;
+    } else if (swipe == 'swipe-down') {
+      $scope.isCharityDetailDisplayed = true;
+    }
+  }
+
+  $scope.toggleCharityDetail = function() {
+    $scope.isCharityDetailDisplayed = !$scope.isCharityDetailDisplayed;
+  }
 
   $scope.charity = {
     name: "",
@@ -66,7 +72,6 @@ angular.module('starter.charityController', ['starter.appServices',
       });
   };
 
-  $scope.isDetailDisplayed = false;
   $scope.charityName  = $rootScope.getSelectedCharityName();
   $scope.charityDescription = $rootScope.getSelectedCharityDescription();
   $scope.charityAvatar = $rootScope.getSelectedCharityAvatar();

@@ -23,7 +23,8 @@ angular.module('starter', ['ionic',
   'chart.js','googleplus',
   'ngCookies',
   'angular-svg-round-progressbar',
-  'ion-datetime-picker'
+  'ion-datetime-picker',
+  'ngMaterial'
 ])
 
   .run(function($ionicPlatform, ngFB) {
