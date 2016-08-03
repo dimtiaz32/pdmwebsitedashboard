@@ -86,7 +86,10 @@ angular.module('starter.historyController', [
         $scope.paceBunnyWeekAvg = 7*($scope.yearlyGoal/365);
         console.log($scope.paceBunnyWeekAvg);
       }
+
+      $scope.paceBunnySetter();
     });
+
 
     $rootScope.$broadcast('paceBunnySetter');
 
@@ -171,7 +174,7 @@ angular.module('starter.historyController', [
         template: '<input type="number" ng-model="goalPopup.goalWeekDistance" placeholder="{{goalWeekDistance}} miles/week" autofocus>'+
         '<div style="padding: 5px 0;"></div>'+
         '<input type="number" ng-model="goalPopup.goalWeekFunds" placeholder="${{goalWeekFunds | number: 2 }}/week">',
-        title: 'Change Daily Goals',
+        title: 'Change Weekly Goals',
         subTitle: 'Enter only numbers',
         scope: $scope,
         buttons: [
@@ -207,7 +210,7 @@ angular.module('starter.historyController', [
     $scope.showSetYearGoal = function(){
       var setGoal = $ionicPopup.show({
         template: '<input type="number" ng-model="goalPopup.goalYearFunds" placeholder="${{yearlyGoal | number: 2 }}/year" autofocus>',
-        title: 'Change Daily Goals',
+        title: 'Change Year Fundraising Goal',
         subTitle: 'Enter only numbers',
         scope: $scope,
         buttons: [

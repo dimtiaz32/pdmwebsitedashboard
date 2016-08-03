@@ -1,16 +1,10 @@
 .workout-page {
-
 }
 
 .workout-page .workouts .workout {
   padding-top: 0;
   padding-bottom: 0;
 }
-
-
-  .workout-page .workouts .workout:first-child{
-    display: none;
-  }
 
   .workout-page .workouts .workout .top.row {
     padding-bottom: 0;
