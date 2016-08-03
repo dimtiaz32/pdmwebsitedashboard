@@ -19,100 +19,7 @@ angular.module('starter.historyListController', [
 
 
   .controller('HistoryListCtrl', function($rootScope, $scope, $filter, $window,HistoryAPI, AuthAPI, $filter) {
-    //date in mm/dd/yyyy format
-    //charity
-    //duration
-    //distance
-    //pace
-
-
-
-    $scope.monthNumberToString = function(month){
-      switch(month){
-        case "01":
-          monthString = "Jan";
-          return monthString;
-          break;
-        case "02":
-          monthString = "Feb";
-          return monthString;
-          break;
-        case "03":
-          monthString = "Mar";
-          return monthString;
-          break;
-        case "04":
-          monthString = "Apr";
-          return monthString;
-          break;
-        case "05":
-          monthString = "May";
-          return monthString;
-          break;
-        case "06":
-          monthString = "Jun";
-          return monthString;
-          break;
-        case "07":
-          monthString = "Jul";
-          return monthString;
-          break;
-        case "08":
-          monthString = "Aug";
-          return monthString;
-          break;
-        case "09":
-          monthString = "Sep";
-          return monthString;
-          break;
-        case "10":
-          monthString = "Oct";
-          return monthString;
-          break;
-        case "11":
-          monthString = "Nov";
-          return monthString;
-          break;
-        case "12":
-          monthString = "Dec";
-          return monthString;
-          break;
-        default:
-          console.log('could not match month number' + month + ' to string')
-          break;
-      }
-    };
-    $scope.listRuns = [{
-      id: String,
-      Date: String,
-      Charity: String,
-      Duration: String,
-      Distance: Number,
-      Pace: Number,
-      moneyRaised: Number
-    }];
-
-    $scope.listRunsIds = [];
-    $scope.listRunsDates = [];
-    $scope.listRunsCharities = [];
-    $scope.listRunsDurations = [];
-    $scope.listRunsDistances = [];
-    $scope.listRunsPaces = [];
-    $scope.listRunsIds = [];
-
-    $scope.thisDateRunDistance = [];
-    $scope.thisDateRunDuration = [];
-    $scope.thisDateRunPace = [];
-    $scope.thisDateRunMoneyRaised = [];
-    $scope.thisDateRunLaps = [];
-    $scope.thisDateRunPath = [];
-
-    $scope.listRunsLaps = [];
-    $scope.listRunsPaths = [];
-
     $scope.list = [];
-
-
     $rootScope.$on('fetchAllHistory', function(){
       console.log('userId:' + $rootScope.getUserId());
       HistoryAPI.getAll($rootScope.getUserId())
@@ -137,8 +44,8 @@ angular.module('starter.historyListController', [
 
     $scope.selectedRun= function(id){
       console.log('selectedDate entered with id: ' + id);
-
-      // $window.location.href = ('#/app/historyDay');
+      $rootScope.setRunIdDayView(id);
+      $window.location.href = ('#/app/historyDay');
 
 
 
