@@ -34,6 +34,10 @@ angular.module('starter.historyServices', [])
     $rootScope.dayRunId = id;
   };
 
+  $rootScope.fetchRunId = function(){
+    $rootScope.$broadcast('fetchRunById');
+  }
+
   return {
 
 
@@ -42,6 +46,15 @@ angular.module('starter.historyServices', [])
         method: 'GET',
         params: {
           user: user
+        }
+      });
+    },
+    getById: function(user, runId){
+      return $http.get(base+'history/id', {
+        method: 'GET',
+        params: {
+          user: user,
+          runId: runId
         }
       });
     },
@@ -72,7 +85,7 @@ angular.module('starter.historyServices', [])
           charityName: charityName
         }
       });
-    },
+    }
     // getPastCharities: function(userId){
     //   return $http.get(base+'history/charities', {
     //     method: 'GET',
