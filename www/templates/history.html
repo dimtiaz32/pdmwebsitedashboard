@@ -10,7 +10,7 @@
     <ion-list class="activity-page">
 
       <ion-item class="activity-page charities-banner">
-        <ion-slides>
+        <ion-slides options="slideOptions" slider="data.slider">
 
           <!--TODO: change background image based on charity in the history.css using charities.css-->
           <ion-slide-page class="charity-banner">
@@ -46,27 +46,28 @@
             </div>
           </ion-slide-page>
 
-
-
         </ion-slides>
 
       </ion-item>
 
       <ion-item class="activity-page goal-stats">
-        <ion-slides option="slideOptions">
+
+        <ion-slides options="options" slider="data.slider">
 
           <ion-slide-page>
             <div class="goal-stats day row">
+              <div class="goal-settings ion-trophy" ng-click="showSetDayGoal()" style="z-index: 10"></div>
               <div class="dist-day-goal col col-50 col-center">
+
                 <div class="heading">Daily Goals</div>
                 <div class="label">
                   {{ currentDayDistance }} mi
                   <br>
-                  <span class="goal">{{ maxDayDistance }} mi</span>
+                  <span class="goal">{{ goalDayDistance }} mi</span>
                 </div>
 
                 <round-progress
-                  max="maxDayDistance"
+                  max="goalDayDistance"
                   current="currentDayDistance"
                   color="{{ getColor() }}"
                   bgcolor="#eaeaea"
@@ -86,13 +87,13 @@
               <div class="col col-50 col-center">
 
                 <div class="label">
-                  ${{ currentDayFunds }}
+                  ${{ currentDayFunds | number: 2  }}
                   <br>
-                  <span class="goal">${{ maxDayFunds }}</span>
+                  <span class="goal">${{ goalDayFunds | number: 2 }}</span>
                 </div>
 
                 <round-progress
-                  max="maxDayFunds"
+                  max="goalDayFunds"
                   current="currentDayFunds"
                   color="{{ getColor() }}"
                   bgcolor="#eaeaea"
@@ -111,6 +112,7 @@
           </ion-slide-page>
 
           <ion-slide-page>
+            <div class="goal-settings ion-trophy" ng-click="showSetWeekGoal()" style="z-index: 10"></div>
             <div class="goal-stats week row">
               <div class="col col-50 col-center">
                 <div class="heading">Weekly Goals</div>
@@ -118,12 +120,12 @@
                 <div class="label">
                   {{ currentWeekDistance }} mi
                   <br>
-                  <span class="goal">{{ maxWeekDistance }} mi</span>
+                  <span class="goal">{{ goalWeekDistance }} mi</span>
                 </div>
 
 
                 <round-progress
-                  max="maxWeekDistance"
+                  max="goalWeekDistance"
                   current="currentWeekDistance"
                   color="{{ getColor() }}"
                   bgcolor="#eaeaea"
@@ -141,13 +143,13 @@
               <div class="col col-50 col-center">
 
                 <div class="label">
-                  ${{ currentWeekFunds }}
+                  ${{ currentWeekFunds | number: 2  }}
                   <br>
-                  <span class="goal">${{ maxWeekFunds }}</span>
+                  <span class="goal">${{ goalWeekFunds | number: 2  }}</span>
                 </div>
 
                 <round-progress
-                  max="maxWeekFunds"
+                  max="goalWeekFunds"
                   current="currentWeekFunds"
                   color="{{ getColor() }}"
                   bgcolor="#eaeaea"
@@ -187,16 +189,17 @@
 
       <ion-item class="activity-page summary">
         <h1>2016 Challenge</h1>
-        <h2>Raise {{yearlyGoal | number: 2}} in 2016: <span style="color: #00b9be"> {{daysLeftInYear}} days left</span></h2>
+        <div class="year-settings ion-trophy" ng-click="showSetYearGoal()" style="z-index: 10"></div>
+        <h2>Raise ${{yearlyGoal | number: 2}} in 2016: <span style="color: #00b9be"> {{daysLeftInYear()}} days left</span></h2>
         <div class="row">
          <h3 class="col">Progress</h3>
-         <h3 class="col avg">Avg: ${{progressWeekAvg | number: 2}}/week</h3>
+         <h3 class="col avg">${{progressWeekAvg | number: 2}}/week</h3>
         </div>
         <tek-progress-bar class="my-progress" ng-model="progressVal">${{yearlyFunds | number: 2}}</tek-progress-bar>
 
         <div class="row">
           <h3 class="col">Pace Bunny</h3>
-          <h3 class="col avg">Avg: ${{paceBunnyWeekAvg | number: 2}}/week</h3>
+          <h3 class="col avg">${{paceBunnyWeekAvg | number: 2}}/week</h3>
         </div>
         <tek-progress-bar class="my-pace-bunny" ng-model="paceBunnyVal">${{yearlyPace | number: 2}}</tek-progress-bar>
       </ion-item>

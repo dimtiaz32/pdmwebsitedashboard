@@ -56,14 +56,20 @@ ion-item.activity-page {
         font-size: medium;
       }
 
-
   .activity-page.goal-stats {
     border: 8px solid transparent;
+    position: relative;
 
     -ms-word-wrap: break-word;
     word-wrap: break-word;
     white-space: normal;
   }
+
+    .activity-page.goal-stats .goal-settings {
+      position: absolute;
+      right: 10px;
+      top: 5px;
+    }
 
     .activity-page.goal-stats .row .col{
       position: relative;
@@ -71,10 +77,12 @@ ion-item.activity-page {
 
       .activity-page.goal-stats .row .col .heading{
         position: absolute;
+        top: 0;
+        left: 0;
       }
 
-    .activity-page.goal-stats .row .col:first-child{
-      border-right: 1px solid #ccc;
+    .activity-page.goal-stats .row .col:first-child {
+      /*border-right: 1px solid #ccc;*/
     }
 
       .activity-page.goal-stats .row .label{
@@ -87,7 +95,7 @@ ion-item.activity-page {
          color: #000;
          font-weight: 200;
          line-height: 1;
-         font-size: 4vh;
+         font-size: 3.75vh;
          text-align: center;
        }
 
@@ -111,11 +119,12 @@ ion-item.activity-page {
 
 ion-item.activity-page.week-graph {
   position: relative;
+  height: 50vw;
 }
 
   .activity-page.week-graph {
-    background: #00c4ca;
-    background: linear-gradient(#00c4ca, #00686D); /* Standard syntax */
+    background: #efefef;
+    /*background: linear-gradient(#00c4ca, #00686D); !* Standard syntax *!*/
   }
 
     .activity-page.week-graph canvas{
@@ -128,6 +137,7 @@ ion-item.activity-page.week-graph {
 ion-item.activity-page.summary {
   position: relative;
   padding: 16px;
+  height: 200px;
 }
 
 .activity-page.summary .col, .activity-page.summary .row {
@@ -138,16 +148,21 @@ ion-item.activity-page.summary {
     text-align: right;
   }
 
+  .activity-page.summary .year-settings {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+  }
 .activity-page.summary h1{
-    font-size: xx-large;
+    font-size: x-large;
     font-weight: 200;
-    margin-bottom: 0;
+    margin-bottom: 5px;
   }
 
   .activity-page.summary h2{
     font-weight: 800;
     /*font-size: x-large;*/
-    margin-bottom: 10px;
+    margin-bottom: 20px;
   }
 
     .activity-page.summary tek-progress-bar.my-progress .progress .progress-bar {
