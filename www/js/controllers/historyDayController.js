@@ -20,4 +20,4 @@ angular.module('starter.historyDayController', [
 
   .controller('HistoryDayController', function($scope, $rootScope, $window, HistoryAPI, $ionicSlideBoxDelegate, AuthAPI, $filter, roundProgressService, $timeout, $ionicPopup){
     console.log('history day controller entered with run id: ' + $rootScope.dayRunId);
-  })
+  });

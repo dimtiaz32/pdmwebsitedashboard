@@ -18,7 +18,7 @@ angular.module('starter.historyListController', [
   'angular-svg-round-progressbar'])
 
 
-  .controller('HistoryListCtrl', function($rootScope, $scope, $filter, $window,HistoryAPI, AuthAPI, $filter) {
+  .controller('HistoryListCtrl', function($rootScope, $scope, $filter, $window, HistoryAPI, AuthAPI, $filter) {
     $scope.list = [];
     $rootScope.$on('fetchAllHistory', function(){
       console.log('userId:' + $rootScope.getUserId());
