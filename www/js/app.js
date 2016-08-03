@@ -3,8 +3,29 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-// 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives', 'stripe', 'ngOpenFB', 'angular-storage', 'chart.js','googleplus','ngCookies', 'angular-svg-round-progressbar', 'ngMaterial'])
+
+angular.module('starter', ['ionic',
+  'starter.accountController',
+  'starter.addRaceController',
+  'starter.authController',
+  'starter.appController',
+  'starter.charityController',
+  'starter.historyController',
+  'starter.historyListController',
+  'starter.historyDayController',
+  'starter.inviteSponsorController',
+  'starter.myDonationController',
+  'starter.raceController',
+  'starter.runController',
+  'starter.directives',
+  'stripe', 'ngOpenFB',
+  'angular-storage',
+  'chart.js','googleplus',
+  'ngCookies',
+  'angular-svg-round-progressbar',
+  'ion-datetime-picker',
+  'ngMaterial'
+])
 
   .run(function($ionicPlatform, ngFB) {
 
@@ -209,17 +230,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
           }
         }
       })
-
-      .state('app.historyList', {
-        url: '/historyList',
-        views: {
-          'app-history': {
-            templateUrl: 'templates/historyList.html',
-            controller: 'HistoryListCtrl'
-          }
-        }
-      })
-
       /*-------*/
       .state('app.historyDay', {
         url: '/historyDay',
@@ -230,49 +240,21 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
           }
         }
       })
+      .state('app.historyList', {
+        url: '/historyList',
+        views: {
+          'app-history': {
+            templateUrl: 'templates/historyList.html',
+            controller: 'HistoryListCtrl'
+          }
+        }
+      })
       .state('app.myPledges',{
         url:'/myPledges',
         views:{
           'app-sponsors':{
             templateUrl:'templates/myPledges.html',
             controller: 'MyDonationCtrl'
-          }
-        }
-      })
-
-      .state('app.search', {
-        url: '/search',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/search.html'
-          }
-        }
-      })
-
-      .state('app.browse', {
-        url: '/browse',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/browse.html'
-          }
-        }
-      })
-      .state('app.playlists', {
-        url: '/playlists',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/playlists.html',
-            controller: 'PlaylistsCtrl'
-          }
-        }
-      })
-
-      .state('app.single', {
-        url: '/playlists/:playlistId',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/playlist.html',
-            controller: 'PlaylistCtrl'
           }
         }
       })
@@ -315,8 +297,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
             controller: 'PastRacesCtrl'
           }
         }
-      });
+      })
 
+    .state('app.createRace', {
+      url: '/races/createRace',
+      views: {
+        'app-races': {
+          templateUrl: 'templates/addRace.html',
+          controller: 'AddRaceCtrl'
+        }
+      }
+    });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/auth/signin');
     // $urlRouterProvider.otherwise('/app/run');

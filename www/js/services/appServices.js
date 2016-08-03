@@ -28,6 +28,29 @@ angular.module('starter.appServices', [])
       }, 1999);
     };
 
+    $rootScope.doRefresh = function(tab) {
+      // if (tab == 1) {
+      //   //$rootScope.broadcast('fetchRaces')
+      // } else
+       if (tab == 2) {
+        $rootScope.$broadcast('fetchMySponsors');
+      }
+      // else if (tab == 3) {
+      //   $rootScope.$broadcast('');
+      // }
+      else if (tab == 4) {
+        $rootScope.$broadcast('fetchMonthHistory');
+      }
+      else if (tab == 5) {
+         $rootScope.$broadcast('fetchAllCharities')
+      }
+     //  else if(tab == 6) {
+     //
+     // }
+
+      $rootScope.$broadcast('scroll.refreshComplete');
+    }
+
 
     return {
 

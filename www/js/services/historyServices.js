@@ -5,7 +5,8 @@
 
 angular.module('starter.historyServices', [])
 
-.factory('HistoryAPI', function($ionicLoading, $rootScope, $http, $window){
+.factory('HistoryAPI', function($ionicLoading,
+                                $rootScope, $http, $window){
   var base = "https://dreamrun.herokuapp.com/";
 
   $rootScope.show = function(text){
@@ -29,12 +30,31 @@ angular.module('starter.historyServices', [])
     }, 1999);
   };
 
+  $rootScope.setRunIdDayView = function(id){
+    $rootScope.dayRunId = id;
+  };
+
+  $rootScope.fetchRunId = function(){
+    $rootScope.$broadcast('fetchRunById');
+  }
+
   return {
+
+
     getAll: function(user){
       return $http.get(base+'history/', {
         method: 'GET',
         params: {
           user: user
+        }
+      });
+    },
+    getById: function(user, runId){
+      return $http.get(base+'history/id', {
+        method: 'GET',
+        params: {
+          user: user,
+          runId: runId
         }
       });
     },
@@ -47,6 +67,16 @@ angular.module('starter.historyServices', [])
         }
       });
     },
+    getByDay: function(userId, month, day){
+      return $http.get(base+'history/day', {
+        method: 'GET',
+        params: {
+          userId: userId,
+          month: month,
+          day: day
+        }
+      });
+    },
     getCharityHistory: function(userId, charityName){
       return $http.get(base+'history/charity', {
         method: 'GET',
@@ -55,7 +85,7 @@ angular.module('starter.historyServices', [])
           charityName: charityName
         }
       });
-    },
+    }
     // getPastCharities: function(userId){
     //   return $http.get(base+'history/charities', {
     //     method: 'GET',
