@@ -5,9 +5,7 @@
 angular.module('starter.raceServices', [])
 
   .factory('RaceAPI', function($ionicLoading,
-                                  $rootScope, $http, $window){
-    // var base = "https://dreamrun.herokuapp.com/";
-    var base = "http://localhost:5000/";
+                                  $rootScope, $http, $window, SERVER_HOST){
     $rootScope.show = function(text){
       $rootScope.loading = $ionicLoading.show({
         content: text ? text : 'Loading',
@@ -36,10 +34,10 @@ angular.module('starter.raceServices', [])
 
     return {
       addRace: function(form){
-        return $http.post(base+'races/addRace', form);
+        return $http.post(SERVER_HOST+'races/addRace', form);
       },
       getAllRaces: function(userId){
-        return $http.get(base+'races/findRaces', {
+        return $http.get(SERVER_HOST+'races/findRaces', {
           method:'GET',
           params: {
             userId: userId
@@ -47,7 +45,7 @@ angular.module('starter.raceServices', [])
         });
       },
       getFeaturedRaces: function(feat){
-        return $http.get(base+'races/featured', {
+        return $http.get(SERVER_HOST+'races/featured', {
           method: 'GET',
           params: {
             feat: feat
@@ -55,7 +53,7 @@ angular.module('starter.raceServices', [])
         });
       },
       getRaceById: function(id){
-        return $http.get(base+'races/raceId', {
+        return $http.get(SERVER_HOST+'races/raceId', {
           method: 'GET',
           params: {
             id: id
@@ -65,7 +63,7 @@ angular.module('starter.raceServices', [])
       joinRace: function(userId, raceId){
         console.log('userId: ' + userId);
         console.log('raceAPI raceId: ' + raceId);
-        return $http.put(base+'races/users', userId, {
+        return $http.put(SERVER_HOST+'races/users', userId, {
           method: 'PUT',
           params: {
             raceId: raceId
@@ -73,7 +71,7 @@ angular.module('starter.raceServices', [])
         });
       },
       getUserRaces: function(userId){
-        return $http.get(base+'races/users', {
+        return $http.get(SERVER_HOST+'races/users', {
           method: 'GET',
           params: {
             userId: userId

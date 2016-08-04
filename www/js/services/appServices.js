@@ -3,8 +3,7 @@
  */
 
 angular.module('starter.appServices', [])
-  .factory('AppAPI', function($rootScope, $http, $ionicLoading, $window) {
-    var base = "https://dreamrun.herokuapp.com";
+  .factory('AppAPI', function($rootScope, $http, $ionicLoading, $window, SERVER_HOST) {
 
     //everything up until return should be put in a main API
     $rootScope.show = function (text) {

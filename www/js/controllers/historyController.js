@@ -28,9 +28,8 @@ angular.module('starter.historyController', [
     //Slider stuffs
     $scope.slideOptions = {
       loop: true,
-      effect: 'fade',
       speed: 500,
-    }
+    };
 
     $scope.$on("$ionicSlides.sliderInitialized", function(event, data){
       // data.slider is the instance of Swiper
@@ -50,6 +49,7 @@ angular.module('starter.historyController', [
 
     //progress bar
     //TODO: Set yearlyFunds and yearlyGoal using user's data
+
     $scope.yearlyFunds = 118;
     $scope.yearlyGoal = 201.60;
 
@@ -91,7 +91,7 @@ angular.module('starter.historyController', [
       return '#00b9be';
     }
 
-    $scope.goalDayDistance = 1;
+    $scope.goalDayDistance = 2;
     $scope.currentDayDistance = 1;
 
     $scope.goalDayFunds = 1;
@@ -100,7 +100,7 @@ angular.module('starter.historyController', [
     $scope.goalWeekDistance = 63;
     $scope.currentWeekDistance = 35;
 
-    $scope.goalWeekFunds =100;
+    $scope.goalWeekFunds =150;
     $scope.currentWeekFunds= 130;
 
 
@@ -218,7 +218,7 @@ angular.module('starter.historyController', [
 
               if (goalYearFunds != "") {
                 $scope.yearlyGoal = goalYearFunds;
-                $scope.paceBunnySetter();
+                $rootScope.$broadcast('paceBunnySetter');
                 console.log('new goal for funds')
               } else {
                 console.log('NO new goal for funds')

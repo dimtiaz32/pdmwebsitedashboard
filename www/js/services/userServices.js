@@ -1,7 +1,6 @@
 angular.module('starter.userServices', [])
 
-.factory('UserAPI', function($rootScope, $http, $ionicLoading, $window){
-	var base = "https://dreamrun.herokuapp.com/";
+.factory('UserAPI', function($rootScope, $http, $ionicLoading, $window, SERVER_HOST){
 
   $rootScope.show = function(text){
     $rootScope.loading = $ionicLoading.show({
@@ -44,7 +43,7 @@ angular.module('starter.userServices', [])
 		//actual account related activities should be handled by auth
 
 		getOne: function(email){
-		  return $http.get(base+'user/find', {
+		  return $http.get(SERVER_HOST + 'user/find', {
 		    method: 'GET',
         params: {
           params: email

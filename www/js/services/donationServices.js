@@ -4,8 +4,7 @@
 
 
 angular.module('starter.donationServices', ['ionic'])
-.factory('DonationAPI', function($rootScope, $http, $ionicLoading, $window){
-  var base = "https://dreamrun.herokuapp.com/";
+.factory('DonationAPI', function($rootScope, $http, $ionicLoading, $window, SERVER_HOST){
 
   //everything up until return should be put in a main API
   $rootScope.show = function(text){
@@ -31,7 +30,7 @@ angular.module('starter.donationServices', ['ionic'])
 
   return{
     getAllSponsors: function(userId){
-      return $http.get(base + 'donations/sponsors', {
+      return $http.get(SERVER_HOST + 'donations/sponsors', {
         method: 'GET',
         params: {
           userId:userId
@@ -40,7 +39,7 @@ angular.module('starter.donationServices', ['ionic'])
     },
 
     getAllPledges: function(donorId){
-      return $http.get(base + 'donations/pledges',{
+      return $http.get(SERVER_HOST + 'donations/pledges',{
         method:'GET',
         params: {
           donorId: donorId
@@ -49,19 +48,19 @@ angular.module('starter.donationServices', ['ionic'])
     },
 
     inviteSponsor: function(form) {
-      return $http.post(base + 'donations/sponsors',form,{
+      return $http.post(SERVER_HOST + 'donations/sponsors',form,{
         method:'POST',
       });
     },
 
     completeSponsor: function(form) {
-      return $http.post(base + 'donations/myDonations',form,{
+      return $http.post(SERVER_HOST + 'donations/myDonations',form,{
         method:'POST',
       });
     },
 
     getUserByRequestId: function(requestId) {
-      return $http.get(base + 'donations/requests',{
+      return $http.get(SERVER_HOST + 'donations/requests',{
         method:'GET',
         params: {
           requestId: requestId
