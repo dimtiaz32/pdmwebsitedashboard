@@ -20,7 +20,7 @@ angular.module('starter.historyController', [
 
 
 
-  .controller('HistoryCtrl', function($scope, $rootScope, $window, HistoryAPI, $ionicSlideBoxDelegate, AuthAPI, $filter, roundProgressService, $timeout, $ionicPopup) {
+  .controller('HistoryCtrl', function($scope, $rootScope, $window, HistoryAPI, $ionicSlideBoxDelegate, AuthAPI, UserAPI, $filter, roundProgressService, $timeout, $ionicPopup) {
 
 
 
@@ -126,9 +126,9 @@ angular.module('starter.historyController', [
 
     $scope.showSetDayGoal = function(){
       var setGoal = $ionicPopup.show({
-        template: '<input type="number" ng-model="goalPopup.goalDayDistance" placeholder="{{goalDayDistance}} miles/day" autofocus>'+
+        template: '<input type="number" min="0" ng-model="goalPopup.goalDayDistance" placeholder="{{goalDayDistance}} miles" autofocus>'+
                   '<div style="padding: 5px 0;"></div>'+
-                  '<input type="number" ng-model="goalPopup.goalDayFunds" placeholder="${{goalDayFunds | number: 2 }}/day">',
+                  '<input type="number" min="0" ng-model="goalPopup.goalDayFunds" placeholder="${{goalDayFunds | number: 2 }}/day">',
         title: 'Change Daily Goals',
         subTitle: 'Enter only numbers',
         scope: $scope,
@@ -138,24 +138,46 @@ angular.module('starter.historyController', [
             text: 'Set',
             type: 'button-positive',
             onTap: function(e) {
-              var goalDayDistance = $scope.goalPopup.goalDayDistance;
-              var goalDayFunds = $scope.goalPopup.goalDayFunds;
+              $rootScope.show('Updating daily goals');
+              var gdDistance = $scope.goalPopup.goalDayDistance;
+              var gdFunds = $scope.goalPopup.goalDayFunds;
 
-              $scope.goalPopup.goalDayDistance = "";
-              $scope.goalPopup.goalDayFunds = "";
+              if (gdDistance != "" && gdFunds != "") {
+                console.log('goalDayDistance: '+ gdDistance + 'goalDayFunds: ' + gdFunds);
 
-              if (goalDayDistance != "") {
-                $scope.goalDayDistance = goalDayDistance;
-                console.log('new goal for dist')
-              } else {
+                $scope.goalDayDistance = gdDistance;
+                $scope.goalDayFunds = gdFunds;
+
+                console.log('$scope.goalDayDistance: ' + $scope.goalDayDistance);
+                console.log('$scope.goalDayFunds: '+ $scope.goalDayFunds);
+                console.log('userId: ' + $rootScope.getUserId());
+                var userId = $rootScope.getUserId();
+                console.log('userId: ' + userId);
+                UserAPI.updateDailyGoals(userId, {fundraising: gdFunds, distance: gdDistance})
+                  .success(function(data, status, headers, config){
+                    console.log('User API updateDailyGoals call a success');
+                    console.log('data.dailyGoals.fundraising: ' + data.dailyGoals.fundraising);
+                    console.log('data.dailyGoals.distance: ' + data.dailyGoals.distance);
+
+                    $rootScope.hide();
+                  })
+                  .error(function(status){
+                    console.log('UserAPI updateDailyGoals call failed with status: ' + status);
+                    $rootScope.hide();
+                  });
+
+
+
+
+              } else if(goalDayDistance = "") {
                 console.log('NO new goal for dist')
+              } else if(goalDayFunds = ""){
+                console.log('No new goal for funds');
               }
-              if (goalDayFunds != "") {
-                $scope.goalDayFunds= goalDayFunds;
-                console.log('new goal for funds')
-              } else {
-                console.log('NO new goal for funds')
-              }
+
+
+
+
             }
           }
         ]
@@ -181,6 +203,8 @@ angular.module('starter.historyController', [
 
               $scope.goalPopup.goalWeekDistance = "";
               $scope.goalPopup.goalWeekFunds = "";
+
+
 
               if (goalWeekDistance != "") {
                 $scope.goalWeekDistance = goalWeekDistance;
