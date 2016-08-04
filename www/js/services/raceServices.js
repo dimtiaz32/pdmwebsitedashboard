@@ -6,8 +6,8 @@ angular.module('starter.raceServices', [])
 
   .factory('RaceAPI', function($ionicLoading,
                                   $rootScope, $http, $window){
-    var base = "https://dreamrun.herokuapp.com/";
-
+    // var base = "https://dreamrun.herokuapp.com/";
+    var base = "http://localhost:5000/";
     $rootScope.show = function(text){
       $rootScope.loading = $ionicLoading.show({
         content: text ? text : 'Loading',
@@ -29,9 +29,56 @@ angular.module('starter.raceServices', [])
       }, 1999);
     };
 
+
+    $rootScope.setRaceId = function(id){
+      $rootScope.selectedRaceId = id;
+    };
+
     return {
       addRace: function(form){
         return $http.post(base+'races/addRace', form);
+      },
+      getAllRaces: function(userId){
+        return $http.get(base+'races/findRaces', {
+          method:'GET',
+          params: {
+            userId: userId
+          }
+        });
+      },
+      getFeaturedRaces: function(feat){
+        return $http.get(base+'races/featured', {
+          method: 'GET',
+          params: {
+            feat: feat
+          }
+        });
+      },
+      getRaceById: function(id){
+        return $http.get(base+'races/raceId', {
+          method: 'GET',
+          params: {
+            id: id
+          }
+        });
+      },
+      joinRace: function(userId, raceId){
+        console.log('userId: ' + userId);
+        console.log('raceAPI raceId: ' + raceId);
+        return $http.put(base+'races/users', userId, {
+          method: 'PUT',
+          params: {
+            raceId: raceId
+          }
+        });
+      },
+      getUserRaces: function(userId){
+        return $http.get(base+'races/users', {
+          method: 'GET',
+          params: {
+            userId: userId
+          }
+        });
       }
     }
   });

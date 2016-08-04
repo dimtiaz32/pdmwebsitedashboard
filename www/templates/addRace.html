@@ -6,6 +6,11 @@
         {{race.date| date: "yyyy-mm-dd H:mm:ss"}}
       </div>
 
+      <label class='item' ion-datetime-picker ng-model="race.date">
+        <span class="input-label">Race Date</span>
+        {{race.date| date: "yyyy-mm-dd H:mm:ss"}}
+      </label>
+
       <label class="item item-input">
         <span class="input-label">Race Name</span>
         <input type="text" ng-model="race.name">
@@ -14,22 +19,32 @@
         <span class="input-label">Race Distances (separate with comma) </span>
         <input type="text" ng-model="race.distances">
       </label>
+      <label class="item item-input">
+        <span class="input-label">Keywords (separate with comma)</span>
+        <input type="text" ng-model="race.keywords">
+      </label>
 
       <label class="item item-input">
-        <span class="input-label">Charity Partners (separate with comma)</span>
+        <span class="input-label">Charity Partners(separate with comma)</span>
         <input type="text" ng-model="race.charityPartners">
+      </label>
 
-        <label class="item item-input">
-          <span class="input-label">Race description</span>
-          <input type="text" ng-model="race.description">
-        </label>
+      <label class="item item-input">
+        <span class="input-label">Race description</span>
+        <input type="text" ng-model="race.description">
+      </label>
+
+      <label class="item item-input">
+        <span class="input-label">City</span>
+        <input type="text" ng-model="race.city">
+      </label>
 
       <label class="item item-input">
         <span class="input-label">Race isFeatured</span>
         <input type="text" ng-model="race.isFeatured">
       </label>
 
-      </label>
+
 
       <!--<input type="text" ng-model="race.logo">-->
       <!--<label class="item item-input">-->

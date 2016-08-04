@@ -1,54 +1,13 @@
 <ion-view class="has-header" view-title="My races">
   <ion-content>
 
-    <div class="races tile-container-one">
-      <div class="races gradient">
-        <h1 class="my-races">My Race 1</h1>
-        <p class="races my-races-detail">Washington, DC</p>
-        <p class="races my-races-detail">500mi</p>
-        <p class="races my-races-detail">7/29/2016</p>
+    <div class="races find-tile-container">
+      <div  class="races find-box" ng-repeat="race in myRaces" ng-click="selectRace(race._id)">
+        <h1 class="featured-race">{{race.name}}</h1>
+        <p class="races find-races-detail">Location: {{race.city}}</p>
+        <p class="races find-races-detail">Distance: {{race.distances}}</p>
+        <p class="races find-races-detail">Date: {{race.date | date:'MM/dd/yyyy'}}</p>
       </div>
     </div>
-    <div class="races tile-container-two">
-      <div class="races gradient">
-        <h1 class="my-races">My Race 2</h1>
-        <p class="races my-races-detail">Arlington, VA</p>
-        <p class="races my-races-detail">500mi</p>
-        <p class="races my-races-detail">7/29/2016</p>
-      </div>
-    </div>
-    <div class="races tile-container-three">
-      <div class="races gradient">
-        <h1 class="my-races">My Race 3</h1>
-        <p class="races my-races-detail">Duluth, MN</p>
-        <p class="races my-races-detail">500mi</p>
-        <p class="races my-races-detail">7/29/2016</p>
-      </div>
-    </div>
-    <div class="races tile-container-one">
-      <div class="races gradient">
-        <h1 class="my-races">My Race 4</h1>
-        <p class="races my-races-detail">Baltimore, MD</p>
-        <p class="races my-races-detail">500mi</p>
-        <p class="races my-races-detail">7/29/2016</p>
-      </div>
-    </div>
-    <div class="races tile-container-two">
-      <div class="races gradient">
-        <h1 class="my-races">My Race 5</h1>
-        <p class="races my-races-detail">Chicago, IL</p>
-        <p class="races my-races-detail">500mi</p>
-        <p class="races my-races-detail">7/29/2016</p>
-      </div>
-    </div>
-    <div class="races tile-container-three">
-      <div class="races gradient">
-        <h1 class="my-races">My Race 6</h1>
-        <p class="races my-races-detail">Hayward, WI</p>
-        <p class="races my-races-detail">500mi</p>
-        <p class="races my-races-detail">7/29/2016</p>
-      </div>
-    </div>
-
   </ion-content>
 </ion-view>
