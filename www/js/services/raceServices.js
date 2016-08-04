@@ -38,6 +38,14 @@ angular.module('starter.raceServices', [])
       addRace: function(form){
         return $http.post(base+'races/addRace', form);
       },
+      getAllRaces: function(userId){
+        return $http.get(base+'races/findRaces', {
+          method:'GET',
+          params: {
+            userId: userId
+          }
+        });
+      },
       getFeaturedRaces: function(feat){
         return $http.get(base+'races/featured', {
           method: 'GET',
@@ -61,6 +69,14 @@ angular.module('starter.raceServices', [])
           method: 'PUT',
           params: {
             raceId: raceId
+          }
+        });
+      },
+      getUserRaces: function(userId){
+        return $http.get(base+'races/users', {
+          method: 'GET',
+          params: {
+            userId: userId
           }
         });
       }
