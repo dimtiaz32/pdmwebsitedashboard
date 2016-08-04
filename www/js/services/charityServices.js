@@ -4,8 +4,7 @@
 
 
 angular.module('starter.charityServices', ['ionic'])
-.factory('CharityAPI', function($rootScope, $http, $ionicLoading, $window){
-  var base = "https://dreamrun.herokuapp.com/";
+.factory('CharityAPI', function($rootScope, $http, $ionicLoading, $window, SERVER_HOST){
 
   //everything up until return should be put in a main API
   $rootScope.show = function(text){
@@ -82,13 +81,13 @@ angular.module('starter.charityServices', ['ionic'])
   //TODO: NEED TO VERIFY TOKEN METHODOLOGY
   return{
     getAll: function(){
-      return $http.get(base+'charities', {
+      return $http.get(SERVER_HOST+'charities', {
         method: 'GET'
 
       });
     },
     getCharityByName: function(name){
-      return $http.get(base+'charity/',  {
+      return $http.get(SERVER_HOST+'charity/',  {
         method: 'GET',
         params: {
           name: name
@@ -96,7 +95,7 @@ angular.module('starter.charityServices', ['ionic'])
       });
     },
     selectCharity: function(id, charityName){
-      return $http.put(base+'user/selectedCharity', charityName, {
+      return $http.put(SERVER_HOST+'user/selectedCharity', charityName, {
         method: 'PUT',
         params: {
           id: id
@@ -105,7 +104,7 @@ angular.module('starter.charityServices', ['ionic'])
 
     },
     getSelectedCharity: function(token, email){
-      return $http.get(base+'user/selectedCharity', email, {
+      return $http.get(SERVER_HOST+'user/selectedCharity', email, {
         method: 'GET',
         params: {
          token: token
@@ -122,7 +121,7 @@ angular.module('starter.charityServices', ['ionic'])
     //   });
     // },
     saveCharity: function(form){
-      return $http.post(base+'charities', form, {
+      return $http.post(SERVER_HOST+'charities', form, {
         method: 'POST'
       });
     }

@@ -2,8 +2,7 @@
  * Created by dev on 7/2/16.
  */
 angular.module('starter.runServices', ['ionic'])
-.factory('RunAPI', function($rootScope, $http, $ionicLoading, $window){
-  var base = "https://dreamrun.herokuapp.com/";
+.factory('RunAPI', function($rootScope, $http, $ionicLoading, $window, SERVER_HOST){
 
   $rootScope.show = function(text){
     $rootScope.loading = $ionicLoading.show({
@@ -143,7 +142,7 @@ angular.module('starter.runServices', ['ionic'])
   return{
 
     saveRun: function(form){
-      return $http.post(base+'history', form);
+      return $http.post(SERVER_HOST+'history', form);
     }
 
   }

@@ -5,11 +5,7 @@
 
 angular.module('starter.authServices', ['ngCookies'])
 
-.factory('AuthAPI', function($rootScope, $http, $window, $ionicLoading, $cookies){
-
-  var base = "https://dreamrun.herokuapp.com/";
-
-  //var base = "https://dreamrun.herokuapp.com/authentication";
+.factory('AuthAPI', function($rootScope, $http, $window, $ionicLoading, $cookies, SERVER_HOST){
 
   $rootScope.verifyStatus = function(status) {
      if (status == "401") {
@@ -155,22 +151,22 @@ angular.module('starter.authServices', ['ngCookies'])
 
   return {
     signin: function(form){
-      return $http.post(base + 'authentication/signin', form);
+      return $http.post(SERVER_HOST + 'authentication/signin', form);
     },
     signup: function(form){
       console.log("form:" + JSON.stringify(form));
-      return $http.post(base + 'authentication/signup', form);
+      return $http.post(SERVER_HOST + 'authentication/signup', form);
     },
     signout: function(){
-      return $http.get(base + 'authentication/signout', {
+      return $http.get(SERVER_HOST + 'authentication/signout', {
         method: 'GET'
       });
     },
     signinByFB: function(form) {
-      return $http.post(base + 'authentication/facebook',form);
+      return $http.post(SERVER_HOST + 'authentication/facebook',form);
     },
     signinByGG: function(form) {
-      return $http.post(base + 'authentication/google',form);
+      return $http.post(SERVER_HOST + 'authentication/google',form);
     }
   }
 });
