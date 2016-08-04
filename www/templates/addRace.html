@@ -1,0 +1,65 @@
+<ion-view class="has-header" view-title="Add Race">
+  <ion-content >
+    <div class="list">
+
+      <div class='item' ion-datetime-picker ng-model="race.date">
+        {{race.date| date: "yyyy-mm-dd H:mm:ss"}}
+      </div>
+
+      <label class='item' ion-datetime-picker ng-model="race.date">
+        <span class="input-label">Race Date</span>
+        {{race.date| date: "yyyy-mm-dd H:mm:ss"}}
+      </label>
+
+      <label class="item item-input">
+        <span class="input-label">Race Name</span>
+        <input type="text" ng-model="race.name">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Race Distances (separate with comma) </span>
+        <input type="text" ng-model="race.distances">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Keywords (separate with comma)</span>
+        <input type="text" ng-model="race.keywords">
+      </label>
+
+      <label class="item item-input">
+        <span class="input-label">Charity Partners(separate with comma)</span>
+        <input type="text" ng-model="race.charityPartners">
+      </label>
+
+      <label class="item item-input">
+        <span class="input-label">Race description</span>
+        <input type="text" ng-model="race.description">
+      </label>
+
+      <label class="item item-input">
+        <span class="input-label">City</span>
+        <input type="text" ng-model="race.city">
+      </label>
+
+      <label class="item item-input">
+        <span class="input-label">Race isFeatured</span>
+        <input type="text" ng-model="race.isFeatured">
+      </label>
+
+
+
+      <!--<input type="text" ng-model="race.logo">-->
+      <!--<label class="item item-input">-->
+      <!--<span class="input-label">Logo Name</span>-->
+
+      <!--</label>-->
+      <!--<div>-->
+      <!--&lt;!&ndash;<input class="bottom-marg-15" type="file" name="file" file="file">&ndash;&gt;-->
+      <!--&lt;!&ndash;<button class="button button-small button-full button-positive" ng-disabled="file.size&amp;&amp;false || uploadProgress&gt;0" ng-click="upload()" ng-cloak="">Upload</button>&ndash;&gt;-->
+      <!--&lt;!&ndash;<img class="fit" ng-if="uploadUri" ng-src="">&ndash;&gt;-->
+      <!--&lt;!&ndash;<a ng-href="" ng-bind="uploadUri"></a>&ndash;&gt;-->
+      <!--</div>-->
+      <button class="button button-block button-positive" ng-click="createRace()">
+        Save
+      </button>
+    </div>
+  </ion-content>
+</ion-view>

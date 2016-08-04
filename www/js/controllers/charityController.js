@@ -19,14 +19,20 @@ angular.module('starter.charityController', ['starter.appServices',
   'angular-svg-round-progressbar'])
 
 
-
-
-
-
-
-
 .controller('CharitiesCtrl', function($rootScope, $timeout, $ionicModal, $window, $scope, CharityAPI, HistoryAPI, AuthAPI){
 
+  $scope.isCharityDetailDisplayed = false;
+  $scope.swipeGestureCharityDetail = function(swipe) {
+    if (swipe == 'swipe-up') {
+      $scope.isCharityDetailDisplayed = false;
+    } else if (swipe == 'swipe-down') {
+      $scope.isCharityDetailDisplayed = true;
+    }
+  }
+
+  $scope.toggleCharityDetail = function() {
+    $scope.isCharityDetailDisplayed = !$scope.isCharityDetailDisplayed;
+  }
 
   $scope.charity = {
     name: "",
@@ -66,7 +72,6 @@ angular.module('starter.charityController', ['starter.appServices',
       });
   };
 
-  $scope.isDetailDisplayed = false;
   $scope.charityName  = $rootScope.getSelectedCharityName();
   $scope.charityDescription = $rootScope.getSelectedCharityDescription();
   $scope.charityAvatar = $rootScope.getSelectedCharityAvatar();
@@ -146,32 +151,36 @@ angular.module('starter.charityController', ['starter.appServices',
 
 
 
-  //TODO: ADD MONEY RAISED CALL FOR EACH SELECTED CHARITY
 
-  CharityAPI.getAll()
-    .success(function(data, status, headers, config){
+  $rootScope.$on('fetchAllCharities', function(){
+    CharityAPI.getAll()
+      .success(function(data, status, headers, config){
 
-      console.log("API call getAll succeeded");
+        console.log("API call getAll succeeded");
 
-      $scope.charities = [];
-      var pastCharities = $scope.charityHistoryCall();
-      console.log('pastCharities: ' + $scope.pastCharities);
-      console.log('pastCharitiesMoneyRaised: ' + $scope.pastCharitiesMoneyRaised);
-
-
-      for(var i = 0; i < data.length; i++){
-        $scope.charities.push(data[i]);
-      }
+        $scope.charities = [];
+        var pastCharities = $scope.charityHistoryCall();
+        console.log('pastCharities: ' + $scope.pastCharities);
+        console.log('pastCharitiesMoneyRaised: ' + $scope.pastCharitiesMoneyRaised);
 
 
+        for(var i = 0; i < data.length; i++){
+          $scope.charities.push(data[i]);
+        }
 
-    })
-    .error(function(err,status){
-      console.log("Error retrieving charities");
-      $rootScope.hide();
-      $rootScope.notify("Something went wrong retrieving the list of charities");
-      $rootScope.verifyStatus(status);
-    });
+
+
+      })
+      .error(function(err,status){
+        console.log("Error retrieving charities");
+        $rootScope.hide();
+        $rootScope.notify("Something went wrong retrieving the list of charities");
+        $rootScope.verifyStatus(status);
+      });
+  });
+
+  $rootScope.$broadcast('fetchAllCharities');
+
 
 
   $scope.getSelectedCharityMoneySplits = function(charityNameString){

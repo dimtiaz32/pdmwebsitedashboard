@@ -2,32 +2,39 @@
   <ion-content>
 
     <div class="races featured-containter">
-      <ion-slides>
-        <ion-slide-page>
+      <ion-slides options="slideOptions" data="data.slider" >
+        <ion-slide-page ng-repeat="race in featuredRaces" ng-click="selectRace(race._id)">
           <div class="races featured-box">
-            <h1 class="featured-race">Featured Race 1</h1>
-            <p class="races featured-race-detail">Location: Washington, DC</p>
-            <p class="races featured-race-detail">Distance: 500mi</p>
+            <h1 class="featured-race">{{race.name}}</h1>
+            <p class="races featured-race-detail">Location: {{race.city}}</p>
+            <p class="races featured-race-detail">Distance: {{race.distances}}</p>
           </div>
         </ion-slide-page>
-        <ion-slide-page>
-          <div class="races featured-box">
-            <h1 class="featured-race">Featured Race 2</h1>
-            <p class="races featured-race-detail">Location: Arlington, VA</p>
-            <p class="races featured-race-detail">Distance: 500mi</p>
-          </div>
-        </ion-slide-page>
-        <ion-slide-page>
-          <div class="races featured-box">
-            <h1 class="featured-race">Featured Race 3</h1>
-            <p class="races featured-race-detail">Location: Baltimore, MD</p>
-            <p class="races featured-race-detail">Distance: 500mi</p>
-          </div>
-        </ion-slide-page>
+        <!--<ion-slide-page>-->
+          <!--<div class="races featured-box">-->
+            <!--<h1 class="featured-race">Featured Race 1</h1>-->
+            <!--<p class="races featured-race-detail">Location: Washington, DC</p>-->
+            <!--<p class="races featured-race-detail">Distance: 500mi</p>-->
+          <!--</div>-->
+        <!--</ion-slide-page>-->
+        <!--<ion-slide-page>-->
+          <!--<div class="races featured-box">-->
+            <!--<h1 class="featured-race">Featured Race 2</h1>-->
+            <!--<p class="races featured-race-detail">Location: Arlington, VA</p>-->
+            <!--<p class="races featured-race-detail">Distance: 500mi</p>-->
+          <!--</div>-->
+        <!--</ion-slide-page>-->
+        <!--<ion-slide-page>-->
+          <!--<div class="races featured-box">-->
+            <!--<h1 class="featured-race">Featured Race 3</h1>-->
+            <!--<p class="races featured-race-detail">Location: Baltimore, MD</p>-->
+            <!--<p class="races featured-race-detail">Distance: 500mi</p>-->
+          <!--</div>-->
+        <!--</ion-slide-page>-->
       </ion-slides>
     </div>
 
-    <a class="races" href="#/app/races/myRaces">
+    <a class="races" href="#/app/myRaces">
       <div class="races my-races-container">
         <h1 class="races">My Races</h1>
         <p class="races races-detail">Next race: In 2 weeks</p>
@@ -35,13 +42,13 @@
         <p class="races races-detail">Current Time: 25min</p>
       </div>
     </a>
-    <a class="races" href="#/app/races/findRaces">
+    <a class="races" href="#/app/findRaces">
       <div class="races find-races-container">
         <h1 class="races">Find Races</h1>
         <p class="races races-detail">12 races in you area next month</p>
       </div>
     </a>
-    <a class="races" href="#/app/races/pastRaces">
+    <a class="races" href="#/app/pastRaces">
       <div class="races past-races-container">
         <h1 class="races">Past Races</h1>
         <p class="races races-detail">You have completed 23 races</p>

@@ -38,76 +38,65 @@
 
 
 
-<ion-view title="History">
+<ion-view title={{dayDisplayDate}}>
 
   <ion-content class="history-day-page has-header">
-    <div class="history-day-page date-header item item-button-right item-button-left">
-      <button class="history-day-page date-header button button-icon icon ion-ios-arrow-thin-left" ng-click="back()"></button>
-      {{dayDisplayDate}}
-    </div>
     <div class="history-day-page map" style="height:30vh; width:100%; background-color: grey;">
       <!--&lt;!&ndash; Space for map image &ndash;&gt;-->
       <!--MAP GOES HERE-->
       <map on-create="mapCreated(map)"></map>
     </div>
-    <ion-slides on-slide-changed="" options="slideOptions" slider="">
-      <ion-slide-page>
-        <div class="history-day-page">
-          <hr style="margin: 0;">
+    <div class="history-day-page">
+      <hr style="margin: 0;">
+      <div class="row">
+        <div class="col col-50">
+          <!--Duration-->
+          <p class="history-day-page head">Duration</p>
+          <p class="history-day-page label">{{duration}}</p><span class="history-day-page miles">min</span> </p>
+        </div>
+        <div class="history-day-page vertical-line"></div>
+        <div class="col col-50">
+          <!--Distance-->
+          <p class="history-day-page head">Distance</p>
+          <p class="history-day-page label">{{distance.toFixed(2)}}<span class="history-day-page miles">mi</span> </p>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col col-50">
+          <!--Pace-->
+          <p class="history-day-page head">Pace</p>
+          <p class="history-day-page label">{{pace.toFixed(2)}}<span class="history-day-page miles">min/mi</span></p>
+        </div>
+        <div class="history-day-page vertical-line"></div>
+        <div class="col col-50">
+          <!--Funds Raised-->
+          <p class="history-day-page head">Funds Raised</p>
+          <p class="history-day-page label">${{funds.toFixed(2)}}</p>
+        </div>
+      </div>
+
+      <hr style="margin:0; height:2px;">
+
+      <div class="list">
+        <div class="item history-day-page splits title">
           <div class="row">
-            <div class="col col-50">
-              <!--Duration-->
-              <p class="history-day-page head">Duration</p>
-              <p class="history-day-page label">{{dayDisplayDuration}}</p>
-            </div>
-            <div class="history-day-page vertical-line"></div>
-            <div class="col col-50">
-              <!--Distance-->
-              <p class="history-day-page head">Distance</p>
-              <p class="history-day-page label">{{dayDisplayDistance.toFixed(2)}}<span class="history-day-page miles">mi</span> </p>
-            </div>
-          </div>
-          <hr>
-          <div class="row">
-            <div class="col col-50">
-              <!--Pace-->
-              <p class="history-day-page head">Pace</p>
-              <p class="history-day-page label">{{dayDisplayPace.toFixed(2)}}<span class="history-day-page miles">min/mi</span></p>
-            </div>
-            <div class="history-day-page vertical-line"></div>
-            <div class="col col-50">
-              <!--Funds Raised-->
-              <p class="history-day-page head">Funds Raised</p>
-              <p class="history-day-page label">${{dayDisplayMoneyRaised.toFixed(2)}}</p>
-            </div>
-          </div>
-
-          <hr style="margin:0; height:2px;">
-
-          <div class="list">
-            <div class="item history-day-page splits title">
-              <div class="row">
-                <div class="col-25 history-day-page">Lap</div>
-                <div class="col-25 history-day-page">Distance</div>
-                <div class="col-25 history-day-page">Time</div>
-                <div class="col-25 history-day-page">Pace</div>
-              </div>
-            </div>
-
-            <div class="list-borderless history-day-page splits values" >
-              <div class="row" ng-repeat="lap in dayLapsForm">
-                <div class="col-25 history-day-page">{{lap.number}}</div>
-                <div class="col-25 history-day-page">{{lap.distance}}</div>
-                <div class="col-25 history-day-page">{{lap.time}}</div>
-                <div class="col-25 history-day-page">{{lap.pace}}</div>
-              </div>
-            </div>
+            <div class="col-25 history-day-page">Lap</div>
+            <div class="col-25 history-day-page">Distance</div>
+            <div class="col-25 history-day-page">Time</div>
+            <div class="col-25 history-day-page">Pace</div>
           </div>
         </div>
-      </ion-slide-page>
-      <ion-slide-page>
-        Run 2 of 3
-      </ion-slide-page>
-    </ion-slides>
+
+        <div class="list-borderless history-day-page splits values" >
+          <div class="row" ng-repeat="lap in lapsForm">
+            <div class="col-25 history-day-page">{{lap.number}}</div>
+            <div class="col-25 history-day-page">{{lap.distance}}</div>
+            <div class="col-25 history-day-page">{{lap.time}}</div>
+            <div class="col-25 history-day-page">{{lap.pace}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </ion-content>
 </ion-view>

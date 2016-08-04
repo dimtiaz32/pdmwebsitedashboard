@@ -1,15 +1,15 @@
 /**
  * Created by dev on 8/2/16.
  */
-angular.module('starter.appController', ['starter.appServices',
+angular.module('starter.appController', [
+  'starter.historyController',
+  'starter.appServices',
   'starter.charityServices',
   'starter.authServices',
   'starter.runServices',
   'starter.donationServices',
   'starter.userServices',
-
   'starter.historyServices',
-
   'starter.runServices',
   'ionic',
   'chart.js',
@@ -26,6 +26,15 @@ angular.module('starter.appController', ['starter.appServices',
 
     $scope.moneyRaised = 0;
 
+    $scope.fetchMonthHistory = function(){
+      console.log('fetchMonthHistory function called');
+      $rootScope.$broadcast("fetchHistoryMonth");
+    }
+
+    $scope.onActivityTabSelect = function(){
+      $rootScope.$broadcast('fetchMonthHistory');
+    };
+
     $scope.fetchMyPledges = function() {
       $rootScope.$broadcast("fetchMyPledges");
     }
@@ -34,9 +43,7 @@ angular.module('starter.appController', ['starter.appServices',
       $rootScope.$broadcast("fetchMySponsors");
     }
 
-    $scope.fetchMyHistory = function(){
-      $rootScope.$broadcast("fetchMyHistory");
-    };
+
 
     $rootScope.$on('fetchMySponsors', function() {
       DonationAPI.getAllSponsors($rootScope.getUserId()).success(function(data, status, headers, config){
@@ -108,9 +115,6 @@ angular.module('starter.appController', ['starter.appServices',
     var todayMonth = todaySplit[1];
     console.log('Today month: '  + todayMonth);
 
-    $scope.fetchMonthHistory = function(){
-      $rootScope.$broadcast('fetchMonthHistory');
-    }
 
     //log out
     $scope.logout = function() {

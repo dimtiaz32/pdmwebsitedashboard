@@ -81,7 +81,7 @@ h1.races {
   background-position: center;
 }
 
-.races.tile-container-one {
+.races.tile-container {
   height: 25%;
   width: 100%;
   margin-bottom: 1px;
@@ -89,7 +89,6 @@ h1.races {
   border-radius: 5px;
 
   background-size: cover;
-  background-repeat: no-repeat;
   background-position: center;
   background-image: url("../img/tree one.jpeg");
 }
@@ -102,7 +101,6 @@ h1.races {
   border-radius: 5px;
 
   background-size: cover;
-  background-repeat: no-repeat;
   background-position: center;
   background-image: url("../img/tree two.jpeg");
 }
@@ -119,12 +117,24 @@ h1.races {
   background-image: url("../img/tree three.jpeg");
 }
 
-.races.gradient {
+
+.races.find-tile-container {
+  height: 25%;
+  widht:100%;
+
+  margin-bottom: 1px;
+}
+.races.find-box {
   height: 100%;
   width: 100%;
-  background: linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) );
-}
 
+  border-radius: 5px;
+
+  background-image: url("../img/tree one.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+
+}
 /*My Races*/
 h1.my-races {
   font-family: "Helvetica Neue";
@@ -193,6 +203,14 @@ select.find-races.select-distance {
   margin-top: 10px;
   margin-bottom: 10px;
 
+}
+
+.chip {
+  color: #00b9be;
+}
+
+strong {
+  padding-right: 5px;
 }
 
 a.races {

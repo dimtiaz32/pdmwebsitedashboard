@@ -1,11 +1,11 @@
 <ion-view view-title="Charities" ng-controller="CharitiesCtrl">
   <ion-content>
-    <div class="charity-page charity-header" ng-show="!noCharity">
+    <div class="charity-page charity-header" ng-show="!noCharity" on-swipe-up="swipeGestureCharityDetail('swipe-up')" on-swipe-down="swipeGestureCharityDetail('swipe-down')">
       <h3>Every mile raises ${{moneyRaised}} for</h3>
       <hr class="charity-page">
       <h1>{{charityName}}</h1>
 
-      <div class="charity-page charity-detail" ng-show="isDetailDisplayed">
+      <div class="charity-page charity-detail" ng-show="isCharityDetailDisplayed">
         <hr class="charity-page">
         <ion-item class="charity-page charity-detail item-thumbnail-left">
           <img ng-src="{{charityAvatar}}">
@@ -27,13 +27,12 @@
           </div>
         </ion-item>
       </div>
-
       <button class="charity-page button-slide"
-        ng-class="isDetailDisplayed ? 'button-slide-down' : 'button-slide-up'"
-        ng-click="isDetailDisplayed = !isDetailDisplayed">
+              ng-class="isCharityDetailDisplayed ? 'button-slide-down' : 'button-slide-up'"
+              ng-click="toggleCharityDetail()">
       </button>
-
     </div>
+
     <ion-list class="charity-page charity-list" show-delete="shouldShowDelete" show-reorder="shouldShowReorder" can-swipe="listCanSwipe">
       <ion-item ng-repeat="charity in charities" class="charity-page charity-list item-thumbnail-left" ng-click="selectCharity('{{charity.name}}')">
         <div class="row">
