@@ -67,14 +67,15 @@
 
     <!--<button class="button button-full" style="background-color: #00b9be; color: white">Search</button>-->
 
-    <div class="races find-tile-container">
-      <div  class="races find-box" ng-repeat="race in races" ng-click="selectRace(race._id)">
+    <div class="races find-races-container" ng-repeat="race in races" ng-click="selectRace(race._id)">
+      <div class="races gradient">
         <h1 class="featured-race">{{race.name}}</h1>
-        <p class="races find-races-detail">Location: {{race.city}}</p>
-        <p class="races find-races-detail">Distance: {{race.distances}}</p>
-        <p class="races find-races-detail">Date: {{race.date | date:'MM/dd/yyyy'}}</p>
+        <p class="races races-detail">Location: {{race.city}}</p>
+        <p class="races races-detail">Distance: {{race.distances}}</p>
+        <p class="races races-detail">Date: {{race.date | date:'MM/dd/yyyy'}}</p>
       </div>
     </div>
+
 
   </ion-content>
 </ion-view>

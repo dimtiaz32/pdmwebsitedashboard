@@ -1,3 +1,9 @@
+.races.gradient {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) );
+}
+
 .races.featured-containter {
   height: 25%;
   widht:100%;
@@ -30,7 +36,7 @@ p.races.races-detail {
   font-size: small;
   color: white;
   padding-left: 10px;
-  margin-bottom: 0;
+  margin-bottom: auto;
 }
 
 h1.races {
@@ -41,18 +47,18 @@ h1.races {
   color: white;
 }
 
-.races.my-races-container {
+.races.my-races-container,
+.races.find-races-container,
+.races.past-races-container {
   height: 25%;
   width: 100%;
-  overflow: auto;
   margin-bottom: 1px;
 
   border-radius: 5px;
 
+  background-image: url("../img/tree one.jpeg");
   background-size: cover;
   background-repeat: no-repeat;
-  background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url("../img/tree one.jpeg");
-  background-position: center;
 }
 
 .races.find-races-container {
@@ -117,13 +123,15 @@ h1.races {
   background-image: url("../img/tree three.jpeg");
 }
 
-
 .races.find-tile-container {
   height: 25%;
   widht:100%;
 
   margin-bottom: 1px;
+
+  overflow: auto;
 }
+
 .races.find-box {
   height: 100%;
   width: 100%;
@@ -153,8 +161,6 @@ p.races.my-races-detail {
   margin-bottom: auto;
 }
 
-
-
 p.races.find-races-head {
   font-family: "Helvetica Neue";
   font-weight: lighter;
@@ -167,6 +173,8 @@ span.races.find-race-detail {
   font-family: "HelveticaNeue-Light";
   font-size: small;
   text-align: right;
+
+  margin-bottom: auto;
 }
 
 
