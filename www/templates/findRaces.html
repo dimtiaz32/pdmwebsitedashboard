@@ -1,7 +1,16 @@
 <ion-view view-title="Find Races">
+  <ion-nav-buttons side="secondary">
+    <button class="button button-icon icon ion-ios-search-strong" ng-click="showFilterBar()" style="color: white">
+    </button>
+  </ion-nav-buttons>
   <ion-content>
 
+
     <div class="races find-races-container" ng-repeat="race in races" ng-click="selectRace(race._id)">
+
+
+    <!--<div class="races find-races-container" ng-repeat="race in filteredRaces" ng-click="selectRace(race._id)">-->
+
       <div class="races gradient">
         <h1 class="featured-race">{{race.name}}</h1>
         <p class="races races-detail">Location: {{race.city}}</p>

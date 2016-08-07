@@ -79,9 +79,10 @@ angular.module('starter.raceController', ['starter.appServices',
             counter++;
             console.log('counter: ' + counter);
           }
+          $scope.pastRacesSubHeader = 'You have completed ' + counter +' races.'
         }
          else {
-          console.log('getUSersRaces data.length was less than 1');
+          console.log('getUsersRaces data.length was less than 1');
           $scope.pastRacesSubHeader = 'You have not completed a race yet!';
         }
       })
