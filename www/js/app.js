@@ -29,7 +29,8 @@ angular.module('starter', ['ionic',
   'ngCookies',
   'angular-svg-round-progressbar',
   'ion-datetime-picker',
-  'ngMaterial'
+  'ngMaterial',
+  'jett.ionic.filter.bar'
 ])
 
   .run(function($ionicPlatform, ngFB) {

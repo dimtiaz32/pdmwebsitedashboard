@@ -18,7 +18,7 @@ angular.module('starter.findRacesController', [
   'angular-svg-round-progressbar'])
 
 
-  .controller('FindRacesCtrl', function($rootScope, RaceAPI, $ionicModal, $window, $scope, CharityAPI, HistoryAPI, AuthAPI){
+  .controller('FindRacesCtrl', function($rootScope, RaceAPI, $ionicModal, $window, $scope, CharityAPI, HistoryAPI, AuthAPI, $ionicFilterBar){
     console.log('FindRacesCtrl entered with userId: ' +$rootScope.getUserId());
 
     $scope.races = [];
@@ -32,11 +32,31 @@ angular.module('starter.findRacesController', [
           $scope.races.push(data[i]);
         }
         $rootScope.hide();
+
+        for (var i = 0; i < $scope.races.length; i++) {
+          console.log($scope.races[i].keyWords);
+        }
+
       })
       .error(function(status){
         console.log('RunAPI getAllRAces call failed with status: '+ status);
         $rootScope.hide();
       });
+
+    /*Filter Bar Stuff*/
+    $scope.filteredRaces = [];
+
+    var filterBarInstance;
+
+    $scope.showFilterBar = function () {
+      filterBarInstance = $ionicFilterBar.show({
+        items: $scope.races,
+        update: function (filteredItems, filterText) {
+          $scope.filteredRaces = filteredItems;
+        },
+        filterProperties: ['keyWords']
+      });
+    };
 
     $scope.selectRace = function(id){
       console.log('selectRace called with id: ' + id);
@@ -44,6 +64,5 @@ angular.module('starter.findRacesController', [
       $rootScope.show('Loading race information');
       $window.location.href = ('#/app/raceProfile');
     }
-
 
   });

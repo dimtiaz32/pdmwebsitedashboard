@@ -1,6 +1,16 @@
 <ion-view view-title="Find Races">
+  <ion-nav-buttons side="secondary">
+    <button class="button button-icon icon ion-ios-search-strong" ng-click="showFilterBar()" style="color: white">
+    </button>
+  </ion-nav-buttons>
   <ion-content>
-
+<!--
+    <ion-list>
+      <ion-item collection-repeat="race in filteredRaces" >
+        <p>{{race.name}}</p>
+      </ion-item>
+    </ion-list>
+-->
     <!--<div class="races find-races-filter-container">-->
       <!--&lt;!&ndash;-->
       <!--<select class="find-races select-city">-->
@@ -67,7 +77,7 @@
 
     <!--<button class="button button-full" style="background-color: #00b9be; color: white">Search</button>-->
 
-    <div class="races find-races-container" ng-repeat="race in races" ng-click="selectRace(race._id)">
+    <div class="races find-races-container" ng-repeat="race in filteredRaces" ng-click="selectRace(race._id)">
       <div class="races gradient">
         <h1 class="featured-race">{{race.name}}</h1>
         <p class="races races-detail">Location: {{race.city}}</p>
