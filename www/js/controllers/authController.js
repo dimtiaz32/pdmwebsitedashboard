@@ -135,52 +135,19 @@ angular.module('starter.authController', ['starter.appServices',
 
     };
 
-    $scope.setUserCharity  = function(charityName){
-
-      $scope.charityHeader = charityName;
-      console.log('$scope.charityHeader: ' + $scope.charityHeader);
-      var charityHeaderString =  $scope.charityHeader.toString();
-      console.log('Charity Stringified: ' + charityHeaderString);
-      CharityAPI.getCharityByName(charityHeaderString)
+    $scope.setUserCharity  = function(charityId){
+      CharityAPI.getById(charityId)
         .success(function(data, status, headers, config){
-          if(data.length == 0){
-            $scope.noCharity = true;
-          } else {
-            var cId = data._id;
-            console.log('JSON returned charityId value of: ' + cId);
-            var cName = data.name;
-            console.log('getCharityByName returned cName value of: ' + cName);
-            var cDescription = data.description;
-            console.log('getCharityByName returned cDescription value of: ' + cDescription);
-            var cUrl = data.url;
-            console.log('getCharityByName returned cUrl value of: ' + cUrl);
-            var cAvatar = data.avatar;
-            console.log('getCharityByName returned cAvatar: ' + cAvatar);
-            $rootScope.setSelectedCharityName(cName);
-            console.log('$rootScope.getSelectedCharityName(): ' + $rootScope.getSelectedCharityName());
-            $rootScope.setSelectedCharityDescription(cDescription);
-            console.log('$rootScope.getSelectedCharityDescription(): ' + $rootScope.getSelectedCharityDescription());
-            $rootScope.setSelectedCharityUrl(cUrl);
-            console.log('$rootScope.getSelectedCharityUrl(): ' + $rootScope.getSelectedCharityUrl());
-            $rootScope.setSelectedCharityAvatar(cAvatar);
-            console.log('$rootScope.getSelectedCharityAvatar' + $rootScope.getSelectedCharityAvatar());
-            $rootScope.setSelectedCharityId(cId);
-            console.log('$rootScope.getSelectedCharityId(): ' + $rootScope.getSelectedCharityId());
-          }
-
-          $rootScope.$broadcast('fetchMySponsors');
-
-          if($scope.noSponsor = true){
-            console.log('fetchMySponsors returned no sponsors');
-          }
-
+          $rootScope.setSelectedCharityName(data.name);
+          $rootScope.setSelectedCharityDescription(data.description);
+          $rootScope.setSelectedCharityUrl(data.url);
+          console.log('$rootScope.selectedCharityName : ' + $rootScope.getSelectedCharityName());
+          console.log(' $rootScope.selectedCharityDescription: ' + $rootScope.getSelectedCharityDescription());
+          console.log(' $rootScope.selectedCharityUrl : ' + $rootScope.getSelectedCharityUrl());
         })
-        .error(function(err,status){
-          console.log('CharityAPI.getOne failed with error: ' + err);
-          console.log('Could not retrieve charity information');
-          $rootScope.verifyStatus(status);
-        })
-
+        .error(function(err, status){
+          console.log('Charity API getCharityById call failed with error: ' + err + ' and status: ' + status);
+        });
     }
 
 
@@ -232,10 +199,14 @@ angular.module('starter.authController', ['starter.appServices',
           $rootScope.setAvatar(data.user.avatar);
 
           // console.log(data.user.charityName);
-          if(data.user.charityName == undefined || data.user.charityName == ""){
+          if(data.user.charity == undefined){
             $scope.noCharity = true;
           } else {
-            $scope.setUserCharity(data.user.charityName);
+            $rootScope.setSelectedCharityId(data.user.charity.id);
+            $rootScope.setSelectedCharityMoneyRaised(data.user.charity.moneyRaised);
+            console.log('selectedCharityId: ' +  $rootScope.getSelectedCharityId());
+            console.log('selectedCharityMoneyRaised: ' + $rootScope.getSelectedCharityMoneyRaised());
+            $scope.setUserCharity($rootScope.getSelectedCharityId());
           }
 
 

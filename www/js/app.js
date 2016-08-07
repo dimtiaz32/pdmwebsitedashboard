@@ -61,6 +61,8 @@ angular.module('starter', ['ionic',
   }])
 
   .constant('CLIENT_HOST','http://localhost:8100/')
+  .constant('SERVER_HOST','https://dreamrun.herokuapp.com/')
+  //.constant('SERVER_HOST','http://localhost:5000/')
 
   .config(['$httpProvider', function($httpProvider) {
       $httpProvider.interceptors.push(function($q, $cookies) {
@@ -326,6 +328,6 @@ angular.module('starter', ['ionic',
     $urlRouterProvider.otherwise('/auth/signin');
     // $urlRouterProvider.otherwise('/app/run');
 
-    Stripe.setPublishableKey('pk_test_AcHwMgfwhswjYGUhawRw0her');
+    Stripe.setPublishableKey('pk_test_U5LiYvbQvafjstjzow9RjSzg');
 
   });
