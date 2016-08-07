@@ -1,33 +1,48 @@
-<ion-view view-title="Race Information">
+<ion-view view-title="Race Name{{raceName}}" class="race-profile">
   <ion-content>
     <ion-list>
-      <ion-item>
-        <label class="item">{{raceName}}</label>
-
-      </ion-item>
-      <ion-item>
-        <label class="item">Date</label>
-        <div class="item">{{raceDate}}</div>
-      </ion-item>
-
-      <ion-item>
-        <label class="item">Distance(s)</label>
-        <div class="item">{{raceDistances}}</div>
-      </ion-item>
-
-
-      <ion-item>
-        <label class="item">Associated Charities</label>
-        <div class="item">{{raceCharityPartners}}</div>
+      <ion-item class="heading">
+        <div class="row">
+          <div class="col">
+           <h1 class="race-name">Race Name{{raceName}}</h1>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <h2 class="race-date">2/5/2017{{raceDate}}</h2>
+          </div>
+          <div class="col">
+            <h2 class="race-distance">5k, 10k{{raceDistances}}</h2>
+          </div>
+        </div>
       </ion-item>
 
+      <ion-item class="item-text-wrap">
+        <p class="">DESCRIPTION - LOTS AND LOTS OF WORDS LOTS AND LOTS OF WORDS LOTS AND LOTS OF WORDS LOTS AND LOTS OF WORDS LOTS AND LOTS OF WORDS LOTS AND LOTS OF WORDS LOTS AND LOTS OF WORDS LOTS AND LOTS OF WORDS LOTS AND LOTS OF WORDS LOTS AND LOTS OF WORDS LOTS AND LOTS OF WORDS LOTS AND LOTS OF WORDS </p>
+        <div class="">{{raceDescription}}</div>
+      </ion-item>
+
+      <ion-item class="divider">
+        <div class="row">
+          <div class="col">
+            Partner Charities
+          </div>
+        </div>
+      </ion-item>
 
       <ion-item>
-        <label class="item">Description</label>
-        <div class="item">{{raceDescription}}</div>
+        <div class="">RANDOM CHARITY - TEST {{raceCharityPartners}}</div>
       </ion-item>
+      <ion-item>
+        <div class="">RANDOM CHARITY - TEST {{raceCharityPartners}}</div>
+      </ion-item>
+      <ion-item>
+        <div class="">RANDOM CHARITY - TEST {{raceCharityPartners}}</div>
+      </ion-item>
+
 
     </ion-list>
-    <button class="button button-positive" ng-click="registerForRace()">Sign Up For Race</button>
+    <button class="register button button-positive button-full" ng-click="registerForRace()">Sign Up For Race</button>
+    <button class="remove button button-positive button-full">Remove race</button>
   </ion-content>
 </ion-view>

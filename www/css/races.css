@@ -1,7 +1,7 @@
 .races.gradient {
   height: 100%;
   width: 100%;
-  background: linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) );
+  background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) );
 }
 
 .races.featured-containter {
@@ -11,18 +11,16 @@
   margin-bottom: 1px;
 }
 
-.races.featured-box {
-  height: 100%;
-  width: 100%;
-
-  border-radius: 5px;
-
-  background-image: url("../img/User Header Background.png");
-  background-size: cover;
-  background-repeat: no-repeat;
+h1.races {
+  font-family: "Helvetica Neue";
+  font-weight: 200;
+  font-size: xx-large;
+  padding-left: 10px;
+  color: white;
 }
 
-h1.featured-race {
+h1.featured-race,
+h1.races.races-head {
   font-family: "Helvetica Neue";
   font-weight: lighter;
   color: white;
@@ -37,14 +35,7 @@ p.races.races-detail {
   color: white;
   padding-left: 10px;
   margin-bottom: auto;
-}
-
-h1.races {
-  font-family: "Helvetica Neue";
-  font-weight: 200;
-  font-size: xx-large;
-  padding-left: 10px;
-  color: white;
+  margin-top: auto;
 }
 
 .races.my-races-container,
@@ -61,31 +52,7 @@ h1.races {
   background-repeat: no-repeat;
 }
 
-.races.find-races-container {
-  height: 25%;
-  width: 100%;
-  margin-bottom:  1px;
-
-  border-radius: 5px;
-
-  background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url("../img/tree two.jpeg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.races.past-races-container {
-  height: 25%;
-  width: 100%;
-  margin-bottom: 1px;
-
-  border-radius: 5px;
-
-  background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url("../img/tree three.jpeg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-}
+/*Old CSS Stuff*/
 
 .races.tile-container {
   height: 25%;
@@ -132,6 +99,17 @@ h1.races {
   overflow: auto;
 }
 
+.races.featured-box {
+  height: 100%;
+  width: 100%;
+
+  border-radius: 5px;
+
+  background-image: url("../img/User Header Background.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
 .races.find-box {
   height: 100%;
   width: 100%;
@@ -143,14 +121,80 @@ h1.races {
   background-repeat: no-repeat;
 
 }
-/*My Races*/
-h1.my-races {
-  font-family: "Helvetica Neue";
-  font-weight: 200;
-  font-size: x-large;
-  padding-left: 10px;
+
+/*Find Races*/
+.races.find-races-filter-container {
+  width: 100%;
+
+  border-radius: 5px;
+  margin-bottom: 1px;
+
+  background-color: white;
+
+  overflow: auto;
+}
+
+.chip {
+  color: #00b9be;
+}
+
+strong {
+  padding-right: 5px;
+}
+
+a.races {
+  text-decoration: none;
+}
+
+
+/*
+p.find-races.filter-head {
+  font-family: "HelveticaNeue-Light";
+  font-size: larger;
+  padding-left: 5px;
   padding-top: 5px;
-  color: white;
+  color: #00b9be;
+}
+
+select.find-races.select-city,
+select.find-races.select-month,
+select.find-races.select-distance {
+  font-family: "HelveticaNeue-Light";
+  color: #00b9be;
+  border: thin;
+  border-style: solid;
+  border-color: #00b9be;
+
+  margin-left: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+}
+
+.races.find-races-container {
+  height: 25%;
+  width: 100%;
+  margin-bottom:  1px;
+
+  border-radius: 5px;
+
+  background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url("../img/tree two.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.races.past-races-container {
+  height: 25%;
+  width: 100%;
+  margin-bottom: 1px;
+
+  border-radius: 5px;
+
+  background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url("../img/tree three.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 p.races.my-races-detail {
@@ -177,50 +221,12 @@ span.races.find-race-detail {
   margin-bottom: auto;
 }
 
-
-/*Find Races*/
-.races.find-races-filter-container {
-  width: 100%;
-
-  border-radius: 5px;
-  margin-bottom: 1px;
-
-  background-color: white;
-
-  overflow: auto;
-}
-
-p.find-races.filter-head {
-  font-family: "HelveticaNeue-Light";
-  font-size: larger;
-  padding-left: 5px;
+h1.my-races {
+  font-family: "Helvetica Neue";
+  font-weight: 200;
+  font-size: x-large;
+  padding-left: 10px;
   padding-top: 5px;
-  color: #00b9be;
+  color: white;
 }
-
-select.find-races.select-city,
-select.find-races.select-month,
-select.find-races.select-distance {
-  font-family: "HelveticaNeue-Light";
-  color: #00b9be;
-  border: thin;
-  border-style: solid;
-  border-color: #00b9be;
-
-  margin-left: 5px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-
-}
-
-.chip {
-  color: #00b9be;
-}
-
-strong {
-  padding-right: 5px;
-}
-
-a.races {
-  text-decoration: none;
-}
+*/
