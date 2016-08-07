@@ -43,8 +43,15 @@ angular.module('starter.findRacesController', [
         $rootScope.hide();
       });
 
+    $scope.selectRace = function(id){
+      console.log('selectRace called with id: ' + id);
+      $rootScope.setRaceId(id);
+      $rootScope.show('Loading race information');
+      $window.location.href = ('#/app/raceProfile');
+    }
+
     /*Filter Bar Stuff*/
-    $scope.filteredRaces = [];
+    $scope.filteredRaces = $scope.races; //This changes once the user uses the filter bar
 
     var filterBarInstance;
 
@@ -58,11 +65,6 @@ angular.module('starter.findRacesController', [
       });
     };
 
-    $scope.selectRace = function(id){
-      console.log('selectRace called with id: ' + id);
-      $rootScope.setRaceId(id);
-      $rootScope.show('Loading race information');
-      $window.location.href = ('#/app/raceProfile');
-    }
+
 
   });
