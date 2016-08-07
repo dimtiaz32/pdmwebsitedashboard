@@ -701,7 +701,7 @@ angular.module('starter.runController', ['starter.appServices',
         $rootScope.setRunPath($scope.distanceCoords);
         $scope.marker = new google.maps.Marker({
           position: currentCoords,
-          icon: '../img/PDM logo.png',
+          icon: '../img/blue-gps-tracker.png',
           map: $scope.map
 
         });

@@ -39,4 +39,10 @@ angular.module('starter.myRacesController', [
         console.log('RunAPI getUserRaces call failed with status: ' + status);
 
       });
+
+    $scope.selectRace = function(id){
+       console.log('selectRace entered with id: ' + id);
+      $rootScope.setRaceId(id);
+      $window.location.href = ('#/app/raceProfile');
+    }
   });
