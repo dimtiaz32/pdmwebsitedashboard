@@ -46,10 +46,33 @@ angular.module('starter.userServices', [])
 		  return $http.get(SERVER_HOST + 'user/find', {
 		    method: 'GET',
         params: {
-          params: email
+          email: email
         }
       });
+    },
+
+    isSignup: function(email) {
+      return $http.get(SERVER_HOST + 'user/email',{
+        method: 'GET',
+        params: {
+          email:email
+        }
+      })
+    },
+
+    sendMail: function(form) {
+      return $http.post(SERVER_HOST + 'user/email',form,{
+        method: 'POST'
+      })
+    },
+
+    changePassword: function(form) {
+      return $http.post(SERVER_HOST + 'user/password',form, {
+          method: 'POST'
+      })
     }
+
+
 
 
 
