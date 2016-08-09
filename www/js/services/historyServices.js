@@ -5,7 +5,7 @@
 
 angular.module('starter.historyServices', [])
 
-.factory('HistoryAPI', function($ionicLoading,$rootScope, $http, $window, SERVER_HOST){
+.factory('HistoryAPI', function($ionicLoading,$rootScope, $http, $window, SERVER_HOST, CLIENT_HOST){
   var base= "http://localhost:5000/";
   $rootScope.show = function(text){
     $rootScope.loading = $ionicLoading.show({
@@ -48,7 +48,7 @@ angular.module('starter.historyServices', [])
       });
     },
     getById: function(user, runId){
-      return $http.get(base+'history/id', {
+      return $http.get(SERVER_HOST+'history/id', {
         method: 'GET',
         params: {
           user: user,
@@ -57,7 +57,7 @@ angular.module('starter.historyServices', [])
       });
     },
     getByWeek: function(userId){
-      return $http.get(base+'history/week',  {
+      return $http.get(SERVER_HOST+'history/week',  {
         method:'POST',
         params: {
           userId: userId
@@ -74,11 +74,13 @@ angular.module('starter.historyServices', [])
       });
     },
 
-    getByMonthAndCharity: function(userId, form){
-      return $http.get(base+'history/charity/month', form, {
+    getByMonthAndCharity: function(userId, charityId, month){
+      return $http.get(SERVER_HOST+'history/charity/month',  {
         method: 'GET',
         params: {
-          userId: userId
+          userId: userId,
+          charityId: charityId,
+          month: month
         }
       });
     },

@@ -38,7 +38,7 @@ angular.module('starter.charityServices', ['ionic'])
     return $window.localStorage.charityName = "";
   };
   $rootScope.setSelectedCharityMoneyRaised = function(moneyRaised){
-    return $window.localStorage.totalCharityMoneyRaised= moneyRaised;
+    $window.localStorage.totalCharityMoneyRaised= moneyRaised;
   };
   $rootScope.getSelectedCharityMoneyRaised = function(){
     return $window.localStorage.totalCharityMoneyRaised;
@@ -46,7 +46,7 @@ angular.module('starter.charityServices', ['ionic'])
   //
   //
   $rootScope.setSelectedCharityDescription = function(charityDescription){
-    return $window.localStorage.charityDescription = charityDescription;
+    $window.localStorage.charityDescription = charityDescription;
   };
   $rootScope.getSelectedCharityDescription = function(){
     return $window.localStorage.charityDescription;
@@ -105,13 +105,13 @@ angular.module('starter.charityServices', ['ionic'])
 
   return{
     getAll: function(){
-      return $http.get(base+'charities', {
+      return $http.get(SERVER_HOST+'charities', {
         method: 'GET'
 
       });
     },
     getById: function(charityId){
-      return $http.get(base+'charity/id', {
+      return $http.get(SERVER_HOST+'charity/id', {
         method: 'GET',
         params: {
           charityId: charityId

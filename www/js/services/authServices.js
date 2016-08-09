@@ -5,7 +5,7 @@
 
 angular.module('starter.authServices', ['ngCookies'])
 
-.factory('AuthAPI', function($rootScope, $http, $window, $ionicLoading, $cookies, SERVER_HOST){
+.factory('AuthAPI', function($rootScope, $http, $window, $ionicLoading, $cookies, SERVER_HOST, CLIENT_HOST){
   // var base = 'https://dreamrun.herokuapp.com/';
   var base="http://localhost:5000/";
 
@@ -38,16 +38,20 @@ angular.module('starter.authServices', ['ngCookies'])
 
 
   $rootScope.setToken = function(token){
-    $cookies.put('token', token);
+    // $cookies.put('token', token);
+    $window.localStorage.token = token;
+
   };
 
   $rootScope.getToken = function(){
     //TODO: TRY PASSING A JSON CALL TO GET TOKEN AND SET IT HERE. MIGHT BE A BAD IDEA SECURITY WISE?
-    return $cookies.get('token')
+    // return $cookies.get('token')
+    return $window.localStorage.token;
   };
 
   $rootScope.removeToken = function(){
-    $cookies.put('token', null);
+    // $cookies.remove('token');
+    delete $window.localStorage.token;
   };
 
 
@@ -68,7 +72,7 @@ angular.module('starter.authServices', ['ngCookies'])
   // };
 
   $rootScope.setPassword = function(password){
-    return $window.localStorage.password = password;
+    $window.localStorage.password = password;
   };
   $rootScope.getPassword = function(){
     return $window.localStorage.password;
@@ -107,7 +111,7 @@ angular.module('starter.authServices', ['ngCookies'])
   };
 
   $rootScope.setSelectedCharity = function(charity){
-    return $window.localStorage.selectedCharity = charity;
+    $window.localStorage.selectedCharity = charity;
   };
 
   $rootScope.getSelectedCharity = function(){
@@ -153,15 +157,13 @@ angular.module('starter.authServices', ['ngCookies'])
 
   return {
     signin: function(form){
-      return $http.post(base+'authentication/signin', form);
+      return $http.post(SERVER_HOST+'authentication/signin', form);
     },
     signup: function(form){
-      return $http.post(base+'authentication/signup', form);
+      return $http.post(SERVER_HOST+'authentication/signup', form);
     },
     signout: function(){
-      return $http.get(SERVER_HOST + 'authentication/signout', {
-        method: 'GET'
-      });
+      return $http.post(SERVER_HOST + 'authentication/signout');
     },
     signinByFB: function(form) {
       return $http.post(SERVER_HOST + 'authentication/facebook',form);

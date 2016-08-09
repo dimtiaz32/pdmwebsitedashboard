@@ -84,8 +84,16 @@ angular.module('starter.raceServices', [])
           }
         });
       },
+      getPastRaces: function(userId){
+        return $http.get(SERVER_HOST+'races/usersPast', {
+          method: 'GET',
+          params: {
+            userId: userId
+          }
+        });
+      },
       removeRace: function(raceId, userId){
-        return $http.delete(base+'races/myRaces',  {
+        return $http.delete(SERVER_HOST+'races/myRaces',  {
           method: 'DELETE',
           params: {
             raceId: raceId,

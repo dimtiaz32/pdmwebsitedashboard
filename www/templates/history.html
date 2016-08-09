@@ -13,18 +13,18 @@
         <ion-slides options="slideOptions" slider="data.slider">
 
           <!--TODO: change background image based on charity in the history.css using charities.css-->
-          <ion-slide-page class="charity-banner">
+          <ion-slide-page class="charity-banner" ng-show="!noTopOne">
             <div class="charity-name">
-              Teens Run DC
+              {{charityOne.name}}
             </div>
             <div class="spacer">
             </div>
             <div class="detail-title row">
               Impact
             </div>
-            <div class="detail row">ionic
+            <div class="detail row">
               <div class="funds col col-50 col-center">
-                $400 <span class="units" style="font-size: small">raised</span>
+                ${{charityOne.moneyRaised}} <span class="units" style="font-size: small">raised</span>
               </div>
               <div class="impact col col-50 col-center">
                 40 students put through college
@@ -34,15 +34,43 @@
 
           </ion-slide-page>
 
-          <ion-slide-page class="charity-banner">
-              <div class="charity-name">
-                Back on my Feet
+          <ion-slide-page class="charity-banner" ng-show="!noTopTwo">
+            <div class="charity-name">
+              {{charityTwo.name}}
+            </div>
+            <div class="spacer">
+            </div>
+            <div class="detail-title row">
+              Impact
+            </div>
+            <div class="detail row">
+              <div class="funds col col-50 col-center">
+                ${{charityTwo.moneyRaised}} <span class="units" style="font-size: small">raised</span>
               </div>
+              <div class="impact col col-50 col-center">
+                40 students put through college
+              </div>
+
+            </div>
           </ion-slide-page>
 
-          <ion-slide-page class="charity-banner">
+          <ion-slide-page class="charity-banner" ng-show="!noTopThree">
             <div class="charity-name">
-              Girls on the Run DC
+              {{charityThree.name}}
+            </div>
+            <div class="spacer">
+            </div>
+            <div class="detail-title row">
+              Impact
+            </div>
+            <div class="detail row">
+              <div class="funds col col-50 col-center">
+                ${{charityThree.moneyRaised}} <span class="units" style="font-size: small">raised</span>
+              </div>
+              <div class="impact col col-50 col-center">
+                40 students put through college
+              </div>
+
             </div>
           </ion-slide-page>
 
@@ -178,10 +206,10 @@
                   width="300"
                   height="150"
                   chart-data="data"
-                  chart-labels="labels | date:'MM/dd/yyyy'"
                   chart-series="series"
                   chart-colours="colors"
                   chart-options="options"
+                  chart-labels="labels | date:'MM/dd/yyyy'"
                   chart-click="onClick">
           </canvas>
 

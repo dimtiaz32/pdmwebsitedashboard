@@ -27,6 +27,9 @@ angular.module('starter.myRacesController', [
         console.log('RunAPI getUserRaces call succeeded');
         //check for data length before parsing
         for(var i=0; i< data.length; i++){
+          var tempDistances = data[i].distances;
+          dSplit = tempDistances.to
+
           $scope.myRaces.push(data[i]);
         }
         if(data.length == 0){

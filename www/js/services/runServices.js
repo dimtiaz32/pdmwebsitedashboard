@@ -3,7 +3,7 @@
  */
 angular.module('starter.runServices', ['ionic'])
 .factory('RunAPI', function($rootScope, $http, $ionicLoading, $window, SERVER_HOST){
-  var base = 'http://localhost:5000/';
+  // var base = 'http://localhost:5000/';
 
   $rootScope.show = function(text){
     $rootScope.loading = $ionicLoading.show({
@@ -144,7 +144,7 @@ angular.module('starter.runServices', ['ionic'])
 
     saveRun: function(form){
       // return $http.post(SERVER_HOST+'history', form);
-      return $http.post(base+'history', form);
+      return $http.post(SERVER_HOST+'history', form);
     }
 
   }

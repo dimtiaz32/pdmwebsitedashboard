@@ -176,10 +176,6 @@ angular.module('starter.authController', ['starter.appServices',
           $rootScope.setName($scope.user.name);
           console.log('user name localStorage set to: ' + $rootScope.getName());
 
-          $scope.user.password = data.user.password;
-          console.log('$scope.user.password set as: ' + $scope.user.password);
-          $rootScope.setPassword($scope.user.password);
-
           $scope.user.email = data.user.email;
           console.log('$scope.user.email set to: ' + $scope.user.email);
           $rootScope.setEmail($scope.user.email);
@@ -199,9 +195,11 @@ angular.module('starter.authController', ['starter.appServices',
           $rootScope.setAvatar(data.user.avatar);
 
           // console.log(data.user.charityName);
-          if(data.user.charity == undefined){
+          if(data.user.charity.id == null){
+            console.log('user.charityId is null');
             $scope.noCharity = true;
           } else {
+            console.log('data.user.charity.id: ' + data.user.charity.id);
             $rootScope.setSelectedCharityId(data.user.charity.id);
             $rootScope.setSelectedCharityMoneyRaised(data.user.charity.moneyRaised);
             console.log('selectedCharityId: ' +  $rootScope.getSelectedCharityId());

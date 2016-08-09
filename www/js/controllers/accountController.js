@@ -22,7 +22,7 @@ angular.module('starter.accountController', ['starter.appServices',
 
 
 
-  .controller('AccountCtrl', function($rootScope, AuthAPI, UserAPI, $window, $scope, $ionicPopup) {
+  .controller('AccountCtrl', function($rootScope, AuthAPI, UserAPI, $window, $scope, $ionicPopup, $ionicHistory) {
 
     $rootScope.$on('initial', function(){
       console.log("---------start account ctrl initial---------");
@@ -238,4 +238,17 @@ angular.module('starter.accountController', ['starter.appServices',
       $scope.saveIsHidden = true;
     })
 
+
+    $scope.logout = function(){
+      $window.localStorage.clear();
+      $rootScope.removeToken();
+      console.log('token checkcheck: ' + $rootScope.getToken());
+      console.log('Signout succeeded, redirecting to login');
+      //redirect to login
+      $window.location.href = ('#/auth/signin');
+    //   AuthAPI.signout()
+    //     .success(function(data, status, headers, config){
+    //
+    //     })
+    }
   })

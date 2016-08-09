@@ -20,7 +20,7 @@ angular.module('starter.historyController', [
 
 
 
-  .controller('HistoryCtrl', function($scope, $rootScope, $window, HistoryAPI, $ionicSlideBoxDelegate, AuthAPI, UserAPI, $filter, roundProgressService, $timeout, $ionicPopup) {
+  .controller('HistoryCtrl', function($scope, $rootScope, $window, HistoryAPI, CharityAPI, $ionicSlideBoxDelegate, AuthAPI, UserAPI, $filter, roundProgressService, $timeout, $ionicPopup) {
 
 
 
@@ -352,7 +352,7 @@ angular.module('starter.historyController', [
         labels: {
           display: true,
           fontFamily: "Helvetica Neue",
-          boxWidth: 0,
+          boxWidth: 0
         }
       },
 
@@ -385,6 +385,88 @@ angular.module('starter.historyController', [
       $scope.matchLabelToDay([bar[0].label]);
     };
 
+    $scope.topThree = [];
+    $scope.charityOne = {
+      name: String,
+      moneyRaised: Number,
+    };
+    $scope.charityTwo = {
+      name: String,
+      moneyRaised: Number,
+    };
+    $scope.charityThree = {
+      name: String,
+      moneyRaised: Number,
+    };
+
+    $scope.getCharityName = function(id, moneyRaised){
+      $scope.charityNames = [];
+      $scope.charityMoneyRaised = [];
+
+      console.log('getCharityName entered with id: ' + id +'   and moneyRaised: ' + moneyRaised);
+      CharityAPI.getById(id)
+        .success(function(data, status, headers, config){
+          console.log('data.name: ' + data.name);
+          console.log('moneyRaised: ' + moneyRaised);
+          var name = data.name;
+          console.log('name name: ' + name);
+          $scope.charityNames.push(name);
+          $scope.charityMoneyRaised.push(moneyRaised)
+          console.log('charityNames.length: ' + $scope.charityNames.length);
+          console.log('charityNames[0]: ' + $scope.charityNames[0]);
+          switch($scope.charityNames.length){
+            case 1:
+              $scope.charityOne = {name: $scope.charityNames[0], moneyRaised: $scope.charityMoneyRaised[0]};
+              break;
+            case 2:
+              $scope.charityTwo = {name: $scope.charityNames[1], moneyRaised: $scope.charityMoneyRaised[1]};
+              break;
+            case 3:
+              $scope.charityThree = {name: $scope.charityNames[2], moneyRaised: $scope.charityMoneyRaised[2]};
+              break;
+          }
+
+          console.log('charityNames: ' + JSON.stringify($scope.charityNames));
+          console.log('charityMoneyRaised: ' + JSON.stringify($scope.charityMoneyRaised));
+        })
+        .error(function(err, status){
+          console.log('getCharityName error: ' + err + ' status: ' + status);
+        })
+
+
+    }
+
+    UserAPI.getTopThreeCharities($rootScope.getUserId())
+      .success(function(data, status, headers, config){
+        console.log('UserAPI getTopThreeCharities call succeeded');
+        console.log('getTopThreeCharities length: ' + data.pastCharities.length);
+
+        // for(var i =0; i< data.pastCharities.length; i++){
+        //   $scope.topThree.push(data.pastCharities[i]);
+        //   console.log('topThreeCharities: ' + JSON.stringify($scope.topThree));
+        //   $scope.getCharityName($scope.topThree[i].id, $scope.topThree[i].moneyRaised);
+        //
+        // }
+
+
+        for(var i =0; i< 3; i++){
+          $scope.topThree.push(data.pastCharities[i]);
+          console.log('topThreeCharities: ' + JSON.stringify($scope.topThree));
+          $scope.getCharityName($scope.topThree[i].id, $scope.topThree[i].moneyRaised);
+
+        }
+
+
+
+
+
+
+
+
+      })
+      .error(function(err, status){
+        console.log('UserAPI getTopThreeCharities call failed with error: ' + err +'  and status: ' + status);
+      });
 
     var today = new Date();
     today.setDate(today.getDate());
@@ -535,6 +617,7 @@ angular.module('starter.historyController', [
 
         }
 
+        $scope.series = ['Miles Run'];
 
         $scope.data = [[
           $scope.distanceByDate[6],

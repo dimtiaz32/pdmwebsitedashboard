@@ -1,8 +1,8 @@
 angular.module('starter.userServices', [])
 
-.factory('UserAPI', function($rootScope, $http, $ionicLoading, $window){
+.factory('UserAPI', function($rootScope, $http, $ionicLoading, $window, SERVER_HOST, CLIENT_HOST){
 	// var base = "https://dreamrun.herokuapp.com/";
-  var base="http://localhost:5000/";
+  // var base="http://localhost:5000/";
   $rootScope.show = function(text){
     $rootScope.loading = $ionicLoading.show({
       content: text ? text : 'Loading',
@@ -44,7 +44,7 @@ angular.module('starter.userServices', [])
 		//actual account related activities should be handled by auth
 
 		getOne: function(email){
-		  return $http.get(base + 'user/find', {
+		  return $http.get(SERVER_HOST + 'user/find', {
 		    method: 'GET',
         params: {
           params: email
@@ -52,7 +52,7 @@ angular.module('starter.userServices', [])
       });
     },
     getGoals: function(userId){
-      return $http.get(base+'user/goals', {
+      return $http.get(SERVER_HOST+'user/goals', {
         method: 'GET',
         params: {
           userId: userId
@@ -60,7 +60,7 @@ angular.module('starter.userServices', [])
       });
     },
     updateDailyGoals: function(userId, form){
-      return $http.post(base+'user/dailyGoals', form, {
+      return $http.post(SERVER_HOST+'user/dailyGoals', form, {
         method: 'POST',
         params: {
           userId: userId
@@ -69,7 +69,7 @@ angular.module('starter.userServices', [])
     },
 
     updateWeeklyGoals: function(userId, form){
-      return $http.post(base+'user/weeklyGoals', form, {
+      return $http.post(SERVER_HOST+'user/weeklyGoals', form, {
         method: 'POST',
         params: {
           userId: userId
@@ -77,7 +77,7 @@ angular.module('starter.userServices', [])
       });
     },
     updateYearlyGoals: function(userId, form){
-      return $http.post(base+'user/yearlyGoals', form, {
+      return $http.post(SERVER_HOST+'user/yearlyGoals', form, {
         method:'POST',
         params:{
           userId: userId
@@ -85,7 +85,7 @@ angular.module('starter.userServices', [])
       });
     },
     getDayProgress: function(userId){
-      return $http.get(base+'history/dayProgress',{
+      return $http.get(SERVER_HOST+'history/dayProgress',{
         method: 'GET',
         params: {
           userId: userId
@@ -93,7 +93,7 @@ angular.module('starter.userServices', [])
       });
     },
     getWeekProgress: function(userId){
-      return $http.get(base+'history/weekProgress', {
+      return $http.get(SERVER_HOST+'history/weekProgress', {
         method: 'GET',
         params: {
           userId:userId
@@ -101,7 +101,7 @@ angular.module('starter.userServices', [])
       });
     },
     getYearProgress: function(userId){
-      return $http.get(base+'history/yearProgress', {
+      return $http.get(SERVER_HOST+'history/yearProgress', {
         method: 'GET',
         params: {
           userId: userId
@@ -109,7 +109,7 @@ angular.module('starter.userServices', [])
       });
     },
     getSelectedCharity: function(userId){
-      return $http.get(base+'user/selectedCharity', {
+      return $http.get(CLIENT_HOST+'user/selectedCharity', {
         method: 'GET',
         params: {
           userId: userId
@@ -117,7 +117,7 @@ angular.module('starter.userServices', [])
       });
     },
     setSelectedCharity : function(userId, form){
-      return $http.post(base+'user/selectedCharity', form ,{
+      return $http.post(CLIENT_HOST+'user/selectedCharity', form ,{
         method: 'POST',
         params: {
           userId: userId
@@ -125,7 +125,7 @@ angular.module('starter.userServices', [])
       });
     },
     getPastCharities: function(userId){
-      return $http.get(base+'user/pastCharities', {
+      return $http.get(SERVER_HOST+'user/pastCharities', {
         method:'GET',
         params: {
           userId: userId
@@ -133,7 +133,7 @@ angular.module('starter.userServices', [])
       });
     },
     updatePastCharities: function(userId, form){
-      return $http.post(base+'user/pastCharities', form, {
+      return $http.post(SERVER_HOST+'user/pastCharities', form, {
         method: 'POST',
         params: {
           userId: userId
@@ -141,7 +141,12 @@ angular.module('starter.userServices', [])
       });
     },
     getTopThreeCharities: function(userId){
-      return $http.get(base+'user/topThreeCharities')
+      return $http.get(SERVER_HOST+'user/topThreeCharities', {
+        method: 'GET',
+        params: {
+          userId: userId
+        }
+      });
     }
 	}
 });

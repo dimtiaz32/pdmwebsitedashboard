@@ -34,7 +34,7 @@
     </div>
 
     <ion-list class="charity-page charity-list" show-delete="shouldShowDelete" show-reorder="shouldShowReorder" can-swipe="listCanSwipe">
-      <ion-item ng-repeat="charity in charitiesDisplayList" class="charity-page charity-list item-thumbnail-left" ng-click="selectCharity('{{charity.id}}')">
+      <ion-item ng-repeat="charity in charitiesDisplayList" class="charity-page charity-list item-thumbnail-left" ng-click="selectCharity(charity.id, charity.moneyRaised)">
         <div class="row">
           <div class="col">
             <img ng-src="{{charity.logo}}">

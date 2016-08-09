@@ -146,6 +146,36 @@ angular.module('starter.charityController', ['starter.appServices',
     return false;
   }
 
+  var today = new Date();
+  console.log('today: ' + today);
+  var todaySplitter = today.toString().split(' ');
+  $scope.charityMonth = todaySplitter[1];
+  console.log('charityMonth: ' + $scope.charityMonth);
+
+  $scope.getMonthMoneyRaised = function(cId){
+    console.log('charityMonth from getMonthMoney: ' + $scope.charityMonth);
+    HistoryAPI.getByMonthAndCharity(userId, cId, $scope.charityMonth)
+      .success(function (data, status, headers, config) {
+        console.log('HistoryAPI getMonthAndCharity call succeeded');
+        console.log('data.length: ' + data.length);
+        console.log('data: ' + JSON.stringify(data));
+        if (data.length > 1) {
+          for (var i = 0; i < data.length; i++) {
+            $scope.selectedCharityDisplay.monthMoneyRaised = $scope.selectedCharityDisplay.monthMoneyRaised + data[i].moneyRaised;
+            console.log('monthMoneyRaised: ' + $scope.selectedCharityDisplay.monthMoneyRaised);
+          }
+        } else {
+          $scope.selectedCharityDisplay.monthMoneyRaised = data[0].moneyRaised;
+          console.log('selectedCharityDisplay.monthMoneyRaised: ' + $scope.selectedCharityDisplay.monthMoneyRaised);
+        }
+      })
+      .error(function (err, status) {
+        console.log('HistoryAPI getMonthAndCharity call failed with: ' + err + ' and status: ' + status);
+      });
+  };
+
+  $scope.getMonthMoneyRaised($rootScope.getSelectedCharityId());
+
   CharityAPI.getAll()
     .success(function(data, status, headers, config){
       console.log("API call getAll succeeded");
@@ -224,9 +254,11 @@ angular.module('starter.charityController', ['starter.appServices',
 
           for(var i =0; i< $scope.charitiesList.length; i++){
             var id = $scope.charitiesList[i]._id;
+            console.log('id: ' + id)
             money = $scope.checkPastIds(id);
             console.log('money: ' + money);
             var lol = {
+              id: id,
               name: $scope.charitiesList[i].name,
               description: $scope.charitiesList[i].description,
               url: $scope.charitiesList[i].url,
@@ -319,9 +351,10 @@ angular.module('starter.charityController', ['starter.appServices',
 
 
 
-  $scope.selectCharity = function(charityId) {
+  $scope.selectCharity = function(charityId, moneyRaised) {
 
     console.log('charityId: ' + charityId);
+    console.log('moneyRaised: ' + moneyRaised);
 
     console.log('$rootScope.getSelectedCharityMoneyRaised(): ' + $rootScope.getSelectedCharityMoneyRaised());
     console.log('$window.localStorage.totalCharityMoneyRaised: ' + $window.localStorage.totalCharityMoneyRaised);
@@ -366,11 +399,7 @@ angular.module('starter.charityController', ['starter.appServices',
     //TODO: QUERY MONTH OF RUNS TO GET MONTH MONEY RAISED
 
 
-    var today = new Date();
-    console.log('today: ' + today);
-    var todaySplitter = today.toString().split(' ');
-    var charityMonth = todaySplitter[1];
-    console.log('charityMonth: ' + charityMonth);
+
 
     console.log($rootScope.getUserId());
 
@@ -380,8 +409,12 @@ angular.module('starter.charityController', ['starter.appServices',
       console.log('$scope.selectedCharityDisplay.totalMoneyRaised: '+ $scope.selectedCharityDisplay.totalMoneyRaised);
     }
 
+
+
+    console.log('charityId for post: ' + charityId);
+
     UserAPI.setSelectedCharity(userId,
-      {charityId: charityId, moneyRaised: $scope.selectedCharityDisplay.totalMoneyRaised})
+      {charityId: charityId, moneyRaised: moneyRaised})
       .success(function (data, status, headers, config) {
         console.log('UserAPI setSelectedCharity call succeeded');
         CharityAPI.getById(charityId)
@@ -393,9 +426,13 @@ angular.module('starter.charityController', ['starter.appServices',
             $rootScope.setSelectedCharityDescription(data.description);
             $rootScope.setSelectedCharityUrl(data.url);
             $rootScope.setSelectedCharityId(data._id);
+            $rootScope.setSelectedCharityMoneyRaised(moneyRaised);
             $scope.selectedCharityDisplay.name = data.name;
             $scope.selectedCharityDisplay.description = data.description;
             $scope.selectedCharityDisplay.url = data.url;
+            $scope.selectedCharityDisplay.totalMoneyRaised = moneyRaised;
+
+            $scope.getMonthMoneyRaised(data._id);
 
           })
           .error(function (err, status) {
@@ -409,23 +446,8 @@ angular.module('starter.charityController', ['starter.appServices',
 
     console.log('$rootScope.getSelectedCharityId(): ' + $rootScope.getSelectedCharityId());
     console.log('charityMonth: ' + charityMonth);
-    HistoryAPI.getByMonthAndCharity(userId,
-      {charityId: $rootScope.getSelectedCharityId(), month: charityMonth})
-      .success(function (data, status, headers, config) {
-        console.log('HistoryAPI getMonthAndCharity call succeeded');
-        console.log('data.length: ' + data.length);
-        console.log('data: ' + data);
-        if (data.length > 0) {
-          for (var i = 0; i < data.length; i++) {
-            $scope.selectedCharityDisplay.monthMoneyRaised = $scope.selectedCharityDisplay.monthMoneyRaised + data[i].moneyRaised;
-            console.log('monthMoneyRaised: ' + $scope.selectedCharityDisplay.monthMoneyRaised);
-          }
-        } else {
-          $scope.selectedCharityDisplay.monthMoneyRaised = 0;
-        }
-      })
-      .error(function (err, status) {
-        console.log('HistoryAPI getMonthAndCharity call failed with: ' + err + ' and status: ' + status);
-      });
+
+
+
   }
 });
