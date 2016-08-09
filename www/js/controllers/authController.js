@@ -60,11 +60,11 @@ angular.module('starter.authController', ['starter.appServices',
 
     };
     $scope.createUser = function(){
-      var firstName = this.user.firstName;
-      var lastName = this.user.lastName;
-      var email  =  this.user.email;
-      var password = this.user.password;
-      var charity = this.user.charity;
+      var firstName = this.user.firstName.trim();
+      var lastName = this.user.lastName.trim();
+      var email  =  this.user.email.trim().toLowerCase();
+      var password = this.user.password.trim();
+      var charity = this.user.charity.trim();
 
 
       if(!firstName){
@@ -121,7 +121,7 @@ angular.module('starter.authController', ['starter.appServices',
 
   .controller("ResetCtrl",function($scope,$rootScope,$location, UserAPI, $window){
 
-      $scope.email = $location.search().email;
+      $scope.email = $location.search().email.trim().toLowerCase();
       $scope.token = $location.search().token;
       $scope.data = {
         newPassword: "",
@@ -191,8 +191,8 @@ angular.module('starter.authController', ['starter.appServices',
 
 
     $scope.login = function(){
-      var email = this.user.email;
-      var password = this.user.password;
+      var email = this.user.email.trim().toLowerCase();
+      var password = this.user.password.trim();
 
       if(!email){
         $rootScope.notify("Login failed. Please enter a valid email address");
@@ -209,15 +209,15 @@ angular.module('starter.authController', ['starter.appServices',
         password: password
       })
         .success(function(data, status, headers, config){
-          var firstName = data.user.name.first;
-          var lastName = data.user.name.last;
+          var firstName = data.user.name.first.trim();
+          var lastName = data.user.name.last.trim();
 
           $scope.user.name = firstName + ' ' + lastName;
           console.log('$scope.name set as: ' + $scope.user.name);
           $rootScope.setName($scope.user.name);
           console.log('user name localStorage set to: ' + $rootScope.getName());
 
-          $scope.user.email = data.user.email;
+          $scope.user.email = data.user.email.trim();
           console.log('$scope.user.email set to: ' + $scope.user.email);
           $rootScope.setEmail($scope.user.email);
           console.log('Email set as: ' + $rootScope.getEmail());
@@ -236,7 +236,7 @@ angular.module('starter.authController', ['starter.appServices',
           $rootScope.setAvatar(data.user.avatar);
 
           // console.log(data.user.charityName);
-          if(data.user.charity.id == null){
+          if(data.user.charity == null || data.user.charity.id == null){
             console.log('user.charityId is null');
             $scope.noCharity = true;
           } else {
@@ -352,13 +352,13 @@ angular.module('starter.authController', ['starter.appServices',
               } else {
                 console.log("email:" + JSON.stringify($scope.data.email));
                 e.preventDefault();
-                UserAPI.isSignup($scope.data.email).success(function(data){
+                UserAPI.isSignup($scope.data.email.trim().toLowerCase()).success(function(data){
                    console.log("check is existed:" +  JSON.stringify(data));
                    if(data.isExisted) {
                      console.log("success,email is existed");
                      $rootScope.setToken(data.token);
                      $ionicPopup._popupStack[0].responseDeferred.resolve();
-                     UserAPI.sendMail({email:$scope.data.email}).success(function(data){
+                     UserAPI.sendMail({email:$scope.data.email.trim().toLowerCase()}).success(function(data){
                         console.log("send mail success");
                      }).error(function(data){
                         console.log("send mail failed");
