@@ -7,7 +7,7 @@
         <h1 class="featured-race">{{race.name}}</h1>
         <p class="races races-detail">Location: {{race.city}}</p>
         <p class="races races-detail">Date: {{race.date | date:'MM/dd/yyyy'}}</p>
-        <p class="races races-detail">Distance:</p><div ng-repeat="distance in raceDistances">{{distance.distance}}</div>
+        <p class="races races-detail">Distance: {{displayDistances(raceDistances)}}</p>
       </div>
     </div>
 <!--

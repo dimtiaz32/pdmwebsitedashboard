@@ -32,6 +32,7 @@ angular.module('starter.pastRacesController', [
           $scope.raceDate = data[i].date;
           $scope.raceCity = data[i].city;
           // $scope.raceDistances = data.distances;
+          console.log(data[i].distances);
           var tempDistanceHolder = data[i].distances;
           var distanceSplit = tempDistanceHolder.toString().split(',');
           console.log('distanceSplit: ' + distanceSplit);
@@ -41,6 +42,7 @@ angular.module('starter.pastRacesController', [
               $scope.raceDistances.push({distance: fDistance});
 
             }
+
           }
 
           $scope.pastRacesDisplay.push({name: $scope.raceName, date: $scope.raceDate,
@@ -57,6 +59,17 @@ angular.module('starter.pastRacesController', [
       console.log('selectRace entered with id: ' + id);
       $rootScope.setRaceId(id);
       $window.location.href = ('#/app/raceProfile');
+    }
+
+    $scope.displayDistances = function(distances) {
+      distanceString = "";
+      for (var i = 0; i < distances.length; i++) {
+        distanceString += (distances[i].distance + "km");
+        if (i < (distances.length - 1)) {
+          distanceString += ", "
+        }
+      }
+      return distanceString;
     }
 
   });

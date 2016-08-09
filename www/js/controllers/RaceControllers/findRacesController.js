@@ -48,7 +48,19 @@ angular.module('starter.findRacesController', [
       $rootScope.setRaceId(id);
       $rootScope.show('Loading race information');
       $window.location.href = ('#/app/raceProfile');
-    }
+    };
+
+    $scope.displayDistanceForRace = function(race) {
+      distanceArray = race.distances.split(",");
+      distanceString = "";
+      for (var i = 0; i < distanceArray.length; i++) {
+        distanceString += distanceArray[i] + "km";
+        if (i < (distanceArray.length - 1)) {
+          distanceString += ", ";
+        }
+      }
+      return distanceString;
+    };
 
     /*Filter Bar Stuff*/
     $scope.filteredRaces = $scope.races; //This changes once the user uses the filter bar

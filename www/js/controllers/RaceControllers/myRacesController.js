@@ -48,4 +48,6 @@ angular.module('starter.myRacesController', [
       $rootScope.setRaceId(id);
       $window.location.href = ('#/app/raceProfile');
     }
+
+
   });

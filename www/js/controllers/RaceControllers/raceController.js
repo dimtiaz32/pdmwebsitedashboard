@@ -67,7 +67,19 @@ angular.module('starter.raceController', ['starter.appServices',
       console.log('select race called with id: ' + id);
       $rootScope.setRaceId(id);
       $window.location.href = ('#/app/raceProfile');
-    }
+    };
+
+    $scope.displayDistanceForRace = function(race) {
+      distanceArray = race.distances.split(",");
+      distanceString = "";
+      for (var i = 0; i < distanceArray.length; i++) {
+        distanceString += distanceArray[i] + "km";
+        if (i < (distanceArray.length - 1)) {
+          distanceString += ", ";
+        }
+      }
+      return distanceString;
+    };
 
     RaceAPI.getUserRaces($rootScope.getUserId())
       .success(function(data, status, headers, config){
