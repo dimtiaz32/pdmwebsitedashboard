@@ -3,26 +3,26 @@
     <div class="charity-page charity-header" ng-show="!noCharity" on-swipe-up="swipeGestureCharityDetail('swipe-up')" on-swipe-down="swipeGestureCharityDetail('swipe-down')">
       <h3>Every mile raises ${{moneyRaised}} for</h3>
       <hr class="charity-page">
-      <h1>{{charityName}}</h1>
+      <h1>{{selectedCharityDisplay.name}}</h1>
 
       <div class="charity-page charity-detail" ng-show="isCharityDetailDisplayed">
         <hr class="charity-page">
         <ion-item class="charity-page charity-detail item-thumbnail-left">
           <img ng-src="{{charityAvatar}}">
-          <a ng-href="{{charityUrl}}">{{charityUrl}}</a>
-          <p class="description">{{charityDescription}}</p>
+          <a ng-href="{{charityUrl}}">{{selectedCharityDisplay.url}}</a>
+          <p class="description">{{selectedCharityDisplay.description}}</p>
         </ion-item>
         <hr>
         <ion-item class="charity-page charity-detail stats">
           <div class="charity-page row">
             <div class="charity-page col col-50">
               <p class="charity-page head">Month</p>
-              <p class="charity-page label">${{selectedCharityMonthMoneyRaised}}</p>
+              <p class="charity-page label">${{selectedCharityDisplay.monthMoneyRaised}}</p>
             </div>
             <div class="charity-page verticalLine"></div>
             <div class="charity-page col col-50">
               <p class="charity-page head">Year</p>
-              <p class="charity-page label">${{selectedCharityTotalMoneyRaised}}</p>
+              <p class="charity-page label">${{selectedCharityDisplay.totalMoneyRaised}}</p>
             </div>
           </div>
         </ion-item>
@@ -34,7 +34,7 @@
     </div>
 
     <ion-list class="charity-page charity-list" show-delete="shouldShowDelete" show-reorder="shouldShowReorder" can-swipe="listCanSwipe">
-      <ion-item ng-repeat="charity in charities" class="charity-page charity-list item-thumbnail-left" ng-click="selectCharity('{{charity.name}}')">
+      <ion-item ng-repeat="charity in charitiesDisplayList" class="charity-page charity-list item-thumbnail-left" ng-click="selectCharity(charity.id, charity.moneyRaised)">
         <div class="row">
           <div class="col">
             <img ng-src="{{charity.logo}}">
@@ -42,7 +42,8 @@
             <p>{{charity.description}}</p>
           </div>
           <div class="funds col col-center">
-            <p>$493.03</p>
+            <!--<p>{{charity.moneyRaised}}</p>-->
+            <p>${{charity.moneyRaised}}</p>
         </div>
         </div>
       </ion-item>

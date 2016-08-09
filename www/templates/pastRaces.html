@@ -2,12 +2,12 @@
   <ion-content class="has-header">
 
     <!--User this template-->
-    <div class="races past-races-container"><!--ng-repeat in this element-->
+    <div class="races past-races-container" ng-repeat="race in pastRacesDisplay">
       <div class="gradient">
-        <h1 class="featured-race">RACE NAME</h1>
-        <p class="races races-detail">Location: LOCATION</p>
-        <p class="races races-detail">Distance: DISTANCE</p>
-        <p class="races races-detail">Date: DATE</p>
+        <h1 class="featured-race">{{race.name}}</h1>
+        <p class="races races-detail">Location: {{race.city}}</p>
+        <p class="races races-detail">Date: {{race.date | date:'MM/dd/yyyy'}}</p>
+        <p class="races races-detail">Distance: {{displayDistances(raceDistances)}}</p>
       </div>
     </div>
 <!--

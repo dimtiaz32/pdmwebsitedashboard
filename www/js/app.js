@@ -29,10 +29,11 @@ angular.module('starter', ['ionic',
   'ngCookies',
   'angular-svg-round-progressbar',
   'ion-datetime-picker',
-  'ngMaterial'
+  'ngMaterial',
+  'jett.ionic.filter.bar'
 ])
 
-  .run(function($ionicPlatform, ngFB) {
+  .run(function($ionicPlatform, ngFB, AuthAPI, $rootScope) {
 
     // TODO facebook application id, need to replace whenr release
     ngFB.init({appId: '1079958642070604'});
@@ -64,11 +65,12 @@ angular.module('starter', ['ionic',
   .constant('SERVER_HOST','https://dreamrun.herokuapp.com/')
   //.constant('SERVER_HOST','http://localhost:5000/')
 
+
   .config(['$httpProvider', function($httpProvider) {
-      $httpProvider.interceptors.push(function($q, $cookies) {
+      $httpProvider.interceptors.push(function($window) {
           return {
            'request': function(config) {
-                config.headers['authorization'] = $cookies.get('token');
+                config.headers['authorization'] = $window.localStorage.token;
                 return config;
             }
           };
@@ -107,7 +109,11 @@ angular.module('starter', ['ionic',
           }
         }
       })
-
+      .state('reset', {
+          url:'/reset:email',
+          templateUrl: 'templates/reset.html',
+          controller: 'ResetCtrl'
+      })
 
       .state('app', {
         url: '/app',
@@ -323,7 +329,9 @@ angular.module('starter', ['ionic',
             controller: 'RaceProfileCtrl'
           }
         }
-      });
+      })
+
+      ;
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/auth/signin');
     // $urlRouterProvider.otherwise('/app/run');

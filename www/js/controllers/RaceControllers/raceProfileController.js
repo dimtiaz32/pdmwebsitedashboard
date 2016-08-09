@@ -20,45 +20,93 @@ angular.module('starter.raceProfileController', ['starter.appServices',
 
 
 
-  .controller('RaceProfileCtrl', function($scope, $rootScope,$window, RaceAPI, AuthAPI, RaceAPI, $ionicLoading, $ionicSlideBoxDelegate, $timeout) {
-    $rootScope.selectedRaceId;
-    console.log('$rootScope.selectedRaceId from RaceProfileCtrl: ' + $rootScope.selectedRaceId);
+  .controller('RaceProfileCtrl', function($scope, $rootScope,$window, RaceAPI, AuthAPI, RaceAPI, $ionicLoading, $ionicPopup, $ionicSlideBoxDelegate, $timeout) {
+    $scope.raceId = $rootScope.getRaceId();
+    console.log('raceId:  ' + $scope.raceId);
+
 
     $scope.race = [];
-    RaceAPI.getRaceById($rootScope.selectedRaceId)
-      .success(function(data, status, headers, config){
+    $scope.charityPartners = [];
+    $scope.raceDistances = [];
+    $scope.userRaces = [];
 
+    $scope.checkIds = function(){
+      console.log('check ids entered with user raceIds: ' + JSON.stringify());
+      console.log('check ids raceId: ' + $scope.raceId);
+      for(var i=0; i<$scope.userRaces.length; i++){
+        if($scope.raceId == $scope.userRaces[i]){
+          console.log('race ids matched with: ' + $scope.raceId + '  $scope.userRaces['+i+']' + $scope.userRaces[i])
+          return true;
+        } else {
+          console.log('race ids matched with: ' + $scope.raceId + '  $scope.userRaces['+i+']' + $scope.userRaces[i])
+
+        }
+      }
+      return false;
+    }
+
+
+
+    RaceAPI.getRaceById($scope.raceId)
+      .success(function(data, status, headers, config){
         $scope.raceName = data.name;
         $scope.raceDate = data.date;
-        $scope.raceDistances = data.distances;
-        $scope.raceCharityPartners = data.charityPartners;
+        // $scope.raceDistances = data.distances;
+        var tempDistanceHolder = data.distances;
+        var tempCharityPartners = data.charityPartners;
         $scope.raceDescription = data.description;
 
-        // $scope.race.push(data[0]);
-        //
-        // console.log('$scope.race[0]: ' + $scope.race[0]);
-        // console.log('$scope.race[0]: ' + $scope.race[0].name);
-        // console.log('$scope.race[0]: ' + $scope.race[0]._id);
-        // if(data.length == 1){
-        //   $scope.race.push(data[0]);
-        //   console.log('data[0]: ' + data[0]);
-        //   console.log('$scope.race[0]: ' + $scope.race[0]);
-        // } else {
-        //   console.log('race id ' + $rootScope.selectedRaceId + 'returned more than one object: ' + data.length);
-        // }
+        var partnersSplit = tempCharityPartners.toString().split(',');
+        console.log('partnersSplit: ' + partnersSplit);
+        if(partnersSplit.length >0){
+          for(var i = 0; i< partnersSplit.length; i++){
+            $scope.charityPartners.push(partnersSplit[i]);
+          }
+          console.log('charityPartners: ' + JSON.stringify($scope.charityPartners));
+        }
+
+        var distanceSplit = tempDistanceHolder.toString().split(',');
+        console.log('distanceSplit: ' + distanceSplit);
+        if(distanceSplit.length> 0){
+          for(var i=0; i< distanceSplit.length; i++){
+            var fDistance = distanceSplit[i] + ' km';
+            $scope.raceDistances.push(fDistance);
+
+          }
+        } else {
+          console.log('distanceSplit has length less than 1: ' + distanceSplit.length);
+        }
+        console.log('raceDistances: ' + JSON.stringify($scope.raceDistances));
+
+
       })
       .error(function(status){
         console.log('RaceAPI getRaceById call failed with status: ' + status);
       });
 
+    RaceAPI.getUserRaces($rootScope.getUserId())
+      .success(function(data, status, headers, config){
+        console.log('RaceAPI getUserRaces succeeded');
+        console.log('getUser races data.length: ' + data.length);
+        for(var i=0; i< data.length; i++){
+          console.log('data['+i+']:._id: ' + data[i]._id);
+          $scope.userRaces.push(data[i]._id);
+        }
+        console.log('user race ids: ' + JSON.stringify($scope.userRaces));
+        $scope.isSignedUp = $scope.checkIds();
+      })
+      .error(function(err, status){
+        console.log('RaceAPI getUserRaces failed with status: ' + status + 'and err: ' + err);
+      });
+
     $scope.registerForRace = function(){
       $rootScope.show("Registering race");
-      console.log('$rootScope.getRaceId: ' + $rootScope.selectedRaceId);
-      var raceId = $rootScope.selectedRaceId;
+      console.log('$rootScope.getRaceId: ' + $scope.userId);
+      console.log('$scope.raceId:  ' + $scope.raceId);
       var userId = $rootScope.getUserId();
       console.log('userID: ' + userId);
-      console.log('raceId: ' + raceId);
-      RaceAPI.joinRace({userId: userId}, raceId)
+      console.log('raceId: ' + $scope.raceId);
+      RaceAPI.joinRace({userId: userId}, $scope.raceId)
         .success(function(data, status, headers, config){
           console.log('RaceAPI join race call');
           console.log('data: ' + data);
@@ -67,6 +115,21 @@ angular.module('starter.raceProfileController', ['starter.appServices',
         .error(function(status){
           console.log('RaceAPI join race call failed with status: ' + status);
           $rootScope.notify("Oops! Unable to register for race!");
+        });
+    }
+
+    $scope.removeRace = function(){
+      console.log('removing race: ' + $scope.raceId);
+      RaceAPI.removeRace($scope.raceId, $rootScope.getUserId())
+        .success(function(data, status, headers, config){
+          console.log('RaceAPI remove race call succeeded');
+          $ionicPopup.alert({
+            title:'Race removed!'
+          });
+
+        })
+        .error(function(err, status){
+          console.log('RaceAPI failed with status:  ' + status +' and error: ' + err);
         });
 
     }

@@ -58,7 +58,6 @@ angular.module('starter.authController', ['starter.appServices',
 
       $rootScope.show("Passwords match....");
 
-
     };
     $scope.createUser = function(){
       var firstName = this.user.firstName;
@@ -71,15 +70,19 @@ angular.module('starter.authController', ['starter.appServices',
       if(!firstName){
         $rootScope.notify("Please enter a valid first name");
         console.log("createUser failed: invalid first name");
+        return false;
       } else if(!lastName){
         $rootScope.notify("Please enter a valid last name");
         console.log("createUser failed: invalid last name")
+        return false;
       } else if(!email){
         $rootScope.notify("Please enter a valid email address");
         console.log("createUser failed: invalid email");
+        return false;
       } else if(!password){
         $rootScope.notify("Please enter a valid password");
         console.log("createUser failed: invalid password");
+        return false;
       }
 
       $rootScope.notify("Register your account:)");
@@ -115,7 +118,43 @@ angular.module('starter.authController', ['starter.appServices',
         });
     }
   })
-  .controller('SigninCtrl', function($scope, $rootScope, $timeout, AuthAPI, $ionicPopup, $window, ngFB, GooglePlus, CharityAPI){
+
+  .controller("ResetCtrl",function($scope,$rootScope,$location, UserAPI, $window){
+
+      $scope.email = $location.search().email;
+      $scope.token = $location.search().token;
+      $scope.data = {
+        newPassword: "",
+        confirmPassword: ""
+      }
+
+      $scope.changePassword = function() {
+
+        if(!$scope.data.newPassword){
+          $rootScope.notify("Change failed. Please enter a valid new Password");
+          console.log("Invalid new password");
+          return false;
+        } else if($scope.data.newPassword != $scope.data.confirmPassword){
+          $rootScope.notify("Change failed. Please match the password ");
+          console.log("Invalid match password");
+          return false;
+        }
+
+        console.log("email:" + $scope.email);
+        console.log("newPassword:" + $scope.data.newPassword);
+        $rootScope.setToken = $scope.token;
+        UserAPI.changePassword({email:$scope.email,newPassword:$scope.data.newPassword}).success(function(data){
+          console.log("change password success!");
+          $window.location.href = "#/auth/signin";
+        }).error(function(error){
+          console.log("change password failed!" + error);
+          $rootScope.notify("change password failed!");
+        })
+
+      }
+  })
+
+  .controller('SigninCtrl', function($scope, $rootScope, $timeout, AuthAPI, $ionicPopup, $window, ngFB, GooglePlus, CharityAPI, UserAPI){
 
     $scope.user = {
       email: "",
@@ -135,52 +174,19 @@ angular.module('starter.authController', ['starter.appServices',
 
     };
 
-    $scope.setUserCharity  = function(charityName){
-
-      $scope.charityHeader = charityName;
-      console.log('$scope.charityHeader: ' + $scope.charityHeader);
-      var charityHeaderString =  $scope.charityHeader.toString();
-      console.log('Charity Stringified: ' + charityHeaderString);
-      CharityAPI.getCharityByName(charityHeaderString)
+    $scope.setUserCharity  = function(charityId){
+      CharityAPI.getById(charityId)
         .success(function(data, status, headers, config){
-          if(data.length == 0){
-            $scope.noCharity = true;
-          } else {
-            var cId = data._id;
-            console.log('JSON returned charityId value of: ' + cId);
-            var cName = data.name;
-            console.log('getCharityByName returned cName value of: ' + cName);
-            var cDescription = data.description;
-            console.log('getCharityByName returned cDescription value of: ' + cDescription);
-            var cUrl = data.url;
-            console.log('getCharityByName returned cUrl value of: ' + cUrl);
-            var cAvatar = data.avatar;
-            console.log('getCharityByName returned cAvatar: ' + cAvatar);
-            $rootScope.setSelectedCharityName(cName);
-            console.log('$rootScope.getSelectedCharityName(): ' + $rootScope.getSelectedCharityName());
-            $rootScope.setSelectedCharityDescription(cDescription);
-            console.log('$rootScope.getSelectedCharityDescription(): ' + $rootScope.getSelectedCharityDescription());
-            $rootScope.setSelectedCharityUrl(cUrl);
-            console.log('$rootScope.getSelectedCharityUrl(): ' + $rootScope.getSelectedCharityUrl());
-            $rootScope.setSelectedCharityAvatar(cAvatar);
-            console.log('$rootScope.getSelectedCharityAvatar' + $rootScope.getSelectedCharityAvatar());
-            $rootScope.setSelectedCharityId(cId);
-            console.log('$rootScope.getSelectedCharityId(): ' + $rootScope.getSelectedCharityId());
-          }
-
-          $rootScope.$broadcast('fetchMySponsors');
-
-          if($scope.noSponsor = true){
-            console.log('fetchMySponsors returned no sponsors');
-          }
-
+          $rootScope.setSelectedCharityName(data.name);
+          $rootScope.setSelectedCharityDescription(data.description);
+          $rootScope.setSelectedCharityUrl(data.url);
+          console.log('$rootScope.selectedCharityName : ' + $rootScope.getSelectedCharityName());
+          console.log(' $rootScope.selectedCharityDescription: ' + $rootScope.getSelectedCharityDescription());
+          console.log(' $rootScope.selectedCharityUrl : ' + $rootScope.getSelectedCharityUrl());
         })
-        .error(function(err,status){
-          console.log('CharityAPI.getOne failed with error: ' + err);
-          console.log('Could not retrieve charity information');
-          $rootScope.verifyStatus(status);
-        })
-
+        .error(function(err, status){
+          console.log('Charity API getCharityById call failed with error: ' + err + ' and status: ' + status);
+        });
     }
 
 
@@ -191,9 +197,11 @@ angular.module('starter.authController', ['starter.appServices',
       if(!email){
         $rootScope.notify("Login failed. Please enter a valid email address");
         console.log("Invalid text in email field");
+        return false;
       } else if(!password){
         $rootScope.notify("Login failed. Please enter a valid password");
         console.log("Invalid text in password field");
+        return false;
       }
 
       AuthAPI.signin({
@@ -208,10 +216,6 @@ angular.module('starter.authController', ['starter.appServices',
           console.log('$scope.name set as: ' + $scope.user.name);
           $rootScope.setName($scope.user.name);
           console.log('user name localStorage set to: ' + $rootScope.getName());
-
-          $scope.user.password = data.user.password;
-          console.log('$scope.user.password set as: ' + $scope.user.password);
-          $rootScope.setPassword($scope.user.password);
 
           $scope.user.email = data.user.email;
           console.log('$scope.user.email set to: ' + $scope.user.email);
@@ -232,10 +236,16 @@ angular.module('starter.authController', ['starter.appServices',
           $rootScope.setAvatar(data.user.avatar);
 
           // console.log(data.user.charityName);
-          if(data.user.charityName == undefined || data.user.charityName == ""){
+          if(data.user.charity.id == null){
+            console.log('user.charityId is null');
             $scope.noCharity = true;
           } else {
-            $scope.setUserCharity(data.user.charityName);
+            console.log('data.user.charity.id: ' + data.user.charity.id);
+            $rootScope.setSelectedCharityId(data.user.charity.id);
+            $rootScope.setSelectedCharityMoneyRaised(data.user.charity.moneyRaised);
+            console.log('selectedCharityId: ' +  $rootScope.getSelectedCharityId());
+            console.log('selectedCharityMoneyRaised: ' + $rootScope.getSelectedCharityMoneyRaised());
+            $scope.setUserCharity($rootScope.getSelectedCharityId());
           }
 
 
@@ -323,13 +333,11 @@ angular.module('starter.authController', ['starter.appServices',
       console.log("end login by google");
     }
 
-    $scope.popup = {
-      email: ""
-    }
 
     $scope.showForgotPassword = function(){
+      $scope.data = {}
       var forgotPassword = $ionicPopup.show({
-        template: '<input type="email" ng-model="popup.email">',
+        template: '<input type="text" ng-model="data.email">',
         title: 'Enter email for password reset',
         //subTitle: 'Whatever you want',
         scope: $scope,
@@ -339,11 +347,30 @@ angular.module('starter.authController', ['starter.appServices',
             text: '<b>Submit</b>',
             type: 'button-positive',
             onTap: function(e) {
-              if (!$scope.popup.email) {
-                //don't allow the user to close unless he enters wifi password
+              if (!$scope.data.email) {
                 e.preventDefault();
               } else {
-                return $scope.popup.email;
+                console.log("email:" + JSON.stringify($scope.data.email));
+                e.preventDefault();
+                UserAPI.isSignup($scope.data.email).success(function(data){
+                   console.log("check is existed:" +  JSON.stringify(data));
+                   if(data.isExisted) {
+                     console.log("success,email is existed");
+                     $rootScope.setToken(data.token);
+                     $ionicPopup._popupStack[0].responseDeferred.resolve();
+                     UserAPI.sendMail({email:$scope.data.email}).success(function(data){
+                        console.log("send mail success");
+                     }).error(function(data){
+                        console.log("send mail failed");
+                     })
+                   } else {
+                     console.log("email is not existed, please sign up first");
+                     $rootScope.notify("email is not existed, please sign up first");
+                   }
+                }).error(function(error){
+                    console.log("check email failed:" + error);
+                    e.preventDefault();
+                });
               }
             }
           }
@@ -374,4 +401,3 @@ angular.module('starter.authController', ['starter.appServices',
 
 
 // })
-
