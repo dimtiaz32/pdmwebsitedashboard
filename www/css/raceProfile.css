@@ -14,11 +14,13 @@
   .race-profile .heading .race-date {
     text-align: center;
     color: #fff;
+    font-weight: 600;
   }
 
   .race-profile .heading .race-distance {
     text-align: center;
     color: #fff;
+    font-weight: 600;
   }
 
 .race-profile .divider {
