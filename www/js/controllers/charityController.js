@@ -159,14 +159,18 @@ angular.module('starter.charityController', ['starter.appServices',
         console.log('HistoryAPI getMonthAndCharity call succeeded');
         console.log('data.length: ' + data.length);
         console.log('data: ' + JSON.stringify(data));
-        if (data.length > 1) {
-          for (var i = 0; i < data.length; i++) {
-            $scope.selectedCharityDisplay.monthMoneyRaised = $scope.selectedCharityDisplay.monthMoneyRaised + data[i].moneyRaised;
-            console.log('monthMoneyRaised: ' + $scope.selectedCharityDisplay.monthMoneyRaised);
+        if(data.length != 0) {
+          if (data.length > 1) {
+            for (var i = 0; i < data.length; i++) {
+              $scope.selectedCharityDisplay.monthMoneyRaised = $scope.selectedCharityDisplay.monthMoneyRaised + data[i].moneyRaised;
+              console.log('monthMoneyRaised: ' + $scope.selectedCharityDisplay.monthMoneyRaised);
+            }
+          } else {
+            $scope.selectedCharityDisplay.monthMoneyRaised = data[0].moneyRaised;
+            console.log('selectedCharityDisplay.monthMoneyRaised: ' + $scope.selectedCharityDisplay.monthMoneyRaised);
           }
         } else {
-          $scope.selectedCharityDisplay.monthMoneyRaised = data[0].moneyRaised;
-          console.log('selectedCharityDisplay.monthMoneyRaised: ' + $scope.selectedCharityDisplay.monthMoneyRaised);
+          $scope.selectedCharityDisplay.monthMoneyRaised = 0;
         }
       })
       .error(function (err, status) {
@@ -345,12 +349,6 @@ angular.module('starter.charityController', ['starter.appServices',
       $rootScope.verifyStatus(status);
     });
 
-
-
-
-
-
-
   $scope.selectCharity = function(charityId, moneyRaised) {
 
     console.log('charityId: ' + charityId);
@@ -359,12 +357,24 @@ angular.module('starter.charityController', ['starter.appServices',
     console.log('$rootScope.getSelectedCharityMoneyRaised(): ' + $rootScope.getSelectedCharityMoneyRaised());
     console.log('$window.localStorage.totalCharityMoneyRaised: ' + $window.localStorage.totalCharityMoneyRaised);
 
+
+    // $scope.pastCheck = function(id){
+    //   console.log('pastCheck entered with id: ' + id);
+    //   console.log('pastCharities from select charity: ' + JSON.stringify($scope.pastCharities));
+    //
+    // }
+
+    // $scope.pastCheck($rootScope.getSelectedCharityId());
+
+
     var mr = $rootScope.getSelectedCharityMoneyRaised();
     $scope.moneyRaisedCheck = function(mr){
-      if(mr = undefined){
+      if(mr == undefined){
+        console.log('mr is undefined, returning 0');
        return 0;
       } else{
-       return 0;
+        console.log('not undefined, returning value: ' + mr);
+       return mr;
       }
     };
 
@@ -373,7 +383,7 @@ angular.module('starter.charityController', ['starter.appServices',
 
     UserAPI.updatePastCharities(userId, {
       id: $rootScope.getSelectedCharityId(),
-      moneyRaised: $scope.moneyRaisedCheck(mr)
+      moneyRaised: $scope.moneyRaisedCheck($rootScope.getSelectedCharityMoneyRaised())
     })
       .success(function (data, status, headers, config) {
         console.log('UserAPI update past charities call succeeded');
@@ -432,7 +442,9 @@ angular.module('starter.charityController', ['starter.appServices',
             $scope.selectedCharityDisplay.url = data.url;
             $scope.selectedCharityDisplay.totalMoneyRaised = moneyRaised;
 
-            $scope.getMonthMoneyRaised(data._id);
+
+            console.log('charityId from inside setSelectedCharity success call: ' + charityId);
+            $scope.getMonthMoneyRaised(charityId);
 
           })
           .error(function (err, status) {
@@ -445,7 +457,7 @@ angular.module('starter.charityController', ['starter.appServices',
       });
 
     console.log('$rootScope.getSelectedCharityId(): ' + $rootScope.getSelectedCharityId());
-    console.log('charityMonth: ' + charityMonth);
+    console.log('charityMonth: ' + $scope.charityMonth);
 
 
 

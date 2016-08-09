@@ -109,7 +109,7 @@ angular.module('starter.userServices', [])
       });
     },
     getSelectedCharity: function(userId){
-      return $http.get(CLIENT_HOST+'user/selectedCharity', {
+      return $http.get(SERVER_HOST+'user/selectedCharity', {
         method: 'GET',
         params: {
           userId: userId
@@ -117,7 +117,7 @@ angular.module('starter.userServices', [])
       });
     },
     setSelectedCharity : function(userId, form){
-      return $http.post(CLIENT_HOST+'user/selectedCharity', form ,{
+      return $http.post(SERVER_HOST+'user/selectedCharity', form ,{
         method: 'POST',
         params: {
           userId: userId
