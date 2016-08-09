@@ -555,6 +555,7 @@ angular.module('starter.historyController', [
         }
         if(data.length < 7 ){
           $scope.labels = [df7, df6, df5, df4, df3, df2, df1];
+          $scope.series = ['Miles Run'];
         }
 
 
@@ -563,12 +564,14 @@ angular.module('starter.historyController', [
         console.log('dates: ' + JSON.stringify($scope.dates));
 
         $scope.matchDates = function(date){
-          for(var i=0; i< $scope.dates.length; i++){
+          // for(var i=0; i< $scope.dates.length; i++){
+          console.log('matchDates entered with date: ' + date);
             console.log('$scope.weekHistory['+i+']:.date' + $scope.weekHistory[i].date);
             if(date == $scope.weekHistory[i].date){
               console.log('dates matches with: ' + date + '   ' +$scope.weekHistory[i].date);
               console.log('$scope.weekHistory[+'+i+'].distance: ' + $scope.weekHistory[i].distance);
               if($scope.weekHistory[i].distance != undefined){
+                console.log('matchDates distance: ' +$scope.weekHistory[i].distance);
                 return $scope.weekHistory[i].distance;
               } else {
                 return 0;
@@ -577,7 +580,7 @@ angular.module('starter.historyController', [
               return 0;
             }
           }
-        }
+        // }
 
         $scope.matchDateToLabel = function(date){
           console.log('matchDateToLabel entered with date: ' + date);
@@ -612,12 +615,7 @@ angular.module('starter.historyController', [
           } else {
             console.log('position undefined: ' + position);
           }
-
-
-
         }
-
-        $scope.series = ['Miles Run'];
 
         $scope.data = [[
           $scope.distanceByDate[6],
@@ -628,6 +626,10 @@ angular.module('starter.historyController', [
           $scope.distanceByDate[1],
           $scope.distanceByDate[0]
         ]];
+
+
+
+
 
 
         // $rootScope.hide();
@@ -1316,5 +1318,6 @@ angular.module('starter.historyController', [
 
 
 
-    // $scope.series = ['Series A'];
+    $scope.series = ['Series A'];
+
   });
