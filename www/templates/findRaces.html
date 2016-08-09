@@ -4,84 +4,17 @@
     </button>
   </ion-nav-buttons>
   <ion-content>
-<!--
-    <ion-list>
-      <ion-item collection-repeat="race in filteredRaces" >
-        <p>{{race.name}}</p>
-      </ion-item>
-    </ion-list>
--->
-    <!--<div class="races find-races-filter-container">-->
-      <!--&lt;!&ndash;-->
-      <!--<select class="find-races select-city">-->
-        <!--<option value="" disabled selected hidden>Location</option>-->
-        <!--<option>Baltimore</option>-->
-        <!--<option>Chicago</option>-->
-        <!--<option>Washington</option>-->
-      <!--</select>-->
-
-      <!--<select class="find-races select-month">-->
-        <!--<option value="" disabled selected hidden>Month</option>-->
-        <!--<option>January</option>-->
-        <!--<option>February</option>-->
-        <!--<option>March</option>-->
-        <!--<option>April</option>-->
-        <!--<option>May</option>-->
-        <!--<option>June</option>-->
-        <!--<option>July</option>-->
-        <!--<option>August</option>-->
-        <!--<option>September</option>-->
-        <!--<option>October</option>-->
-        <!--<option>November</option>-->
-        <!--<option>December</option>-->
-        <!--<option>Current Location</option>-->
-      <!--</select>-->
-
-      <!--<select class="find-races select-distance">-->
-        <!--<option value="" disabled selected hidden>Distance</option>-->
-        <!--<option>5k</option>-->
-        <!--<option>10k</option>-->
-        <!--<option>15k</option>-->
-        <!--<option>20k</option>-->
-      <!--</select>-->
-
-      <!--&ndash;&gt;-->
 
 
+    <!--<div class="races find-races-container" ng-repeat="race in races" ng-click="selectRace(race._id)">-->
 
-    <!--</div>-->
-
-    <!--<div ng-controller="FindRacesCtrl as ctrl" layout="column" ng-cloak>-->
-      <!--<md-contact-chips-->
-        <!--ng-model="ctrl.cities"-->
-        <!--md-contacts="ctrl.cityQuerySearch($query)"-->
-        <!--md-contact-name="name"-->
-        <!--md-require-match="true"-->
-        <!--md-highlight-flags="i"-->
-        <!--filter-selected="ctrl.filterSelected"-->
-        <!--placeholder="Enter a city"-->
-        <!--secondary-placeholder="Enter another city">-->
-      <!--</md-contact-chips>-->
-      <!--<br>-->
-      <!--<md-contact-chips-->
-        <!--ng-model="ctrl.distances"-->
-        <!--md-contacts="ctrl.distanceQuerySearch($query)"-->
-        <!--md-contact-name="name"-->
-        <!--md-require-match="true"-->
-        <!--md-highlight-flags="i"-->
-        <!--filter-selected="ctrl.filterSelected"-->
-        <!--placeholder="Enter a distance"-->
-        <!--secondary-placeholder="Enter another distance">-->
-      <!--</md-contact-chips>-->
-    <!--</div>-->
-
-    <!--<button class="button button-full" style="background-color: #00b9be; color: white">Search</button>-->
 
     <div class="races find-races-container" ng-repeat="race in filteredRaces" ng-click="selectRace(race._id)">
+
       <div class="races gradient">
         <h1 class="featured-race">{{race.name}}</h1>
         <p class="races races-detail">Location: {{race.city}}</p>
-        <p class="races races-detail">Distance: {{race.distances}}</p>
+        <p class="races races-detail">Distance: {{displayDistanceForRace(race)}}</p>
         <p class="races races-detail">Date: {{race.date | date:'MM/dd/yyyy'}}</p>
       </div>
     </div>

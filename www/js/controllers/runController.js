@@ -17,9 +17,9 @@ angular.module('starter.runController', ['starter.appServices',
   'ionic.contrib.drawer.vertical',
   'angular-svg-round-progressbar'])
 
+//TODO: CLEAR VALUES AFTER RUN SUMMARY, NEW RUN BUTTON?
 
-
-  .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI, CharityAPI, $ionicPopup, AuthAPI, $ionicModal){
+  .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI, CharityAPI, HistoryAPI, $ionicPopup, AuthAPI, $ionicModal){
 
     //CONSOLE LOGGING COLORS:
 
@@ -81,10 +81,16 @@ angular.module('starter.runController', ['starter.appServices',
     };
 
     $scope.charityName = $rootScope.getSelectedCharityName();
-    console.log('Run charityName: ' + $scope.charityName);
+    console.log('charityName: ' + $scope.charityName);
 
-    $scope.moneyRaised = $rootScope.getMoneyRaisedPerMile();
-    console.log('$scope.moneyRaised: ' + $scope.moneyRaised);
+    if($rootScope.getMoneyRaisedPerMile() != undefined){
+      $scope.moneyRaised = $rootScope.getMoneyRaisedPerMile();
+    } else {
+      $scope.moneyRaised = 0;
+    }
+
+
+    console.log('$scope.moneyRaised: ' + $scope.getMoneyRaisedPerMile());
 
 
     $scope.user.name = $rootScope.getName();
@@ -496,13 +502,6 @@ angular.module('starter.runController', ['starter.appServices',
         if(!$scope.map){
           return;
         }
-
-        $scope.loading = $ionicLoading.show({
-          content: 'Starting your dreamrun',
-          showBackdrop: false
-        });
-
-        $rootScope.hide();
         $scope.startRun();
 
       });
@@ -549,6 +548,9 @@ angular.module('starter.runController', ['starter.appServices',
 
       summaryButtonUI.addEventListener('click', function(){
         console.log('run summary button clicked');
+
+        console.log('check runIdDayView: ' + $rootScope.dayRunId);
+        $window.location.href=('#/app/historyDay');
       });
     }
 
@@ -654,6 +656,8 @@ angular.module('starter.runController', ['starter.appServices',
         $scope.myLatLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
         console.log('%cuser coords: ' + $scope.myLatLng, 'color: Purple');
       });
+
+
       console.log('%cReturning myLatLng from userCoords: ' + $scope.myLatLng, 'color: Purple');
       console.log('%cuser Coords Interval mark, refreshing coords', 'color: Purple');
       return $scope.myLatLng;
@@ -661,15 +665,20 @@ angular.module('starter.runController', ['starter.appServices',
     }
 
 
+
+
     //calculator for money raised on this run
     $scope.runMoneyRaisedCalculator = function(distance){
-      console.log('run Money Raised Calculator called with distance value of: ' + distance);
-      var moneyPerMile = $rootScope.getMoneyRaisedPerMile();
-      console.log('Money per mile' + moneyPerMile);
-      $scope.moneyCalc = moneyPerMile * distance;
-      console.log('Current money raised amount ($scope.moneyCalc): ' + $scope.moneyCalc)
-      $rootScope.setRunMoneyRaisedAmount($scope.moneyCalc);
-      console.log('Run Money Raised Amount set as: ' + $rootScope.getRunMoneyRaisedAmount());
+
+        console.log('run Money Raised Calculator called with distance value of: ' + distance);
+        var moneyPerMile = $scope.moneyRaised;
+        console.log('Money per mile' + moneyPerMile);
+        $scope.moneyCalc = moneyPerMile * distance;
+        console.log('Current money raised amount ($scope.moneyCalc): ' + $scope.moneyCalc)
+        $rootScope.setRunMoneyRaisedAmount($scope.moneyCalc);
+        console.log('Run Money Raised Amount set as: ' + $rootScope.getRunMoneyRaisedAmount());
+
+
     }
 
     //distance functions
@@ -690,6 +699,12 @@ angular.module('starter.runController', ['starter.appServices',
           console.log('%cCurrent coords pushed to distance array. distanceCoords values: ' + $scope.distanceCoords, 'color: Purple');
         }
         $rootScope.setRunPath($scope.distanceCoords);
+        $scope.marker = new google.maps.Marker({
+          position: currentCoords,
+          icon: '../img/blue-gps-tracker.png',
+          map: $scope.map
+
+        });
         console.log('Run path global var set as: ' + $rootScope.getRunPath());
         $scope.distance = google.maps.geometry.spherical.computeLength({
           path: $scope.distanceCoords
@@ -700,7 +715,7 @@ angular.module('starter.runController', ['starter.appServices',
         $rootScope.setRunDistance($scope.distance);
         console.log('%cRun Distance (global) set as: ' + $rootScope.getRunDistance(), 'color: Purple');
         console.log('%cExiting runDistance at interval', 'color: Purple');
-      }, 2000);
+      }, 1500);
     }
 
     $scope.stopRunDistance = function(){
@@ -716,16 +731,17 @@ angular.module('starter.runController', ['starter.appServices',
     }
 
     var polyDrawer;
+
     $scope.runPolyline = function(){
       console.log('%crunPolyline function activated', 'color: Lime');
-
+      var currentCoords = $scope.userCoords();
       $scope.polyCoords = [];
       console.log('%cempty poly coords array initialized', 'color: Lime');
       // var drawerTestCoords = {lat: 38.9042049, lng: -77.0473209};
       // $scope.polyCoords.push(drawerTestCoords);
       polyDrawer = $interval(function(){
 
-        var currentCoords = $scope.userCoords();
+        currentCoords = $scope.userCoords();
         console.log('%c userCoords called from inside interval in polyDrawer', 'color: Lime');
 
         // var currentCoords = $scope.getUserCoords();
@@ -738,25 +754,26 @@ angular.module('starter.runController', ['starter.appServices',
           path: $scope.polyCoords,
           strokeColor: '#FF0000',
           strokeOpacity: 1.0,
-          strokeWeight: 2
+          strokeWeight: 6
         });
         $scope.runPath.setMap($scope.map);
         console.log('%crunPath.setMap completed', 'color: Lime');
         console.log('%cexiting Polyline at interval mark', 'color: Lime');
-      }, 3000);
+      }, 2000);
 
     }
 
-    $scope.pausePolylineDrawer = function(){
+    $scope.stopPolyLineDrawer = function(){
       console.log('%ccoordinate retrieval refresher paused', 'color: Lime');
       $interval.cancel(polyDrawer);
       polyDrawer = undefined;
     }
 
-    $scope.resumePolylineDrawer = function(){
-      console.log('%cresumePolylineDrawer function activated', 'color: Lime');
-      $scope.runPolyline();
-    }
+    // $scope.resumePolylineDrawer = function(){
+    //   console.log('%cresumePolylineDrawer function activated', 'color: Lime');
+    //   $interval.restore(polyDrawer);
+    //
+    // }
 
 
     //timer functions
@@ -904,10 +921,12 @@ angular.module('starter.runController', ['starter.appServices',
         // $rootScope.setLapPath($scope.lapCoords);
         // console.log('Lap path global var set as: '+$rootScope.getPath());
 
-        $scope.marker = new google.maps.Marker({
-          position: currentCoords,
-          map: $scope.map
-        })
+        // $scope.marker = new google.maps.Marker({
+        //   position: currentCoords,
+        //   icon: '../img/PDM logo.png',
+        //   map: $scope.map
+        //
+        // });
 
         $scope.lapDistance = google.maps.geometry.spherical.computeLength({
           path: $scope.lapCoords
@@ -1089,13 +1108,13 @@ angular.module('starter.runController', ['starter.appServices',
     $scope.mapCreated = function(map){
       $scope.map = map;
 
-
       $scope.mapOptions = map.setOptions({
         center: $scope.myLatLng,
         zoom: 19,
         disableDefaultUI: true,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       });
+
 
 
 
@@ -1123,6 +1142,7 @@ angular.module('starter.runController', ['starter.appServices',
       // $scope.mapOptions.setMap($scope.map);
 
     };
+
 
     $scope.startRun  = function(){
       console.log('%cStarting run...', 'color: HotPink');
@@ -1312,7 +1332,7 @@ angular.module('starter.runController', ['starter.appServices',
 
 
       $scope.pauseTimer();
-      $scope.pausePolylineDrawer();
+
       $scope.pauseLapTimer();
       // $scope.pauseCoordsArrayUpdater();
 
@@ -1324,7 +1344,7 @@ angular.module('starter.runController', ['starter.appServices',
       $scope.removeLap();
       $scope.removePause();
       $scope.pauseTimer();
-      $scope.pausePolylineDrawer();
+
       var pausedControlDiv = document.createElement('div');
       var pausedControl = $scope.pausedControl(pausedControlDiv, $scope.map);
 
@@ -1342,7 +1362,6 @@ angular.module('starter.runController', ['starter.appServices',
       $scope.addPause();
       console.log('%c$scope.resumeTimer() called', 'color: RoyalBlue');
       $scope.resumeTimer();
-      $scope.resumePolylineDrawer();
       $scope.resumeLapTimer();
       // $scope.resumeCoordsArrayUpdater();
     }
@@ -1362,7 +1381,7 @@ angular.module('starter.runController', ['starter.appServices',
       $scope.stopLapDistance();
       $scope.stopPaceCalculator();
       $scope.stopLapPaceCalculator();
-
+      $scope.stopPolyLineDrawer();
       $scope.addOriginalPositionLocateUI();
 
       var runSummaryButtonControlDiv = document.createElement('div');
@@ -1446,7 +1465,7 @@ angular.module('starter.runController', ['starter.appServices',
         pace: $rootScope.getRunPace(),
         User: $rootScope.getUserId(),
         moneyRaised: $rootScope.getRunMoneyRaisedAmount(),
-        charity: $rootScope.getSelectedCharityName(),
+        charityId: $rootScope.getSelectedCharityId(),
         path: {lat: [$scope.lat], long: [$scope.long]},
         laps: { number: [$scope.lapPushNumbers],
           distance: [$scope.lapPushDistances],
@@ -1454,7 +1473,6 @@ angular.module('starter.runController', ['starter.appServices',
           minutes: [$scope.lapPushMinutes],
           pace: [$scope.lapPushPace]
         }
-
       }
       console.log('Form Distance: ' + form.distance);
       console.log('Form.lapDistance: ' + form.lapDistance);
@@ -1464,6 +1482,8 @@ angular.module('starter.runController', ['starter.appServices',
         .success(function(data, status, headers, config){
           //just status header for now
           console.log('saveRun API call returned success');
+          console.log('data.id: ' + data._id);
+          $rootScope.setRunIdDayView(data._id);
 
         })
         .error(function(err,status){

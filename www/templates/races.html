@@ -7,7 +7,7 @@
           <div class="races featured-box">
             <h1 class="featured-race">{{race.name}}</h1>
             <p class="races featured-race-detail">Location: {{race.city}}</p>
-            <p class="races featured-race-detail">Distance: {{race.distances}}</p>
+            <p class="races featured-race-detail">Distance: {{displayDistanceForRace(race)}}</p>
           </div>
         </ion-slide-page>
         <!--<ion-slide-page>-->
@@ -37,9 +37,8 @@
     <a class="races" href="#/app/myRaces">
       <div class="races my-races-container">
         <h1 class="races">My Races</h1>
+        <p class="races races-detail">{{myRacesSubHeader}}</p>
         <p class="races races-detail">Next race: In 2 weeks</p>
-        <p class="races races-detail">Goal Time: 20min</p>
-        <p class="races races-detail">Current Time: 25min</p>
       </div>
     </a>
     <a class="races" href="#/app/findRaces">
@@ -51,7 +50,7 @@
     <a class="races" href="#/app/pastRaces">
       <div class="races past-races-container">
         <h1 class="races">Past Races</h1>
-        <p class="races races-detail">You have completed 23 races</p>
+        <p class="races races-detail">{{pastRacesSubheader}}</p>
       </div>
     </a>
 

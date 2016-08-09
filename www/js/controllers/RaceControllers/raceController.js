@@ -67,5 +67,59 @@ angular.module('starter.raceController', ['starter.appServices',
       console.log('select race called with id: ' + id);
       $rootScope.setRaceId(id);
       $window.location.href = ('#/app/raceProfile');
-    }
+    };
+
+    $scope.displayDistanceForRace = function(race) {
+      distanceArray = race.distances.split(",");
+      distanceString = "";
+      for (var i = 0; i < distanceArray.length; i++) {
+        distanceString += distanceArray[i] + "km";
+        if (i < (distanceArray.length - 1)) {
+          distanceString += ", ";
+        }
+      }
+      return distanceString;
+    };
+
+    RaceAPI.getUserRaces($rootScope.getUserId())
+      .success(function(data, status, headers, config){
+        console.log('Race API getUsersRaces call succeeded ');
+        console.log('getUsersRaces data.length: ' + data.length);
+        var counter = 0;
+        if(data.length >0){
+          for(var i = 0; i< data.length; i++){
+            counter++;
+            console.log('counter: ' + counter);
+          }
+          $scope.myRacesSubHeader = 'You have ' + counter +' upcoming races.'
+        }
+         else {
+          console.log('getUsersRaces data.length was less than 1');
+          $scope.myRacesSubHeader = 'You have not signed up for a race yet!';
+        }
+      })
+      .error(function(err, status){
+        console.log('Race API getUsersRaces call failed with status: ' + status +' and error: ' + err);
+      });
+
+
+    RaceAPI.getPastRaces($rootScope.getUserId())
+      .success(function(data, status, headers, config){
+        console.log('RaceAPI getPastRaces succeeded');
+        console.log('getPastRaces data.length: ' + data.length);
+        var counter = 0;
+        if(data.length > 0){
+          for(var i=0; i<data.length; i++){
+            counter++;
+          }
+          $scope.pastRacesSubheader = 'You have completed ' + counter + ' races';
+        } else {
+          console.log('data.length was less than one');
+          $scope.pastRacesSubheader = 'You have completed 0 races';
+        }
+      })
+      .error(function(err, status){
+        console.log('RaceAPI getPastRaces failed with status: ' + status + '   and error: ' + err);
+      })
+
   });

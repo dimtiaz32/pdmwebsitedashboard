@@ -22,7 +22,7 @@ angular.module('starter.findRacesController', [
     console.log('FindRacesCtrl entered with userId: ' +$rootScope.getUserId());
 
     $scope.races = [];
-    $rootScope.show("Loading races");
+
     RaceAPI.getAllRaces($rootScope.getUserId())
       .success(function(data, status, headers, config){
         console.log('RunAPI getAllRAces call succeeded');
@@ -31,12 +31,12 @@ angular.module('starter.findRacesController', [
         for(var i=0; i<data.length; i++){
           $scope.races.push(data[i]);
         }
+
         $rootScope.hide();
 
         for (var i = 0; i < $scope.races.length; i++) {
           console.log($scope.races[i].keyWords);
         }
-
       })
       .error(function(status){
         console.log('RunAPI getAllRAces call failed with status: '+ status);
@@ -48,7 +48,19 @@ angular.module('starter.findRacesController', [
       $rootScope.setRaceId(id);
       $rootScope.show('Loading race information');
       $window.location.href = ('#/app/raceProfile');
-    }
+    };
+
+    $scope.displayDistanceForRace = function(race) {
+      distanceArray = race.distances.split(",");
+      distanceString = "";
+      for (var i = 0; i < distanceArray.length; i++) {
+        distanceString += distanceArray[i] + "km";
+        if (i < (distanceArray.length - 1)) {
+          distanceString += ", ";
+        }
+      }
+      return distanceString;
+    };
 
     /*Filter Bar Stuff*/
     $scope.filteredRaces = $scope.races; //This changes once the user uses the filter bar
@@ -65,6 +77,10 @@ angular.module('starter.findRacesController', [
       });
     };
 
-
+    $scope.selectRace = function(id){
+      console.log('selectRace called with id: ' + id);
+      $rootScope.setRaceId(id);
+      $window.location.href = ('#/app/raceProfile');
+    }
 
   });

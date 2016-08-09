@@ -33,7 +33,7 @@ angular.module('starter', ['ionic',
   'jett.ionic.filter.bar'
 ])
 
-  .run(function($ionicPlatform, ngFB) {
+  .run(function($ionicPlatform, ngFB, AuthAPI, $rootScope) {
 
     // TODO facebook application id, need to replace whenr release
     ngFB.init({appId: '1079958642070604'});
@@ -62,14 +62,15 @@ angular.module('starter', ['ionic',
   }])
 
   .constant('CLIENT_HOST','http://localhost:8100/')
-  //.constant('SERVER_HOST','https://dreamrun.herokuapp.com/')
-  .constant('SERVER_HOST','http://localhost:5000/')
+  .constant('SERVER_HOST','https://dreamrun.herokuapp.com/')
+  //.constant('SERVER_HOST','http://localhost:5000/')
+
 
   .config(['$httpProvider', function($httpProvider) {
-      $httpProvider.interceptors.push(function($q, $cookies) {
+      $httpProvider.interceptors.push(function($window) {
           return {
            'request': function(config) {
-                config.headers['authorization'] = $cookies.get('token');
+                config.headers['authorization'] = $window.localStorage.token;
                 return config;
             }
           };
