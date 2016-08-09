@@ -70,19 +70,19 @@ angular.module('starter.authController', ['starter.appServices',
       if(!firstName){
         $rootScope.notify("Please enter a valid first name");
         console.log("createUser failed: invalid first name");
-        return;
+        return false;
       } else if(!lastName){
         $rootScope.notify("Please enter a valid last name");
         console.log("createUser failed: invalid last name")
-        return;
+        return false;
       } else if(!email){
         $rootScope.notify("Please enter a valid email address");
         console.log("createUser failed: invalid email");
-        return;
+        return false;
       } else if(!password){
         $rootScope.notify("Please enter a valid password");
         console.log("createUser failed: invalid password");
-        return;
+        return false;
       }
 
       $rootScope.notify("Register your account:)");
@@ -122,6 +122,7 @@ angular.module('starter.authController', ['starter.appServices',
   .controller("ResetCtrl",function($scope,$rootScope,$location, UserAPI, $window){
 
       $scope.email = $location.search().email;
+      $scope.token = $location.search().token;
       $scope.data = {
         newPassword: "",
         confirmPassword: ""
@@ -132,15 +133,16 @@ angular.module('starter.authController', ['starter.appServices',
         if(!$scope.data.newPassword){
           $rootScope.notify("Change failed. Please enter a valid new Password");
           console.log("Invalid new password");
-          return;
+          return false;
         } else if($scope.data.newPassword != $scope.data.confirmPassword){
           $rootScope.notify("Change failed. Please match the password ");
           console.log("Invalid match password");
-          return;
+          return false;
         }
 
         console.log("email:" + $scope.email);
         console.log("newPassword:" + $scope.data.newPassword);
+        $rootScope.setToken = $scope.token;
         UserAPI.changePassword({email:$scope.email,newPassword:$scope.data.newPassword}).success(function(data){
           console.log("change password success!");
           $window.location.href = "#/auth/signin";
@@ -228,11 +230,11 @@ angular.module('starter.authController', ['starter.appServices',
       if(!email){
         $rootScope.notify("Login failed. Please enter a valid email address");
         console.log("Invalid text in email field");
-        return
+        return false;
       } else if(!password){
         $rootScope.notify("Login failed. Please enter a valid password");
         console.log("Invalid text in password field");
-        return
+        return false;
       }
 
       AuthAPI.signin({
@@ -385,6 +387,7 @@ angular.module('starter.authController', ['starter.appServices',
                    console.log("check is existed:" +  JSON.stringify(data));
                    if(data.isExisted) {
                      console.log("success,email is existed");
+                     $rootScope.setToken(data.token);
                      $ionicPopup._popupStack[0].responseDeferred.resolve();
                      UserAPI.sendMail({email:$scope.data.email}).success(function(data){
                         console.log("send mail success");
