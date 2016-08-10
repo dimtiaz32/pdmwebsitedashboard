@@ -71,7 +71,7 @@ angular.module('starter.userServices', [])
       return $http.post(SERVER_HOST + 'user/password',form, {
           method: 'POST'
       })
-    }
+    },
 
     getGoals: function(userId){
       return $http.get(SERVER_HOST+'user/goals', {
