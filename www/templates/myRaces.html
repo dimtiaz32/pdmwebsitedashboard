@@ -5,8 +5,9 @@
       <div class="races gradient">
         <h1 class="featured-race">{{race.name}}</h1>
         <p class="races races-detail">Location: {{race.city}}</p>
-        <p class="races races-detail">Distance: {{race.distances}}</p>
+
         <p class="races races-detail">Date: {{race.date | date:'MM/dd/yyyy'}}</p>
+        <p class="races races-detail">Distance: {{displayDistances(raceDistances)}}</p>
       </div>
     </div>
 <!--

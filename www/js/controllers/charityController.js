@@ -120,6 +120,7 @@ angular.module('starter.charityController', ['starter.appServices',
 
   $scope.pastIds = [];
   $scope.charIds = [];
+  $scope.objectIds = [];
 
   console.log('charityName: ' +$rootScope.getSelectedCharityName());
 
@@ -204,6 +205,7 @@ angular.module('starter.charityController', ['starter.appServices',
               $scope.pastCharities.push(data[i]);
               $scope.pastCharitiesPop.push(data[i]);
               $scope.pastIds.push(data[i].id);
+              $scope.objectIds.push(data[i]._id);
             }
             console.log('$scope.pastCharities.length: ' + $scope.pastCharities.length);
             console.log('charitiesExist: ' + $scope.pastCharitiesExist);
@@ -218,38 +220,22 @@ angular.module('starter.charityController', ['starter.appServices',
           console.log('$scope.pastCharities.length: ' + $scope.pastCharities.length);
           console.log('$scope.pastCharities.length: ' + $scope.charitiesList.length);
 
-          $scope.getPastMoney = function(id){
-            var  moneyRaised;
-            for(var i=0; i< $scope.pastIds.length; i++){
-              if($scope.pastCharities[i].id = id){
-                console.log('ids matched' + $scope.pastCharities[i].id +'     '+ id);
-                if($scope.pastCharities[i].moneyRaised == undefined){
-                  return 0;
-                } else {
-                  return $scope.pastCharities[i].moneyRaised;
-                }
-              } else {
-                console.log('ids did not match: ' + $scope.pastCharities[i].id + id);
-               return 0;
-              }
 
-            }
-
-          }
 
           $scope.checkPastIds = function(id){
-
+            console.log('check past ids eetered with id: ' + id);
             console.log('pastIds.length: ' + $scope.pastIds.length);
-            for(var i=0; i< $scope.pastIds.length; i++){
-              console.log('$scope.pastIdsd['+i+'].id: ' + $scope.pastIds[i]);
-              if($scope.pastIds[i] == id){
-                console.log('ids matched' + $scope.pastIds[i] + '       '+ id);
-                var thisMR = $scope.getPastMoney(id);
+            for(var i=0; i< $scope.pastCharities.length; i++){
+              console.log('$scope.charityId['+i+'].id: ' + $scope.pastCharities[i].id);
+              if($scope.pastCharities[i].id == id) {
+                console.log('ids matched' + $scope.pastIds[i] + '       ' + id);
+                var thisMR = $scope.pastCharities[i].moneyRaised;
                 console.log('thisMR: ' + thisMR);
                 return thisMR;
-              } else {
+              }
+               else {
                 console.log('ids did not match'+ $scope.pastIds[i] + '       '+ id);
-                return 0;
+                return;
               }
 
             }
@@ -260,6 +246,10 @@ angular.module('starter.charityController', ['starter.appServices',
             var id = $scope.charitiesList[i]._id;
             console.log('id: ' + id)
             money = $scope.checkPastIds(id);
+            console.log('money: ' + money);
+            if(money == undefined){
+              money = 0;
+            }
             console.log('money: ' + money);
             var lol = {
               id: id,
@@ -272,66 +262,11 @@ angular.module('starter.charityController', ['starter.appServices',
             console.log('CharitiesDisplayList: ' + JSON.stringify($scope.charitiesDisplayList));
           }
 
-              // for(x = 0; x <$scope.pastCharitiesPop.length; x++) {
 
-                // console.log('pastCharitiesPop:' + JSON.stringify($scope.pastCharitiesPop));
-                // console.log('charitiesListPop:' + JSON.stringify($scope.charitiesListPop));
-                // console.log('charitiesDisplayList:' + JSON.stringify($scope.charitiesDisplayList));
-                // if ($scope.pastCharitiesPop[x].id == $scope.charitiesListPop[i]._id) {
-                //   console.log('pastCharitiesPop[' + x + '].id: ' + $scope.pastCharitiesPop[x].id +
-                //     ' == $scope.charitiesListPop[' + i + ']._id: ' + $scope.charitiesListPop[x].id);
-                //   if ($scope.pastCharitiesPop[x].moneyRaised != 0 || $scope.pastCharitiesPop[x].moneyRaised != undefined) {
-                //     console.log('moneyRaised: $scope.pastCharities[x].moneyRaised' + $scope.pastCharities[x].moneyRaised);
-                //     var lol = {
-                //       name: $scope.charitiesListPop[i].name,
-                //       description: $scope.charitiesListPop[i].description,
-                //       moneyRaised: $scope.pastCharitiesPop[x].moneyRaised,
-                //       id: $scope.charitiesListPop[i]._id
-                //     };
-                //     $scope.charitiesDisplayList.push(lol);
-                //     console.log('charitiesDisplayList: ' + JSON.stringify($scope.charitiesDisplayList));
-                //
-                //
-                //   } else {
-                //     console.log('money =0 else entered');
-                //     var lol = {
-                //       name: $scope.charitiesListPop[i].name,
-                //       description: $scope.charitiesListPop[i].description,
-                //       moneyRaised: 0,
-                //       id: $scope.charitiesListPop[i]._id
-                //     };
-                //     $scope.charitiesDisplayList.push(lol);
-                //     console.log('charitiesDisplayList: ' + JSON.stringify($scope.charitiesDisplayList));
-                //
-                //   }
-                //   $scope.charitiesListPop.remove($scope.charitiesListPop[i]);
-                //
-                // } else {
-                //   var lol = {
-                //     name: $scope.charitiesListPop[i].name,
-                //     description: $scope.charitiesListPop[i].description,
-                //     moneyRaised: 0,
-                //     id: $scope.charitiesListPop[i]._id
-                //   };
-                //   $scope.charitiesDisplayList.push(lol);
-                //   console.log('charitiesDisplayList: ' + JSON.stringify($scope.charitiesDisplayList));
-                //   $scope.charitiesListPop.remove($scope.charitiesListPop[i]);
-                // }
-              // }
-          //   }else {
-          //     console.log('charitly list length: ' +$scope.charitiesList.length);
-          //     for (i = 0; i < $scope.charitiesList.length; i++) {
-          //       var lol = {name: $scope.charitiesList[i].name,
-          //         description: $scope.charitiesList[i].description,
-          //         moneyRaised: 0,
-          //         id: $scope.charitiesList[i]._id};
-          //       $scope.charitiesDisplayList.push(lol);
-          //    }
-          // }
-          // console.log('charitiesDisplayList.lol: ' + JSON.stringify($scope.charitiesDisplayList));
-          // console.log('charitiesDisplayList.name: ' + $scope.charitiesDisplayList[0].name);
-          // // $rootScope.$broadcast('listToDisplay');
-          // }
+          console.log('charitiesDisplayList.lol: ' + JSON.stringify($scope.charitiesDisplayList));
+          console.log('charitiesDisplayList.name: ' + $scope.charitiesDisplayList[0].name);
+          // $rootScope.$broadcast('listToDisplay');
+
         })
         .error(function(status, err){
           console.log('User API getPastCharities call failed with status: ' + status + ' and error: ' +err);
@@ -380,18 +315,26 @@ angular.module('starter.charityController', ['starter.appServices',
 
     console.log('$scope.moneyRaisedCheck: ' + $scope.moneyRaisedCheck(mr));
 
+  $scope.objId;
 
-    UserAPI.updatePastCharities(userId, {
-      id: $rootScope.getSelectedCharityId(),
-      moneyRaised: $scope.moneyRaisedCheck($rootScope.getSelectedCharityMoneyRaised())
-    })
-      .success(function (data, status, headers, config) {
-        console.log('UserAPI update past charities call succeeded');
-        $scope.updateMoneyRaised();
+
+    $scope.updatePastCharities = function(){
+      console.log('updatePastCharities entered with objId: ' + $scope.objId);
+      UserAPI.updatePastCharities(userId, {
+        id: $scope.objId,
+        charityId: $rootScope.getSelectedCharityId(),
+        moneyRaised: $scope.moneyRaisedCheck($rootScope.getSelectedCharityMoneyRaised())
       })
-      .error(function (err, status) {
-        console.log('UserAPI update past charities call failed with status: ' + status + ' and error: ' + err);
-      });
+        .success(function (data, status, headers, config) {
+          console.log('UserAPI update past charities call succeeded');
+          $scope.updateMoneyRaised();
+        })
+        .error(function (err, status) {
+          console.log('UserAPI update past charities call failed with status: ' + status + ' and error: ' + err);
+        });
+
+    }
+
 
 
     console.log('pastCharitieslength' + $scope.pastCharities.length);
@@ -403,7 +346,7 @@ angular.module('starter.charityController', ['starter.appServices',
         }
       }
     };
-    $scope.updateMoneyRaised();
+    // $scope.updateMoneyRaised();
 
 
     //TODO: QUERY MONTH OF RUNS TO GET MONTH MONEY RAISED
@@ -414,50 +357,79 @@ angular.module('starter.charityController', ['starter.appServices',
     console.log($rootScope.getUserId());
 
     console.log('$scope.selectedCharityDisplay.totalMoneyRaised: '+ $scope.selectedCharityDisplay.totalMoneyRaised);
-    if($scope.selectedCharityDisplay.totalMoneyRaised = false || $scope.selectedCharityDisplay.totalMoneyRaised == undefined){
+    if($scope.selectedCharityDisplay.totalMoneyRaised == undefined){
       $scope.selectedCharityDisplay.totalMoneyRaised = 0;
       console.log('$scope.selectedCharityDisplay.totalMoneyRaised: '+ $scope.selectedCharityDisplay.totalMoneyRaised);
     }
 
 
 
+
     console.log('charityId for post: ' + charityId);
 
-    UserAPI.setSelectedCharity(userId,
-      {charityId: charityId, moneyRaised: moneyRaised})
-      .success(function (data, status, headers, config) {
-        console.log('UserAPI setSelectedCharity call succeeded');
-        CharityAPI.getById(charityId)
-          .success(function (data, status, headers, config) {
-            console.log('CharityAPI get by id succeeded');
-            console.log('data.charity.name: ' + data.name);
-            console.log('data.charity.description: ' + data.description);
-            $rootScope.setSelectedCharityName(data.name);
-            $rootScope.setSelectedCharityDescription(data.description);
-            $rootScope.setSelectedCharityUrl(data.url);
-            $rootScope.setSelectedCharityId(data._id);
-            $rootScope.setSelectedCharityMoneyRaised(moneyRaised);
-            $scope.selectedCharityDisplay.name = data.name;
-            $scope.selectedCharityDisplay.description = data.description;
-            $scope.selectedCharityDisplay.url = data.url;
-            $scope.selectedCharityDisplay.totalMoneyRaised = moneyRaised;
+    $scope.setSelectedCharity = function(){
+      UserAPI.setSelectedCharity(userId,
+        {charityId: charityId, moneyRaised: moneyRaised})
+        .success(function (data, status, headers, config) {
+          console.log('UserAPI setSelectedCharity call succeeded');
+          CharityAPI.getById(charityId)
+            .success(function (data, status, headers, config) {
+              console.log('CharityAPI get by id succeeded');
+              console.log('data.charity.name: ' + data.name);
+              console.log('data.charity.description: ' + data.description);
+              $rootScope.setSelectedCharityName(data.name);
+              $rootScope.setSelectedCharityDescription(data.description);
+              $rootScope.setSelectedCharityUrl(data.url);
+              $rootScope.setSelectedCharityId(data._id);
+              $rootScope.setSelectedCharityMoneyRaised(moneyRaised);
+              $scope.selectedCharityDisplay.name = data.name;
+              $scope.selectedCharityDisplay.description = data.description;
+              $scope.selectedCharityDisplay.url = data.url;
+              $scope.selectedCharityDisplay.totalMoneyRaised = moneyRaised;
 
 
-            console.log('charityId from inside setSelectedCharity success call: ' + charityId);
-            $scope.getMonthMoneyRaised(charityId);
+              console.log('charityId from inside setSelectedCharity success call: ' + charityId);
+              $scope.getMonthMoneyRaised(charityId);
 
-          })
-          .error(function (err, status) {
-            console.log('CharityAPI get by id failed with error: ' + err + ' and status: ' + status);
-          })
+            })
+            .error(function (err, status) {
+              console.log('CharityAPI get by id failed with error: ' + err + ' and status: ' + status);
+            })
 
-      })
-      .error(function (err, status) {
-        console.log('UserAPI setSelectedCharity call failed with error: ' + err + ' and status: ' + status);
-      });
+        })
+        .error(function (err, status) {
+          console.log('UserAPI setSelectedCharity call failed with error: ' + err + ' and status: ' + status);
+        });
+
+    }
 
     console.log('$rootScope.getSelectedCharityId(): ' + $rootScope.getSelectedCharityId());
     console.log('charityMonth: ' + $scope.charityMonth);
+
+
+
+    console.log('$scope.objectIds: ' + JSON.stringify($scope.objectIds));
+    console.log('$scope.objectIds: ' + JSON.stringify($scope.pastCharities));
+    console.log('$scope.objectIds.length: ' + $scope.objectIds.length);
+    $scope.getObjectId = function(){
+      if($scope.pastCharities.length> 0){
+        for(var i=0; i< $scope.pastCharities.length; i++){
+          console.log('pastCharities['+i+']._id: ' + $scope.pastCharities[i]._id);
+          console.log('pastCharities['+i+'].id:' + $scope.pastCharities[i].id);
+          if($scope.pastCharities[i].id == $rootScope.getSelectedCharityId()){
+            $scope.objId = $scope.pastCharities[i]._id;
+            console.log('$scope.objId: ' + $scope.objId);
+            $scope.updatePastCharities();
+          }
+        }
+      } else {
+        console.log('pastCharities.length was less than one');
+        $scope.setSelectedCharity();
+      }
+
+    }
+
+    $scope.getObjectId();
 
 
 
