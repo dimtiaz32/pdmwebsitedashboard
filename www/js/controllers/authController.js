@@ -104,6 +104,8 @@ angular.module('starter.authController', ['starter.appServices',
         $rootScope.setName(name);
         $rootScope.setToken(data.token);
         $rootScope.setUserId(data.user._id);
+        console.log("password: " + data.user.password);
+        $rootScope.setPassword(data.user.password);
         $rootScope.$broadcast("initial");
         $window.location.href  = ('#/app/charities');
       })
@@ -234,6 +236,8 @@ angular.module('starter.authController', ['starter.appServices',
           $rootScope.setToken(data.token);
           console.log("token: " + data.token);
           $rootScope.setAvatar(data.user.avatar);
+          console.log("password: " + data.user.password);
+          $rootScope.setPassword(data.user.password);
 
           // console.log(data.user.charityName);
           if(data.user.charity == null || data.user.charity.id == null){

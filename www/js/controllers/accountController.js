@@ -22,7 +22,7 @@ angular.module('starter.accountController', ['starter.appServices',
 
 
 
-  .controller('AccountCtrl', function($rootScope, AuthAPI, UserAPI, $window, $scope, $ionicPopup, $ionicHistory) {
+  .controller('AccountCtrl', function($rootScope, AuthAPI, UserAPI, $window, $scope, $ionicPopup, $ionicHistory, bcrypt) {
 
     $rootScope.$on('initial', function(){
       console.log("---------start account ctrl initial---------");
@@ -131,8 +131,9 @@ angular.module('starter.accountController', ['starter.appServices',
     //TODO: FIX PASSWORD RETURN – CURRENTLY RETURNS 'UNDEFINED'
     //TODO: GET PASSWORD TO UPDATE ON SERVER
     $scope.showConfirmPassword = function(){
+      $scope.data = {}
       var confirmPassword = $ionicPopup.show({
-        template: '<input type="password" ng-model="popup.currentPasswordHolder">',
+        template: '<input type="password" ng-model="data.currentPasswordHolder">',
         title: 'Change password',
         subTitle: 'Enter current password',
         scope: $scope,
@@ -143,14 +144,16 @@ angular.module('starter.accountController', ['starter.appServices',
             type: 'button-positive',
             onTap: function(e) {
               var currentPassword = $rootScope.getPassword();
+              console.log("currentPassword: " + currentPassword);
+              console.log("currentPasswordHolder: " + $scope.data.currentPasswordHolder);
               console.log('Current Password: '+ currentPassword);
               console.log($rootScope.getPassword());
-              if (currentPassword != $scope.popup.currentPasswordHolder) {
+              if (!bcrypt.compareSync($scope.data.currentPasswordHolder, currentPassword)) {
                 $scope.showAlert('Oops!', "You didn't enter your current password");
-                $scope.popup.currentPasswordHolder = "";
+                $scope.data.currentPasswordHolder = "";
                 e.preventDefault();
-              } else if (currentPassword == $scope.popup.currentPasswordHolder) {
-                $scope.popup.currentPasswordHolder = "";
+              } else {
+                $scope.data.currentPasswordHolder = "";
                 $scope.showChangePassword();
               }
             }
@@ -173,14 +176,7 @@ angular.module('starter.accountController', ['starter.appServices',
             text: '<b>Change</b>',
             type: 'button-positive',
             onTap: function(e) {
-              if ($scope.popup.password1 == $scope.popup.password2) {
-                var newPassword = $scope.popup.password1;
-                $scope.popup.password1 = "";
-                $scope.popup.password2 = "";
-                $scope.showAlert('Yay!','Password changed');
-                $rootScope.setPassword(newPassword);
-                console.log($rootScope.getPassword())
-              } else if ($scope.popup.password1 == "") {
+              if ($scope.popup.password1 == "") {
                 $scope.showAlert('Oops!',"Don't leave any field blank!");
                 e.preventDefault();
               } else if ($scope.popup.password1 == "") {
@@ -191,6 +187,21 @@ angular.module('starter.accountController', ['starter.appServices',
                 $scope.popup.password2="";
                 $scope.showAlert('Oops!','Passwords do not match');
                 e.preventDefault();
+              } else if ($scope.popup.password1 == $scope.popup.password2){
+                var newPassword = $scope.popup.password1;
+                UserAPI.changePassword({email:$rootScope.getEmail(),newPassword:newPassword}).success(function(data){
+                  console.log("change password success!");
+                  $rootScope.notify("change password success!");
+                  $scope.popup.password1 = "";
+                  $scope.popup.password2 = "";
+                  $scope.showAlert('Yay!','Password changed');
+                  $rootScope.setPassword(bcrypt.hashSync(newPassword, bcrypt.genSaltSync(8), null));
+                  console.log($rootScope.getPassword())
+                }).error(function(error){
+                  console.log("change password failed!" + error);
+                  $rootScope.notify("change password failed!");
+                  $scope.showAlert('Sorry!','Password change failed');
+                })
               } else {
                 $scope.popup.password1="";
                 $scope.popup.password2="";

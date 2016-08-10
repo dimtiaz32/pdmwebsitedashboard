@@ -30,7 +30,8 @@ angular.module('starter', ['ionic',
   'angular-svg-round-progressbar',
   'ion-datetime-picker',
   'ngMaterial',
-  'jett.ionic.filter.bar'
+  'jett.ionic.filter.bar',
+  'dtrw.bcrypt'
 ])
 
   .run(function($ionicPlatform, ngFB, AuthAPI, $rootScope) {
