@@ -21,22 +21,40 @@ angular.module('starter.myRacesController', [
   .controller('MyRacesCtrl', function($rootScope, $timeout, $ionicModal, $window, $scope,RaceAPI, RunAPI, HistoryAPI, AuthAPI){
     console.log('MyRacesCtrl entered: userId ' + $rootScope.getUserId());
     $scope.myRaces = [];
-
+    $scope.raceDistances = [];
     RaceAPI.getUserRaces($rootScope.getUserId())
       .success(function(data, status, headers, config){
         console.log('RunAPI getUserRaces call succeeded');
         //check for data length before parsing
-        for(var i=0; i< data.length; i++){
-          var tempDistances = data[i].distances;
-          dSplit = tempDistances.to
-
-          $scope.myRaces.push(data[i]);
-        }
         if(data.length == 0){
           $scope.noRaces = true;
-        } else{
+        } else {
           $scope.noRaces = false;
+
+          for (var i = 0; i < data.length; i++) {
+            $scope.raceName = data[i].name;
+            $scope.raceDate = data[i].date;
+            $scope.raceCity = data[i].city;
+
+            console.log(data[i].distances);
+            var tempDistanceHolder = data[i].distances;
+            var distanceSplit = tempDistanceHolder.toString().split(',');
+            console.log('distanceSplit: ' + distanceSplit);
+            if (distanceSplit.length > 0) {
+              for (var i = 0; i < distanceSplit.length; i++) {
+                var fDistance = distanceSplit[i];
+                $scope.raceDistances.push({distance: fDistance});
+
+              }
+
+            }
+
+            $scope.myRaces.push({name: $scope.raceName, date: $scope.raceDate,
+              city: $scope.raceCity});
+            console.log('pastRacesDisplay: ' + JSON.stringify($scope.myRaces));
+          }
         }
+
       })
       .error(function(status){
         console.log('RunAPI getUserRaces call failed with status: ' + status);
@@ -47,6 +65,17 @@ angular.module('starter.myRacesController', [
        console.log('selectRace entered with id: ' + id);
       $rootScope.setRaceId(id);
       $window.location.href = ('#/app/raceProfile');
+    }
+
+    $scope.displayDistances = function(distances) {
+      distanceString = "";
+      for (var i = 0; i < distances.length; i++) {
+        distanceString += (distances[i].distance + "km");
+        if (i < (distances.length - 1)) {
+          distanceString += ", "
+        }
+      }
+      return distanceString;
     }
 
 

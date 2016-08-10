@@ -30,7 +30,8 @@ angular.module('starter', ['ionic',
   'angular-svg-round-progressbar',
   'ion-datetime-picker',
   'ngMaterial',
-  'jett.ionic.filter.bar'
+  'jett.ionic.filter.bar',
+  'dtrw.bcrypt'
 ])
 
   .run(function($ionicPlatform, ngFB, AuthAPI, $rootScope) {
@@ -63,7 +64,7 @@ angular.module('starter', ['ionic',
 
   .constant('CLIENT_HOST','http://localhost:8100/')
   .constant('SERVER_HOST','https://dreamrun.herokuapp.com/')
-  //.constant('SERVER_HOST','http://localhost:5000/')
+  // .constant('SERVER_HOST','http://localhost:5000/')
 
 
   .config(['$httpProvider', function($httpProvider) {
