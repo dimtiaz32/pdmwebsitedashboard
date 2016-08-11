@@ -921,12 +921,12 @@ angular.module('starter.runController', ['starter.appServices',
         // $rootScope.setLapPath($scope.lapCoords);
         // console.log('Lap path global var set as: '+$rootScope.getPath());
 
-        // $scope.marker = new google.maps.Marker({
-        //   position: currentCoords,
-        //   icon: '../img/PDM logo.png',
-        //   map: $scope.map
-        //
-        // });
+        $scope.marker = new google.maps.Marker({
+          position: currentCoords,
+          icon: '../img/blue-gps-tracker.png',
+          map: $scope.map
+
+        });
 
         $scope.lapDistance = google.maps.geometry.spherical.computeLength({
           path: $scope.lapCoords

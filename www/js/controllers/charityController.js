@@ -223,19 +223,18 @@ angular.module('starter.charityController', ['starter.appServices',
 
 
           $scope.checkPastIds = function(id){
-            console.log('check past ids eetered with id: ' + id);
-            console.log('pastIds.length: ' + $scope.pastIds.length);
+            console.log('moneyRaised check past ids eetered with id: ' + id);
+            console.log('moneyRaised pastIds.length: ' + $scope.pastIds.length);
             for(var i=0; i< $scope.pastCharities.length; i++){
               console.log('$scope.charityId['+i+'].id: ' + $scope.pastCharities[i].id);
               if($scope.pastCharities[i].id == id) {
-                console.log('ids matched' + $scope.pastIds[i] + '       ' + id);
+                console.log('moneyRaised ids matched' + $scope.pastIds[i] + '       ' + id);
                 var thisMR = $scope.pastCharities[i].moneyRaised;
-                console.log('thisMR: ' + thisMR);
+                console.log('moneyRaised thisMR: ' + thisMR);
                 return thisMR;
               }
                else {
-                console.log('ids did not match'+ $scope.pastIds[i] + '       '+ id);
-                return;
+                console.log('moneyRaised ids did not match'+ $scope.pastIds[i] + '       '+ id);
               }
 
             }
@@ -244,9 +243,9 @@ angular.module('starter.charityController', ['starter.appServices',
 
           for(var i =0; i< $scope.charitiesList.length; i++){
             var id = $scope.charitiesList[i]._id;
-            console.log('id: ' + id)
+            console.log('moneyRaised id: ' + id);
             money = $scope.checkPastIds(id);
-            console.log('money: ' + money);
+            console.log('moneyRaised money: ' + money);
             if(money == undefined){
               money = 0;
             }
@@ -284,6 +283,32 @@ angular.module('starter.charityController', ['starter.appServices',
       $rootScope.verifyStatus(status);
     });
 
+
+  CharityAPI.getById($rootScope.getSelectedCharityId())
+    .success(function (data, status, headers, config) {
+      console.log('CharityAPI get by id succeeded');
+      console.log('data.charity.name: ' + data.name);
+      console.log('data.charity.description: ' + data.description);
+      // $rootScope.setSelectedCharityName(data.name);
+      // $rootScope.setSelectedCharityDescription(data.description);
+      // $rootScope.setSelectedCharityUrl(data.url);
+      // $rootScope.setSelectedCharityId(data._id);
+      // $rootScope.setSelectedCharityMoneyRaised(moneyRaised);
+      $scope.selectedCharityDisplay.name = data.name;
+      $scope.selectedCharityDisplay.description = data.description;
+      $scope.selectedCharityDisplay.url = data.url;
+      $scope.selectedCharityDisplay.totalMoneyRaised = moneyRaised;
+
+
+      console.log('charityId from inside setSelectedCharity success call: ' + charityId);
+      $scope.getMonthMoneyRaised(charityId);
+
+    })
+    .error(function (err, status) {
+      console.log('CharityAPI get by id failed with error: ' + err + ' and status: ' + status);
+    })
+
+
   $scope.selectCharity = function(charityId, moneyRaised) {
 
     console.log('charityId: ' + charityId);
@@ -291,15 +316,6 @@ angular.module('starter.charityController', ['starter.appServices',
 
     console.log('$rootScope.getSelectedCharityMoneyRaised(): ' + $rootScope.getSelectedCharityMoneyRaised());
     console.log('$window.localStorage.totalCharityMoneyRaised: ' + $window.localStorage.totalCharityMoneyRaised);
-
-
-    // $scope.pastCheck = function(id){
-    //   console.log('pastCheck entered with id: ' + id);
-    //   console.log('pastCharities from select charity: ' + JSON.stringify($scope.pastCharities));
-    //
-    // }
-
-    // $scope.pastCheck($rootScope.getSelectedCharityId());
 
 
     var mr = $rootScope.getSelectedCharityMoneyRaised();
@@ -315,13 +331,12 @@ angular.module('starter.charityController', ['starter.appServices',
 
     console.log('$scope.moneyRaisedCheck: ' + $scope.moneyRaisedCheck(mr));
 
-  $scope.objId;
 
 
-    $scope.updatePastCharities = function(){
+
       console.log('updatePastCharities entered with objId: ' + $scope.objId);
-      UserAPI.updatePastCharities(userId, {
-        id: $scope.objId,
+      UserAPI.updatePastCharities({
+        userId: $rootScope.getUserId(),
         charityId: $rootScope.getSelectedCharityId(),
         moneyRaised: $scope.moneyRaisedCheck($rootScope.getSelectedCharityMoneyRaised())
       })
@@ -333,7 +348,7 @@ angular.module('starter.charityController', ['starter.appServices',
           console.log('UserAPI update past charities call failed with status: ' + status + ' and error: ' + err);
         });
 
-    }
+
 
 
 
@@ -357,51 +372,48 @@ angular.module('starter.charityController', ['starter.appServices',
     console.log($rootScope.getUserId());
 
     console.log('$scope.selectedCharityDisplay.totalMoneyRaised: '+ $scope.selectedCharityDisplay.totalMoneyRaised);
-    if($scope.selectedCharityDisplay.totalMoneyRaised == undefined){
-      $scope.selectedCharityDisplay.totalMoneyRaised = 0;
-      console.log('$scope.selectedCharityDisplay.totalMoneyRaised: '+ $scope.selectedCharityDisplay.totalMoneyRaised);
-    }
-
-
-
-
     console.log('charityId for post: ' + charityId);
 
-    $scope.setSelectedCharity = function(){
+
       UserAPI.setSelectedCharity(userId,
         {charityId: charityId, moneyRaised: moneyRaised})
         .success(function (data, status, headers, config) {
           console.log('UserAPI setSelectedCharity call succeeded');
-          CharityAPI.getById(charityId)
-            .success(function (data, status, headers, config) {
-              console.log('CharityAPI get by id succeeded');
-              console.log('data.charity.name: ' + data.name);
-              console.log('data.charity.description: ' + data.description);
-              $rootScope.setSelectedCharityName(data.name);
-              $rootScope.setSelectedCharityDescription(data.description);
-              $rootScope.setSelectedCharityUrl(data.url);
-              $rootScope.setSelectedCharityId(data._id);
-              $rootScope.setSelectedCharityMoneyRaised(moneyRaised);
-              $scope.selectedCharityDisplay.name = data.name;
-              $scope.selectedCharityDisplay.description = data.description;
-              $scope.selectedCharityDisplay.url = data.url;
-              $scope.selectedCharityDisplay.totalMoneyRaised = moneyRaised;
+          console.log('moneyRaised: ' + moneyRaised);
+          $scope.getDisplayInformation = function(){
+            CharityAPI.getById(charityId)
+              .success(function (data, status, headers, config) {
+                console.log('CharityAPI get by id succeeded');
+                console.log('data.charity.name: ' + data.name);
+                console.log('data.charity.description: ' + data.description);
+                $rootScope.setSelectedCharityName(data.name);
+                $rootScope.setSelectedCharityDescription(data.description);
+                $rootScope.setSelectedCharityUrl(data.url);
+                $rootScope.setSelectedCharityId(data._id);
+                $rootScope.setSelectedCharityMoneyRaised(moneyRaised);
+                $scope.selectedCharityDisplay.name = data.name;
+                $scope.selectedCharityDisplay.description = data.description;
+                $scope.selectedCharityDisplay.url = data.url;
+                $scope.selectedCharityDisplay.totalMoneyRaised = moneyRaised;
 
 
-              console.log('charityId from inside setSelectedCharity success call: ' + charityId);
-              $scope.getMonthMoneyRaised(charityId);
+                console.log('charityId from inside setSelectedCharity success call: ' + charityId);
+                $scope.getMonthMoneyRaised(charityId);
 
-            })
-            .error(function (err, status) {
-              console.log('CharityAPI get by id failed with error: ' + err + ' and status: ' + status);
-            })
+              })
+              .error(function (err, status) {
+                console.log('CharityAPI get by id failed with error: ' + err + ' and status: ' + status);
+              })
+          }
+          $scope.getDisplayInformation();
+
 
         })
         .error(function (err, status) {
           console.log('UserAPI setSelectedCharity call failed with error: ' + err + ' and status: ' + status);
         });
 
-    }
+
 
     console.log('$rootScope.getSelectedCharityId(): ' + $rootScope.getSelectedCharityId());
     console.log('charityMonth: ' + $scope.charityMonth);
@@ -411,25 +423,25 @@ angular.module('starter.charityController', ['starter.appServices',
     console.log('$scope.objectIds: ' + JSON.stringify($scope.objectIds));
     console.log('$scope.objectIds: ' + JSON.stringify($scope.pastCharities));
     console.log('$scope.objectIds.length: ' + $scope.objectIds.length);
-    $scope.getObjectId = function(){
-      if($scope.pastCharities.length> 0){
-        for(var i=0; i< $scope.pastCharities.length; i++){
-          console.log('pastCharities['+i+']._id: ' + $scope.pastCharities[i]._id);
-          console.log('pastCharities['+i+'].id:' + $scope.pastCharities[i].id);
-          if($scope.pastCharities[i].id == $rootScope.getSelectedCharityId()){
-            $scope.objId = $scope.pastCharities[i]._id;
-            console.log('$scope.objId: ' + $scope.objId);
-            $scope.updatePastCharities();
-          }
-        }
-      } else {
-        console.log('pastCharities.length was less than one');
-        $scope.setSelectedCharity();
-      }
-
-    }
-
-    $scope.getObjectId();
+    // $scope.getObjectId = function(){
+    //   if($scope.pastCharities.length> 0){
+    //     for(var i=0; i< $scope.pastCharities.length; i++){
+    //       console.log('pastCharities['+i+']._id: ' + $scope.pastCharities[i]._id);
+    //       console.log('pastCharities['+i+'].id:' + $scope.pastCharities[i].id);
+    //       if($scope.pastCharities[i].id == $rootScope.getSelectedCharityId()){
+    //         $scope.objId = $scope.pastCharities[i]._id;
+    //         console.log('$scope.objId: ' + $scope.objId);
+    //         $scope.updatePastCharities();
+    //       }
+    //     }
+    //   } else {
+    //     console.log('pastCharities.length was less than one');
+    //     $scope.setSelectedCharity();
+    //   }
+    //
+    // }
+    //
+    // $scope.getObjectId();
 
 
 

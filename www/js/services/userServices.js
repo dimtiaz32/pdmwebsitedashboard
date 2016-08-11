@@ -154,12 +154,10 @@ angular.module('starter.userServices', [])
         }
       });
     },
-    updatePastCharities: function(userId, form){
+    updatePastCharities: function(form){
       return $http.post(SERVER_HOST+'user/pastCharities', form, {
         method: 'POST',
-        params: {
-          userId: userId
-        }
+
       });
     },
     getTopThreeCharities: function(userId){

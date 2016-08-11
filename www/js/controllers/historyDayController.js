@@ -29,11 +29,11 @@ angular.module('starter.historyDayController', [
             console.log('data length: ' + data.length);
 
             if(data.length == 1){
-              console.log('data[0].seconds' + data[0].seconds +'  data[0].minutes' + data[0].minutes);
-              if (data[0].seconds < 10) {
-                $scope.duration = data[0].minutes.toString() + ":0" + data[0].seconds.toString();
+              console.log('data[0].seconds' + data.seconds +'  data[0].minutes' + data.minutes);
+              if (data.seconds < 10) {
+                $scope.duration = data.minutes.toString() + ":0" + data.seconds.toString();
               } else {
-                $scope.duration = data[0].minutes.toString() + ":"  + data[0].seconds.toString();
+                $scope.duration = data.minutes.toString() + ":"  + data.seconds.toString();
               }
               console.log('$scope.duration: ' + $scope.duration);
 
