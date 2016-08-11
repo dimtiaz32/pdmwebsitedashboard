@@ -18,8 +18,23 @@ angular.module('starter.historyListController', [
   'angular-svg-round-progressbar'])
 
 
-  .controller('HistoryListCtrl', function($rootScope, $scope, $filter, $window, HistoryAPI, AuthAPI, $filter) {
+  .controller('HistoryListCtrl', function($rootScope, $scope, $filter, $window, HistoryAPI, CharityAPI, AuthAPI, $filter) {
     $scope.list = [];
+    $scope.getCharityName = function(id){
+      console.log('getCharityNAme entered with id: ' + id);
+
+      CharityAPI.getById(id)
+        .success(function(data, status, headers, config){
+          console.log('CharityAPI get by ID succeeded with data: ' + JSON.stringify(data));
+          console.log('charity.name: ' + data.name);
+          return data.name;
+        })
+        .error(function(err, status){
+          console.log('CharityAPI get by ID failed with status: ' + status + ' and error: ' + err);
+        });
+
+    }
+
     $rootScope.$on('fetchAllHistory', function(){
       console.log('userId:' + $rootScope.getUserId());
       HistoryAPI.getAll($rootScope.getUserId())
@@ -29,7 +44,21 @@ angular.module('starter.historyListController', [
             if (data[i].seconds < 10) {
               data[i].seconds = "0" + data[i].seconds.toString();
             }
-            $scope.list.push(data[i]);
+
+            if(data[i].charity != undefined) {
+              // data[i].charity =$scope.getCharityName();
+              var char  = $scope.getCharityName(data[i].charity);
+              console.log('data['+i+'].charity post get: ' + data[i].charity);
+              console.log('char: ' + char);
+
+              console.log('data['+i+'].charity post get: ' + data[i].charity);
+              $scope.list.push(data[i], {charity: char});
+              console.log('list: ' + JSON.stringify($scope.list));
+            } else {
+              $scope.list.push(data[i]);
+              console.log('list: ' + JSON.stringify($scope.list));
+            }
+
           }
         })
         .error(function(err){
