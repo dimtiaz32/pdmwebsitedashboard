@@ -2,7 +2,7 @@
   <ion-content>
 
     <div class="races featured-containter">
-      <ion-slides options="slideOptions" data="data.slider" >
+      <ion-slides options="slideOptions" slider="data.slider">
         <ion-slide-page ng-repeat="race in featuredRaces" ng-click="selectRace(race._id)">
           <div class="races featured-box">
             <h1 class="featured-race">{{race.name}}</h1>
@@ -36,9 +36,10 @@
 
     <a class="races" href="#/app/myRaces">
       <div class="races my-races-container">
-        <h1 class="races">My Races</h1>
-        <p class="races races-detail">{{myRacesSubHeader}}</p>
-        <p class="races races-detail">Next race: In 2 weeks</p>
+            <h1 class="races">My Races</h1>
+            <p class="races races-detail">{{myRacesSubHeader}}</p>
+            <p class="races races-detail">Next race: In 2 weeks</p>
+        </div>
       </div>
     </a>
     <a class="races" href="#/app/findRaces">

@@ -339,6 +339,7 @@ angular.module('starter.authController', ['starter.appServices',
 
 
     $scope.showForgotPassword = function(){
+      console.log('popup')
       $scope.data = {}
       var forgotPassword = $ionicPopup.show({
         template: '<input type="text" ng-model="data.email">',

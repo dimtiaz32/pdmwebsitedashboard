@@ -56,11 +56,11 @@ ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.tab-item-active, ion-
   }
 
   [name=auth-signin] .pane{
-    background-color: #00b9be;
+    background-color: transparent;
   }
 
   [name=auth-signup] .pane{
-    background-color: #00b9be;
+    background-color: transparent;
 }
 /*^^^*/
 
