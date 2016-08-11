@@ -554,7 +554,7 @@ angular.module('starter.historyController', [
           // $scope.dates
         }
 
-          console.log('labels: ' + df7 + " " + df6 + " " + df5 + " " + df4 + " " + df3 + " " + df2 + " " + df1 + " ")
+          console.log('labels: ' + df7 + " " + df6 + " " + df5 + " " + df4 + " " + df3 + " " + df2 + " " + df1 + " ");
           $scope.labels = [df7, df6, df5, df4, df3, df2, df1];
           $scope.series = ['Miles Run'];
 
