@@ -321,6 +321,7 @@ angular.module('starter.historyController', [
 
               if (gyFunds != undefined || gyFunds != undefined) {
                 $scope.yearlyGoal = gyFunds;
+
                 console.log('yearlyGoal: ' + $scope.yearlyGoal);
                 UserAPI.updateYearlyGoals($rootScope.getUserId(),{fundraising: $scope.yearlyGoal});
                 $rootScope.$broadcast('paceBunnySetter');
@@ -552,12 +553,8 @@ angular.module('starter.historyController', [
           $scope.distances.push(data[i].distance);
           // $scope.dates
         }
-<<<<<<< HEAD
 
-=======
-        if(data.length < 7 ){
           console.log('labels: ' + df7 + " " + df6 + " " + df5 + " " + df4 + " " + df3 + " " + df2 + " " + df1 + " ")
->>>>>>> f0660bbec5cc61b725f88aef83065c3d8c10e936
           $scope.labels = [df7, df6, df5, df4, df3, df2, df1];
           $scope.series = ['Miles Run'];
 
