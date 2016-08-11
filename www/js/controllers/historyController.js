@@ -320,8 +320,8 @@ angular.module('starter.historyController', [
               var gyFunds = $scope.goalPopup.goalYearFunds;
 
               if (gyFunds != undefined || gyFunds != undefined) {
-                $scope.yearlyGoal = goalYearFunds;
-                console.log('yearlyGoal: ' + yearlyGoal);
+                $scope.yearlyGoal = gyFunds;
+                console.log('yearlyGoal: ' + $scope.yearlyGoal);
                 UserAPI.updateYearlyGoals($rootScope.getUserId(),{fundraising: $scope.yearlyGoal});
 
                 $rootScope.$broadcast('paceBunnySetter');
@@ -337,7 +337,7 @@ angular.module('starter.historyController', [
 
 
 
-    //graph stuff
+    //graph/chart stuff
     $scope.colors = [{
       fillColor: "#00b9be",
       strokeColor: "#00b9be",
@@ -554,6 +554,7 @@ angular.module('starter.historyController', [
           // $scope.dates
         }
         if(data.length < 7 ){
+          console.log('labels: ' + df7 + " " + df6 + " " + df5 + " " + df4 + " " + df3 + " " + df2 + " " + df1 + " ")
           $scope.labels = [df7, df6, df5, df4, df3, df2, df1];
           $scope.series = ['Miles Run'];
         }
