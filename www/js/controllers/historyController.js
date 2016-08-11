@@ -61,6 +61,10 @@ angular.module('starter.historyController', [
 
     $scope.progressWeekAvg =  "";
     $scope.paceBunnyWeekAvg = "";
+    $scope.viewHistory = function(){
+      $window.location.href=  ('#/app/historyList');
+
+    };
 
 
     $scope.daysLeftInYear = function(){
@@ -819,10 +823,10 @@ angular.module('starter.historyController', [
     // // })
     //
     //
-    // $scope.viewHistory = function(){
-    //   $window.location.href=  ('#/app/historyList');
-    //
-    // };
+    $scope.viewHistory = function(){
+      $window.location.href=  ('#/app/historyList');
+
+    };
     //
     //
     // //week stuff
