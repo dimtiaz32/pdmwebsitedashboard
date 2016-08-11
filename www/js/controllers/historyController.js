@@ -320,10 +320,9 @@ angular.module('starter.historyController', [
               var gyFunds = $scope.goalPopup.goalYearFunds;
 
               if (gyFunds != undefined || gyFunds != undefined) {
-                $scope.yearlyGoal = goalYearFunds;
+                $scope.yearlyGoal = gyFunds;
                 console.log('yearlyGoal: ' + yearlyGoal);
                 UserAPI.updateYearlyGoals($rootScope.getUserId(),{fundraising: $scope.yearlyGoal});
-
                 $rootScope.$broadcast('paceBunnySetter');
                 console.log('new goal for funds')
               } else {
@@ -553,10 +552,10 @@ angular.module('starter.historyController', [
           $scope.distances.push(data[i].distance);
           // $scope.dates
         }
-        if(data.length < 7 ){
+
           $scope.labels = [df7, df6, df5, df4, df3, df2, df1];
           $scope.series = ['Miles Run'];
-        }
+
 
 
         console.log('weekHistory: ' + JSON.stringify($scope.weekHistory));
