@@ -24,7 +24,7 @@ angular.module('starter.raceController', ['starter.appServices',
     $scope.slideOptions = {
       loop: true,
       speed: 500,
-    }
+    };
 
     $scope.$on("$ionicSlides.sliderInitialized", function(event, data){
       // data.slider is the instance of Swiper

@@ -1,7 +1,7 @@
-<ion-view class="" view-title="My races">
+<ion-view class="my-races" view-title="My races">
   <ion-content>
 
-    <div class="races my-races-container" ng-repeat="race in myRaces" ng-click="selectRace(race._id)">
+    <div class="races my-races-container" ng-repeat="race in myRaces" ng-click="selectRace(race._id)" ng-style="">
       <div class="races gradient">
         <h1 class="featured-race">{{race.name}}</h1>
         <p class="races races-detail">Location: {{race.city}}</p>
@@ -10,6 +10,7 @@
         <p class="races races-detail">Distance: {{displayDistances(raceDistances)}}</p>
       </div>
     </div>
+
 <!--
     <div class="races find-tile-container">
       <div  class="races find-box" ng-repeat="race in myRaces" ng-click="selectRace(race._id)">
