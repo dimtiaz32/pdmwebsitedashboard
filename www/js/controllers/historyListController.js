@@ -18,7 +18,13 @@ angular.module('starter.historyListController', [
   'angular-svg-round-progressbar'])
 
 
-  .controller('HistoryListCtrl', function($rootScope, $scope, $filter, $window, HistoryAPI, CharityAPI, AuthAPI, $filter) {
+  .controller('HistoryListCtrl', function($rootScope, $scope, $filter, $window, HistoryAPI, CharityAPI, AuthAPI, $filter, $ionicNavBarDelegate, $ionicViewSwitcher) {
+
+    $scope.goBack = function() {
+      $ionicViewSwitcher.nextDirection('back');
+      $window.location.href = ('#/app/history')
+    };
+
     $scope.list = [];
     $scope.getCharityName = function(id){
       console.log('getCharityNAme entered with id: ' + id);
@@ -72,6 +78,8 @@ angular.module('starter.historyListController', [
     $rootScope.$broadcast('fetchAllHistory');
 
     $scope.selectedRun= function(id){
+      $ionicViewSwitcher.nextDirection('forward');
+
       $rootScope.setRunIdDayView(id);
       console.log('selectedDate entered with id: ' + id);
       $rootScope.fetchRunId();

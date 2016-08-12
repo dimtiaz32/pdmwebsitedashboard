@@ -18,8 +18,15 @@ angular.module('starter.myRacesController', [
   'angular-svg-round-progressbar'])
 
 
-  .controller('MyRacesCtrl', function($rootScope, $timeout, $ionicModal, $window, $scope,RaceAPI, RunAPI, HistoryAPI, AuthAPI){
+  .controller('MyRacesCtrl', function($rootScope, $timeout, $ionicModal, $window, $scope,RaceAPI, RunAPI, HistoryAPI, AuthAPI, $ionicViewSwitcher){
     console.log('MyRacesCtrl entered: userId ' + $rootScope.getUserId());
+
+    $scope.goBack = function() {
+      //IonicViewSwitcher.nextDirection specifies the animation direction when switching page
+      $ionicViewSwitcher.nextDirection('back');
+      $window.location.href = ('#/app/races')
+    };
+
     $scope.myRaces = [];
     $scope.raceDistances = [];
     RaceAPI.getUserRaces($rootScope.getUserId())

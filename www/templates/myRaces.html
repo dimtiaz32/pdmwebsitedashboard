@@ -1,4 +1,11 @@
 <ion-view class="my-races" view-title="My races">
+
+  <ion-nav-buttons side="left">
+    <button class="button back-button buttons button-clear header-item" ng-click="goBack()" >
+      <i class="icon ion-ios-arrow-back"></i>
+      Races</button>
+  </ion-nav-buttons>
+
   <ion-content>
 
     <div class="races my-races-container" ng-repeat="race in myRaces" ng-click="selectRace(race._id)" ng-style="">

@@ -18,7 +18,14 @@ angular.module('starter.pastRacesController', [
   'angular-svg-round-progressbar'])
 
 
-  .controller('PastRacesCtrl', function($rootScope, $timeout, $ionicModal, $window, $scope, RaceAPI, CharityAPI, HistoryAPI, AuthAPI){
+  .controller('PastRacesCtrl', function($rootScope, $timeout, $ionicModal, $window, $scope, RaceAPI, CharityAPI, HistoryAPI, AuthAPI, $ionicViewSwitcher){
+
+    $scope.goBack = function() {
+      //IonicViewSwitcher.nextDirection specifies the animation direction when switching page
+      $ionicViewSwitcher.nextDirection('back');
+      $window.location.href = ('#/app/races')
+    };
+
     $scope.pastRacesDisplay = [];
     $scope.raceDistances = [];
 

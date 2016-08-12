@@ -38,7 +38,13 @@
 
 
 
-<ion-view title={{dayDisplayDate}}>
+<ion-view title="DATE GOES HERE">
+
+  <ion-nav-buttons side="left">
+    <button class="button back-button buttons button-clear header-item" ng-click="goBack()" >
+      <i class="icon ion-ios-arrow-back"></i>
+      Workouts</button>
+  </ion-nav-buttons>
 
   <ion-content class="history-day-page has-header">
     <div class="history-day-page map" style="height:30vh; width:100%; background-color: grey;">

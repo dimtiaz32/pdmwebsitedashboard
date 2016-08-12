@@ -1,5 +1,12 @@
-<ion-view class="has-header" view-title="Past Races">
-  <ion-content class="has-header">
+<ion-view class="" view-title="Past Races">
+
+  <ion-nav-buttons side="left">
+    <button class="button back-button buttons button-clear header-item" ng-click="goBack()" >
+      <i class="icon ion-ios-arrow-back"></i>
+      Races</button>
+  </ion-nav-buttons>
+
+  <ion-content class="">
 
     <!--User this template-->
     <div class="races past-races-container" ng-repeat="race in pastRacesDisplay">

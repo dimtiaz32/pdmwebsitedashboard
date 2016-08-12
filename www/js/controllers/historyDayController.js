@@ -18,8 +18,13 @@ angular.module('starter.historyDayController', [
   'angular-svg-round-progressbar',
   'Tek.progressBar'])
 
-  .controller('HistoryDayCtrl', function($scope, $rootScope, $window, HistoryAPI, AuthAPI, $ionicSlideBoxDelegate, AuthAPI, $filter, roundProgressService, $timeout, $ionicPopup){
+  .controller('HistoryDayCtrl', function($scope, $rootScope, $window, HistoryAPI, AuthAPI, $ionicSlideBoxDelegate, AuthAPI, $filter, roundProgressService, $timeout, $ionicPopup, $ionicNavBarDelegate, $ionicViewSwitcher){
     console.log('history day controller entered with run id: ' + $rootScope.dayRunId);
+
+        $scope.goBack = function() {
+          $ionicViewSwitcher.nextDirection('back');
+          $window.location.href = ('#/app/historyList')
+        };
 
 
         $scope.pathArray = [];

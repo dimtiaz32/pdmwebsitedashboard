@@ -49,6 +49,10 @@ angular.module('starter.runController', ['starter.appServices',
     //(L)DISTANCE: MEDIUMPURPLE
     //(L)PACE: DarkGoldenRod
 
+    $scope.viewAccount = function() {
+      $window.location.href=  ('#/app/accountInfo');
+    }
+
     $scope.user =  {
       name: ""
     };

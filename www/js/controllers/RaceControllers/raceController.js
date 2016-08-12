@@ -18,7 +18,7 @@ angular.module('starter.raceController', ['starter.appServices',
 
 
 
-  .controller('RacesCtrl', function($scope, $rootScope, $window, AuthAPI, RaceAPI,  $ionicSlideBoxDelegate, $timeout) {
+  .controller('RacesCtrl', function($scope, $rootScope, $window, AuthAPI, RaceAPI,  $ionicSlideBoxDelegate, $timeout, $ionicViewSwitcher) {
 
     //Slider stuffs
     $scope.slideOptions = {
@@ -66,6 +66,7 @@ angular.module('starter.raceController', ['starter.appServices',
     $scope.selectRace = function(id){
       console.log('select race called with id: ' + id);
       $rootScope.setRaceId(id);
+      $ionicViewSwitcher.nextDirection('forward');
       $window.location.href = ('#/app/raceProfile');
     };
 
