@@ -297,11 +297,11 @@ angular.module('starter.charityController', ['starter.appServices',
       $scope.selectedCharityDisplay.name = data.name;
       $scope.selectedCharityDisplay.description = data.description;
       $scope.selectedCharityDisplay.url = data.url;
-      $scope.selectedCharityDisplay.totalMoneyRaised = moneyRaised;
+      // $scope.selectedCharityDisplay.totalMoneyRaised = moneyRaised;
 
 
-      console.log('charityId from inside setSelectedCharity success call: ' + charityId);
-      $scope.getMonthMoneyRaised(charityId);
+      // console.log('charityId from inside setSelectedCharity success call: ' + charityId);
+      // $scope.getMonthMoneyRaised(charityId);
 
     })
     .error(function (err, status) {

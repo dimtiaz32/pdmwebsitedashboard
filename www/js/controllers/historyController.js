@@ -61,6 +61,10 @@ angular.module('starter.historyController', [
 
     $scope.progressWeekAvg =  "";
     $scope.paceBunnyWeekAvg = "";
+    $scope.viewHistory = function(){
+      $window.location.href=  ('#/app/historyList');
+
+    };
 
 
     $scope.daysLeftInYear = function(){
@@ -554,7 +558,7 @@ angular.module('starter.historyController', [
           // $scope.dates
         }
 
-          console.log('labels: ' + df7 + " " + df6 + " " + df5 + " " + df4 + " " + df3 + " " + df2 + " " + df1 + " ")
+          console.log('labels: ' + df7 + " " + df6 + " " + df5 + " " + df4 + " " + df3 + " " + df2 + " " + df1 + " ");
           $scope.labels = [df7, df6, df5, df4, df3, df2, df1];
           $scope.series = ['Miles Run'];
 
@@ -819,10 +823,10 @@ angular.module('starter.historyController', [
     // // })
     //
     //
-    // $scope.viewHistory = function(){
-    //   $window.location.href=  ('#/app/historyList');
-    //
-    // };
+    $scope.viewHistory = function(){
+      $window.location.href=  ('#/app/historyList');
+
+    };
     //
     //
     // //week stuff

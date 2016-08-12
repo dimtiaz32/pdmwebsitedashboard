@@ -37,21 +37,11 @@ angular.module('starter.myRacesController', [
             $scope.raceCity = data[i].city;
 
             console.log(data[i].distances);
-            var tempDistanceHolder = data[i].distances;
-            var distanceSplit = tempDistanceHolder.toString().split(',');
-            console.log('distanceSplit: ' + distanceSplit);
-            if (distanceSplit.length > 0) {
-              for (var i = 0; i < distanceSplit.length; i++) {
-                var fDistance = distanceSplit[i];
-                $scope.raceDistances.push({distance: fDistance});
-
-              }
-
-            }
+            var distances = $scope.displayDistances(data[i].distances);
 
             $scope.myRaces.push({name: $scope.raceName, date: $scope.raceDate,
-              city: $scope.raceCity});
-            console.log('pastRacesDisplay: ' + JSON.stringify($scope.myRaces));
+              city: $scope.raceCity, distances: distances,  _id: data[i]._id});
+            console.log('myRacesDisplay: ' + JSON.stringify($scope.myRaces));
           }
         }
 

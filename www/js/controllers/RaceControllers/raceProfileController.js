@@ -108,8 +108,9 @@ angular.module('starter.raceProfileController', ['starter.appServices',
       console.log('raceId: ' + $scope.raceId);
       RaceAPI.joinRace({userId: userId}, $scope.raceId)
         .success(function(data, status, headers, config){
-          console.log('RaceAPI join race call');
+          console.log('RaceAPI join race call success');
           console.log('data: ' + data);
+          $scope.isSignedUp = true;
           $rootScope.hide();
         })
         .error(function(status){
