@@ -2,6 +2,8 @@
   background-color: #00b9be !important;
 }*/
 
+
+
 .sign-up .logo-image {
   display: block;
   margin: 0 auto 10px auto;
@@ -49,3 +51,24 @@ ion-content.sign-up {
 .sign-up .item-input {
   padding: 3px 0 3px 16px;
 }
+
+/*Error Styling*/
+.sign-up .error-message {
+  text-align: left;
+  color: #ee1e20;
+
+  position: relative;
+  left: 16px;
+  bottom: 4px;
+
+  font-size: 4.5vw;
+  font-weight: 600;
+}
+
+  .sign-up input:invalid {
+     color: red;
+   }
+
+  .sign-up .error-highlight {
+    color: red;
+  }

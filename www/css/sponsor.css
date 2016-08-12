@@ -1,3 +1,7 @@
+.sponsors-pledges-page.popover {
+  height: 120px;
+}
+
 .my-sponsors.sponsor-header {
   background-image: url("../img/account_info-bg.png");
   background-position: center;

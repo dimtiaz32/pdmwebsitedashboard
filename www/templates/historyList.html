@@ -1,5 +1,11 @@
 <ion-view view-title="Workouts">
 
+    <ion-nav-buttons side="left">
+      <button class="button back-button buttons button-clear header-item" ng-click="goBack()" >
+        <i class="icon ion-ios-arrow-back"></i>
+        Activity</button>
+    </ion-nav-buttons>
+
   <ion-content class="workout-page">
     <ion-list class="workouts list">
       <div ng-repeat="run in list">

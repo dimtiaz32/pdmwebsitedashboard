@@ -2,6 +2,18 @@ ion-content.sign-in{
   background-color: #00b9be;
 }
 
+.sign-in .error-message {
+  text-align: left;
+  color: #ee1e20;
+
+  position: relative;
+  left: 32px;
+  bottom: 6px;
+
+  font-size: 4.5vw;
+  font-weight: 600;
+}
+
 .sign-in .logo-image {
   display: block;
   margin: 0 auto 0 auto;
@@ -38,6 +50,8 @@ ion-content.sign-in{
   color: #a1a1a1;
   padding-left: 16px;
 }
+
+
 
 .sign-in .button {
   background-color: #01999d;
@@ -78,5 +92,5 @@ ion-content.sign-in{
   width:60%;
   height: auto;
   z-index: 10;
-
 }
+

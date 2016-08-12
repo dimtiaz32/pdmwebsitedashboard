@@ -18,8 +18,14 @@ angular.module('starter.findRacesController', [
   'angular-svg-round-progressbar'])
 
 
-  .controller('FindRacesCtrl', function($rootScope, RaceAPI, $ionicModal, $window, $scope, CharityAPI, HistoryAPI, AuthAPI, $ionicFilterBar){
+  .controller('FindRacesCtrl', function($rootScope, RaceAPI, $ionicModal, $window, $scope, CharityAPI, HistoryAPI, AuthAPI, $ionicFilterBar, $ionicViewSwitcher){
     console.log('FindRacesCtrl entered with userId: ' +$rootScope.getUserId());
+
+    $scope.goBack = function() {
+      //IonicViewSwitcher.nextDirection specifies the animation direction when switching page
+      $ionicViewSwitcher.nextDirection('back');
+      $window.location.href = ('#/app/races')
+    };
 
     $scope.races = [];
 

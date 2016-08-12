@@ -31,8 +31,6 @@ angular.module('starter.addRaceController', [
    isFeatured: ""
  };
 
-
-
  $scope.createRace = function(){
    $scope.keyWords = [];
    keyWordSplit = $scope.race.keywords.toString().split(',');

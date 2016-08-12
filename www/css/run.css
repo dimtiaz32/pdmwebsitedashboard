@@ -1,3 +1,10 @@
+.run-page.settings.button i {
+  content: url("../img/PDM-logo-white.svg");
+  /*padding: 3px 1px 1px 1px;*/
+  margin: .5vh 0 0 .25vh;
+  width: 7.5vw;
+  color: #fff;
+}
 
 .animated-detail {
   margin: 0 !important;

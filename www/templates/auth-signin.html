@@ -4,15 +4,19 @@
       <img class="sign-in logo-image" ng-src="img/PDM logo.png">
       <h1 class="sign-in logo-title">DREAM<span>RUN</span></h1>
       <h2 class="sign-in logo-subtitle">by Project Dream Miles</h2>
+
+    </div>
+    <div class="error-message">
+      {{errorMessage}}
     </div>
     <div class="sign-in list">
       <label class="sign-in item item-input">
         <span class="sign-in input-label">Email</span>
-        <input type="text" ng-model="user.email">
+        <input type="text" placeholder="" ng-model="user.email">
       </label>
       <label class="sign-in item item-input">
         <span class="sign-in input-label">Password</span>
-        <input type="password" ng-model="user.password">
+        <input type="password" placeholder="" ng-model="user.password">
       </label>
       <button class="sign-in login button button-full button-positive" ng-click="login()">
         Sign in

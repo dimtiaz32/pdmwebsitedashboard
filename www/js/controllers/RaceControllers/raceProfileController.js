@@ -20,7 +20,15 @@ angular.module('starter.raceProfileController', ['starter.appServices',
 
 
 
-  .controller('RaceProfileCtrl', function($scope, $rootScope,$window, RaceAPI, AuthAPI, RaceAPI, $ionicLoading, $ionicPopup, $ionicSlideBoxDelegate, $timeout) {
+  .controller('RaceProfileCtrl', function($scope, $rootScope,$window, RaceAPI, AuthAPI, RaceAPI, $ionicLoading, $ionicPopup, $ionicSlideBoxDelegate, $timeout, $ionicViewSwitcher, $ionicHistory) {
+
+    $scope.goBack = function() {
+      //ionicViewSwitcher.nextDirection specifies the animation direction when switching page
+      $ionicViewSwitcher.nextDirection('back');
+      //ionicHistory is a record of the app's navigation history
+      $ionicHistory.goBack();
+    };
+
     $scope.raceId = $rootScope.getRaceId();
     console.log('raceId:  ' + $scope.raceId);
 

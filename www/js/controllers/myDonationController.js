@@ -19,7 +19,49 @@ angular.module('starter.myDonationController', ['starter.appServices',
   'angular-svg-round-progressbar'])
 
 
-  .controller('MyDonationCtrl',function($rootScope, $scope, $filter, $window, $ionicModal, $cordovaSms, $cordovaSocialSharing,DonationAPI,AuthAPI, CLIENT_HOST) {
+  .controller('MyDonationCtrl',function($rootScope, $scope, $filter, $window, $ionicModal, $cordovaSms, $cordovaSocialSharing,DonationAPI,AuthAPI, CLIENT_HOST, $ionicPopover) {
+
+    $scope.menuActive = false;
+    $scope.menuToggle = function(){
+      $scope.menuActive = !$scope.menuActive
+    };
+
+    //Popover Menu - Sponsors/Pledges
+    $scope.popoverTemplate =
+      '<ion-popover-view class="sponsors-pledges-page popover"><ion-content>' +
+      '<div class="list">' +
+      '<a class="item" ng-click="popupNavSponsors()">My Sponsors</a>' +
+      '<a class="item" ng-click="popupNavPledges()">My Pledges</a>' +
+      '</div>' +
+      '</ion-content>' +
+      '</ion-popover-view>';;
+
+    $scope.popover = $ionicPopover.fromTemplate($scope.popoverTemplate, {
+      scope: $scope
+    });
+    $scope.openPopover = function($event) {
+      $scope.popover.show($event);
+      $scope.menuActive = true;
+    };
+    $scope.closePopover = function() {
+      $scope.popover.hide();
+      $scope.menuActive = false;
+    };
+    //Cleanup the popover when we're done with it!
+    $scope.$on('$destroy', function() {
+      $scope.popover.remove();
+      $scope.menuActive = false;
+    });
+    $scope.popupNavSponsors = function() {
+      $window.location.href = ('#/app/mySponsors');
+      $scope.closePopover();
+    };
+    $scope.popupNavPledges = function() {
+      $window.location.href = ('#/app/myPledges');
+      $scope.closePopover();
+    };
+
+
 
 
     $rootScope.$on('initial', function () {
@@ -41,21 +83,21 @@ angular.module('starter.myDonationController', ['starter.appServices',
     $scope.managePledges = function () {
       $rootScope.$broadcast('fetchMyPledges');
       $window.location.href = "#/app/myPledges";
-    }
+    };
 
     $scope.manageSponsors = function () {
       $rootScope.$broadcast('fetchMySponsors');
       $window.location.href = "#/app/mySponsors";
-    }
+    };
 
     $scope.doRefresh = function (fetchType) {
       console.log("fetchType:" + fetchType);
       $rootScope.$broadcast(fetchType);
-    }
+    };
 
     $scope.formateDate = function (date) {
       return $filter('date')(date, "MMM dd yyyy");
-    }
+    };
 
     $scope.formateCurreny = function (amount) {
       var realAmount = parseInt(amount);
@@ -66,7 +108,7 @@ angular.module('starter.myDonationController', ['starter.appServices',
         return realAmount / 100 + " $";
       }
 
-    }
+    };
 
     $ionicModal.fromTemplateUrl('templates/inviteSponsor.html', {
       scope: $scope
@@ -94,13 +136,13 @@ angular.module('starter.myDonationController', ['starter.appServices',
         //   });
         // }
         $scope.shareByMail = function () {
-          console.log("email share begin")
+          console.log("email share begin");
           $cordovaSocialSharing.shareViaEmail("aaa", "bbb", "", "", "", "").then(function (result) {
             console.log("email share success");
           }, function (err) {
             console.log("email share failure");
           });
-        }
+        };
 
         $scope.shareBySMS = function () {
           console.log("begin share by sms");
@@ -111,7 +153,7 @@ angular.module('starter.myDonationController', ['starter.appServices',
               console.log('share sms failure');
               console.log(error);
             });
-        }
+        };
 
         $scope.shareByFB = function () {
           console.log("begin share by facebook");

@@ -40,6 +40,12 @@ angular.module('starter.authController', ['starter.appServices',
       password:""
     };
 
+    $scope.errorMessage = "";
+    $scope.invalidFirstName = false;
+    $scope.invalidLastName = false;
+    $scope.invalidEmail = false;
+    $scope.invalidPassword = false;
+
 
     $scope.verifyPassword = function(){
       var password = this.user.password;
@@ -50,38 +56,51 @@ angular.module('starter.authController', ['starter.appServices',
         $rootScope.notify("Passwords Match!");
         console.log("Passwords match!");
         match = true;
+        $scope.invalidPassword = false;
       } else {
         $rootScope.notify("Passwords do not match. Please reenter your password");
         console.log("Error: Passwords do not match");
         match = false;
+        $scope.errorMessage="Passwords do not match";
+        $scope.invalidPassword = true;
       }
 
       $rootScope.show("Passwords match....");
 
     };
     $scope.createUser = function(){
+
+
       var firstName = this.user.firstName.trim();
       var lastName = this.user.lastName.trim();
       var email  =  this.user.email.trim().toLowerCase();
       var password = this.user.password.trim();
       var charity = this.user.charity.trim();
 
-
       if(!firstName){
         $rootScope.notify("Please enter a valid first name");
         console.log("createUser failed: invalid first name");
+        $scope.invalidFirstName = true;
+        $scope.errorMessage = "Please fill all fields";
         return false;
       } else if(!lastName){
         $rootScope.notify("Please enter a valid last name");
         console.log("createUser failed: invalid last name")
+        $scope.invalidLastName = true;
+        $scope.errorMessage = "Please fill all fields";
         return false;
       } else if(!email){
         $rootScope.notify("Please enter a valid email address");
         console.log("createUser failed: invalid email");
+        console.log(email.trim())
+        $scope.invalidEmail = true;
+        $scope.errorMessage = "Please fill all fields";
         return false;
       } else if(!password){
         $rootScope.notify("Please enter a valid password");
         console.log("createUser failed: invalid password");
+        $scope.invalidPassword = true;
+        $scope.errorMessage = "Please fill all fields";
         return false;
       }
 
@@ -114,8 +133,10 @@ angular.module('starter.authController', ['starter.appServices',
           if(error.error && error.error.code == 11000){
             $rootScope.notify("This email is already in use");
             console.log("could not register user: email already in use ");
+            $scope.errorMessage = "This email is already in use";
           } else {
             $rootScope.notify("An error has occured. Please try again");
+            $scope.errorMessage = "An error has occured. Please try again";
           }
         });
     }
@@ -192,6 +213,8 @@ angular.module('starter.authController', ['starter.appServices',
     }
 
 
+    $scope.errorMessage = "";
+
     $scope.login = function(){
       var email = this.user.email.trim().toLowerCase();
       var password = this.user.password.trim();
@@ -199,10 +222,12 @@ angular.module('starter.authController', ['starter.appServices',
       if(!email){
         $rootScope.notify("Login failed. Please enter a valid email address");
         console.log("Invalid text in email field");
+        $scope.errorMessage = "Please enter valid email"
         return false;
       } else if(!password){
         $rootScope.notify("Login failed. Please enter a valid password");
         console.log("Invalid text in password field");
+        $scope.errorMessage = "Please enter valid email & password"
         return false;
       }
 
@@ -268,9 +293,16 @@ angular.module('starter.authController', ['starter.appServices',
           $window.location.href=('#/app/run');
 
         })
-        .error(function(error){
+        .error(function(error, status){
           $rootScope.hide();
           $rootScope.notify("Invalid username or password");
+          if (status == 400) {
+            console.log(status);
+            console.log(error);
+            $scope.user.email = "";
+            $scope.user.password = "";
+            $scope.errorMessage = "Invalid username/password";
+          }
         });
     };
 
