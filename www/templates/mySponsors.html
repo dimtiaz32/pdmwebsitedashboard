@@ -1,4 +1,11 @@
 <ion-view view-title="Sponsors" ng-controller="MyDonationCtrl">
+    <ion-nav-title>
+      <a class="" ng-click="openPopover($event)">
+        <span class="">Sponsors</span>
+        <i class="ion-arrow-right-b" ng-hide="menuActive"></i>
+        <i class="ion-arrow-down-b" ng-show="menuActive"></i>
+      </a>
+    </ion-nav-title>
     <ion-nav-buttons side="right" >
         <button class="my-sponsors button button-clear button-positive" ng-click="openModal($event)">
           <span class="ion-person-add" style="color: #fff;font-size: 22px;"></span>
@@ -56,4 +63,7 @@
       </div>
       </div>
     </ion-content>
+
 </ion-view>
+
+
