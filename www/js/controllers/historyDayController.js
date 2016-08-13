@@ -50,6 +50,17 @@ angular.module('starter.historyDayController', [
           $scope.duration = data[0].minutes.toString() + ":"  + data[0].seconds.toString();
         }
         console.log('$scope.duration: ' + $scope.duration);
+        var jdate = data[0].date;
+        console.log('jdate: ' + jdate);
+        var uDate = new Date(jdate);
+        console.log('uDate: ' + uDate);
+        var month = uDate.getMonth();
+        var day = uDate.getDay();
+        var year = uDate.getFullYear();
+        console.log('month day, year: ' + day+ ' ' + month + ','+ year);
+        $scope.date = day +' ' + month + ', ' + year;
+
+        console.log('date: ' + $scope.date);
 
         $scope.distance = data[0].distance;
         $scope.pace = data[0].pace;
@@ -136,12 +147,25 @@ angular.module('starter.historyDayController', [
 
           console.log('historyPolyCoords length: ' + $scope.historyPolyCoords.length);
           var mc = $scope.historyPolyCoords.length/2;
-          if(mc%2===0){
+          if(mc%1===0){
             console.log('mc is whole number: ' + mc);
-            $scope.middle = new google.maps.LatLng($scope.historyPolyCoords[mc].lat, $scope.historyPolyCoords[mc].long);
+            var hcSplit = $scope.historyPolyCoords[mc].toString().split(',');
+            console.log('hcSplit: ' + hcSplit);
+            var latSplit = hcSplit[0];
+            var longSplit = hcSplit[1];
+            console.log('latSplit: ' + latSplit +'   longSplit: ' + longSplit);
+            latSplit = latSplit.split('(');
+            longSplit = longSplit.split(')');
+            console.log('latSplit: ' + latSplit +'   longSplit: ' + longSplit);
+            var lat = latSplit[1];
+            var long = longSplit[0];
+            console.log('lat: ' + lat + '   long: ' + long);
+            $scope.middle = new google.maps.LatLng(lat, long);
+            console.log('$scope.historyPolyCoords[mc]' + $scope.historyPolyCoords[mc]);
             console.log('middle coord: ' + $scope.middle);
+            $scope.mapCreated($scope.map);
           } else {
-            console.log('mc is now whole number: ' + mc);
+            console.log('mc is not whole number: ' + mc);
             mc = mc - 0.5;
             console.log('mc -0.5 = ' + mc);
             var hcSplit = $scope.historyPolyCoords[mc].toString().split(',');

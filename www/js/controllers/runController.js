@@ -27,11 +27,15 @@ angular.module('starter.runController', ['starter.appServices',
     $scope.long = [];
     $scope.laps = [];
     $scope.lapDistance = 0;
-    $scope.lapNumber = 0;
+    $scope.previousLapDistance = 0;
+    $scope.lapNumber = 1;
     $scope.lapNumbers = [];
     $scope.lapDistances = [];
     $scope.lapSecs = [];
     $scope.lapMins = [];
+    $scope.lapPaces = [];
+    $scope.distance = 0;
+    $scope.runPath;
 
 
     $scope.isDetailDisplayed = false;
@@ -444,6 +448,10 @@ angular.module('starter.runController', ['starter.appServices',
         startDiv.removeChild(startUI);
       }
 
+      $scope.addStart = function(){
+        startDiv.appendChild(startUI);
+      }
+
       startUI.addEventListener('click', function(){
 
 
@@ -561,10 +569,11 @@ angular.module('starter.runController', ['starter.appServices',
       } else {
         var time = $scope.minutes + ($scope.seconds/60);
         console.log('pace time: ' + time);
-        var pace = time/3;
+        var pace = time/distance;
       }
       return pace;
     }
+
 
     $scope.coordsDeterminant = function(i, split) {
       var splitNumber = i;
@@ -625,8 +634,22 @@ angular.module('starter.runController', ['starter.appServices',
       lapTimer = undefined;
 
     }
+    $scope.getLapPace = function(lapDistance){
+      console.log('lapPace calculator entered with distance: ' + lapDistance);
+      console.log('lapPace minutes: ' + $scope.lapMinutes + '  lapPaceSeconds: ' + $scope.lapSeconds);
+      var lapPace;
+      if(lapDistance == 0){
+        lapPace = 0;
+      } else {
+        var lapTime = $scope.lapMinutes + ($scope.lapSeconds/60);
+        console.log('pace time: ' + time);
+        lapPace = lapTime/lapDistance;
+      }
+      return lapPace;
+    }
 
     $scope.polyCoords = [];
+    $scope.line = [];
     $scope.mapCreated = function(map){
       console.log('isRunning load value: ' + $scope.isRunning);
 
@@ -655,8 +678,26 @@ angular.module('starter.runController', ['starter.appServices',
             strokeOpacity: 1.0,
             strokeWeight: 6
           });
+
           $scope.distance = google.maps.geometry.spherical.computeLength($scope.runPath.getPath());
           $scope.runPath.setMap($scope.map);
+          $scope.removePolyLine = function(){
+            console.log('remove polyLine entered');
+            console.log('polyCoords.length: ' + $scope.polyCoords.length);
+            $scope.runPath.setMap(null);
+            for(var i=0; i< $scope.polyCoords.length; i++){
+              $scope.runPath.setMap(null);
+            }
+          }
+
+          console.log('$scope.distance for lapDistance: ' + $scope.distance);
+          console.log('$scope.previousLapDistance: ' + $scope.previousLapDistance);
+          $scope.lapDistance = $scope.distance - $scope.previousLapDistance;
+          console.log('$scope.lapDistance: ' + $scope.lapDistance);
+          $scope.previousLapDistance = $scope.distance;
+          console.log('new lap distance: ' + $scope.previousLapDistance);
+          $scope.lapPace = $scope.getLapPace($scope.lapDistance);
+          console.log('lapPace: ' + $scope.lapPace);
 
 
           $scope.pace = $scope.paceCalculator($scope.distance);
@@ -701,28 +742,20 @@ angular.module('starter.runController', ['starter.appServices',
       $scope.map.controls[google.maps.ControlPosition.BOTTOM].push(buttonControlDiv);
     }
 
-    $scope.previousLapDistance = 0;
+
     $scope.lap = function(){
       $scope.stopLapTimer();
-      console.log('$scope.distance from lap: ' + $scope.distance);
-      console.log('$scope.previousLapDistance: ' + $scope.previousLapDistance);
-      $scope.lapDistance = $scope.distance - $scope.previousLapDistance;
-      console.log('$scope.lapDistance: ' + $scope.lapDistance);
-      $scope.previousLapDistance = $scope.distance;
-      console.log('new lap distance: ' + $scope.previousLapDistance);
 
-
-      // $scope.laps.push({number: $scope.lapNumber, distance: $scope.lapDistance, seconds: $scope.lapSeconds,
-      //       minutes: $scope.lapMinutes});
-      // console.log('$scope.laps: ' + JSON.stringify($scope.laps));
       $scope.lapNumbers.push($scope.lapNumber);
-      $scope.lapDistances.push($scope.lapDistances);
+      $scope.lapDistances.push($scope.lapDistance);
       $scope.lapSecs.push($scope.lapSeconds);
       $scope.lapMins.push($scope.lapMinutes);
+      $scope.lapPaces.push($scope.lapPace);
       console.log('lapNumbers: ' + $scope.lapNumbers);
       console.log('lapDistances: ' + $scope.lapDistances);
       console.log('lapSecs: ' + $scope.lapSecs);
       console.log('lapMins: ' + $scope.lapMins);
+      console.log('lapPaces: ' + $scope.lapPaces);
 
       console.log('lapMinutes: ' + $scope.lapMinutes + '    lapSeconds: ' + $scope.lapSeconds);
       $scope.lapTimer();
@@ -757,14 +790,34 @@ angular.module('starter.runController', ['starter.appServices',
       $scope.addPause();
     }
 
+
+    $scope.resetRun = function(){
+      console.log('resetRun entered');
+
+      navigator.geolocation.clearWatch($scope.watch);
+
+      $scope.removePolyLine();
+      $scope.polyCoords = [];
+      $scope.seconds = 0;
+      $scope.minutes = 0;
+      $scope.distance = 0;
+      $scope.removeStop();
+      $scope.removeResume();
+      $scope.addStart();
+      $scope.toggleRun();
+    }
     $scope.stopRun = function(){
+      $scope.lapNumbers.push($scope.lapNumber);
+      $scope.lapDistances.push($scope.lapDistance);
+      $scope.lapSecs.push($scope.lapSeconds);
+      $scope.lapMins.push($scope.lapMinutes);
+      $scope.lapPaces.push($scope.lapPace);
       $scope.postRun();
       $scope.stopTimer();
       $scope.stopLapTimer();
-      navigator.geolocation.clearWatch($scope.watch);
-      $scope.polyCoords = [];
-
-
+      $scope.resetRun();
+      // navigator.geolocation.clearWatch($scope.watch);
+      // $scope.polyCoords = [];
     };
     $scope.postRun = function(){
       var t = Date.now();
@@ -823,7 +876,8 @@ angular.module('starter.runController', ['starter.appServices',
         laps: { number: [$scope.lapNumbers.toString()],
           distance: [$scope.lapDistances.toString()],
           seconds: [$scope.lapSecs.toString()],
-          minutes: [$scope.lapMins.toString()]
+          minutes: [$scope.lapMins.toString()],
+          pace: [$scope.lapPaces.toString()]
         }
       }
 
