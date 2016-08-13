@@ -25,6 +25,14 @@ angular.module('starter.runController', ['starter.appServices',
     };
     $scope.lat =[];
     $scope.long = [];
+    $scope.laps = [];
+    $scope.lapDistance = 0;
+    $scope.lapNumber = 0;
+    $scope.lapNumbers = [];
+    $scope.lapDistances = [];
+    $scope.lapSecs = [];
+    $scope.lapMins = [];
+
 
     $scope.isDetailDisplayed = false;
     $scope.isRunDetailDisplayed = false;
@@ -507,9 +515,10 @@ angular.module('starter.runController', ['starter.appServices',
     }
 
     var startTimer;
+    $scope.seconds = 00;
+    $scope.minutes = 00;
     $scope.timer = function(){
-      $scope.seconds = 00;
-      $scope.minutes = 00;
+
       startTimer = $interval(function(){
         if($scope.seconds <60){
           $scope.seconds++;
@@ -532,7 +541,7 @@ angular.module('starter.runController', ['starter.appServices',
 
     $scope.resumeTimer = function(){
       console.log('%cresume timer function activated', 'color: RoyalBlue');
-      $scope.startTimer();
+      $scope.timer();
     }
 
     $scope.stopTimer = function(){
@@ -580,38 +589,41 @@ angular.module('starter.runController', ['starter.appServices',
       }
     }
 
-    var startLapTimer;
+    var lapTimer;
     $scope.lapTimer = function(){
       $scope.lapSeconds = 00;
-      $scope.lapMinutes = 00;
-      startLapTimer = $interval(function(){
+      $scope.lapMinutes = 0;
+      console.log('stopLapTimer: minutes: ' + $scope.lapMinutes + ' seconds: ' + $scope.lapMinutes);
+      lapTimer = $interval(function(){
         if($scope.lapSeconds <60){
           $scope.lapSeconds++;
           if($scope.lapSeconds < 10){
-            $scope.lapSeconds = '0' + $scope.seconds;
+            $scope.lapSeconds =  '0' +$scope.lapSeconds;
           }
         } else {
           $scope.lapMinutes++;
           $scope.lapSeconds = 00;
         }
+        console.log('lap minutes: ' + $scope.lapMinutes + '  lap seconds: ' + $scope.lapSeconds);
       }, 1000);
-      console.log('minutes: ' + $scope.lapMinutes + '  seconds: ' + $scope.lapSeconds);
+      console.log('lap minutes: ' + $scope.lapMinutes + '  lap seconds: ' + $scope.lapSeconds);
     }
 
     $scope.pauseLapTimer = function(){
-      $interval.cancel(startLapTimer);
-      startLapTimer = undefined;
+      $interval.cancel(lapTimer);
+      lapTimer = undefined;
     }
 
     $scope.resumeLapTimer = function(){
       console.log('%cLap timer resumed', 'color: Blue');
-      $scope.startLapTimer();
+      $scope.lapTimer();
     }
 
     $scope.stopLapTimer = function(){
       console.log('%cLap timer stopped', 'color: Blue');
-      $interval.cancel(startLapTimer);
-      startLapTimer = undefined;
+      $interval.cancel(lapTimer);
+      lapTimer = undefined;
+
     }
 
     $scope.polyCoords = [];
@@ -660,19 +672,11 @@ angular.module('starter.runController', ['starter.appServices',
       $scope.watch = navigator.geolocation.watchPosition($scope.onSuccess, $scope.onError, {maximumAge: 3000, timeout: 5000, enableHighAccuracy: true});
       console.log('watch: ' + JSON.stringify($scope.watch));
 
-
-
-
       console.log('mapOptions: ' + JSON.stringify($scope.mapOptions));
-
       var startControlDiv = document.createElement('div');
       var startControl = $scope.startControl(startControlDiv, map);
-
-
       startControlDiv.index = 1;
       map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(startControlDiv);
-
-
 
       var locateControlDiv = document.createElement('div');
       var locateControl = $scope.locateControl(locateControlDiv, map);
@@ -697,6 +701,35 @@ angular.module('starter.runController', ['starter.appServices',
       $scope.map.controls[google.maps.ControlPosition.BOTTOM].push(buttonControlDiv);
     }
 
+    $scope.previousLapDistance = 0;
+    $scope.lap = function(){
+      $scope.stopLapTimer();
+      console.log('$scope.distance from lap: ' + $scope.distance);
+      console.log('$scope.previousLapDistance: ' + $scope.previousLapDistance);
+      $scope.lapDistance = $scope.distance - $scope.previousLapDistance;
+      console.log('$scope.lapDistance: ' + $scope.lapDistance);
+      $scope.previousLapDistance = $scope.distance;
+      console.log('new lap distance: ' + $scope.previousLapDistance);
+
+
+      // $scope.laps.push({number: $scope.lapNumber, distance: $scope.lapDistance, seconds: $scope.lapSeconds,
+      //       minutes: $scope.lapMinutes});
+      // console.log('$scope.laps: ' + JSON.stringify($scope.laps));
+      $scope.lapNumbers.push($scope.lapNumber);
+      $scope.lapDistances.push($scope.lapDistances);
+      $scope.lapSecs.push($scope.lapSeconds);
+      $scope.lapMins.push($scope.lapMinutes);
+      console.log('lapNumbers: ' + $scope.lapNumbers);
+      console.log('lapDistances: ' + $scope.lapDistances);
+      console.log('lapSecs: ' + $scope.lapSecs);
+      console.log('lapMins: ' + $scope.lapMins);
+
+      console.log('lapMinutes: ' + $scope.lapMinutes + '    lapSeconds: ' + $scope.lapSeconds);
+      $scope.lapTimer();
+      console.log('lapMinutes: ' + $scope.lapMinutes + '    lapSeconds: ' + $scope.lapSeconds);
+      $scope.lapNumber++;
+
+    }
     $scope.pauseRun = function(){
       $scope.pauseTimer();
 
@@ -713,6 +746,26 @@ angular.module('starter.runController', ['starter.appServices',
       $scope.map.controls[google.maps.ControlPosition.BOTTOM].push(pausedControlDiv);
     }
 
+
+    $scope.resumeRun = function(){
+      $scope.removeStop();
+      $scope.removeResume();
+      $scope.resumeTimer();
+      $scope.resumeLapTimer();
+
+      $scope.addLap();
+      $scope.addPause();
+    }
+
+    $scope.stopRun = function(){
+      $scope.postRun();
+      $scope.stopTimer();
+      $scope.stopLapTimer();
+      navigator.geolocation.clearWatch($scope.watch);
+      $scope.polyCoords = [];
+
+
+    };
     $scope.postRun = function(){
       var t = Date.now();
       var today = new Date(t);
@@ -767,14 +820,14 @@ angular.module('starter.runController', ['starter.appServices',
         moneyRaised: $scope.moneyRaised,
         charityId: $rootScope.getSelectedCharityId(),
         path: {lat: [$scope.lat], long: [$scope.long]},
-        laps: { number: 1,
-          distance: 3,
-          seconds: 4,
-          minutes: 5,
-          pace: 8
+        laps: { number: [$scope.lapNumbers.toString()],
+          distance: [$scope.lapDistances.toString()],
+          seconds: [$scope.lapSecs.toString()],
+          minutes: [$scope.lapMins.toString()]
         }
       }
 
+      console.log('form: ' + form.laps);
       RunAPI.saveRun(form)
         .success(function(data, status, headers, config){
           //just status header for now
@@ -792,12 +845,7 @@ angular.module('starter.runController', ['starter.appServices',
         });
 
     }
-    $scope.stopRun = function(){
-      $scope.stopTimer();
-      $scope.stopLapTimer();
-      $scope.postRun();
 
-    };
 
 
     $scope.centerOnMe = function(){
