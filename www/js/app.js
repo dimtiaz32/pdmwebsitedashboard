@@ -78,6 +78,10 @@ angular.module('starter', ['ionic',
         });
   }])
 
+  .config(function( $mdGestureProvider ) {
+    $mdGestureProvider.skipClickHijack();
+  })
+
   .config(['$ionicConfigProvider', function($ionicConfigProvider) {
 
     $ionicConfigProvider.tabs.position('bottom');
