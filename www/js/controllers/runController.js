@@ -23,6 +23,8 @@ angular.module('starter.runController', ['starter.appServices',
     $scope.user =  {
       name: ""
     };
+    $scope.lat =[];
+    $scope.long = [];
 
     $scope.isDetailDisplayed = false;
     $scope.isRunDetailDisplayed = false;
@@ -523,6 +525,22 @@ angular.module('starter.runController', ['starter.appServices',
 
 
     }
+    $scope.pauseTimer = function(){
+      $interval.cancel(startTimer);
+      startTimer = undefined;
+    }
+
+    $scope.resumeTimer = function(){
+      console.log('%cresume timer function activated', 'color: RoyalBlue');
+      $scope.startTimer();
+    }
+
+    $scope.stopTimer = function(){
+      console.log('%cstop timer function activated', 'color: RoyalBlue');
+      $interval.cancel(startTimer);
+      startTimer = undefined;
+
+    }
 
     $scope.paceCalculator = function(distance){
       console.log('paceCalculator entered with distance: ' + distance);
@@ -537,6 +555,29 @@ angular.module('starter.runController', ['starter.appServices',
         var pace = time/3;
       }
       return pace;
+    }
+
+    $scope.coordsDeterminant = function(i, split) {
+      var splitNumber = i;
+      if (i = 0 || i % 2 == 0) {
+        coordSplit = split.toString().split('(');
+        var firstSplit = coordSplit[0];
+        var secondSplit = coordSplit[1];
+        console.log('Coord split ' + splitNumber + 'first split: ' + firstSplit);
+        console.log('Coord split ' + splitNumber + 'second split: ' + secondSplit);
+        $scope.lat.push(secondSplit);
+        console.log('$scope.lat: ' + $scope.lat);
+
+      } else {
+        coordSplit = split.toString().split(')');
+        var firstSplit = coordSplit[0];
+        var secondSplit = coordSplit[1];
+        console.log('Coord split ' + splitNumber + 'first split: ' + firstSplit);
+        console.log('Coord split ' + splitNumber + 'second split: ' + secondSplit);
+        $scope.long.push(firstSplit);
+        console.log('$scope.long: ' + $scope.long);
+
+      }
     }
 
     var startLapTimer;
@@ -557,6 +598,21 @@ angular.module('starter.runController', ['starter.appServices',
       console.log('minutes: ' + $scope.lapMinutes + '  seconds: ' + $scope.lapSeconds);
     }
 
+    $scope.pauseLapTimer = function(){
+      $interval.cancel(startLapTimer);
+      startLapTimer = undefined;
+    }
+
+    $scope.resumeLapTimer = function(){
+      console.log('%cLap timer resumed', 'color: Blue');
+      $scope.startLapTimer();
+    }
+
+    $scope.stopLapTimer = function(){
+      console.log('%cLap timer stopped', 'color: Blue');
+      $interval.cancel(startLapTimer);
+      startLapTimer = undefined;
+    }
 
     $scope.polyCoords = [];
     $scope.mapCreated = function(map){
@@ -641,6 +697,108 @@ angular.module('starter.runController', ['starter.appServices',
       $scope.map.controls[google.maps.ControlPosition.BOTTOM].push(buttonControlDiv);
     }
 
+    $scope.pauseRun = function(){
+      $scope.pauseTimer();
+
+      $scope.pauseLapTimer();
+      // $scope.pauseCoordsArrayUpdater();
+      $scope.removeLap();
+      $scope.removePause();
+      $scope.pauseTimer();
+
+      var pausedControlDiv = document.createElement('div');
+      var pausedControl = $scope.pausedControl(pausedControlDiv, $scope.map);
+
+      pausedControlDiv.index = 1;
+      $scope.map.controls[google.maps.ControlPosition.BOTTOM].push(pausedControlDiv);
+    }
+
+    $scope.postRun = function(){
+      var t = Date.now();
+      var today = new Date(t);
+      var todaySplit = today.toString().split(' ');
+      console.log('t: ' + t + ' today: ' + today + ' todaySplit: ' + todaySplit);
+      var runMonth = todaySplit[1];
+      console.log('Run month: ' + runMonth);
+
+      console.log('$scope.polyCoords: ' +$scope.polyCoords);
+
+      var coordString = $scope.polyCoords.toString();
+      console.log('coordString: ' + coordString);
+
+      var coordSplit = coordString.split(',');
+      console.log('coordSplit: ' + coordSplit);
+      console.log('coordSplit.length : ' + coordSplit.length);
+
+      var firstSplit = coordSplit[0];
+      console.log('firstSplit: ' + firstSplit);
+
+      var secondSplit = coordSplit[1];
+      console.log('secondSplit: ' + secondSplit);
+
+      var thirdSplit = coordSplit[2];
+      console.log('thirdSplit: ' + thirdSplit);
+
+      for (var i=0; i< coordSplit.length; i++){
+        var splitNumber = i;
+        var split = coordSplit[i];
+        if(split == ""){
+          console.log('split value is null');
+          i++;
+        } else {
+          console.log('Split ' + splitNumber + ': ' + split);
+          $scope.coordsDeterminant(i, split);
+        }
+      }
+
+
+      console.log('$scope.lat: ' + $scope.lat);
+      console.log('$scope.long: ' + $scope.long);
+
+
+      var form = {
+        distance: $scope.distance,
+        date: Date.now(),
+        month: runMonth,
+        seconds: $scope.seconds,
+        minutes: $scope.minutes,
+        pace: $scope.pace,
+        User: $rootScope.getUserId(),
+        moneyRaised: $scope.moneyRaised,
+        charityId: $rootScope.getSelectedCharityId(),
+        path: {lat: [$scope.lat], long: [$scope.long]},
+        laps: { number: 1,
+          distance: 3,
+          seconds: 4,
+          minutes: 5,
+          pace: 8
+        }
+      }
+
+      RunAPI.saveRun(form)
+        .success(function(data, status, headers, config){
+          //just status header for now
+          console.log('saveRun API call returned success');
+          console.log('data.id: ' + data._id);
+          $rootScope.setRunIdDayView(data._id);
+          console.log('$rootScope.dayRunId: ' + $rootScope.dayRunId);
+          $window.location.href = ('#/app/historyDay');
+
+        })
+        .error(function(err,status){
+          console.log(err);
+          console.log('Save run API call failed');
+          $rootScope.verifyStatus(status);
+        });
+
+    }
+    $scope.stopRun = function(){
+      $scope.stopTimer();
+      $scope.stopLapTimer();
+      $scope.postRun();
+
+    };
+
 
     $scope.centerOnMe = function(){
       console.log("%cCentering", 'color: Green');
@@ -662,6 +820,7 @@ angular.module('starter.runController', ['starter.appServices',
         alert('Unable to get location: ' + error.message);
       });
     };
+
 
 
   });
