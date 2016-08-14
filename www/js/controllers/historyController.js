@@ -98,11 +98,11 @@ angular.module('starter.historyController', [
       return '#00b9be';
     }
 
-    $scope.goalDayDistance = 2;
-    $scope.currentDayDistance = 1;
+    $scope.goalDayDistance = 0;
+    $scope.currentDayDistance = 0;
 
-    $scope.goalDayFunds = 1;
-    $scope.currentDayFunds= .3;
+    $scope.goalDayFunds = 0;
+    $scope.currentDayFunds= 0.00;
 
     $scope.goalWeekDistance = 63;
     $scope.currentWeekDistance = 0;

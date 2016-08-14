@@ -55,10 +55,10 @@ angular.module('starter.historyDayController', [
         var uDate = new Date(jdate);
         console.log('uDate: ' + uDate);
         var month = uDate.getMonth();
-        var day = uDate.getDay();
+        var day = uDate.getDate();
         var year = uDate.getFullYear();
         console.log('month day, year: ' + day+ ' ' + month + ','+ year);
-        $scope.date = day +' ' + month + ', ' + year;
+        $scope.date = day.toString() +' ' + month.toString() + ', ' + year.toString();
 
         console.log('date: ' + $scope.date);
 

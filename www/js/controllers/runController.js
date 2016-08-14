@@ -34,6 +34,7 @@ angular.module('starter.runController', ['starter.appServices',
     $scope.lapSecs = [];
     $scope.lapMins = [];
     $scope.lapPaces = [];
+    $scope.pace = 0;
     $scope.distance = 0;
     $scope.runPath = null;
 
@@ -651,9 +652,12 @@ angular.module('starter.runController', ['starter.appServices',
     $scope.polyCoords = [];
     $scope.line = [];
     $rootScope.$on('newMap', function(){
+      console.log('new map broadCast entered');
+      console.log('polyCoords on newMap call: ' + $scope.polyCoords);
       $scope.mapCreated = function(map){
+        console.log('mapCreated entered');
         console.log('isRunning load value: ' + $scope.isRunning);
-
+        $scope.polyCoords = [];
         $scope.map = map;
         $scope.onSuccess = function(pos){
           console.log('onSuccess entered with pos: ' + pos);
@@ -671,7 +675,6 @@ angular.module('starter.runController', ['starter.appServices',
             icon: '../img/blue-gps-tracker.png'
           });
           if($scope.isRunning  == true){
-
             $scope.path = null;
             $scope.polyCoords.push($scope.ll);
             console.log('polyCoords: ' + $scope.polyCoords);
@@ -681,15 +684,20 @@ angular.module('starter.runController', ['starter.appServices',
               strokeOpacity: 1.0,
               strokeWeight: 6
             });
-            $scope.distance = google.maps.geometry.spherical.computeLength($scope.runPath.getPath());
+            var meters = google.maps.geometry.spherical.computeLength($scope.runPath.getPath());
+            console.log('meters: ' + meters);
+            $scope.distance = meters * 0.000621371;
+            console.log('$scope.distance: ' + $scope.distance);
             $scope.runPath.setMap($scope.map);
-
+            $scope.prePath =  $scope.path;
             $scope.removePolyLine = function(){
-              $scope.prePath =  $scope.path;
+
               if($scope.prePath){
                 $scope.runPath.setMap(this.map);
+                // $scope.runPath.setMap(null);
               }
               $scope.path = $scope.runPath;
+              // $scope.path.setMap(null);
               // $scope.runPath = $scope.path;
             }
 
@@ -885,7 +893,7 @@ angular.module('starter.runController', ['starter.appServices',
       $scope.polyCoords = [];
       console.log('resetRun polyCoords vals post reset: ' + $scope.polyCoords);
       $scope.runPath = null;
-      // $scope.runPath.setMap($scope.map);
+      // $scope.runPath.setMap(null);
 
 
 
@@ -894,12 +902,17 @@ angular.module('starter.runController', ['starter.appServices',
       $scope.distance = 0;
       $scope.removeStop();
       $scope.removeResume();
-      $scope.addStart();
+      $scope.removeLocateUI();
+      // $scope.addStart();
       $scope.toggleRun();
       console.log('isRunning: ' + $scope.isRunning);
+      $scope.removePolyLine();
+
       $rootScope.$broadcast('newMap');
+      $scope.mapCreated(this.map);
 
     }
+
     $scope.stopRun = function(){
       $scope.runPath.setMap(null);
       navigator.geolocation.clearWatch($scope.watch);
