@@ -73,10 +73,12 @@ angular.module('starter.runController', ['starter.appServices',
     };
 
     $scope.toggleDetail = function() {
+      console.log("toggle Detail");
       $scope.isDetailDisplayed = !$scope.isDetailDisplayed;
     };
 
     $scope.toggleRunDetail = function() {
+      console.log("toggle run detail");
       $scope.isRunDetailDisplayed = !$scope.isRunDetailDisplayed;
     };
 

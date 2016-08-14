@@ -29,7 +29,6 @@ angular.module('starter', ['ionic',
   'ngCookies',
   'angular-svg-round-progressbar',
   'ion-datetime-picker',
-  'ngMaterial',
   'jett.ionic.filter.bar',
   'dtrw.bcrypt'
 ])
@@ -77,11 +76,11 @@ angular.module('starter', ['ionic',
           };
         });
   }])
-
+/*
   .config(function( $mdGestureProvider ) {
     $mdGestureProvider.skipClickHijack();
   })
-
+*/
   .config(['$ionicConfigProvider', function($ionicConfigProvider) {
 
     $ionicConfigProvider.tabs.position('bottom');

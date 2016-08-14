@@ -18,7 +18,16 @@ angular.module('starter.authController', ['starter.appServices',
   'angular-svg-round-progressbar'])
 
 
-  .controller('SignUpCtrl', function($scope, $rootScope, $ionicModal, $timeout, AuthAPI, $window, UserAPI){
+  .controller('SignUpCtrl', function($scope, $rootScope, $ionicModal, $timeout, AuthAPI, $window, UserAPI, $event){
+
+    //Keyboard stuff
+    $scope.keyPressed = function(event) {
+      if (event.which === 13) {
+        cordova.plugins.Keyboard.close();
+      }
+    };
+    //End keyboard stuff
+
     $scope.user = {
       firstName: "",
       lastName: "",

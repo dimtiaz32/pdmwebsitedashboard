@@ -41,4 +41,8 @@ angular.module('starter.directives', [])
         }
       }
     }
+  })
+
+  .directive('onEnter', function() {
+
   });

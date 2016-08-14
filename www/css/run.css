@@ -180,16 +180,18 @@ button.run-page.button-large.button-start {
 button.run-page.button-slide-up {
   background-image: url("../img/pull down grey bar straight.png");
   background-size: contain;
-  background-position: center;
+  background-position: center bottom;
   background-repeat: no-repeat;
   background-color: white;
   border: none;
   display: block;
 
   width: 100%;
-  height: 0.8vh;
+  height: 5px;
 
   margin-bottom: 3px;
+
+  position: relative;
 }
 
 button.run-page.button-slide-down {
@@ -202,10 +204,38 @@ button.run-page.button-slide-down {
   display: block;
 
   width: 100%;
-  height: 1.5vh;
+  height: 1.7vh;
 
   margin-bottom: 3px;
+
+  position: relative;
 }
+
+button.run-page.button-slide-up:before {
+  content:'';
+  position:absolute;
+  top:-5px;
+  bottom:-20px;
+  left:-20px;
+  right: -20px;
+
+}
+
+button.run-page.button-slide-down:before {
+  content:'';
+  position: absolute;
+  top: -20px;
+  bottom: -20px;
+  left: -20px;
+  right: -20px;
+
+}
+
+.run-page.spacer {
+  height: 10px;
+  width: 100%;
+}
+
 
 h2.run-page {
   /*Check to remove this later*/
