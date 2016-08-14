@@ -955,6 +955,8 @@ angular.module('starter.runController', ['starter.appServices',
 
       console.log('$scope.lat: ' + $scope.lat);
       console.log('$scope.long: ' + $scope.long);
+      console.log('charityId for run post: ' + $rootScope.getSelectedCharityId());
+      console.log('charityId for run post: ' + $rootScope.getSelectedCharityName());
 
 
       var form = {
@@ -966,7 +968,8 @@ angular.module('starter.runController', ['starter.appServices',
         pace: $scope.pace,
         User: $rootScope.getUserId(),
         moneyRaised: $scope.moneyRaised,
-        charityId: $rootScope.getSelectedCharityId(),
+        charity: $rootScope.getSelectedCharityId(),
+        charityName: $rootScope.getSelectedCharityName(),
         path: {lat: [$scope.lat], long: [$scope.long]},
         laps: { number: [$scope.lapNumbers.toString()],
           distance: [$scope.lapDistances.toString()],
@@ -976,7 +979,7 @@ angular.module('starter.runController', ['starter.appServices',
         }
       }
 
-      console.log('form: ' + form.laps);
+      console.log('form: ' + JSON.stringify(form));
       RunAPI.saveRun(form)
         .success(function(data, status, headers, config){
           //just status header for now
