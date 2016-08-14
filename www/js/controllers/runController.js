@@ -580,7 +580,8 @@ angular.module('starter.runController', ['starter.appServices',
 
     $scope.coordsDeterminant = function(i, split) {
       var splitNumber = i;
-      if (i = 0 || i % 2 == 0) {
+
+      if (i == 0 || i % 2 == 0) {
         coordSplit = split.toString().split('(');
         var firstSplit = coordSplit[0];
         var secondSplit = coordSplit[1];
@@ -659,8 +660,10 @@ angular.module('starter.runController', ['starter.appServices',
       $scope.mapCreated = function(map){
         console.log('mapCreated entered');
         console.log('isRunning load value: ' + $scope.isRunning);
-        $scope.polyCoords = [];
+        $scope.polyCoords = null;
+
         $scope.map = map;
+        $scope.polyCoords = [];
         $scope.onSuccess = function(pos){
           console.log('onSuccess entered with pos: ' + pos);
           $scope.ll = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
@@ -691,17 +694,17 @@ angular.module('starter.runController', ['starter.appServices',
             $scope.distance = meters * 0.000621371;
             console.log('$scope.distance: ' + $scope.distance);
             $scope.runPath.setMap($scope.map);
-            $scope.prePath =  $scope.path;
-            $scope.removePolyLine = function(){
-
-              if($scope.prePath){
-                $scope.runPath.setMap(this.map);
-                // $scope.runPath.setMap(null);
-              }
-              $scope.path = $scope.runPath;
-              // $scope.path.setMap(null);
-              // $scope.runPath = $scope.path;
-            }
+            // $scope.prePath =  $scope.path;
+            // $scope.removePolyLine = function(){
+            //
+            //   if($scope.prePath){
+            //     $scope.runPath.setMap(this.map);
+            //     // $scope.runPath.setMap(null);
+            //   }
+            //   $scope.path = $scope.runPath;
+            //   // $scope.path.setMap(null);
+            //   // $scope.runPath = $scope.path;
+            // }
 
             console.log('$scope.distance for lapDistance: ' + $scope.distance);
             console.log('$scope.previousLapDistance: ' + $scope.previousLapDistance);
@@ -716,6 +719,18 @@ angular.module('starter.runController', ['starter.appServices',
             $scope.moneyRaised = $scope.mrCalculator($scope.distance);
           }
           $scope.marker.setMap($scope.map);
+          $scope.prePath =  $scope.path;
+          $scope.removePolyLine = function(){
+
+            if($scope.prePath){
+              $scope.runPath.setMap(this.map);
+              // $scope.runPath.setMap(null);
+            }
+            $scope.path = $scope.runPath;
+            // $scope.path.setMap(null);
+            // $scope.runPath = $scope.path;
+          }
+
         }
 
         $scope.onError = function(){
@@ -892,7 +907,7 @@ angular.module('starter.runController', ['starter.appServices',
       //   $scope.polyCoords.pop();
       // }
 
-      $scope.polyCoords = [];
+      $scope.polyCoords = null;
       console.log('resetRun polyCoords vals post reset: ' + $scope.polyCoords);
       $scope.runPath = null;
       // $scope.runPath.setMap(null);
@@ -908,11 +923,10 @@ angular.module('starter.runController', ['starter.appServices',
       // $scope.addStart();
       $scope.toggleRun();
       console.log('isRunning: ' + $scope.isRunning);
-      $scope.removePolyLine();
 
-      $rootScope.$broadcast('newMap');
       $scope.mapCreated(this.map);
-
+      $scope.removePolyLine();
+      $rootScope.$broadcast('newMap');
     }
 
     $scope.stopRun = function(){
@@ -936,6 +950,8 @@ angular.module('starter.runController', ['starter.appServices',
       console.log('t: ' + t + ' today: ' + today + ' todaySplit: ' + todaySplit);
       var runMonth = todaySplit[1];
       console.log('Run month: ' + runMonth);
+      $scope.long = [];
+      $scope.lat = [];
 
       console.log('$scope.polyCoords: ' +$scope.polyCoords);
 
