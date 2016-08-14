@@ -84,6 +84,22 @@ angular.module('starter.historyServices', [])
         }
       });
     },
+    getWeekMoneyRaised: function(userId){
+      return $http.get(SERVER_HOST+'history/week/moneyRaised', {
+        method: 'GET',
+        params: {
+          userId: userId
+        }
+      });
+    },
+    getMonthMoneyRaised: function(userId){
+      return $http.get(SERVER_HOST+'history/month/moneyRaised', {
+        method: 'GET',
+        params: {
+          userId: userId
+        }
+      });
+    },
     getByDay: function(userId, month, day){
       return $http.get(SERVER_HOST+'history/day', {
         method: 'GET',

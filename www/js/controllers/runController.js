@@ -474,6 +474,47 @@ angular.module('starter.runController', ['starter.appServices',
 
     };
 
+    //week & month moneyRaised && distance
+    HistoryAPI.getWeekMoneyRaised($rootScope.getUserId())
+      .success(function(data, status, headers, config){
+        console.log('historyAPI getWeekMoneyRaised call succeeded: (data): ' + JSON.stringify(data));
+        console.log('getWeekMoneyRaised data.length: ' + data.length);
+
+        $scope.weekDist = 0;
+        $scope.weekMr = 0;
+        for(var i = 0; i< data.length; i++){
+          $scope.weekMr = $scope.weekMr + data[i].moneyRaised;
+          $scope.weekDist = $scope.weekDist + data[i].distance;
+          console.log('$scope.weekMr: ' + $scope.weekMr);
+          console.log('$scope.weekDist: ' + $scope.weekDist);
+        }
+        console.log('final $scope.weekMr: ' + $scope.weekMr);
+        console.log('final $scope.weekDist: ' + $scope.weekDist);
+      })
+      .error(function(err, status){
+        console.log('historyAPI getWeekMoneyRaised call failed with error: ' + err + '   and status: ' + status);
+      });
+
+    HistoryAPI.getMonthMoneyRaised($rootScope.getUserId())
+      .success(function(data, status, headers, config){
+        console.log('historyAPI getMonthMoneyRaised call succeeded: (data): ' + JSON.stringify(data));
+        console.log('getMonthMoneyRaised data.length: ' + data.length);
+
+        $scope.monthDist = 0;
+        $scope.monthMr = 0;
+        for(var i = 0; i< data.length; i++){
+          $scope.monthMr = $scope.monthMr + data[i].moneyRaised;
+          $scope.monthDist = $scope.monthDist + data[i].distance;
+          console.log('$scope.monthMr: ' + $scope.monthMr);
+          console.log('$scope.monthDist: ' + $scope.monthDist);
+        }
+        console.log('final $scope.monthMr: ' + $scope.monthMr);
+        console.log('final $scope.monthDist: ' + $scope.monthDist);
+      })
+      .error(function(err, status){
+        console.log('historyAPI getWeekMoneyRaised call failed with error: ' + err + '   and status: ' + status);
+      });
+
 
     //Center-Map Button
     $scope.locateControl = function(locateDiv, map){
