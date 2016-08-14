@@ -14,13 +14,13 @@ angular.module('starter.directives', [])
       link: function($scope, $element, $attr){
         $scope.initialize= function(){
 
-          var myLatLng = navigator.geolocation.getCurrentPosition(function(pos){
-            console.log('Centering on position on map initilization');
-            map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-
-          }, function(error){
-            alert('Unable to get current location' + error.message);
-          });
+          // var myLatLng = navigator.geolocation.getCurrentPosition(function(pos){
+          //   console.log('Centering on position on map initilization');
+          //   map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+          //
+          // }, function(error){
+          //   alert('Unable to get current location' + error.message);
+          // });
 
 
           var map = new google.maps.Map($element[0]);
