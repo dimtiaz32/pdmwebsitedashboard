@@ -35,7 +35,7 @@ angular.module('starter.runController', ['starter.appServices',
     $scope.lapMins = [];
     $scope.lapPaces = [];
     $scope.distance = 0;
-    $scope.runPath;
+    $scope.runPath = null;
 
 
     $scope.isDetailDisplayed = false;
@@ -650,88 +650,167 @@ angular.module('starter.runController', ['starter.appServices',
 
     $scope.polyCoords = [];
     $scope.line = [];
-    $scope.mapCreated = function(map){
-      console.log('isRunning load value: ' + $scope.isRunning);
+    $rootScope.$on('newMap', function(){
+      $scope.mapCreated = function(map){
+        console.log('isRunning load value: ' + $scope.isRunning);
 
-      $scope.map = map;
-      $scope.onSuccess = function(pos){
-        console.log('onSuccess entered with pos: ' + pos);
-        $scope.ll = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-        console.log('ll: ' + $scope.ll);
-        $scope.mapOptions = map.setOptions({
-          center: $scope.ll,
-          zoom: 18,
-          disableDefaultUI: true,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        });
-        $scope.polyCoords.push($scope.ll);
-        $scope.marker = new google.maps.Marker({
-          position:$scope.ll,
-          icon: '../img/blue-gps-tracker.png'
-        });
-        if($scope.isRunning  == true){
-          $scope.polyCoords.push($scope.ll);
-          console.log('polyCoords: ' + $scope.polyCoords);
-          $scope.runPath = new google.maps.Polyline({
-            path: $scope.polyCoords,
-            strokeColor: '#FF0000',
-            strokeOpacity: 1.0,
-            strokeWeight: 6
+        $scope.map = map;
+        $scope.onSuccess = function(pos){
+          console.log('onSuccess entered with pos: ' + pos);
+          $scope.ll = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+          console.log('ll: ' + $scope.ll);
+          $scope.mapOptions = map.setOptions({
+            center: $scope.ll,
+            zoom: 18,
+            disableDefaultUI: true,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
           });
+          $scope.polyCoords.push($scope.ll);
+          $scope.marker = new google.maps.Marker({
+            position:$scope.ll,
+            icon: '../img/blue-gps-tracker.png'
+          });
+          if($scope.isRunning  == true){
 
-          $scope.distance = google.maps.geometry.spherical.computeLength($scope.runPath.getPath());
-          $scope.runPath.setMap($scope.map);
-          $scope.removePolyLine = function(){
-            console.log('remove polyLine entered');
-            console.log('polyCoords.length: ' + $scope.polyCoords.length);
-            $scope.runPath.setMap(null);
-            for(var i=0; i< $scope.polyCoords.length; i++){
-              $scope.runPath.setMap(null);
+            $scope.path = null;
+            $scope.polyCoords.push($scope.ll);
+            console.log('polyCoords: ' + $scope.polyCoords);
+            $scope.runPath = new google.maps.Polyline({
+              path: $scope.polyCoords,
+              strokeColor: '#FF0000',
+              strokeOpacity: 1.0,
+              strokeWeight: 6
+            });
+            $scope.distance = google.maps.geometry.spherical.computeLength($scope.runPath.getPath());
+            $scope.runPath.setMap($scope.map);
+
+            $scope.removePolyLine = function(){
+              $scope.prePath =  $scope.path;
+              if($scope.prePath){
+                $scope.runPath.setMap(this.map);
+              }
+              $scope.path = $scope.runPath;
+              // $scope.runPath = $scope.path;
             }
+
+            console.log('$scope.distance for lapDistance: ' + $scope.distance);
+            console.log('$scope.previousLapDistance: ' + $scope.previousLapDistance);
+            $scope.lapDistance = $scope.distance - $scope.previousLapDistance;
+            console.log('$scope.lapDistance: ' + $scope.lapDistance);
+            $scope.lapPace = $scope.getLapPace($scope.lapDistance);
+            console.log('lapPace: ' + $scope.lapPace);
+
+
+            $scope.pace = $scope.paceCalculator($scope.distance);
+            // console.log('pace: ' + $scope.pace);
+            $scope.moneyRaised = $scope.mrCalculator($scope.distance);
           }
-
-          console.log('$scope.distance for lapDistance: ' + $scope.distance);
-          console.log('$scope.previousLapDistance: ' + $scope.previousLapDistance);
-          $scope.lapDistance = $scope.distance - $scope.previousLapDistance;
-          console.log('$scope.lapDistance: ' + $scope.lapDistance);
-          $scope.previousLapDistance = $scope.distance;
-          console.log('new lap distance: ' + $scope.previousLapDistance);
-          $scope.lapPace = $scope.getLapPace($scope.lapDistance);
-          console.log('lapPace: ' + $scope.lapPace);
-
-
-          $scope.pace = $scope.paceCalculator($scope.distance);
-          // console.log('pace: ' + $scope.pace);
-          $scope.moneyRaised = $scope.mrCalculator($scope.distance);
+          $scope.marker.setMap($scope.map);
         }
-        $scope.marker.setMap($scope.map);
+
+        $scope.onError = function(){
+          console.log('watchPosition onErrror entered');
+        }
+        $scope.watch = navigator.geolocation.watchPosition($scope.onSuccess, $scope.onError, {maximumAge: 3000, timeout: 5000, enableHighAccuracy: true});
+        console.log('watch: ' + JSON.stringify($scope.watch));
+
+        console.log('mapOptions: ' + JSON.stringify($scope.mapOptions));
+        var startControlDiv = document.createElement('div');
+        var startControl = $scope.startControl(startControlDiv, map);
+        startControlDiv.index = 1;
+        map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(startControlDiv);
+
+        var locateControlDiv = document.createElement('div');
+        var locateControl = $scope.locateControl(locateControlDiv, map);
+
+        locateControlDiv.index = 1;
+        map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(locateControlDiv);
+
       }
+    });
+    // $scope.mapCreated = function(map){
+    //     console.log('isRunning load value: ' + $scope.isRunning);
+    //
+    //   $scope.map = map;
+    //   $scope.onSuccess = function(pos){
+    //     console.log('onSuccess entered with pos: ' + pos);
+    //     $scope.ll = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+    //     console.log('ll: ' + $scope.ll);
+    //     $scope.mapOptions = map.setOptions({
+    //       center: $scope.ll,
+    //       zoom: 18,
+    //       disableDefaultUI: true,
+    //       mapTypeId: google.maps.MapTypeId.ROADMAP
+    //     });
+    //     $scope.polyCoords.push($scope.ll);
+    //     $scope.marker = new google.maps.Marker({
+    //       position:$scope.ll,
+    //       icon: '../img/blue-gps-tracker.png'
+    //     });
+    //     if($scope.isRunning  == true){
+    //
+    //       $scope.path = null;
+    //       $scope.polyCoords.push($scope.ll);
+    //       console.log('polyCoords: ' + $scope.polyCoords);
+    //       $scope.runPath = new google.maps.Polyline({
+    //         path: $scope.polyCoords,
+    //         strokeColor: '#FF0000',
+    //         strokeOpacity: 1.0,
+    //         strokeWeight: 6
+    //       });
+    //       $scope.distance = google.maps.geometry.spherical.computeLength($scope.runPath.getPath());
+    //       $scope.runPath.setMap($scope.map);
+    //
+    //       $scope.removePolyLine = function(){
+    //         $scope.prePath =  $scope.path;
+    //         if($scope.prePath){
+    //           $scope.runPath.setMap(this.map);
+    //         }
+    //         $scope.path = $scope.runPath;
+    //       }
+    //
+    //       console.log('$scope.distance for lapDistance: ' + $scope.distance);
+    //       console.log('$scope.previousLapDistance: ' + $scope.previousLapDistance);
+    //       $scope.lapDistance = $scope.distance - $scope.previousLapDistance;
+    //       console.log('$scope.lapDistance: ' + $scope.lapDistance);
+    //       $scope.lapPace = $scope.getLapPace($scope.lapDistance);
+    //       console.log('lapPace: ' + $scope.lapPace);
+    //
+    //
+    //       $scope.pace = $scope.paceCalculator($scope.distance);
+    //       // console.log('pace: ' + $scope.pace);
+    //       $scope.moneyRaised = $scope.mrCalculator($scope.distance);
+    //     }
+    //     $scope.marker.setMap($scope.map);
+    //   }
+    //
+    //   $scope.onError = function(){
+    //     console.log('watchPosition onErrror entered');
+    //   }
+    //   $scope.watch = navigator.geolocation.watchPosition($scope.onSuccess, $scope.onError, {maximumAge: 3000, timeout: 5000, enableHighAccuracy: true});
+    //   console.log('watch: ' + JSON.stringify($scope.watch));
+    //
+    //   console.log('mapOptions: ' + JSON.stringify($scope.mapOptions));
+    //   var startControlDiv = document.createElement('div');
+    //   var startControl = $scope.startControl(startControlDiv, map);
+    //   startControlDiv.index = 1;
+    //   map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(startControlDiv);
+    //
+    //   var locateControlDiv = document.createElement('div');
+    //   var locateControl = $scope.locateControl(locateControlDiv, map);
+    //
+    //   locateControlDiv.index = 1;
+    //   map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(locateControlDiv);
+    //
+    // }
 
-      $scope.onError = function(){
-        console.log('watchPosition onErrror entered');
-      }
-      $scope.watch = navigator.geolocation.watchPosition($scope.onSuccess, $scope.onError, {maximumAge: 3000, timeout: 5000, enableHighAccuracy: true});
-      console.log('watch: ' + JSON.stringify($scope.watch));
-
-      console.log('mapOptions: ' + JSON.stringify($scope.mapOptions));
-      var startControlDiv = document.createElement('div');
-      var startControl = $scope.startControl(startControlDiv, map);
-      startControlDiv.index = 1;
-      map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(startControlDiv);
-
-      var locateControlDiv = document.createElement('div');
-      var locateControl = $scope.locateControl(locateControlDiv, map);
-
-      locateControlDiv.index = 1;
-      map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(locateControlDiv);
-
-    }
-
+    $rootScope.$broadcast('newMap');
     $scope.startRun = function(){
       console.log('isRunning: ' + $scope.isRunning);
       $scope.removeStartUI();
       $scope.removeLocateUI();
       $scope.addRepositionedLocateUI();
+
 
       $scope.timer();
       $scope.lapTimer();
@@ -745,6 +824,9 @@ angular.module('starter.runController', ['starter.appServices',
 
     $scope.lap = function(){
       $scope.stopLapTimer();
+
+      $scope.previousLapDistance = $scope.distance;
+      console.log('new lap distance: ' + $scope.previousLapDistance);
 
       $scope.lapNumbers.push($scope.lapNumber);
       $scope.lapDistances.push($scope.lapDistance);
@@ -794,10 +876,19 @@ angular.module('starter.runController', ['starter.appServices',
     $scope.resetRun = function(){
       console.log('resetRun entered');
 
-      navigator.geolocation.clearWatch($scope.watch);
+      console.log('resetRun $scope.polyCoords.length: ' + $scope.polyCoords.length);
+      console.log('resetRun polyCoords vals pre reset: ' + $scope.polyCoords);
+      // for(var i=0; i< $scope.polyCoords.length; i++){
+      //   $scope.polyCoords.pop();
+      // }
 
-      $scope.removePolyLine();
       $scope.polyCoords = [];
+      console.log('resetRun polyCoords vals post reset: ' + $scope.polyCoords);
+      $scope.runPath = null;
+      // $scope.runPath.setMap($scope.map);
+
+
+
       $scope.seconds = 0;
       $scope.minutes = 0;
       $scope.distance = 0;
@@ -805,8 +896,13 @@ angular.module('starter.runController', ['starter.appServices',
       $scope.removeResume();
       $scope.addStart();
       $scope.toggleRun();
+      console.log('isRunning: ' + $scope.isRunning);
+      $rootScope.$broadcast('newMap');
+
     }
     $scope.stopRun = function(){
+      $scope.runPath.setMap(null);
+      navigator.geolocation.clearWatch($scope.watch);
       $scope.lapNumbers.push($scope.lapNumber);
       $scope.lapDistances.push($scope.lapDistance);
       $scope.lapSecs.push($scope.lapSeconds);
@@ -816,8 +912,7 @@ angular.module('starter.runController', ['starter.appServices',
       $scope.stopTimer();
       $scope.stopLapTimer();
       $scope.resetRun();
-      // navigator.geolocation.clearWatch($scope.watch);
-      // $scope.polyCoords = [];
+
     };
     $scope.postRun = function(){
       var t = Date.now();
