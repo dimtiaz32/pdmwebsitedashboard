@@ -28,7 +28,7 @@
             {{run.minutes + ":" +run.seconds}} min
           </div>
           <div class="col col-30">
-            {{run.distance}} mi
+            {{run.distance | number: 2}} mi
           </div>
           <div class="col col-30">
             {{run.pace | number: 2 }} min/mi
