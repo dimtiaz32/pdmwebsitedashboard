@@ -48,9 +48,6 @@ angular.module('starter.historyController', [
 
 
     //progress bar
-    //TODO: Set yearlyFunds and yearlyGoal using user's data
-
-
 
     $scope.yearlyFunds = 0;
     $scope.yearlyGoal = 201.60;
@@ -62,8 +59,8 @@ angular.module('starter.historyController', [
     $scope.progressWeekAvg =  "";
     $scope.paceBunnyWeekAvg = "";
     $scope.viewHistory = function(){
+      $ionicViewSwitcher.nextDirection('enter');
       $window.location.href=  ('#/app/historyList');
-
     };
 
 
