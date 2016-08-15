@@ -695,13 +695,31 @@ angular.module('starter.runController', ['starter.appServices',
 
     $scope.polyCoords = [];
     $scope.line = [];
+    var icon =  {
+      path: google.maps.SymbolPath.CIRCLE,
+      scale: 10,
+      fillOpacity: 1,
+      fillColor: '#00b9be',
+      strokeOpacity: 1,
+      strokeColor: '#fff',
+      strokeWeight: 2
+    };
+
+    $scope.marker = new google.maps.Marker({
+      icon: icon
+    });
+    // $scope.runPath = new google.maps.Polyline({
+    //   strokeColor: '#FF0000',
+    //   strokeOpacity: 1.0,
+    //   strokeWeight: 10
+    // });
     $rootScope.$on('newMap', function(){
       console.log('new map broadCast entered');
       console.log('polyCoords on newMap call: ' + $scope.polyCoords);
       $scope.mapCreated = function(map){
         console.log('mapCreated entered');
         console.log('isRunning load value: ' + $scope.isRunning);
-        $scope.polyCoords = null;
+        // $scope.polyCoords = null;
 
         $scope.map = map;
         $scope.polyCoords = [];
@@ -717,30 +735,28 @@ angular.module('starter.runController', ['starter.appServices',
             mapTypeId: google.maps.MapTypeId.ROADMAP
           });
 
-          $scope.marker = new google.maps.Marker({
-            position:$scope.ll,
-            // icon: '../img/blue-gps-tracker.png'
-            icon: {
-              path: google.maps.SymbolPath.CIRCLE,
-              scale: 10,
-              fillOpacity: 1,
-              fillColor: '#00b9be',
-              strokeOpacity: 1,
-              strokeColor: '#fff',
-              strokeWeight: 2,
-            }
-          });
+          // var icon =  {
+          //   path: google.maps.SymbolPath.CIRCLE,
+          //   scale: 10,
+          //   fillOpacity: 1,
+          //   fillColor: '#00b9be',
+          //   strokeOpacity: 1,
+          //   strokeColor: '#fff',
+          //   strokeWeight: 2
+          // };
+          //
+          // $scope.marker = new google.maps.Marker({
+          //
+          //   icon: icon
+          // });
+          $scope.marker.setPosition($scope.ll);
+
           if($scope.isRunning  == true){
-            $scope.polyCoords.push($scope.ll);
             $scope.path = null;
             $scope.polyCoords.push($scope.ll);
             console.log('polyCoords: ' + $scope.polyCoords);
-            $scope.runPath = new google.maps.Polyline({
-              path: $scope.polyCoords,
-              strokeColor: '#FF0000',
-              strokeOpacity: 1.0,
-              strokeWeight: 6
-            });
+            $scope.runPath.setPath($scope.polyCoords);
+
             var meters = google.maps.geometry.spherical.computeLength($scope.runPath.getPath());
             console.log('meters: ' + meters);
             $scope.distance = meters * 0.000621371;
@@ -887,7 +903,11 @@ angular.module('starter.runController', ['starter.appServices',
       $scope.removeStartUI();
       $scope.removeLocateUI();
       $scope.addRepositionedLocateUI();
-
+      $scope.runPath = new google.maps.Polyline({
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
+        strokeWeight: 10
+      });
 
       $scope.timer();
       $scope.lapTimer();
@@ -991,7 +1011,6 @@ angular.module('starter.runController', ['starter.appServices',
       $scope.lapPaces.push($scope.lapPace);
       $scope.postRun();
       $scope.stopTimer();
-      $scope.stopLapTimer();
       $scope.resetRun();
 
     };
