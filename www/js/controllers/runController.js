@@ -722,7 +722,7 @@ angular.module('starter.runController', ['starter.appServices',
             // icon: '../img/blue-gps-tracker.png'
             icon: {
               path: google.maps.SymbolPath.CIRCLE,
-              scale: 13,
+              scale: 10,
               fillOpacity: 1,
               fillColor: '#00b9be',
               strokeOpacity: 1,
