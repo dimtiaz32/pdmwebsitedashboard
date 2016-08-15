@@ -59,7 +59,7 @@ angular.module('starter.historyController', [
     $scope.progressWeekAvg =  "";
     $scope.paceBunnyWeekAvg = "";
     $scope.viewHistory = function(){
-      $ionicViewSwitcher.nextDirection('enter');
+      $ionicViewSwitcher.nextDirection('forward');
       $window.location.href=  ('#/app/historyList');
     };
 

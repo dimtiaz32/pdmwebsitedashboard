@@ -84,6 +84,7 @@ angular.module('starter', ['ionic',
   .config(['$ionicConfigProvider', function($ionicConfigProvider) {
 
     $ionicConfigProvider.tabs.position('bottom');
+    $ionicConfigProvider.navBar.alignTitle('center');
 
   }])
 
@@ -342,4 +343,9 @@ angular.module('starter', ['ionic',
 
     Stripe.setPublishableKey('pk_test_U5LiYvbQvafjstjzow9RjSzg');
 
-  });
+  })
+  .filter('secondsToDateTime', [function() {
+    return function(seconds) {
+      return new Date(0,0,0,0,0,0,0).setSeconds(seconds);
+    };
+  }]);

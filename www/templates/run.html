@@ -51,12 +51,12 @@
         <div class="run-page row">
           <div class="run-page col col-50">
             <p class="run-page head">Duration</p>
-            <p class="run-page label">{{minutes}}:{{seconds}}<span class="units">min:sec</span></p>
+            <p class="run-page label">{{minutes}}:{{seconds}}<span class="units"> min:sec</span></p>
           </div>
           <div class="run-page verticalLine"></div>
           <div class="run-page col col-50">
             <p class="run-page head">Distance</p>
-            <p class="run-page label">{{distance.toFixed(2)}}<span class="units">mi</span></p>
+            <p class="run-page label">{{distance | number: 2}}<span class="units"> mi</span></p>
           </div>
         </div>
 
@@ -65,7 +65,7 @@
         <div class="run-page row">
           <div class="run-page col col-50">
             <p class="run-page head">Pace</p>
-            <p class="run-page label">{{pace.toFixed(2)}}<span class="units">min/mi</span></p>
+            <p class="run-page label">{{pace | secondsToDateTime | date: 'mm:ss'}}<span class="units"> min/mi</span></p>
           </div>
           <div class="run-page verticalLine"></div>
           <div class="run-page col col-50">
