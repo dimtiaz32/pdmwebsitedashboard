@@ -41,4 +41,19 @@ angular.module('starter.directives', [])
         }
       }
     }
+  })
+
+  .directive('enterClose', function() {
+    return {
+      link: function (scope, element, attributes) {
+        element.bind('keydown', function (event) {
+          if (event.which == 13) {
+            console.log("Close keyboard");
+            element[0].blur();
+          }
+        })
+      }
+    }
   });
+
+

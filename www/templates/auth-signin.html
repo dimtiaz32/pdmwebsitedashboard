@@ -12,11 +12,11 @@
     <div class="sign-in list">
       <label class="sign-in item item-input">
         <span class="sign-in input-label">Email</span>
-        <input type="text" placeholder="" ng-model="user.email" ng-keypress="keyPressed($event)">
+        <input type="text" placeholder="" ng-model="user.email" enter-close="">
       </label>
       <label class="sign-in item item-input">
         <span class="sign-in input-label">Password</span>
-        <input type="password" placeholder="" ng-model="user.password" ng-keypress="keyPressed($event)">
+        <input type="password" placeholder="" ng-model="user.password" enter-close>
       </label>
       <button class="sign-in login button button-full button-positive" ng-click="login()">
         Sign in

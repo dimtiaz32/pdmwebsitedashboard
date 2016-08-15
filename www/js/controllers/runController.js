@@ -37,7 +37,7 @@ angular.module('starter.runController', ['starter.appServices',
     $scope.pace = 0;
     $scope.distance = 0;
     $scope.runPath = null;
-
+    $scope.marker;
 
     $scope.isDetailDisplayed = false;
     $scope.isRunDetailDisplayed = false;
@@ -707,6 +707,7 @@ angular.module('starter.runController', ['starter.appServices',
         $scope.polyCoords = [];
         $scope.onSuccess = function(pos){
           console.log('onSuccess entered with pos: ' + pos);
+
           $scope.ll = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
           console.log('ll: ' + $scope.ll);
           $scope.mapOptions = map.setOptions({
