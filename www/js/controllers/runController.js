@@ -716,13 +716,14 @@ angular.module('starter.runController', ['starter.appServices',
             disableDefaultUI: true,
             mapTypeId: google.maps.MapTypeId.ROADMAP
           });
-          $scope.polyCoords.push($scope.ll);
+
           $scope.marker = new google.maps.Marker({
             position:$scope.ll,
             // icon: '../www/img/blue-gps-tracker.png'
             icon: '../img/blue-gps-tracker.png'
           });
           if($scope.isRunning  == true){
+            $scope.polyCoords.push($scope.ll);
             $scope.path = null;
             $scope.polyCoords.push($scope.ll);
             console.log('polyCoords: ' + $scope.polyCoords);
