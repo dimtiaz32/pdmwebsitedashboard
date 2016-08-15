@@ -687,7 +687,7 @@ angular.module('starter.runController', ['starter.appServices',
         lapPace = 0;
       } else {
         var lapTime = $scope.lapMinutes + ($scope.lapSeconds/60);
-        console.log('pace time: ' + time);
+        console.log('pace time: ' + lapTime);
         lapPace = lapTime/lapDistance;
       }
       return lapPace;
@@ -718,7 +718,16 @@ angular.module('starter.runController', ['starter.appServices',
           $scope.polyCoords.push($scope.ll);
           $scope.marker = new google.maps.Marker({
             position:$scope.ll,
-            icon: '../img/blue-gps-tracker.png'
+            // icon: '../img/blue-gps-tracker.png'
+            icon: {
+              path: google.maps.SymbolPath.CIRCLE,
+              scale: 13,
+              fillOpacity: 1,
+              fillColor: '#00b9be',
+              strokeOpacity: 1,
+              strokeColor: '#fff',
+              strokeWeight: 2,
+            }
           });
           if($scope.isRunning  == true){
             $scope.path = null;
