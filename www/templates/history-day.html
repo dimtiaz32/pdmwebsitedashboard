@@ -62,7 +62,7 @@
         <div class="col col-50">
           <!--Distance-->
           <p class="history-day-page head">Distance</p>
-          <p class="history-day-page label">{{distance.toFixed(2)}}<span class="history-day-page miles">mi</span> </p>
+          <p class="history-day-page label">{{distance | number:2}}<span class="history-day-page miles">mi</span> </p>
         </div>
       </div>
       <hr>
@@ -70,13 +70,13 @@
         <div class="col col-50">
           <!--Pace-->
           <p class="history-day-page head">Pace</p>
-          <p class="history-day-page label">{{pace.toFixed(2)}}<span class="history-day-page miles">min/mi</span></p>
+          <p class="history-day-page label">{{pace | number: 2}}<span class="history-day-page miles">min/mi</span></p>
         </div>
         <div class="history-day-page vertical-line"></div>
         <div class="col col-50">
           <!--Funds Raised-->
           <p class="history-day-page head">Funds Raised</p>
-          <p class="history-day-page label">${{funds.toFixed(2)}}</p>
+          <p class="history-day-page label">${{funds | number: 2}}</p>
         </div>
       </div>
 
@@ -95,9 +95,9 @@
         <div class="list-borderless history-day-page splits values" >
           <div class="row" ng-repeat="lap in lapsForm">
             <div class="col-25 history-day-page">{{lap.number}}</div>
-            <div class="col-25 history-day-page">{{lap.distance}}</div>
+            <div class="col-25 history-day-page">{{lap.distance | number: 2}}</div>
             <div class="col-25 history-day-page">{{lap.time}}</div>
-            <div class="col-25 history-day-page">{{lap.pace}}</div>
+            <div class="col-25 history-day-page">{{lap.pace | number: 2}}</div>
           </div>
         </div>
       </div>
