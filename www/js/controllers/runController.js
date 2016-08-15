@@ -740,7 +740,7 @@ angular.module('starter.runController', ['starter.appServices',
           var i = 0;
           var deltaLat;
           var deltaLang;
-          var lastMark = $scope.latTrans.length - 1;
+          var lastMark = $scope.latTrans.length;
           $scope.latTrans.push(pos.coords.latitude);
           $scope.lngTrans.push(pos.coords.longitude);
 
