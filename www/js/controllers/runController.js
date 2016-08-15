@@ -695,24 +695,20 @@ angular.module('starter.runController', ['starter.appServices',
 
     $scope.polyCoords = [];
     $scope.line = [];
-    var icon =  {
-      path: google.maps.SymbolPath.CIRCLE,
-      scale: 10,
-      fillOpacity: 1,
-      fillColor: '#00b9be',
-      strokeOpacity: 1,
-      strokeColor: '#fff',
-      strokeWeight: 2
-    };
 
     $scope.marker = new google.maps.Marker({
-      icon: icon
+      // icon: '../img/blue-gps-tracker.png'
+      icon: {
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 10,
+        fillOpacity: 1,
+        fillColor: '#00b9be',
+        strokeOpacity: 1,
+        strokeColor: '#fff',
+        strokeWeight: 2,
+      }
     });
-    // $scope.runPath = new google.maps.Polyline({
-    //   strokeColor: '#FF0000',
-    //   strokeOpacity: 1.0,
-    //   strokeWeight: 10
-    // });
+
     $rootScope.$on('newMap', function(){
       console.log('new map broadCast entered');
       console.log('polyCoords on newMap call: ' + $scope.polyCoords);
@@ -723,6 +719,8 @@ angular.module('starter.runController', ['starter.appServices',
 
         $scope.map = map;
         $scope.polyCoords = [];
+        $scope.latTrans = [];
+        $scope.lngTrans = [];
         $scope.onSuccess = function(pos){
           console.log('onSuccess entered with pos: ' + pos);
 
@@ -735,21 +733,61 @@ angular.module('starter.runController', ['starter.appServices',
             mapTypeId: google.maps.MapTypeId.ROADMAP
           });
 
-          // var icon =  {
-          //   path: google.maps.SymbolPath.CIRCLE,
-          //   scale: 10,
-          //   fillOpacity: 1,
-          //   fillColor: '#00b9be',
-          //   strokeOpacity: 1,
-          //   strokeColor: '#fff',
-          //   strokeWeight: 2
-          // };
-          //
-          // $scope.marker = new google.maps.Marker({
-          //
-          //   icon: icon
-          // });
-          $scope.marker.setPosition($scope.ll);
+          // $scope.marker.setPosition($scope.ll);
+
+          //Move map marker smoothly
+          var numDeltas = 50;
+          var delay = 0;
+          var i = 0;
+          var deltaLat;
+          var deltaLng;
+          var lastMark = $scope.latTrans.length;
+          $scope.latTrans.push(pos.coords.latitude);
+          $scope.lngTrans.push(pos.coords.longitude);
+
+          var x = $scope.polyCoords.length;
+          $scope.transitionMarker = function() {
+            i = 0;
+
+            if ($scope.latTrans.length > 2) {
+
+              console.log($scope.latTrans);
+
+              $scope.latTrans.shift();
+              $scope.lngTrans.shift();
+
+              console.log($scope.latTrans);
+
+              console.log($scope.latTrans[1]);
+              console.log($scope.latTrans[0]);
+
+              deltaLat = ($scope.latTrans[1] - $scope.latTrans[0]) / numDeltas;
+              deltaLng = ($scope.lngTrans[1] - $scope.lngTrans[0]) / numDeltas;
+              console.log('deltaLat = ' + deltaLat);
+              $scope.moveMarker();
+            } else {
+              $scope.marker.setPosition($scope.ll)
+            }
+          }
+
+          $scope.moveMarker = function() {
+            console.log('moveMarker - deltaLat: '+deltaLat)
+            console.log('moveMarker - deltaLng: '+deltaLng)
+
+            $scope.latTrans[0] += deltaLat;
+            $scope.lngTrans[0] += deltaLng;
+            var latlng = new google.maps.LatLng($scope.latTrans[0], $scope.lngTrans[0]);
+            $scope.marker.setPosition(latlng);
+            if(i!=numDeltas){
+              i++;
+              setTimeout($scope.moveMarker, delay);
+              console.log('Marker moved to: ' + $scope.latTrans[0] + " " + $scope.lngTrans[0])
+            }
+          }
+
+          $scope.transitionMarker();
+
+          // $scope.marker.setPosition($scope.ll);
 
           if($scope.isRunning  == true){
             $scope.path = null;
@@ -818,6 +856,9 @@ angular.module('starter.runController', ['starter.appServices',
 
         locateControlDiv.index = 1;
         map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(locateControlDiv);
+
+
+
 
       }
     });
@@ -983,7 +1024,7 @@ angular.module('starter.runController', ['starter.appServices',
       console.log('resetRun polyCoords vals post reset: ' + $scope.polyCoords);
       $scope.runPath = null;
       // $scope.runPath.setMap(null);
-
+      // $scope.polyCoords.setMap(null);
 
 
       $scope.seconds = 0;
