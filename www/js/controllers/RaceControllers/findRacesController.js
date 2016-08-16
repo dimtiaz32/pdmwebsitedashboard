@@ -29,7 +29,7 @@ angular.module('starter.findRacesController', [
 
     $scope.races = [];
 
-    RaceAPI.getAllRaces($rootScope.getUserId())
+    RaceAPI.getAllRaces()
       .success(function(data, status, headers, config){
         console.log('RunAPI getAllRAces call succeeded');
         console.log('response: ' + data);
