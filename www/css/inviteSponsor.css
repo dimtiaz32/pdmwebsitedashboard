@@ -32,11 +32,19 @@ p.invite-sponsor {
 }
 
 /*Donation Link Styling*/
-.donation-link.invite-sponsor p {
+.donation-link.invite-sponsor.unselected p {
   text-align: center;
   background-color: #efefef;
   padding: 2%;
   margin: 0 5% 3% 5%;
+}
+
+.donation-link.invite-sponsor.selected p {
+  text-align: center;
+  background-color: #00b9be;
+  padding: 2%;
+  margin: 0 5% 3% 5%;
+  color: white;
 }
 
 
@@ -74,7 +82,3 @@ ul.invite-sponsor li {
 }
 
 
-
-input {
-  text-align: center;
-}

@@ -27,6 +27,12 @@ angular.module('starter.myDonationController', ['starter.appServices',
     };
 
     //Popover Menu - Sponsors/Pledges
+    $scope.isLinkSelected = false;
+    $scope.selectLink = function() {
+      console.log('held down/double tap');
+      $scope.isLinkSelected = true;
+    };
+
     $scope.popoverTemplate =
       '<ion-popover-view class="sponsors-pledges-page popover"><ion-content>' +
       '<div class="list">' +
