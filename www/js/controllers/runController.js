@@ -1,3 +1,4 @@
+
 /**
  * Created by dev on 8/2/16.
  */
@@ -726,6 +727,7 @@ angular.module('starter.runController', ['starter.appServices',
 
           $scope.ll = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
           console.log('ll: ' + $scope.ll);
+          $scope.marker.setPosition($scope.ll);
           $scope.mapOptions = map.setOptions({
             center: $scope.ll,
             zoom: 18,
@@ -733,7 +735,7 @@ angular.module('starter.runController', ['starter.appServices',
             mapTypeId: google.maps.MapTypeId.ROADMAP
           });
 
-          // $scope.marker.setPosition($scope.ll);
+
 
           //Move map marker smoothly
           var numDeltas = 50;
@@ -746,46 +748,46 @@ angular.module('starter.runController', ['starter.appServices',
           $scope.lngTrans.push(pos.coords.longitude);
 
           var x = $scope.polyCoords.length;
-          $scope.transitionMarker = function() {
-            i = 0;
-
-            if ($scope.latTrans.length > 2) {
-
-              console.log($scope.latTrans);
-
-              $scope.latTrans.shift();
-              $scope.lngTrans.shift();
-
-              console.log($scope.latTrans);
-
-              console.log($scope.latTrans[1]);
-              console.log($scope.latTrans[0]);
-
-              deltaLat = ($scope.latTrans[1] - $scope.latTrans[0]) / numDeltas;
-              deltaLng = ($scope.lngTrans[1] - $scope.lngTrans[0]) / numDeltas;
-              console.log('deltaLat = ' + deltaLat);
-              $scope.moveMarker();
-            } else {
-              $scope.marker.setPosition($scope.ll)
-            }
-          }
-
-          $scope.moveMarker = function() {
-            console.log('moveMarker - deltaLat: '+deltaLat)
-            console.log('moveMarker - deltaLng: '+deltaLng)
-
-            $scope.latTrans[0] += deltaLat;
-            $scope.lngTrans[0] += deltaLng;
-            var latlng = new google.maps.LatLng($scope.latTrans[0], $scope.lngTrans[0]);
-            $scope.marker.setPosition(latlng);
-            if(i!=numDeltas){
-              i++;
-              setTimeout($scope.moveMarker, delay);
-              console.log('Marker moved to: ' + $scope.latTrans[0] + " " + $scope.lngTrans[0])
-            }
-          }
-
-          $scope.transitionMarker();
+          // $scope.transitionMarker = function() {
+          //   i = 0;
+          //
+          //   if ($scope.latTrans.length > 2) {
+          //
+          //     console.log($scope.latTrans);
+          //
+          //     $scope.latTrans.shift();
+          //     $scope.lngTrans.shift();
+          //
+          //     console.log($scope.latTrans);
+          //
+          //     console.log($scope.latTrans[1]);
+          //     console.log($scope.latTrans[0]);
+          //
+          //     deltaLat = ($scope.latTrans[1] - $scope.latTrans[0]) / numDeltas;
+          //     deltaLng = ($scope.lngTrans[1] - $scope.lngTrans[0]) / numDeltas;
+          //     console.log('deltaLat = ' + deltaLat);
+          //     $scope.moveMarker();
+          //   } else {
+          //     $scope.marker.setPosition($scope.ll)
+          //   }
+          // }
+          //
+          // $scope.moveMarker = function() {
+          //   console.log('moveMarker - deltaLat: '+deltaLat)
+          //   console.log('moveMarker - deltaLng: '+deltaLng)
+          //
+          //   $scope.latTrans[0] += deltaLat;
+          //   $scope.lngTrans[0] += deltaLng;
+          //   var latlng = new google.maps.LatLng($scope.latTrans[0], $scope.lngTrans[0]);
+          //   $scope.marker.setPosition(latlng);
+          //   if(i!=numDeltas){
+          //     i++;
+          //     setTimeout($scope.moveMarker, delay);
+          //     console.log('Marker moved to: ' + $scope.latTrans[0] + " " + $scope.lngTrans[0])
+          //   }
+          // }
+          //
+          // $scope.transitionMarker();
 
           // $scope.marker.setPosition($scope.ll);
 
@@ -800,17 +802,7 @@ angular.module('starter.runController', ['starter.appServices',
             $scope.distance = meters * 0.000621371;
             console.log('$scope.distance: ' + $scope.distance);
             $scope.runPath.setMap($scope.map);
-            // $scope.prePath =  $scope.path;
-            // $scope.removePolyLine = function(){
-            //
-            //   if($scope.prePath){
-            //     $scope.runPath.setMap(this.map);
-            //     // $scope.runPath.setMap(null);
-            //   }
-            //   $scope.path = $scope.runPath;
-            //   // $scope.path.setMap(null);
-            //   // $scope.runPath = $scope.path;
-            // }
+
 
             console.log('$scope.distance for lapDistance: ' + $scope.distance);
             console.log('$scope.previousLapDistance: ' + $scope.previousLapDistance);
@@ -842,7 +834,7 @@ angular.module('starter.runController', ['starter.appServices',
         $scope.onError = function(){
           console.log('watchPosition onErrror entered');
         }
-        $scope.watch = navigator.geolocation.watchPosition($scope.onSuccess, $scope.onError, {maximumAge: 3000, timeout: 5000, enableHighAccuracy: true});
+        $scope.watch = navigator.geolocation.watchPosition($scope.onSuccess, $scope.onError, {maximumAge: 1000, timeout: 1000, enableHighAccuracy: true});
         console.log('watch: ' + JSON.stringify($scope.watch));
 
         console.log('mapOptions: ' + JSON.stringify($scope.mapOptions));
