@@ -160,11 +160,12 @@ angular.module('starter.charityController', ['starter.appServices',
         console.log('HistoryAPI getMonthAndCharity call succeeded');
         console.log('data.length: ' + data.length);
         console.log('data: ' + JSON.stringify(data));
+        var more = 0;
         if(data.length != 0) {
           if (data.length > 1) {
             for (var i = 0; i < data.length; i++) {
-              $scope.selectedCharityDisplay.monthMoneyRaised = $scope.selectedCharityDisplay.monthMoneyRaised + data[i].moneyRaised;
-              console.log('monthMoneyRaised: ' + $scope.selectedCharityDisplay.monthMoneyRaised);
+              more = more+ data[i].moneyRaised;
+              console.log('monthMoneyRaised: ' + more);
             }
           } else {
             $scope.selectedCharityDisplay.monthMoneyRaised = data[0].moneyRaised;
@@ -173,13 +174,23 @@ angular.module('starter.charityController', ['starter.appServices',
         } else {
           $scope.selectedCharityDisplay.monthMoneyRaised = 0;
         }
+        $scope.selectedCharityDisplay.monthMoneyRaised =more;
+        console.log('more outside loop: ' + more);
+        console.log('$scope.selectedCharityDisplay.monthMoneyRaised: ' + $scope.selectedCharityDisplay.monthMoneyRaised);
       })
       .error(function (err, status) {
         console.log('HistoryAPI getMonthAndCharity call failed with: ' + err + ' and status: ' + status);
       });
   };
 
-  $scope.getMonthMoneyRaised($rootScope.getSelectedCharityId());
+  $rootScope.$on('fetchCharityMonthMr', function(){
+    console.log('fetchCharityMonth called from broadcast');
+    $scope.getMonthMoneyRaised($rootScope.getSelectedCharityId());
+  });
+
+  $rootScope.$broadcast('fetchCharityMonthMr');
+
+
 
   CharityAPI.getAll()
     .success(function(data, status, headers, config){
@@ -299,7 +310,7 @@ angular.module('starter.charityController', ['starter.appServices',
       $scope.selectedCharityDisplay.url = data.url;
       // $scope.selectedCharityDisplay.totalMoneyRaised = moneyRaised;
 
-
+      $scope.getMonthMoneyRaised($rootScope.getSelectedCharityId());
       // console.log('charityId from inside setSelectedCharity success call: ' + charityId);
       // $scope.getMonthMoneyRaised(charityId);
 
