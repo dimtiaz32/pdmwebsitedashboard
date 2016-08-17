@@ -568,19 +568,20 @@ angular.module('starter.runController', ['starter.appServices',
     }
 
     var startTimer;
-    $scope.seconds = 00;
+    $scope.seconds = 0;
     $scope.minutes = 00;
     $scope.timer = function(){
 
       startTimer = $interval(function(){
-        if($scope.seconds <60){
+        if($scope.seconds <59){
           $scope.seconds++;
           if($scope.seconds < 10){
             $scope.seconds = '0' + $scope.seconds;
           }
-        } else {
+        }
+         else {
           $scope.minutes++;
-          $scope.seconds = 00;
+          $scope.seconds = '0'+0;
         }
       }, 1000);
       console.log('minutes: ' + $scope.minutes + '  seconds: ' + $scope.seconds);
@@ -650,7 +651,7 @@ angular.module('starter.runController', ['starter.appServices',
       $scope.lapMinutes = 0;
       console.log('stopLapTimer: minutes: ' + $scope.lapMinutes + ' seconds: ' + $scope.lapMinutes);
       lapTimer = $interval(function(){
-        if($scope.lapSeconds <60){
+        if($scope.lapSeconds <60 || $scope.lapSeconds ==0){
           $scope.lapSeconds++;
           if($scope.lapSeconds < 10){
             $scope.lapSeconds =  '0' +$scope.lapSeconds;
@@ -697,17 +698,27 @@ angular.module('starter.runController', ['starter.appServices',
     $scope.polyCoords = [];
     $scope.line = [];
 
-    $scope.marker = new google.maps.Marker({
-      // icon: '../img/blue-gps-tracker.png'
-      icon: {
-        path: google.maps.SymbolPath.CIRCLE,
-        scale: 10,
-        fillOpacity: 1,
-        fillColor: '#00b9be',
-        strokeOpacity: 1,
-        strokeColor: '#fff',
-        strokeWeight: 2,
-      }
+    // $scope.marker = new google.maps.Marker({
+    //   // icon: '../img/blue-gps-tracker.png'
+    //   icon: {
+    //     path: google.maps.SymbolPath.CIRCLE,
+    //     scale: 10,
+    //     fillOpacity: 1,
+    //     fillColor: '#00b9be',
+    //     strokeOpacity: 1,
+    //     strokeColor: '#fff',
+    //     strokeWeight: 2,
+    //   }
+    // });
+
+    $scope.circle = new google.maps.Circle({
+      fillOpacity: 1,
+      fillColor: '#00b9be',
+      strokeOpacity: 1,
+      strokeColor: '#fff',
+      strokeWeight: 2,
+      radius: 5,
+      zIndex: 2
     });
 
     $rootScope.$on('newMap', function(){
@@ -727,7 +738,9 @@ angular.module('starter.runController', ['starter.appServices',
 
           $scope.ll = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
           console.log('ll: ' + $scope.ll);
-          $scope.marker.setPosition($scope.ll);
+          // $scope.marker.setPosition($scope.ll);
+          $scope.circle.setCenter($scope.ll);
+          $scope.map.panTo($scope.ll);
           $scope.mapOptions = map.setOptions({
             center: $scope.ll,
             zoom: 18,
@@ -735,6 +748,7 @@ angular.module('starter.runController', ['starter.appServices',
             mapTypeId: google.maps.MapTypeId.ROADMAP
           });
 
+          $scope.circle.setMap($scope.map);
 
 
           //Move map marker smoothly
@@ -816,7 +830,8 @@ angular.module('starter.runController', ['starter.appServices',
             // console.log('pace: ' + $scope.pace);
             $scope.moneyRaised = $scope.mrCalculator($scope.distance);
           }
-          $scope.marker.setMap($scope.map);
+          // $scope.marker.setMap($scope.map);
+
           $scope.prePath =  $scope.path;
           $scope.removePolyLine = function(){
 
@@ -939,7 +954,8 @@ angular.module('starter.runController', ['starter.appServices',
       $scope.runPath = new google.maps.Polyline({
         strokeColor: '#FF0000',
         strokeOpacity: 1.0,
-        strokeWeight: 10
+        strokeWeight: 10,
+        zIndex: 1
       });
 
       $scope.timer();
