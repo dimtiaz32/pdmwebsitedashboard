@@ -50,15 +50,26 @@ angular.module('starter.historyDayController', [
           $scope.duration = data[0].minutes.toString() + ":"  + data[0].seconds.toString();
         }
         console.log('$scope.duration: ' + $scope.duration);
+        var monthNames = ["January", "February", "March", "April", "May", "June",
+          "July", "August", "September", "October", "November", "December"
+        ];
         var jdate = data[0].date;
         console.log('jdate: ' + jdate);
         var uDate = new Date(jdate);
         console.log('uDate: ' + uDate);
-        var month = uDate.getMonth() + 1;
+// <<<<<<< HEAD
+//         var month = uDate.getMonth() + 1;
+//         var day = uDate.getDate();
+//         var year = uDate.getFullYear();
+//         console.log('month day, year: ' + day+ ' ' + month + ','+ year);
+//         $scope.date = month.toString() +'/' + day.toString() + '/' + year.toString();
+// =======
+        var month = monthNames[uDate.getMonth()];
         var day = uDate.getDate();
         var year = uDate.getFullYear();
         console.log('month day, year: ' + day+ ' ' + month + ','+ year);
-        $scope.date = month.toString() +'/' + day.toString() + '/' + year.toString();
+        $scope.date =  month.toString()+' ' + day.toString() + ', ' + year.toString();
+// >>>>>>> 6fe384f4aab5042a0f555eeed622a21464063e1d
 
         console.log('date: ' + $scope.date);
 

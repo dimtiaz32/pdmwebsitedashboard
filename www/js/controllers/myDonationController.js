@@ -19,14 +19,39 @@ angular.module('starter.myDonationController', ['starter.appServices',
   'angular-svg-round-progressbar'])
 
 
-  .controller('MyDonationCtrl',function($rootScope, $scope, $filter, $window, $ionicModal, $cordovaSms, $cordovaSocialSharing,DonationAPI,AuthAPI, CLIENT_HOST, $ionicPopover) {
+  .controller('MyDonationCtrl',function($rootScope, $scope, HistoryAPI, AuthAPI,  $window, $ionicModal, $cordovaSms, $cordovaSocialSharing,DonationAPI,AuthAPI, CLIENT_HOST, $ionicPopover) {
 
     $scope.menuActive = false;
     $scope.menuToggle = function(){
       $scope.menuActive = !$scope.menuActive
     };
 
+
+    $scope.name = $rootScope.getName();
+    $scope.totalMoneyRaised = 0;
+    HistoryAPI.getAll($rootScope.getUserId())
+      .success(function(data, status, headers, config){
+        for(var i = 0; i< data.length; i++) {
+          console.log('data.['+i+'].moneyRaised: ' + data[i].moneyRaised);
+
+          $scope.totalMoneyRaised = data[i].moneyRaised + $scope.totalMoneyRaised;
+        }
+      })
+      .error(function(err){
+        console.log('inside charity get all API call failure');
+      })
+      .finally(function(){
+        console.log("Refresh Finally");
+        $scope.$broadcast('scroll.refreshComplete');
+      });
+
     //Popover Menu - Sponsors/Pledges
+    $scope.isLinkSelected = false;
+    $scope.selectLink = function() {
+      console.log('held down/double tap');
+      $scope.isLinkSelected = true;
+    };
+
     $scope.popoverTemplate =
       '<ion-popover-view class="sponsors-pledges-page popover"><ion-content>' +
       '<div class="list">' +
