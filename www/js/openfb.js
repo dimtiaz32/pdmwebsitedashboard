@@ -7,6 +7,8 @@
  * @author Christophe Coenraets @ccoenraets
  * @version 0.5
  */
+
+
 var openFB = (function () {
 
     var loginURL = 'https://www.facebook.com/dialog/oauth',

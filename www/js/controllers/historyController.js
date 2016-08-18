@@ -22,6 +22,8 @@ angular.module('starter.historyController', [
 
   .controller('HistoryCtrl', function($scope, $rootScope, $window, HistoryAPI, CharityAPI, $ionicSlideBoxDelegate, AuthAPI, UserAPI, $filter, roundProgressService, $timeout, $ionicPopup) {
 
+  $rootScope.$on('fetchHistory', function(){
+
 
 
 
@@ -155,7 +157,7 @@ angular.module('starter.historyController', [
         console.log('getWeekProgress data.length: ' + data.length);
         // if(data.length > 1){
           for(var i = 0; i< data.length; i++){
-
+            $scope.currentWeekDistance = $scope.currentWeekDistance + data[i].distance;
             $scope.yearlyFunds = $scope.yearlyFunds + data[i].moneyRaised;
           }
         // }
@@ -456,13 +458,6 @@ angular.module('starter.historyController', [
           $scope.getCharityName($scope.topThree[i].id, $scope.topThree[i].moneyRaised);
 
         }
-
-
-
-
-
-
-
 
       })
       .error(function(err, status){
@@ -1321,5 +1316,7 @@ angular.module('starter.historyController', [
 
 
     $scope.series = ['Series A'];
+  });
+    $rootScope.$broadcast('fetchHistory');
 
   });
