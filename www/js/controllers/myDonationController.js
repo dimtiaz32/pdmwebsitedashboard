@@ -46,6 +46,7 @@ angular.module('starter.myDonationController', ['starter.appServices',
       });
 
     //Popover Menu - Sponsors/Pledges
+
     $scope.isLinkSelected = false;
     $scope.selectLink = function() {
       console.log('held down/double tap');
