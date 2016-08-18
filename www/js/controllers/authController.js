@@ -331,7 +331,7 @@ angular.module('starter.authController', ['starter.appServices',
             $rootScope.setAvatar(data.user.facebook.avatar);
             console.log("facebook avatar: " + $rootScope.getAvatar());
             $rootScope.$broadcast("initial");
-            $window.location.href=('#/app/charities');
+            $window.location.href=('#/app/run');
           }).error(function(error){
             console.log("AuthAPI.signinByFB failed:" + error);
             $rootScope.hide();
