@@ -457,13 +457,6 @@ angular.module('starter.historyController', [
 
         }
 
-
-
-
-
-
-
-
       })
       .error(function(err, status){
         console.log('UserAPI getTopThreeCharities call failed with error: ' + err +'  and status: ' + status);
