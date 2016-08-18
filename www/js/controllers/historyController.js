@@ -27,7 +27,7 @@ angular.module('starter.historyController', [
 
     //Slider stuffs
     $scope.slideOptions = {
-      loop: true,
+      loop: false,
       speed: 500,
     };
 
