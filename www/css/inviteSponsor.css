@@ -37,6 +37,7 @@ p.invite-sponsor {
   background-color: #efefef;
   padding: 2%;
   margin: 0 5% 3% 5%;
+  -webkit-user-select: auto;
 }
 
 .donation-link.invite-sponsor.selected p {
@@ -45,7 +46,24 @@ p.invite-sponsor {
   padding: 2%;
   margin: 0 5% 3% 5%;
   color: white;
+  -webkit-user-select: auto;
 }
+
+p.invite-sponsor.link {
+  -webkit-user-select: auto;
+}
+
+ion-content{
+  overflow-scroll: true;
+}
+
+.scroll-content {
+  -webkit-user-select: auto !important;
+  -moz-user-select: auto !important;
+  -ms-user-select: auto !important;
+  user-select: auto !important;
+}
+
 
 
 /*Share Buttons Styling - Text and Email*/

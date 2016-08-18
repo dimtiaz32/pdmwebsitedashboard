@@ -28,6 +28,17 @@
         <p class="run-page header" ng-show="!noCharity">{{charityName}}</p>
         <a class="run-page no-charity header" href="#/app/charities"><p class="run-page no-charity header" ng-show="noCharity">Select a charity</p></a>
 
+        <div class="animated-detail" ng-show="isDetailDisplayed">
+
+          <hr class="full" style="height: 2px;">
+          <span class="run-page head">This Week</span>
+          <p class="run-page label">${{weekMr}}<span class="units">raised </span>{{weekDist | number: 2}} miles<span class="units">  run for charity</span></p>
+          <hr class="full">
+          <span class="run-page head">This Month</span>
+          <p class="run-page label">${{monthMr}} <span class="units">raised </span>{{monthDist | number: 2}} miles<span class="units"> run for charity</span></p>
+
+        </div>
+        <!--
         <div class="animated-detail" ng-class="{'active':isDetailDisplayed}">
 
           <hr class="full" style="height: 2px;">
@@ -38,7 +49,7 @@
           <p class="run-page label">${{monthMr}} <span class="units">raised </span>{{monthDist | number: 2}} miles<span class="units"> run for charity</span></p>
 
         </div>
-
+-->
         <button class="run-page button-slide"
                   ng-class="isDetailDisplayed ? 'button-slide-down' : 'button-slide-up'"
                   ng-click="toggleDetail()">
