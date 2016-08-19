@@ -1,3 +1,8 @@
+.invite-sponsor.header{
+  padding-top: 5px;
+  background-color: #efefef;
+}
+
 .invite-sponsor.header .heading {
   background-color: #efefef;
   color: #000000;
