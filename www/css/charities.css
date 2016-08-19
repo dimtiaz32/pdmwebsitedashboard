@@ -159,15 +159,22 @@ button.charity-page.button-slide-up:before {
   .charity-page.charity-list h2 {
     padding: 2% 0 0 0;
     position: relative;
-    left: -10%;
+    left: -7vw;
   }
 
   .charity-page.charity-list p {
     padding: 0;
     position: relative;
-    left: -10%;
+    left: -7vw;
+    max-width: 70vw;
   }
 
-  .charity-page.charity-list .funds {
+  .charity-page.charity-list .select {
     text-align: right;
   }
+
+    .charity-page.charity-list .button.select {
+      background-color: transparent;
+      color: #009b9e;
+      font-size: xx-large;
+    }

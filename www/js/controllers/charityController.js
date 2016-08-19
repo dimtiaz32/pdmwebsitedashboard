@@ -21,6 +21,7 @@ angular.module('starter.charityController', ['starter.appServices',
 
 .controller('CharitiesCtrl', function($rootScope, $timeout, $ionicModal, $window, $scope, CharityAPI, HistoryAPI, AuthAPI, UserAPI){
 
+
   $scope.isCharityDetailDisplayed = false;
   $scope.swipeGestureCharityDetail = function(swipe) {
     if (swipe == 'swipe-up') {
