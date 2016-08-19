@@ -29,7 +29,7 @@ angular.module('starter.historyController', [
 
     //Slider stuffs
     $scope.slideOptions = {
-      loop: true,
+      loop: false,
       speed: 500,
     };
 
@@ -61,7 +61,7 @@ angular.module('starter.historyController', [
     $scope.progressWeekAvg =  "";
     $scope.paceBunnyWeekAvg = "";
     $scope.viewHistory = function(){
-      $ionicViewSwitcher.nextDirection('enter');
+      $ionicViewSwitcher.nextDirection('forward');
       $window.location.href=  ('#/app/historyList');
     };
 

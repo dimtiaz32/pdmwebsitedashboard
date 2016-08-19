@@ -1,7 +1,9 @@
 .races.gradient {
   height: 100%;
   width: 100%;
-  background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) );
+  background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) );
+  padding: 0 0 0 0;
+  margin: auto;
 }
 
 .races.featured-containter {
@@ -26,11 +28,7 @@ h1.races.races-head {
   color: white;
   text-align: left;
   padding-top: 10px;
-  padding-left: 10px
-}
-
-h1.races {
-  color: #fff;
+  padding-left: 10px;
 }
 
 p.races.featured-race-detail,
@@ -43,28 +41,68 @@ p.races.races-detail {
   margin-top: auto;
 }
 
-p.races.races-detail {
-  color: #fff;
-}
-
-.races.my-races-container,
-.races.find-races-container,
-.races.past-races-container {
-  height: 24%;
+.races.my-races-container {
+  height: 23%;
   width: 100%;
+  /*
   padding-top: 10px;
-
   padding-bottom: 10px;
   padding-right: 10px;
+*/
+  margin-top: 1px;
+  margin-bottom: 1px;
 
-
-  border-radius: 2px;
+  border-radius: 4px;
 
   background-color: #fff;
 
-  background-image: url("../img/tree one.jpeg");
+  background-image: url("../img/sunrun.png");
   background-size: cover;
   background-repeat: no-repeat;
+
+  overflow: auto;
+}
+
+.races.find-races-container {
+  height: 23%;
+  width: 100%;
+  /*
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 10px;
+*/
+  margin-bottom: 1px;
+
+  border-radius: 4px;
+
+  background-color: #fff;
+
+  background-image: url("../img/look.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  overflow: auto;
+}
+
+.races.past-races-container {
+  height: 23%;
+  width: 100%;
+  /*
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 10px;
+*/
+  margin-bottom: 1px;
+
+  border-radius: 4px;
+
+  background-color: #fff;
+
+  background-image: url("../img/Crossing.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  overflow: auto;
 }
 
 
