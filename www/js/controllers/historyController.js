@@ -107,7 +107,7 @@ angular.module('starter.historyController', [
     $scope.currentWeekDistance = 0;
 
     $scope.goalWeekFunds =150;
-    $scope.currentWeekFunds= 0;
+    $scope.currentWeekFunds= 0.00;
 
 
 

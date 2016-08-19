@@ -137,13 +137,14 @@ button.charity-page.button-slide-up:before {
 .charity-page.charity-list{
 
 }
+
   .charity-page.charity-list ion-item:first-child	 {
     border-top: none;
   }
 
   .charity-page.charity-list ion-item {
+    position: relative;
     min-height: 75px;
-    height: 75px;
   }
 
   .charity-page.charity-list img:first-child {
@@ -151,7 +152,7 @@ button.charity-page.button-slide-up:before {
     width: 50px;
     height: 50px;
     position: absolute;
-    top: 0; left: 0; bottom: 0; right: 0;
+    top: 5px; left: 0; bottom: 0; right: 0;
     margin: 15px;
     display: inline
   }
@@ -159,15 +160,67 @@ button.charity-page.button-slide-up:before {
   .charity-page.charity-list h2 {
     padding: 2% 0 0 0;
     position: relative;
-    left: -10%;
+    left: -7vw;
   }
 
   .charity-page.charity-list p {
     padding: 0;
     position: relative;
-    left: -10%;
+    left: -7vw;
+    max-width: 70vw;
   }
 
-  .charity-page.charity-list .funds {
+  .charity-page.charity-list .select {
     text-align: right;
   }
+
+    .charity-page.charity-list .button.select {
+      background-color: transparent;
+      color: #009b9e;
+      font-size: 9vw;
+      position: absolute;
+      right: 10px;
+      top: 20px;
+    }
+
+  .charity-page.charity-list .charity-detail  {
+    position: relative;
+    left: -20%;
+
+  }
+
+    .charity-page.charity-list .charity-detail ion-item {
+      width: 100vw;
+      border-bottom: none;
+      border-top: 1px solid #ddd;
+      min-height: 50px;
+      padding-top: 5px;
+      padding-bottom: 0;
+      margin-top: 10px;
+    }
+
+    .charity-page.charity-list .charity-detail a {
+      padding: 0;
+      margin: 0;
+      position: relative;
+      left: 0;
+    }
+
+    .charity-page.charity-list .charity-detail p.description {
+      /*padding: 0;*/
+      max-width: 85vw;
+      margin: 0;
+      position: relative;
+      left: 0;
+    }
+
+    .charity-page.charity-list .charity-detail .stats .head {
+      padding-left: 15px;
+    }
+
+
+    .charity-page.charity-list .charity-detail .stats .label {
+      text-align: center;
+    }
+
+

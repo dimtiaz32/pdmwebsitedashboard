@@ -21,6 +21,7 @@ angular.module('starter.charityController', ['starter.appServices',
 
 .controller('CharitiesCtrl', function($rootScope, $timeout, $ionicModal, $window, $scope, CharityAPI, HistoryAPI, AuthAPI, UserAPI){
 
+
   $scope.isCharityDetailDisplayed = false;
   $scope.swipeGestureCharityDetail = function(swipe) {
     if (swipe == 'swipe-up') {
@@ -407,6 +408,14 @@ angular.module('starter.charityController', ['starter.appServices',
                 $scope.selectedCharityDisplay.url = data.url;
                 $scope.selectedCharityDisplay.totalMoneyRaised = moneyRaised;
 
+                CharityAPI.updateCharityName($rootScope.getUserId(), data.name)
+                  .success(function(data, status, headers, config){
+                    console.log('updateCharityName succeeded: ' + data.charityName);
+                  })
+                  .error(function(err, status){
+                    console.log('updateCharityName failed with error: ' + err + ' and status: ' + status);
+                  })
+
 
                 console.log('charityId from inside setSelectedCharity success call: ' + charityId);
                 $scope.getMonthMoneyRaised(charityId);
@@ -457,4 +466,11 @@ angular.module('starter.charityController', ['starter.appServices',
 
 
   }
+
+  //Get selected charity in list to expand
+  $scope.toggledCharity;
+  $scope.toggleListDetail = function(charityId) {
+    $scope.toggledCharity = charityId
+  }
+
 });

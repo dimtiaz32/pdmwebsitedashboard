@@ -126,3 +126,8 @@ a.my-sponsors.item.item-icon-left {
   top: 50%;
   transform: translateY(-50%);
 }
+
+a.my-sponsors {
+  color: #00b9be;
+  text-decoration: none;
+}

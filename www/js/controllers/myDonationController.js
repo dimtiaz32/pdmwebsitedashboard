@@ -151,7 +151,8 @@ angular.module('starter.myDonationController', ['starter.appServices',
         charity: $rootScope.getSelectedCharityId(),
         userId: $rootScope.getUserId()
       }).success(function (data, status, headers, config) {
-        $scope.inviteUrl = CLIENT_HOST + "#/app/inviteSponsor/start?id=" + data.code;
+        // $scope.inviteUrl = CLIENT_HOST + "#/app/inviteSponsor/start?id=" + data.code;
+        $scope.inviteUrl = "https://www.projectdreammiles.com/#/invite/start?id=" + data.code;
         console.log("local data:" + $scope.inviteUrl);
         // $scope.shareBySMS = function() {
         //   console.log("sms share begin")

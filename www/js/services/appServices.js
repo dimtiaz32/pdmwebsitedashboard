@@ -2,8 +2,8 @@
  * Created by dev on 6/28/16.
  */
 
-angular.module('starter.appServices', [])
-  .factory('AppAPI', function($rootScope, $http, $ionicLoading, $window, SERVER_HOST) {
+angular.module('starter.appServices', ['starter.historyServices'])
+  .factory('AppAPI', function($rootScope, $http, $ionicLoading, $window, SERVER_HOST, HistoryAPI) {
 
     //everything up until return should be put in a main API
     $rootScope.show = function (text) {
@@ -32,7 +32,7 @@ angular.module('starter.appServices', [])
       //   //$rootScope.broadcast('fetchRaces')
       // } else
        if (tab == 2) {
-        $rootScope.$broadcast('fetchMySponsors');
+        $rootScope.$broadcast('fetchHistory');
       }
       // else if (tab == 3) {
       //   $rootScope.$broadcast('');

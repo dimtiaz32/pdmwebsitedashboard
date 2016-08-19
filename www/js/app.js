@@ -5,6 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 
 angular.module('starter', ['ionic',
+  'ionic.service.core', 'ionic.service.analytics',
   'starter.accountController',
   'starter.addRaceController',
   'starter.authController',
@@ -33,12 +34,14 @@ angular.module('starter', ['ionic',
   'dtrw.bcrypt'
 ])
 
-  .run(function($ionicPlatform, ngFB, AuthAPI, $rootScope) {
+  .run(function($ionicPlatform,$ionicAnalytics, ngFB, AuthAPI, $rootScope) {
 
     // TODO facebook application id, need to replace whenr release
     ngFB.init({appId: '1079958642070604'});
 
     $ionicPlatform.ready(function() {
+
+      $ionicAnalytics.register();
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
       if (window.cordova && window.cordova.plugins.Keyboard) {

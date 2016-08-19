@@ -8,7 +8,6 @@ angular.module('starter.runController', ['starter.appServices',
   'starter.runServices',
   'starter.donationServices',
   'starter.userServices',
-
   'starter.historyServices',
 
   'starter.runServices',
@@ -20,7 +19,7 @@ angular.module('starter.runController', ['starter.appServices',
 
 //TODO: CLEAR VALUES AFTER RUN SUMMARY, NEW RUN BUTTON?
 
-  .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI, CharityAPI, HistoryAPI, $ionicPopup, AuthAPI, $ionicModal){
+  .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI, CharityAPI, HistoryAPI, DonationAPI, AuthAPI, $ionicModal){
     $scope.user =  {
       name: ""
     };
@@ -42,6 +41,21 @@ angular.module('starter.runController', ['starter.appServices',
 
     $scope.isDetailDisplayed = false;
     $scope.isRunDetailDisplayed = false;
+
+    DonationAPI.getAllSponsors($rootScope.getUserId())
+      .success(function(data, status, headers, config){
+        console.log('Donation API getAllSponsors from run controller succeeded');
+        console.log('data.length: ' + data.length);
+        if(data.length > 0){
+          $scope.noSponsor = false;
+        } else {
+          $scope.noSponsor = true;
+        }
+      })
+      .error(function(err, status){
+        console.log('Donation API getAllSponsors from run controller failed with error: ' + err + '   and status: ' + status);
+      })
+
 
     $scope.swipeGestureDetail = function(gesture) {
       if (gesture == 'swipe-down') {
@@ -711,6 +725,7 @@ angular.module('starter.runController', ['starter.appServices',
     //   }
     // });
 
+    $scope.oldZoom = 18;
     $scope.circle = new google.maps.Circle({
       fillOpacity: 1,
       fillColor: '#00b9be',
@@ -720,10 +735,117 @@ angular.module('starter.runController', ['starter.appServices',
       radius: 5,
       zIndex: 2
     });
+    $scope.getCustomRadiusForZoom = function(zoomLevel){
+      console.log('getCustomRadius entered with zoomLevel: ' + zoomLevel);
+      var newRadius = 0;
+      switch(zoomLevel){
+        case 0:
+          newRadius = 5*Math.pow(2,18);
+          console.log('newRadius: ' + newRadius);
+           return newRadius;;
+        case 1:
+          newRadius = 5*Math.pow(2,17);
+          console.log('newRadius: ' + newRadius);
+           return newRadius;;
+        case 2:
+          newRadius = 5*Math.pow(2,16);
+          console.log('newRadius: ' + newRadius);
+           return newRadius;;
+        case 3:
+          newRadius = 5*Math.pow(2,15);
+          console.log('newRadius: ' + newRadius);
+           return newRadius;;
+        case 4:
+          newRadius = 5*Math.pow(2,14);
+          console.log('newRadius: ' + newRadius);
+           return newRadius;;
+        case 5:
+          newRadius = 5*Math.pow(2,13);
+          console.log('newRadius: ' + newRadius);
+           return newRadius;;
+        case 6:
+          newRadius = 5*Math.pow(2,12);
+          console.log('newRadius: ' + newRadius);
+           return newRadius;;
+        case 7:
+          newRadius = 5*Math.pow(2,11);
+          console.log('newRadius: ' + newRadius);
+           return newRadius;;
+        case 8:
+          newRadius = 5*Math.pow(2,10);
+          console.log('newRadius: ' + newRadius);
+           return newRadius;;
+        case 9:
+          newRadius = 5*Math.pow(2,9);
+          console.log('newRadius: ' + newRadius);
+           return newRadius;;
+        case 10:
+          newRadius = 5*Math.pow(2,8);
+          console.log('newRadius: ' + newRadius);
+           return newRadius;;
+        case 11:
+          newRadius = 5*Math.pow(2,7);
+          console.log('newRadius: ' + newRadius);
+           return newRadius;;
+        case 12:
+          newRadius = 5*Math.pow(2,6);
+          console.log('newRadius: ' + newRadius);
+           return newRadius;;
+        case 13:
+          newRadius =newRadius = 5*Math.pow(2,5);
+          console.log('newRadius: ' + newRadius);
+           return newRadius;;
+        case 14:
+          newRadius = 5*Math.pow(2,4);
+          console.log('newRadius: ' + newRadius);
+           return newRadius;;
+        case 15:
+          newRadius = 5*(Math.pow(2,3));
+          console.log('newRadius: ' + newRadius);
+           return newRadius;;
+        case 16:
+          newRadius = 5*(Math.pow(2, 2));
+          console.log('newRadius: ' + newRadius);
+           return newRadius;;
+        case 17:
+          newRadius = 5*2;
+          console.log('newRadius: ' + newRadius);
+           return newRadius;;
+        case 18:
+          newRadius = 5;
+          console.log('newRadius: ' + newRadius);
+           return newRadius;;
+        case 19:
+          newRadius = 5-(1.25 *1);
+          console.log('newRadius: ' + newRadius);
+           return newRadius;;
+        case 20:
+          newRadius = 5-(1.25 *2);
+          console.log('newRadius: ' + newRadius);
+           return newRadius;;
+        case 21:
+          newRadius = 5-(1.25*3);
+          console.log('newRadius: ' + newRadius);
+           return newRadius;;
+        case 22:
+          newRadius = 5-(0.5*4);
+          console.log('newRadius: ' + newRadius);
+           return newRadius;;
+        case 23:
+          newRadius = 5-(0.5*5);
+          console.log('newRadius: ' + newRadius);
+           return newRadius;;
+      };
+
+
+      // return newRadius;
+    }
+
 
     $rootScope.$on('newMap', function(){
       console.log('new map broadCast entered');
       console.log('polyCoords on newMap call: ' + $scope.polyCoords);
+
       $scope.mapCreated = function(map){
         console.log('mapCreated entered');
         console.log('isRunning load value: ' + $scope.isRunning);
@@ -747,8 +869,13 @@ angular.module('starter.runController', ['starter.appServices',
             disableDefaultUI: true,
             mapTypeId: google.maps.MapTypeId.ROADMAP
           });
-
+          google.maps.event.addListener($scope.map, 'zoom_changed', function(){
+            var zoomLevel = $scope.map.getZoom();
+            // var circleRadius = $scope.circle.getRadius();
+            $scope.circle.setRadius($scope.getCustomRadiusForZoom(zoomLevel));
+          });
           $scope.circle.setMap($scope.map);
+
 
 
           //Move map marker smoothly
@@ -944,6 +1071,8 @@ angular.module('starter.runController', ['starter.appServices',
     //   map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(locateControlDiv);
     //
     // }
+
+
 
     $rootScope.$broadcast('newMap');
     $scope.startRun = function(){
@@ -1164,8 +1293,11 @@ angular.module('starter.runController', ['starter.appServices',
 
       navigator.geolocation.getCurrentPosition(function(pos){
         console.log('Got pos', pos);
-        $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
         // $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+        // $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+         var centeringCenter = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+        $scope.map.setCenter(centeringCenter);
+
         $scope.hide();
       }, function(error){
         alert('Unable to get location: ' + error.message);
