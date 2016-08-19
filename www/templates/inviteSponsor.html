@@ -1,15 +1,18 @@
 <ion-modal-view>
-  <ion-content overflow-scroll="true">
+  <ion-content>
     <div class="invite-sponsor header">
       <h1 class="invite-sponsor heading">
         <span class="ion-close-round" ng-click="modal.hide()"></span>
         Invite Sponsors
       </h1>
     </div>
-    <div class="invite-sponsor donation-link unselected" ng-class="isLinkSelected ? 'selected' : 'unselected'">
-      <h2 class="invite-sponsor">Donation Link</h2>
-      <p class="invite-sponsor link" on-hold="selectLink()" on-double-tap="selectLink()">{{inviteUrl}}</p>
-      <!--<input value="{{ inviteUrl }}" readonly type="text" size="50" onclick="this.select()"/>-->
+    <h2 class="invite-sponsor">Donation Link</h2>
+    <div class="invite-sponsor donation-link unselected">
+      <p class="invite-sponsor link"><input type="text" class="transparent-input" value="{{ inviteUrl }}" readonly  size="50" click-select/></p>
+
+      <!--<input class="invite-sponsor" value="{{ inviteUrl }}" readonly type="text" size="50" click-select/>-->
+      <!--<p class="invite-sponsor link" click-select>{{inviteUrl}}</p>-->
+
     </div>
     <div>
       <h2 class="invite-sponsor">Share</h2>
