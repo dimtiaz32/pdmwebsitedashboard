@@ -64,9 +64,9 @@ ion-content{
 
 .scroll-content {
   -webkit-user-select: auto !important;
-  -moz-user-select: auto !important;
-  -ms-user-select: auto !important;
-  user-select: auto !important;
+  -moz-user-select: inherit !important;
+  -ms-user-select: inherit !important;
+  user-select: inherit !important;
 }
 
 
@@ -105,9 +105,6 @@ ul.invite-sponsor li {
 }
 
 
-<<<<<<< HEAD
 .invite-sponsors .input {
   text-align: center;
 }
-=======
->>>>>>> 6fe384f4aab5042a0f555eeed622a21464063e1d
