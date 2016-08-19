@@ -195,6 +195,7 @@ button.charity-page.button-slide-up:before {
       border-top: 1px solid #ddd;
       min-height: 50px;
       padding-top: 5px;
+      padding-bottom: 0;
       margin-top: 10px;
     }
 
@@ -222,5 +223,10 @@ button.charity-page.button-slide-up:before {
       text-align: center;
     }
 
+
+    .active {
+      background-color: red;
+      color: green;
+    }
 
 

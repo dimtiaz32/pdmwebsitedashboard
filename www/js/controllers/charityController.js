@@ -466,4 +466,11 @@ angular.module('starter.charityController', ['starter.appServices',
 
 
   }
+
+  //Get selected charity in list to expand
+  $scope.toggledCharity;
+  $scope.toggleListDetail = function(charityId) {
+    $scope.toggledCharity = charityId
+  }
+
 });
