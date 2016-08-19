@@ -1,3 +1,10 @@
+
+.invite-sponsor.header{
+  padding-top: 5px;
+  background-color: #efefef;
+}
+
+
 .invite-sponsor.header .heading {
   background-color: #efefef;
   color: #000000;
@@ -29,6 +36,7 @@ p.invite-sponsor {
   font-size: 1em;
   font-weight: 300;
   padding: 0 5% 3% 5%;
+  background-color: #efefef;
 }
 
 /*Donation Link Styling*/
@@ -37,7 +45,6 @@ p.invite-sponsor {
   background-color: #efefef;
   padding: 2%;
   margin: 0 5% 3% 5%;
-  -webkit-user-select: auto;
 }
 
 .donation-link.invite-sponsor.selected p {
@@ -50,18 +57,14 @@ p.invite-sponsor {
 }
 
 p.invite-sponsor.link {
-  -webkit-user-select: auto;
-}
-
-ion-content{
-  overflow-scroll: true;
+  -webkit-user-select: text;
 }
 
 .scroll-content {
   -webkit-user-select: auto !important;
-  -moz-user-select: auto !important;
-  -ms-user-select: auto !important;
-  user-select: auto !important;
+  -moz-user-select: inherit !important;
+  -ms-user-select: inherit !important;
+  user-select: inherit !important;
 }
 
 
@@ -100,9 +103,17 @@ ul.invite-sponsor li {
 }
 
 
-<<<<<<< HEAD
-.invite-sponsors .input {
-  text-align: center;
+
+input[type="text"].transparent-input {
+  border:none !important
 }
-=======
->>>>>>> 6fe384f4aab5042a0f555eeed622a21464063e1d
+
+.transparent-input {
+  background-color: rgba(0, 0, 0, 0);
+  border:none;
+}
+
+input[type="text"].transparent-input{
+  background-color:rgba(0,0,0,0) !important;
+  border:none !important;
+}

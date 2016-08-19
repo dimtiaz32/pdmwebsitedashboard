@@ -126,13 +126,7 @@ angular.module('starter.charityServices', ['ionic'])
         }
       });
     },
-    updateCharityName: function(userId, charityName){
-      return $http.post(SERVER_HOST+'user/updateCharityName', charityName, {
-        params: {
-          userId: userId
-        }
-      });
-    },
+
     // selectCharity: function(id, charityName){
     //   return $http.put(SERVER_HOST+'user/selectedCharity', charityName, {
     //     method: 'PUT',
