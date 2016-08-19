@@ -22,7 +22,7 @@ angular.module('starter.raceController', ['starter.appServices',
 
     //Slider stuffs
     $scope.slideOptions = {
-      loop: true,
+      loop: false,
       speed: 500,
     };
 

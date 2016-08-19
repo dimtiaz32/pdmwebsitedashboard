@@ -34,6 +34,10 @@ angular.module('starter.historyServices', [])
 
   $rootScope.fetchRunId = function(){
     $rootScope.$broadcast('fetchRunById');
+  };
+
+  $rootScope.fetchHistory = function(){
+    $rootScope.$broadcast('fetchHistory');
   }
 
   return {
