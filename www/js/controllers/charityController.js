@@ -129,6 +129,7 @@ angular.module('starter.charityController', ['starter.appServices',
   $scope.selectedCharityDisplay.name = $rootScope.getSelectedCharityName();
   $scope.selectedCharityDisplay.url = $rootScope.getSelectedCharityUrl();
   $scope.selectedCharityDisplay.totalMoneyRaised = $rootScope.getSelectedCharityMoneyRaised();
+
   Array.prototype.remove = function(value) {
     if (this.indexOf(value)!==-1) {
       this.splice(this.indexOf(value), 1);
@@ -153,6 +154,32 @@ angular.module('starter.charityController', ['starter.appServices',
   var todaySplitter = today.toString().split(' ');
   $scope.charityMonth = todaySplitter[1];
   console.log('charityMonth: ' + $scope.charityMonth);
+
+
+
+  $scope.getSelected = function(id){
+    console.log('get Selected entered with id: ' + id);
+    var sId = $rootScope.getSelectedCharityId();
+    if(id == sId){
+      console.log('getSelected ids matched with id: ' + id +'  and sid: ' + sId);
+      return true;
+    }else {
+      console.log('getSelected ids did not match- id: ' + id + ' and sid: ' + sId);
+      return false;
+    }
+  }
+
+  $scope.setSelected = function(oldId, newId){
+    console.log('setSelected entered with oldId: ' + oldId + ' and newId: ' + newId);
+    for(var i=0; i<$scope.charitiesDisplayList.length; i++){
+      if($scope.charitiesDisplayList[i].id == oldId){
+        $scope.charitiesDisplayList[i].isSelected = false;
+      }
+      if($scope.charitiesDisplayList[i].id == newId){
+        $scope.charitiesDisplayList[i].isSelected = true;
+      }
+    }
+  }
 
   $scope.getMonthMoneyRaised = function(cId){
     console.log('charityMonth from getMonthMoney: ' + $scope.charityMonth);
@@ -267,7 +294,8 @@ angular.module('starter.charityController', ['starter.appServices',
               name: $scope.charitiesList[i].name,
               description: $scope.charitiesList[i].description,
               url: $scope.charitiesList[i].url,
-              moneyRaised: money
+              moneyRaised: money,
+              isSelected: $scope.getSelected($scope.charitiesList[i]._id)
             };
             $scope.charitiesDisplayList.push(lol);
             console.log('CharitiesDisplayList: ' + JSON.stringify($scope.charitiesDisplayList));
@@ -343,7 +371,8 @@ angular.module('starter.charityController', ['starter.appServices',
 
     console.log('$scope.moneyRaisedCheck: ' + $scope.moneyRaisedCheck(mr));
 
-
+    $scope.oldSelectedCharityId = $rootScope.getSelectedCharityId();
+    console.log('oldSelectedCharityId: ' + $scope.oldSelectedCharityId);
 
 
       console.log('updatePastCharities entered with objId: ' + $scope.objId);
@@ -408,13 +437,17 @@ angular.module('starter.charityController', ['starter.appServices',
                 $scope.selectedCharityDisplay.url = data.url;
                 $scope.selectedCharityDisplay.totalMoneyRaised = moneyRaised;
 
+                console.log('oldSelectedCharityId: ' + $scope.oldSelectedCharityId);
+                console.log('new (getSelected) CharityId: ' + $rootScope.getSelectedCharityId());
+                $scope.setSelected($scope.oldSelectedCharityId, $rootScope.getSelectedCharityId());
+
                 CharityAPI.updateCharityName($rootScope.getUserId(), data.name)
                   .success(function(data, status, headers, config){
                     console.log('updateCharityName succeeded: ' + data.charityName);
                   })
                   .error(function(err, status){
                     console.log('updateCharityName failed with error: ' + err + ' and status: ' + status);
-                  })
+                  });
 
 
                 console.log('charityId from inside setSelectedCharity success call: ' + charityId);
