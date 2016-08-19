@@ -18,7 +18,7 @@ angular.module('starter.authController', ['starter.appServices',
   'angular-svg-round-progressbar'])
 
 
-  .controller('SignUpCtrl', function($scope, $rootScope, $ionicModal, $timeout, AuthAPI, $window, UserAPI, $event){
+  .controller('SignUpCtrl', function($scope, $rootScope, $ionicModal, $timeout, AuthAPI, $window, UserAPI){
 
     //Keyboard stuff
     $scope.keyPressed = function(event) {
@@ -139,7 +139,10 @@ angular.module('starter.authController', ['starter.appServices',
       })
         .error(function(error){
           $rootScope.hide();
-          if(error.error && error.error.code == 11000){
+          // console.log(error.error);
+          // console.log(error.error.code);
+          if(error.error == "Invalid User"){
+            // if(error.error && error.error.code == 11000){
             $rootScope.notify("This email is already in use");
             console.log("could not register user: email already in use ");
             $scope.errorMessage = "This email is already in use";
@@ -331,7 +334,7 @@ angular.module('starter.authController', ['starter.appServices',
             $rootScope.setAvatar(data.user.facebook.avatar);
             console.log("facebook avatar: " + $rootScope.getAvatar());
             $rootScope.$broadcast("initial");
-            $window.location.href=('#/app/charities');
+            $window.location.href=('#/app/run');
           }).error(function(error){
             console.log("AuthAPI.signinByFB failed:" + error);
             $rootScope.hide();
