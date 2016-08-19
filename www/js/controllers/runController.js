@@ -8,7 +8,6 @@ angular.module('starter.runController', ['starter.appServices',
   'starter.runServices',
   'starter.donationServices',
   'starter.userServices',
-
   'starter.historyServices',
 
   'starter.runServices',
@@ -20,7 +19,7 @@ angular.module('starter.runController', ['starter.appServices',
 
 //TODO: CLEAR VALUES AFTER RUN SUMMARY, NEW RUN BUTTON?
 
-  .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI, CharityAPI, HistoryAPI, $ionicPopup, AuthAPI, $ionicModal){
+  .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI, CharityAPI, HistoryAPI, DonationAPI, AuthAPI, $ionicModal){
     $scope.user =  {
       name: ""
     };
@@ -42,6 +41,21 @@ angular.module('starter.runController', ['starter.appServices',
 
     $scope.isDetailDisplayed = false;
     $scope.isRunDetailDisplayed = false;
+
+    DonationAPI.getAllSponsors($rootScope.getUserId())
+      .success(function(data, status, headers, config){
+        console.log('Donation API getAllSponsors from run controller succeeded');
+        console.log('data.length: ' + data.length);
+        if(data.length > 0){
+          $scope.noSponsor = false;
+        } else {
+          $scope.noSponsor = true;
+        }
+      })
+      .error(function(err, status){
+        console.log('Donation API getAllSponsors from run controller failed with error: ' + err + '   and status: ' + status);
+      })
+
 
     $scope.swipeGestureDetail = function(gesture) {
       if (gesture == 'swipe-down') {

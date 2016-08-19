@@ -408,6 +408,14 @@ angular.module('starter.charityController', ['starter.appServices',
                 $scope.selectedCharityDisplay.url = data.url;
                 $scope.selectedCharityDisplay.totalMoneyRaised = moneyRaised;
 
+                CharityAPI.updateCharityName($rootScope.getUserId(), data.name)
+                  .success(function(data, status, headers, config){
+                    console.log('updateCharityName succeeded: ' + data.charityName);
+                  })
+                  .error(function(err, status){
+                    console.log('updateCharityName failed with error: ' + err + ' and status: ' + status);
+                  })
+
 
                 console.log('charityId from inside setSelectedCharity success call: ' + charityId);
                 $scope.getMonthMoneyRaised(charityId);
