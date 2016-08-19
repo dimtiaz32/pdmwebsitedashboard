@@ -1,7 +1,7 @@
 .races.gradient {
   height: 100%;
   width: 100%;
-  background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) );
+  background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6) );
   padding: 0 0 0 0;
   margin: auto;
 }
@@ -29,6 +29,10 @@ h1.races.races-head {
   text-align: left;
   padding-top: 10px;
   padding-left: 10px;
+  padding-bottom: 5px;
+  font-size: 2em;
+
+  margin-bottom: auto;
 }
 
 p.races.featured-race-detail,
