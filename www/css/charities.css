@@ -216,11 +216,13 @@ button.charity-page.button-slide-up:before {
       /*left: -2%;*/
     }
 
-
+    .charity-page.charity-list .charity-detail .stats {
+      padding-top: 10px
+    }
 
     .charity-page.charity-list .charity-detail .stats .head {
       padding-left: 5px;
-      font-size: 20px;
+      font-size: 24px;
       display: inline;
     }
 
