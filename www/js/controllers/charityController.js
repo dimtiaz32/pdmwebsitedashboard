@@ -505,8 +505,18 @@ angular.module('starter.charityController', ['starter.appServices',
 
   //Get selected charity in list to expand
   $scope.toggledCharity;
+  $scope.showCharity = false;
   $scope.toggleListDetail = function(charityId) {
     $scope.toggledCharity = charityId;
+    $scope.showCharity = !$scope.showCharity;
+    console.log($scope.showCharity);
+
+  }
+
+  $scope.detailListShow = function(thisCharityId, toggleCharityId) {
+    if ((thisCharityId == toggleCharityId) && ($scope.showCharity)){
+      return true;
+    }
   }
   });
 
