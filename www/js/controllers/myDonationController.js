@@ -29,6 +29,7 @@ angular.module('starter.myDonationController', ['starter.appServices',
 
     $scope.name = $rootScope.getName();
     $scope.totalMoneyRaised = 0;
+
     HistoryAPI.getAll($rootScope.getUserId())
       .success(function(data, status, headers, config){
         for(var i = 0; i< data.length; i++) {

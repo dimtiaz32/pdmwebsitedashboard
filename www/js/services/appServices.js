@@ -41,7 +41,7 @@ angular.module('starter.appServices', ['starter.historyServices'])
         $rootScope.$broadcast('fetchMonthHistory');
       }
       else if (tab == 5) {
-         $rootScope.$broadcast('fetchAllCharities')
+         $rootScope.$broadcast('fetchCharities');
       }
      //  else if(tab == 6) {
      //

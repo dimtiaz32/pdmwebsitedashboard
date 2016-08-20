@@ -45,6 +45,7 @@ angular.module('starter.appController', [
 
 
 
+
     $rootScope.$on('fetchMySponsors', function() {
       DonationAPI.getAllSponsors($rootScope.getUserId()).success(function(data, status, headers, config){
         $scope.sponsors = [];
@@ -81,9 +82,14 @@ angular.module('starter.appController', [
     $rootScope.$on('fetchMyPledges',function(){
       DonationAPI.getAllPledges($rootScope.getUserId()).success(function(data, status, headers, config){
         $scope.pledges = [];
+        $scope.pledgeMoney = 0;
         for (var i = 0; i < data.length; i++) {
           $scope.pledges.push(data[i]);
+          $scope.pledgeMoney = $scope.pledgeMoney + data[i].payment_amount;
         };
+        if($scope.pledgeMoney == undefined){
+          $scope.pledgeMoney =0;
+        }
 
         if(data.length == 0) {
           $scope.noPledge = true;

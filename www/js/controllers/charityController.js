@@ -20,6 +20,8 @@ angular.module('starter.charityController', ['starter.appServices',
 
 
 .controller('CharitiesCtrl', function($rootScope, $timeout, $ionicModal, $window, $scope, CharityAPI, HistoryAPI, AuthAPI, UserAPI){
+  $rootScope.$on('fetchCharities', function(){
+
 
 
   $scope.isCharityDetailDisplayed = false;
@@ -295,7 +297,8 @@ angular.module('starter.charityController', ['starter.appServices',
               description: $scope.charitiesList[i].description,
               url: $scope.charitiesList[i].url,
               moneyRaised: money,
-              isSelected: $scope.getSelected($scope.charitiesList[i]._id)
+              isSelected: $scope.getSelected($scope.charitiesList[i]._id),
+              position: i
             };
             $scope.charitiesDisplayList.push(lol);
             console.log('CharitiesDisplayList: ' + JSON.stringify($scope.charitiesDisplayList));
@@ -503,7 +506,11 @@ angular.module('starter.charityController', ['starter.appServices',
   //Get selected charity in list to expand
   $scope.toggledCharity;
   $scope.toggleListDetail = function(charityId) {
-    $scope.toggledCharity = charityId
+    $scope.toggledCharity = charityId;
   }
+  });
+
+  $rootScope.$broadcast('fetchCharities');
+
 
 });
