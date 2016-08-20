@@ -132,7 +132,16 @@ angular.module('starter.authServices', ['ngCookies'])
 
   $rootScope.getAvatar = function() {
     return $window.localStorage.avatar;
-  }
+  };
+
+  $rootScope.setDonorId = function(donorId){
+    $window.localStorage.donorId = donorId;
+  };
+  $rootScope.getDonorId = function(){
+    return $window.localStorage.donorId;
+  };
+
+
 
   $rootScope.clearAll = function() {
       $window.localStorage.clear();

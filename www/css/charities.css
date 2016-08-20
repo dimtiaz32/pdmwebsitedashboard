@@ -52,6 +52,7 @@
   .charity-page.charity-detail a {
     position: relative;
     top: 5%;
+
     left: -3%;
     color: #00b9be;
   }
@@ -154,7 +155,7 @@ button.charity-page.button-slide-up:before {
     position: absolute;
     top: 5px; left: 0; bottom: 0; right: 0;
     margin: 15px;
-    display: inline
+    display: inline;
   }
 
   .charity-page.charity-list h2 {
@@ -177,7 +178,7 @@ button.charity-page.button-slide-up:before {
     .charity-page.charity-list .button.select {
       background-color: transparent;
       color: #009b9e;
-      font-size: 9vw;
+      font-size: 32px;
       position: absolute;
       right: 10px;
       top: 20px;
@@ -202,25 +203,57 @@ button.charity-page.button-slide-up:before {
     .charity-page.charity-list .charity-detail a {
       padding: 0;
       margin: 0;
+      margin-top: 10px;
       position: relative;
-      left: 0;
+      /*left: -2%;*/
     }
 
     .charity-page.charity-list .charity-detail p.description {
       /*padding: 0;*/
-      max-width: 85vw;
-      margin: 0;
+      max-width: 80vw;
+      margin: 5px 0px 10px 0px;
       position: relative;
-      left: 0;
+      /*left: -2%;*/
+    }
+
+    .charity-page.charity-list .charity-detail .stats {
+      padding-top: 10px
     }
 
     .charity-page.charity-list .charity-detail .stats .head {
-      padding-left: 15px;
+      padding-left: 5px;
+      font-size: 24px;
+      display: inline;
     }
 
 
     .charity-page.charity-list .charity-detail .stats .label {
       text-align: center;
+      font-size: 20px;
+
+      display: inline;
     }
 
 
+    @media (max-width: 350px) {
+
+      .charity-page.charity-list .charity-detail  {
+        position: relative;
+        left: -33%;
+      }
+
+
+      .charity-page.charity-list .charity-detail p.description {
+        position: relative;
+        left: -5%;
+      }
+
+      .charity-page.charity-list .charity-detail a {
+        position: relative;
+        left: -5%;
+      }
+
+      .charity-page.charity-list .charity-detail .stats .head {
+        padding-left: 0;
+      }
+    }

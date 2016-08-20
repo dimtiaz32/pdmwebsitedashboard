@@ -199,6 +199,7 @@ angular.module('starter.authController', ['starter.appServices',
       charity: "",
       history: [],
       provider: "",
+      donorId:"",
       past_donations_from: [],
       past_donations_to: [],
       donations_to: [],
@@ -275,6 +276,9 @@ angular.module('starter.authController', ['starter.appServices',
           $rootScope.setAvatar(data.user.avatar);
           console.log("password: " + data.user.password);
           $rootScope.setPassword(data.user.password);
+
+          $scope.user.donorId = data.user.donorId;
+          console.log('donorId: ' + $scope.user.donorId);
 
           // console.log(data.user.charityName);
           if(data.user.charity == null || data.user.charity.id == null){

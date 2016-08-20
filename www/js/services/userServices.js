@@ -167,6 +167,13 @@ angular.module('starter.userServices', [])
           userId: userId
         }
       });
-    }
+    },
+    updateCharityName: function(userId, charityName){
+      return $http.post(SERVER_HOST+'user/updateCharityName', charityName, {
+        params: {
+          userId: userId
+        }
+      });
+    },
 	}
 });

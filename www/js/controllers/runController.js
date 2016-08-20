@@ -448,6 +448,9 @@ angular.module('starter.runController', ['starter.appServices',
       startUI.style.margin = 'inherit auto';
       startUI.style.position = 'relative';
       startUI.style.bottom = '5px';
+      startUI.style.left = '50%';
+      startUI.style.transform = 'translate(-50%,0)';
+
 
       startDiv.appendChild(startUI);
 
