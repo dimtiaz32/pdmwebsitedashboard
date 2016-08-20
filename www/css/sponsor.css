@@ -1,3 +1,11 @@
+ion-content.sponsors {
+  overflow-scroll: true;
+}
+
+.sponsors.selectable {
+  -webkit-user-select: text;
+}
+
 .sponsors-pledges-page.popover {
   height: 120px;
 }
