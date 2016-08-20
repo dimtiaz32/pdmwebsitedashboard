@@ -53,13 +53,16 @@
 
         <div class="charity-page charity-detail" ng-show="charity.id == toggledCharity">
           <ion-item class="charity-page charity-detail">
-            <a ng-href="{{charityUrl}}">{{charity.url}}</a>
+
             <p class="description">{{charity.description}}</p>
+            <a ng-href="{{charity.url}}">{{charity.url}}</a>
+
           </ion-item>
           <ion-item class="charity-page charity-detail stats">
             <div class="charity-page row">
               <div class="charity-page col">
-                <p class="charity-page head">Total</p>
+
+                <p class="charity-page head">Total Fundraising:</p>
                 <p class="charity-page label">${{charity.moneyRaised}}</p>
               </div>
 
