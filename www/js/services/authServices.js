@@ -144,9 +144,15 @@ angular.module('starter.authServices', ['ngCookies'])
 
 
   $rootScope.clearAll = function() {
-      $window.localStorage.clear();
+      $window.localStorage.email = "";
+    $window.localStorage.password ="";
+    $window.localStorage.name = "";
+    $window.localStorage.history="";
+    $window.localStorage.selectedCharity = "";
+    $window.localStorage.userId = "";
+    $window.localStorage.donorId ="";
       $cookies.remove();
-  }
+  };
 
   // $rootScope.setCharity = function(charity){
   //   return $window.localStorage.selectedCharity = charity;

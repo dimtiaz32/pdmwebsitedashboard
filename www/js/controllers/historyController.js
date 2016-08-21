@@ -623,6 +623,7 @@ angular.module('starter.historyController', [
           $scope.distanceByDate[1],
           $scope.distanceByDate[0]
         ]];
+        $rootScope.hide();
 
       })
       .error(function(status, err){

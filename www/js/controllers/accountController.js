@@ -251,7 +251,7 @@ angular.module('starter.accountController', ['starter.appServices',
 
 
     $scope.logout = function(){
-      $window.localStorage.clear();
+      $rootScope.clearAll();
       $rootScope.removeToken();
       console.log('token checkcheck: ' + $rootScope.getToken());
       console.log('Signout succeeded, redirecting to login');
