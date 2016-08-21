@@ -1,4 +1,10 @@
 <ion-view view-title="Charities" ng-controller="CharitiesCtrl">
+
+  <ion-nav-buttons side="secondary">
+    <button class="button button-icon icon ion-ios-search-strong" ng-click="showFilterBar()" style="color: white">
+    </button>
+  </ion-nav-buttons>
+
   <ion-content>
     <div class="charity-page charity-header" ng-show="!noCharity" on-swipe-up="swipeGestureCharityDetail('swipe-up')" on-swipe-down="swipeGestureCharityDetail('swipe-down')">
       <h3>Every mile raises ${{moneyRaised}} for</h3>
@@ -8,7 +14,7 @@
       <div class="charity-page charity-detail" ng-show="isCharityDetailDisplayed">
         <hr class="charity-page">
         <ion-item class="charity-page charity-detail item-thumbnail-left">
-          <img ng-src="../img/charity-images/{{selectedCharityDisplay.avatar}}" alt="{{selectedCharityDisplay.avatar}}">
+          <img ng-src="img/charity-images/{{selectedCharityDisplay.avatar}}" alt="{{selectedCharityDisplay.avatar}}">
           <a ng-href="{{selectedCharityDisplay.url}}">{{selectedCharityDisplay.url}}</a>
           <p class="description">{{selectedCharityDisplay.description}}</p>
         </ion-item>
@@ -37,7 +43,7 @@
       <ion-item ng-repeat="charity in charitiesDisplayList" class="charity-page charity-list item-thumbnail-left item-button-right">
         <div class="main row">
           <div class="col" ng-click="toggleListDetail(charity.id)">
-            <img ng-src="../img/charity-images/{{charity.avatar}}" alt="{{charity.avatar}}">
+            <img ng-src="img/charity-images/{{charity.avatar}}" alt="{{charity.avatar}}">
             <h2>{{charity.name}}</h2>
             <p>{{charity.description}}</p>
           </div>

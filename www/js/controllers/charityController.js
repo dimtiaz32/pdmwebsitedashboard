@@ -19,7 +19,7 @@ angular.module('starter.charityController', ['starter.appServices',
   'angular-svg-round-progressbar'])
 
 
-.controller('CharitiesCtrl', function($rootScope, $timeout, $ionicModal, $window, $scope, CharityAPI, HistoryAPI, AuthAPI, UserAPI){
+.controller('CharitiesCtrl', function($rootScope, $timeout, $ionicModal, $window, $scope, CharityAPI, HistoryAPI, AuthAPI, UserAPI, $ionicFilterBar){
   $rootScope.$on('fetchCharities', function(){
     $rootScope.show("Loading charities");
 
@@ -32,6 +32,16 @@ angular.module('starter.charityController', ['starter.appServices',
       $scope.isCharityDetailDisplayed = true;
     }
   }
+
+  $scope.showFilterBar = function () {
+    filterBarInstance = $ionicFilterBar.show({
+      items: $scope.charitiesDisplayList,
+      update: function (filteredItems, filterText) {
+        $scope.charitiesDisplayList = filteredItems;
+      },
+      filterProperties: ['name']
+    });
+  };
 
   $scope.toggleCharityDetail = function() {
     $scope.isCharityDetailDisplayed = !$scope.isCharityDetailDisplayed;
@@ -118,7 +128,8 @@ angular.module('starter.charityController', ['starter.appServices',
     totalMoneyRaised: Number,
     monthMoneyRaised: Number,
     description: String,
-    url: String
+    url: String,
+    avatar: String
   };
 
   $scope.pastIds = [];
@@ -438,6 +449,7 @@ angular.module('starter.charityController', ['starter.appServices',
                 $scope.selectedCharityDisplay.name = data.name;
                 $scope.selectedCharityDisplay.description = data.description;
                 $scope.selectedCharityDisplay.url = data.url;
+                $scope.selectedCharityDisplay.avatar = data.avatar;
                 $scope.selectedCharityDisplay.totalMoneyRaised = moneyRaised;
 
                 console.log('oldSelectedCharityId: ' + $scope.oldSelectedCharityId);

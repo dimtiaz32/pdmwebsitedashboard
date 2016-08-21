@@ -9,7 +9,10 @@
 
     <h2 class="invite-sponsor">Donation Link</h2>
     <div class="invite-sponsor donation-link unselected">
-      <p class="invite-sponsor link"><input type="text" class="transparent-input" value="{{ inviteUrl }}" readonly  size="50" click-select/></p>
+
+      <p class="invite-sponsor link selectable">
+        <textarea class="invite-sponsor link selectable" type="text" class="transparent-input" value="{{ inviteUrl }}" readonly  size="50" click-select>{{ inviteUrl }}</textarea>
+      </p>
 
       <!--<input class="invite-sponsor" value="{{ inviteUrl }}" readonly type="text" size="50" click-select/>-->
       <!--<p class="invite-sponsor link" click-select>{{inviteUrl}}</p>-->

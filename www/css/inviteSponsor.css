@@ -1,6 +1,6 @@
 
 .invite-sponsor.header{
-  padding-top: 5px;
+  padding-top: 8px;
   background-color: #efefef;
 }
 
@@ -35,11 +35,19 @@ h2.invite-sponsor {
 p.invite-sponsor {
   font-size: 1em;
   font-weight: 300;
-  padding: 0 5% 3% 5%;
+  margin: 0 5% 0% 5%;
+  padding: 3%;
   background-color: #efefef;
 }
 
-/*Donation Link Styling*/
+  p.invite-sponsor textarea {
+    resize: none;
+    width: 100%;
+    text-align: center;
+    background-color: transparent !important;
+  }
+
+  /*Donation Link Styling*/
 .donation-link.invite-sponsor.unselected p {
   text-align: center;
   background-color: #efefef;
