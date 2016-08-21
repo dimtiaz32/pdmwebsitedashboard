@@ -21,7 +21,7 @@ angular.module('starter.charityController', ['starter.appServices',
 
 .controller('CharitiesCtrl', function($rootScope, $timeout, $ionicModal, $window, $scope, CharityAPI, HistoryAPI, AuthAPI, UserAPI){
   $rootScope.$on('fetchCharities', function(){
-
+    $rootScope.show("Loading charities");
 
 
   $scope.isCharityDetailDisplayed = false;
@@ -302,6 +302,7 @@ angular.module('starter.charityController', ['starter.appServices',
             };
             $scope.charitiesDisplayList.push(lol);
             console.log('CharitiesDisplayList: ' + JSON.stringify($scope.charitiesDisplayList));
+            $rootScope.hide();
           }
 
 

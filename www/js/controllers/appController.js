@@ -21,7 +21,7 @@ angular.module('starter.appController', [
 
   .controller('AppCtrl', function($rootScope, $scope, $window, $filter, $ionicModal, $timeout, DonationAPI, CharityAPI, AuthAPI, $ionicNavBarDelegate) {
 
-    $ionicNavBarDelegate.showBackButton(false)
+    $ionicNavBarDelegate.showBackButton(false);
 
 
     $scope.moneyRaised = 0;

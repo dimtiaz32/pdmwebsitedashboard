@@ -28,16 +28,17 @@ angular.module('starter.appServices', ['starter.historyServices'])
     };
 
     $rootScope.doRefresh = function(tab) {
-      // if (tab == 1) {
-      //   //$rootScope.broadcast('fetchRaces')
-      // } else
+      if (tab == 1) {
+        $rootScope.$broadcast('newMap');
+
+      } else
        if (tab == 2) {
         $rootScope.$broadcast('fetchHistory');
       }
       // else if (tab == 3) {
       //   $rootScope.$broadcast('');
       // }
-      else if (tab == 4) {
+       if (tab == 4) {
         $rootScope.$broadcast('fetchMonthHistory');
       }
       else if (tab == 5) {

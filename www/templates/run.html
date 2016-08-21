@@ -25,7 +25,7 @@
         <a class="run-page no-sponsor detail-head" href="#/app/mySponsors"><p style="color: #00b9be" class="run-page detail-head" ng-show="!noSponsor">Every mile raises ${{mrPerMile}} for</p></a>
         <a class="run-page no-sponsor detail-head" href="#/app/mySponsors"><p class="run-page no-sponsor detail-head" ng-show="noSponsor" >Invite sponsors to start fundraising</p></a>
         <hr class="run-page">
-        <p class="run-page header" ng-show="!noCharity">{{charityName}}</p>
+        <p class="run-page header" ng-show="hasCharity">{{charityName}}</p>
         <a class="run-page no-charity header" href="#/app/charities"><p class="run-page no-charity header" ng-show="noCharity">Select a charity</p></a>
 
         <div class="animated-detail" ng-show="isDetailDisplayed">

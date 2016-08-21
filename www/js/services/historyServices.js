@@ -5,8 +5,8 @@
 
 angular.module('starter.historyServices', [])
 
-.factory('HistoryAPI', function($ionicLoading,$rootScope, $http, $window, SERVER_HOST, CLIENT_HOST){
-  var base= "http://localhost:5000/";
+.factory('HistoryAPI', function($rootScope, $ionicLoading, $http, $window, SERVER_HOST, CLIENT_HOST){
+
   $rootScope.show = function(text){
     $rootScope.loading = $ionicLoading.show({
       content: text ? text : 'Loading',
@@ -28,6 +28,7 @@ angular.module('starter.historyServices', [])
     }, 1999);
   };
 
+
   $rootScope.setRunIdDayView = function(id){
     $rootScope.dayRunId = id;
   };
@@ -35,13 +36,17 @@ angular.module('starter.historyServices', [])
   $rootScope.fetchRunId = function(){
     $rootScope.$broadcast('fetchRunById');
   };
-
   $rootScope.fetchHistory = function(){
     $rootScope.$broadcast('fetchHistory');
-  }
+  };
+
+
 
   return {
-
+    fetchHistory: function(){
+      console.log('History API fetchHistory called');
+      return $rootScope.$broadcast('fetchHistory');
+    },
 
     getAll: function(user){
       return $http.get(SERVER_HOST+'history/', {

@@ -7,10 +7,9 @@ angular.module('starter.authController', ['starter.appServices',
   'starter.runServices',
   'starter.donationServices',
   'starter.userServices',
-
   'starter.historyServices',
-
   'starter.runServices',
+  'starter.directives',
   'ionic',
   'chart.js',
   'ngCordova','ngOpenFB','ngCookies',
@@ -18,7 +17,7 @@ angular.module('starter.authController', ['starter.appServices',
   'angular-svg-round-progressbar'])
 
 
-  .controller('SignUpCtrl', function($scope, $rootScope, $ionicModal, $timeout, AuthAPI, $window, UserAPI){
+  .controller('SignUpCtrl', function($scope, $rootScope, $ionicModal, $timeout, AuthAPI, RunAPI, $window, UserAPI){
 
     //Keyboard stuff
     $scope.keyPressed = function(event) {
@@ -78,7 +77,7 @@ angular.module('starter.authController', ['starter.appServices',
 
     };
     $scope.createUser = function(){
-
+      $rootScope.show("Signing up...");
 
       var firstName = this.user.firstName.trim();
       var lastName = this.user.lastName.trim();
@@ -91,25 +90,29 @@ angular.module('starter.authController', ['starter.appServices',
         console.log("createUser failed: invalid first name");
         $scope.invalidFirstName = true;
         $scope.errorMessage = "Please fill all fields";
+        $rootScope.hide();
         return false;
       } else if(!lastName){
         $rootScope.notify("Please enter a valid last name");
         console.log("createUser failed: invalid last name")
         $scope.invalidLastName = true;
         $scope.errorMessage = "Please fill all fields";
+        $rootScope.hide();
         return false;
       } else if(!email){
         $rootScope.notify("Please enter a valid email address");
         console.log("createUser failed: invalid email");
-        console.log(email.trim())
+        console.log(email.trim());
         $scope.invalidEmail = true;
         $scope.errorMessage = "Please fill all fields";
+        $rootScope.hide();
         return false;
       } else if(!password){
         $rootScope.notify("Please enter a valid password");
         console.log("createUser failed: invalid password");
         $scope.invalidPassword = true;
         $scope.errorMessage = "Please fill all fields";
+        $rootScope.hide();
         return false;
       }
 
@@ -134,7 +137,8 @@ angular.module('starter.authController', ['starter.appServices',
         $rootScope.setUserId(data.user._id);
         console.log("password: " + data.user.password);
         $rootScope.setPassword(data.user.password);
-        $rootScope.$broadcast("initial");
+        $rootScope.loadMap();
+        $rootScope.hide();
         $window.location.href  = ('#/app/charities');
       })
         .error(function(error){
@@ -189,7 +193,7 @@ angular.module('starter.authController', ['starter.appServices',
       }
   })
 
-  .controller('SigninCtrl', function($scope, $rootScope, $timeout, AuthAPI, $ionicPopup, $window, ngFB, GooglePlus, CharityAPI, UserAPI){
+  .controller('SigninCtrl', function($scope, $rootScope, $timeout, AuthAPI, $ionicPopup, $window, ngFB, GooglePlus, CharityAPI,HistoryAPI, UserAPI, RunAPI){
 
     $scope.user = {
       email: "",
@@ -228,19 +232,24 @@ angular.module('starter.authController', ['starter.appServices',
 
     $scope.errorMessage = "";
 
+
+
     $scope.login = function(){
+      $rootScope.show("Signing in...");
       var email = this.user.email.trim().toLowerCase();
       var password = this.user.password.trim();
 
       if(!email){
         $rootScope.notify("Login failed. Please enter a valid email address");
         console.log("Invalid text in email field");
-        $scope.errorMessage = "Please enter valid email"
+        $scope.errorMessage = "Please enter valid email";
+        $rootScope.hide();
         return false;
       } else if(!password){
         $rootScope.notify("Login failed. Please enter a valid password");
         console.log("Invalid text in password field");
-        $scope.errorMessage = "Please enter valid email & password"
+        $scope.errorMessage = "Please enter valid email & password";
+        $rootScope.hide();
         return false;
       }
 
@@ -294,7 +303,6 @@ angular.module('starter.authController', ['starter.appServices',
           }
 
 
-
           // $scope.user.charityName = data.charityName;
           // console.log('Charity: ' + $scope.user.charity);
           // $scope.setUserCharity($scope.user.charityName);
@@ -304,14 +312,16 @@ angular.module('starter.authController', ['starter.appServices',
           // $rootScope.setSelectedCharity($scope.user.charityId);
           // console.log('selectedCharity local storage set: ' + $rootScope.getSelectedCharity());
 
-          $rootScope.hide();
           $rootScope.$broadcast("initial");
+          $rootScope.$broadcast('newMap');
+
+
+          $rootScope.hide();
           $window.location.href=('#/app/run');
 
         })
         .error(function(error, status){
           $rootScope.hide();
-          $rootScope.notify("Invalid username or password");
           if (status == 400) {
             console.log(status);
             console.log(error);
@@ -338,6 +348,7 @@ angular.module('starter.authController', ['starter.appServices',
             $rootScope.setAvatar(data.user.facebook.avatar);
             console.log("facebook avatar: " + $rootScope.getAvatar());
             $rootScope.$broadcast("initial");
+            $rootScope.$broadcast("newMap");
             $window.location.href=('#/app/run');
           }).error(function(error){
             console.log("AuthAPI.signinByFB failed:" + error);

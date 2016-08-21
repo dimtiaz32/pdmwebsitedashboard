@@ -26,6 +26,11 @@ angular.module('starter.runServices', ['ionic'])
     }, 4000);
   };
 
+  $rootScope.loadMap = function(){
+    console.log('newMap broadcase entered');
+    $rootScope.$broadcast('newMap');
+  }
+
   $rootScope.setRunDistance = function(distance){
     return $window.localStorage.distance = distance;
   };

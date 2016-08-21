@@ -19,7 +19,7 @@ angular.module('starter.runController', ['starter.appServices',
 
 //TODO: CLEAR VALUES AFTER RUN SUMMARY, NEW RUN BUTTON?
 
-  .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI, CharityAPI, HistoryAPI, DonationAPI, AuthAPI, $ionicModal){
+  .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI, CharityAPI, HistoryAPI, DonationAPI, AuthAPI, $ionicPopup, $ionicModal){
     $scope.user =  {
       name: ""
     };
@@ -41,6 +41,15 @@ angular.module('starter.runController', ['starter.appServices',
 
     $scope.isDetailDisplayed = false;
     $scope.isRunDetailDisplayed = false;
+
+    $scope.hasCharity = function(){
+      if($rootScope.getSelectedCharityId() != undefined && $rootScope.getSelectedCharityId() != null){
+        console.log('has charity is true');
+        return true;
+      } else {
+        return false;
+      }
+    }
 
     DonationAPI.getAllSponsors($rootScope.getUserId())
       .success(function(data, status, headers, config){
@@ -729,15 +738,7 @@ angular.module('starter.runController', ['starter.appServices',
     // });
 
     $scope.oldZoom = 18;
-    $scope.circle = new google.maps.Circle({
-      fillOpacity: 1,
-      fillColor: '#00b9be',
-      strokeOpacity: 1,
-      strokeColor: '#fff',
-      strokeWeight: 2,
-      radius: 5,
-      zIndex: 2
-    });
+
     $scope.getCustomRadiusForZoom = function(zoomLevel){
       console.log('getCustomRadius entered with zoomLevel: ' + zoomLevel);
       var newRadius = 0;
@@ -854,6 +855,16 @@ angular.module('starter.runController', ['starter.appServices',
         console.log('isRunning load value: ' + $scope.isRunning);
         // $scope.polyCoords = null;
 
+
+        $scope.circle = new google.maps.Circle({
+          fillOpacity: 1,
+          fillColor: '#00b9be',
+          strokeOpacity: 1,
+          strokeColor: '#fff',
+          strokeWeight: 2,
+          radius: 5,
+          zIndex: 2
+        });
         $scope.map = map;
         $scope.polyCoords = [];
         $scope.latTrans = [];
@@ -878,62 +889,6 @@ angular.module('starter.runController', ['starter.appServices',
             $scope.circle.setRadius($scope.getCustomRadiusForZoom(zoomLevel));
           });
           $scope.circle.setMap($scope.map);
-
-
-
-          //Move map marker smoothly
-          var numDeltas = 50;
-          var delay = 0;
-          var i = 0;
-          var deltaLat;
-          var deltaLng;
-          var lastMark = $scope.latTrans.length;
-          $scope.latTrans.push(pos.coords.latitude);
-          $scope.lngTrans.push(pos.coords.longitude);
-
-          var x = $scope.polyCoords.length;
-          // $scope.transitionMarker = function() {
-          //   i = 0;
-          //
-          //   if ($scope.latTrans.length > 2) {
-          //
-          //     console.log($scope.latTrans);
-          //
-          //     $scope.latTrans.shift();
-          //     $scope.lngTrans.shift();
-          //
-          //     console.log($scope.latTrans);
-          //
-          //     console.log($scope.latTrans[1]);
-          //     console.log($scope.latTrans[0]);
-          //
-          //     deltaLat = ($scope.latTrans[1] - $scope.latTrans[0]) / numDeltas;
-          //     deltaLng = ($scope.lngTrans[1] - $scope.lngTrans[0]) / numDeltas;
-          //     console.log('deltaLat = ' + deltaLat);
-          //     $scope.moveMarker();
-          //   } else {
-          //     $scope.marker.setPosition($scope.ll)
-          //   }
-          // }
-          //
-          // $scope.moveMarker = function() {
-          //   console.log('moveMarker - deltaLat: '+deltaLat)
-          //   console.log('moveMarker - deltaLng: '+deltaLng)
-          //
-          //   $scope.latTrans[0] += deltaLat;
-          //   $scope.lngTrans[0] += deltaLng;
-          //   var latlng = new google.maps.LatLng($scope.latTrans[0], $scope.lngTrans[0]);
-          //   $scope.marker.setPosition(latlng);
-          //   if(i!=numDeltas){
-          //     i++;
-          //     setTimeout($scope.moveMarker, delay);
-          //     console.log('Marker moved to: ' + $scope.latTrans[0] + " " + $scope.lngTrans[0])
-          //   }
-          // }
-          //
-          // $scope.transitionMarker();
-
-          // $scope.marker.setPosition($scope.ll);
 
           if($scope.isRunning  == true){
             $scope.path = null;
@@ -976,10 +931,17 @@ angular.module('starter.runController', ['starter.appServices',
 
         }
 
+        $scope.watchRetry = function(){
+          console.log('attempting watchRetry...');
+          $scope.watch = navigator.geolocation.watchPosition($scope.onSuccess, $scope.onError, {maximumAge: 1000, timeout: 5000, enableHighAccuracy: true});
+        }
         $scope.onError = function(){
           console.log('watchPosition onErrror entered');
+          $scope.watchRetry();
+
         }
-        $scope.watch = navigator.geolocation.watchPosition($scope.onSuccess, $scope.onError, {maximumAge: 1000, timeout: 1000, enableHighAccuracy: true});
+        $scope.watch = navigator.geolocation.watchPosition($scope.onSuccess, $scope.onError, {maximumAge: 1000, timeout: 5000, enableHighAccuracy: true});
+
         console.log('watch: ' + JSON.stringify($scope.watch));
 
         console.log('mapOptions: ' + JSON.stringify($scope.mapOptions));
@@ -1294,17 +1256,16 @@ angular.module('starter.runController', ['starter.appServices',
         showBackdrop: false
       });
 
-      navigator.geolocation.getCurrentPosition(function(pos){
+      var centeringCenter = navigator.geolocation.getCurrentPosition(function(pos){
         console.log('Got pos', pos);
-        // $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-        // $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-         var centeringCenter = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-        $scope.map.setCenter(centeringCenter);
 
-        $scope.hide();
+
       }, function(error){
         alert('Unable to get location: ' + error.message);
       });
+
+      $scope.map.setCenter(new google.maps.LatLng(centeringCenter));
+      $rootScope.hide();
     };
 
 
