@@ -118,7 +118,8 @@ angular.module('starter.charityController', ['starter.appServices',
     totalMoneyRaised: Number,
     monthMoneyRaised: Number,
     description: String,
-    url: String
+    url: String,
+    avatar: String
   };
 
   $scope.pastIds = [];
@@ -442,6 +443,7 @@ angular.module('starter.charityController', ['starter.appServices',
                 $scope.selectedCharityDisplay.name = data.name;
                 $scope.selectedCharityDisplay.description = data.description;
                 $scope.selectedCharityDisplay.url = data.url;
+                $scope.selectedCharityDisplay.avatar = data.avatar;
                 $scope.selectedCharityDisplay.totalMoneyRaised = moneyRaised;
 
                 console.log('oldSelectedCharityId: ' + $scope.oldSelectedCharityId);
