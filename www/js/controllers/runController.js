@@ -20,9 +20,27 @@ angular.module('starter.runController', ['starter.appServices',
 //TODO: CLEAR VALUES AFTER RUN SUMMARY, NEW RUN BUTTON?
 
   .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI, CharityAPI, HistoryAPI, DonationAPI, $ionicPopup, AuthAPI, $ionicModal){
-    $scope.user =  {
-      name: ""
-    };
+
+
+
+
+
+    $rootScope.$on('LoadRun', function(){
+      $scope.name = $rootScope.getName();
+      $scope.charityName = $rootScope.getSelectedCharityName();
+      $scope.$broadcast('scroll.refreshComplete');
+    });
+
+
+    $rootScope.$on('ChangeCharity', function(){
+
+      $scope.$broadcast('scroll.refreshComplete');
+    });
+
+    $scope.charityName = $rootScope.getSelectedCharityName();
+    $rootScope.$broadcast('LoadRun');
+    $rootScope.$broadcast('ChangeCharity');
+
     $scope.lat =[];
     $scope.long = [];
     $scope.laps = [];
@@ -92,8 +110,7 @@ angular.module('starter.runController', ['starter.appServices',
       $scope.isRunDetailDisplayed = !$scope.isRunDetailDisplayed;
     };
 
-    $scope.charityName = $rootScope.getSelectedCharityName();
-    console.log('charityName: ' + $scope.charityName);
+
 
     if($rootScope.getMoneyRaisedPerMile() != undefined){
       $scope.mrPerMile = $rootScope.getMoneyRaisedPerMile();
@@ -105,7 +122,7 @@ angular.module('starter.runController', ['starter.appServices',
     console.log('$scope.moneyRaised: ' + $scope.getMoneyRaisedPerMile());
 
 
-    $scope.user.name = $rootScope.getName();
+
 
     $scope.isHistoryDetailDisplayed = true;
     $scope.isRunning = false;
@@ -501,46 +518,62 @@ angular.module('starter.runController', ['starter.appServices',
 
     };
 
-    //week & month moneyRaised && distance
-    HistoryAPI.getWeekMoneyRaised($rootScope.getUserId())
-      .success(function(data, status, headers, config){
-        console.log('historyAPI getWeekMoneyRaised call succeeded: (data): ' + JSON.stringify(data));
-        console.log('getWeekMoneyRaised data.length: ' + data.length);
+    $rootScope.$on('runWeekMoneyRaised', function() {
+      //week & month moneyRaised && distance
+      HistoryAPI.getWeekMoneyRaised($rootScope.getUserId())
+        .success(function (data, status, headers, config) {
+          console.log('historyAPI getWeekMoneyRaised call succeeded: (data): ' + JSON.stringify(data));
+          console.log('getWeekMoneyRaised data.length: ' + data.length);
 
-        $scope.weekDist = 0;
-        $scope.weekMr = 0;
-        for(var i = 0; i< data.length; i++){
-          $scope.weekMr = $scope.weekMr + data[i].moneyRaised;
-          $scope.weekDist = $scope.weekDist + data[i].distance;
-          console.log('$scope.weekMr: ' + $scope.weekMr);
-          console.log('$scope.weekDist: ' + $scope.weekDist);
-        }
-        console.log('final $scope.weekMr: ' + $scope.weekMr);
-        console.log('final $scope.weekDist: ' + $scope.weekDist);
-      })
-      .error(function(err, status){
-        console.log('historyAPI getWeekMoneyRaised call failed with error: ' + err + '   and status: ' + status);
+          $scope.weekDist = 0;
+          $scope.weekMr = 0;
+          for (var i = 0; i < data.length; i++) {
+            $scope.weekMr = $scope.weekMr + data[i].moneyRaised;
+            $scope.weekDist = $scope.weekDist + data[i].distance;
+            console.log('$scope.weekMr: ' + $scope.weekMr);
+            console.log('$scope.weekDist: ' + $scope.weekDist);
+          }
+          console.log('final $scope.weekMr: ' + $scope.weekMr);
+          console.log('final $scope.weekDist: ' + $scope.weekDist);
+        })
+        .error(function (err, status) {
+          console.log('historyAPI getWeekMoneyRaised call failed with error: ' + err + '   and status: ' + status);
+        }).finally(function(){
+          console.log("Refresh Finally~");
+          $scope.$broadcast('scroll.refreshComplete');
+      });
+      console.log("--------end runWeekMoneyRaised---------");
+    });
+
+    $rootScope.$on('runMonthMoneyRaised', function(){
+      HistoryAPI.getMonthMoneyRaised($rootScope.getUserId())
+        .success(function(data, status, headers, config){
+          console.log('historyAPI getMonthMoneyRaised call succeeded: (data): ' + JSON.stringify(data));
+          console.log('getMonthMoneyRaised data.length: ' + data.length);
+
+          $scope.monthDist = 0;
+          $scope.monthMr = 0;
+          for(var i = 0; i< data.length; i++){
+            $scope.monthMr = $scope.monthMr + data[i].moneyRaised;
+            $scope.monthDist = $scope.monthDist + data[i].distance;
+            console.log('$scope.monthMr: ' + $scope.monthMr);
+            console.log('$scope.monthDist: ' + $scope.monthDist);
+          }
+          console.log('final $scope.monthMr: ' + $scope.monthMr);
+          console.log('final $scope.monthDist: ' + $scope.monthDist);
+        })
+        .error(function(err, status){
+          console.log('historyAPI getWeekMoneyRaised call failed with error: ' + err + '   and status: ' + status);
+        }).finally(function(){
+          console.log("Refresh Finally~");
+          $scope.$broadcast('scroll.refreshComplete');
       });
 
-    HistoryAPI.getMonthMoneyRaised($rootScope.getUserId())
-      .success(function(data, status, headers, config){
-        console.log('historyAPI getMonthMoneyRaised call succeeded: (data): ' + JSON.stringify(data));
-        console.log('getMonthMoneyRaised data.length: ' + data.length);
+      console.log("--------end runMonthMoneyRaised---------");
+    });
 
-        $scope.monthDist = 0;
-        $scope.monthMr = 0;
-        for(var i = 0; i< data.length; i++){
-          $scope.monthMr = $scope.monthMr + data[i].moneyRaised;
-          $scope.monthDist = $scope.monthDist + data[i].distance;
-          console.log('$scope.monthMr: ' + $scope.monthMr);
-          console.log('$scope.monthDist: ' + $scope.monthDist);
-        }
-        console.log('final $scope.monthMr: ' + $scope.monthMr);
-        console.log('final $scope.monthDist: ' + $scope.monthDist);
-      })
-      .error(function(err, status){
-        console.log('historyAPI getWeekMoneyRaised call failed with error: ' + err + '   and status: ' + status);
-      });
+    $rootScope.$broadcast('runMonthMoneyRaised');
+    $rootScope.$broadcast('runWeekMoneyRaised');
 
 
     //Center-Map Button
@@ -871,7 +904,7 @@ angular.module('starter.runController', ['starter.appServices',
         $scope.lngTrans = [];
         $scope.onSuccess = function(pos){
           console.log('onSuccess entered with pos: ' + pos);
-
+          $scope.name = $rootScope.getName();
           $scope.ll = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
           console.log('ll: ' + $scope.ll);
           // $scope.marker.setPosition($scope.ll);
@@ -1267,7 +1300,6 @@ angular.module('starter.runController', ['starter.appServices',
       $scope.map.setCenter(new google.maps.LatLng(centeringCenter));
       $rootScope.hide();
     };
-
 
 
   });

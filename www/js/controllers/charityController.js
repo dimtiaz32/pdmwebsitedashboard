@@ -413,10 +413,6 @@ angular.module('starter.charityController', ['starter.appServices',
 
 
     //TODO: QUERY MONTH OF RUNS TO GET MONTH MONEY RAISED
-
-
-
-
     console.log($rootScope.getUserId());
 
     console.log('$scope.selectedCharityDisplay.totalMoneyRaised: '+ $scope.selectedCharityDisplay.totalMoneyRaised);
@@ -447,8 +443,9 @@ angular.module('starter.charityController', ['starter.appServices',
                 console.log('oldSelectedCharityId: ' + $scope.oldSelectedCharityId);
                 console.log('new (getSelected) CharityId: ' + $rootScope.getSelectedCharityId());
                 $scope.setSelected($scope.oldSelectedCharityId, $rootScope.getSelectedCharityId());
+                $rootScope.$broadcast('ChangeCharity');
 
-                CharityAPI.updateCharityName($rootScope.getUserId(), data.name)
+                UserAPI.updateCharityName($rootScope.getUserId(), data.name)
                   .success(function(data, status, headers, config){
                     console.log('updateCharityName succeeded: ' + data.charityName);
                   })

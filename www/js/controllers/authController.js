@@ -312,10 +312,13 @@ angular.module('starter.authController', ['starter.appServices',
           // $rootScope.setSelectedCharity($scope.user.charityId);
           // console.log('selectedCharity local storage set: ' + $rootScope.getSelectedCharity());
 
-          $rootScope.$broadcast("initial");
-          $rootScope.$broadcast('newMap');
+          // $rootScope.$broadcast("initial");
+          // $rootScope.$broadcast('newMap');
 
-
+          $rootScope.$broadcast('LoadRun');
+          $rootScope.$broadcast('initial');
+          $rootScope.$broadcast('runMonthMoneyRaised');
+          $rootScope.$broadcast('runWeekMoneyRaised');
           $rootScope.hide();
           $window.location.href=('#/app/run');
 
@@ -382,6 +385,7 @@ angular.module('starter.authController', ['starter.appServices',
           $rootScope.setName(data.user.google.firstname + ' ' + data.user.google.lastname);
           $rootScope.setAvatar(data.user.google.avatar);
           $rootScope.$broadcast("initial");
+          $rootScope.loadMap();
           $window.location.href=('#/app/charities');
         }).error(function(error){
           console.log("AuthAPI.signinByFB failed:" + error);

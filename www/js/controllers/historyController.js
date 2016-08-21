@@ -52,7 +52,7 @@ angular.module('starter.historyController', [
     //progress bar
 
     $scope.yearlyFunds = 0;
-    $scope.yearlyGoal = 201.60;
+    $scope.yearlyGoal = 0;
 
     $scope.yearlyPace = "";
     $scope.progressVal = "";
@@ -103,10 +103,10 @@ angular.module('starter.historyController', [
     $scope.goalDayFunds = 0;
     $scope.currentDayFunds= 0.00;
 
-    $scope.goalWeekDistance = 63;
+    $scope.goalWeekDistance = 0;
     $scope.currentWeekDistance = 0;
 
-    $scope.goalWeekFunds =150;
+    $scope.goalWeekFunds =0;
     $scope.currentWeekFunds= 0.00;
 
 
@@ -121,11 +121,14 @@ angular.module('starter.historyController', [
         console.log('dailyGoals: distance: ' + data.dailyGoals.distance);
         console.log('dailyGoals: fundraising: ' + data.dailyGoals.fundraising);
         console.log('yearChallenge: ' + data.yearGoals.fundraising);
-        if(data.yearGoals.fundraising== undefined){
-          $scope.noYearlyGoal = true;
-        } else {
-          $scope.noYearlyGoal = false;
+        if(data.yearGoals.fundraising != undefined){
+          console.log('data.yearlyGoals.fundraising: ' + data.yearlyGoals.fundraising);
           $scope.yearlyGoal = data.yearGoals.fundraising;
+          $scope.noYearlyGoal = false;
+        } else {
+          console.log('data.yearlygoals.fundraising thre undefined');
+          $scope.noYearlyGoal = true;
+
         }
         $scope.goalDayDistance = data.dailyGoals.distance;
         $scope.goalDayFunds = data.dailyGoals.fundraising;
@@ -454,8 +457,28 @@ angular.module('starter.historyController', [
 
         for(var i =0; i< 3; i++){
           $scope.topThree.push(data.pastCharities[i]);
-          console.log('topThreeCharities: ' + JSON.stringify($scope.topThree));
-          $scope.getCharityName($scope.topThree[i].id, $scope.topThree[i].moneyRaised);
+
+          if($scope.topThree === undefined){
+            $scope.hasCharityOne = false;
+            $scope.hasCharityTwo = false;
+            $scope.hasCharityThree = false;
+          } else{
+            if($scope.topThree[i].id === undefined){
+              if(i==0){
+                $scope.hasCharityOne = false;
+                $scope.hasCharityTwo = false;
+                $scope.hasCharityThree = false;
+              } else if(i==1){
+                $scope.hasCharityTwo = false;
+                $scope.hasCharityThree = false;
+              } else if(i==2){
+                $scope.hasCharityThree =false;
+              }
+            } else {
+              console.log('topThreeCharities: ' + JSON.stringify($scope.topThree));
+              $scope.getCharityName($scope.topThree[i]._id, $scope.topThree[i].moneyRaised);
+            }
+          }
 
         }
 

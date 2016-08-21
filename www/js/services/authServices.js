@@ -86,6 +86,10 @@ angular.module('starter.authServices', ['ngCookies'])
     return $window.localStorage.name;
   };
 
+  $rootScope.$on("fetchName", function(){
+    return $window.localStorage.name;
+  });
+
   $rootScope.setHistory = function(history){
     return $window.localStorage.history = history;
   };
@@ -144,13 +148,14 @@ angular.module('starter.authServices', ['ngCookies'])
 
 
   $rootScope.clearAll = function() {
-      $window.localStorage.email = "";
-    $window.localStorage.password ="";
-    $window.localStorage.name = "";
+      $window.localStorage.email = undefined;
+    $window.localStorage.password =undefined;
+    $window.localStorage.name = undefined;
     $window.localStorage.history="";
     $window.localStorage.selectedCharity = "";
     $window.localStorage.userId = "";
     $window.localStorage.donorId ="";
+    $window.localStorage.clear();
       $cookies.remove();
   };
 

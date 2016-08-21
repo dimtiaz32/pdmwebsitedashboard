@@ -20,13 +20,13 @@
 
       <div class="run-page detail" on-swipe-down="swipeGestureDetail('swipe-down')" on-swipe-up="swipeGestureDetail('swipe-up')" ng-show="!isRunning">
 
-        <p class="run-page header"> Welcome {{user.name}}</p>
+        <p class="run-page header"> Welcome {{name}}</p>
         <hr class="run-page">
         <a class="run-page no-sponsor detail-head" href="#/app/mySponsors"><p style="color: #00b9be" class="run-page detail-head" ng-show="!noSponsor">Every mile raises ${{mrPerMile}} for</p></a>
         <a class="run-page no-sponsor detail-head" href="#/app/mySponsors"><p class="run-page no-sponsor detail-head" ng-show="noSponsor" >Invite sponsors to start fundraising</p></a>
         <hr class="run-page">
         <p class="run-page header" ng-show="hasCharity">{{charityName}}</p>
-        <a class="run-page no-charity header" href="#/app/charities"><p class="run-page no-charity header" ng-show="hasCharity">Select a charity</p></a>
+        <a class="run-page no-charity header" href="#/app/charities"><p class="run-page no-charity header" ng-show="!hasCharity">Select a charity</p></a>
 
         <div class="animated-detail" ng-show="isDetailDisplayed">
 

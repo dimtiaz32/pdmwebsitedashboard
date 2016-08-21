@@ -13,8 +13,27 @@
         <ion-slides options="slideOptions" slider="data.slider">
 
           <!--TODO: change background image based on charity in the history.css using charities.css-->
+          <ion-slide-page class="charity-banner" ng-show="!hasCharityOne">
+            <div class="charity-name">
+              You do not have <br style="border-top: 5px;">any top charities:(</br>
+            </div>
+            <div class="spacer">
+            </div>
+            <div class="detail-title row">
+              Impact
+            </div>
+            <div class="detail row">
+              <div class="funds col col-50 col-center">
+                $0<span class="units" style="font-size: small"> raised</span>
+              </div>
+              <div class="impact col col-50 col-center">
+              </div>
 
-          <ion-slide-page class="charity-banner">
+            </div>
+
+          </ion-slide-page>
+
+          <ion-slide-page class="charity-banner" ng-show="hasCharityOne">
             <div class="charity-name">
               {{charityOne.name}}
             </div>
@@ -35,7 +54,7 @@
 
           </ion-slide-page>
 
-          <ion-slide-page class="charity-banner">
+          <ion-slide-page class="charity-banner" ng-show="hasCharityTwo">
             <div class="charity-name">
               {{charityTwo.name}}
             </div>
@@ -55,7 +74,7 @@
             </div>
           </ion-slide-page>
 
-          <ion-slide-page class="charity-banner">
+          <ion-slide-page class="charity-banner" ng-show="hasCharityThree">
             <div class="charity-name">
               {{charityThree.name}}
             </div>
