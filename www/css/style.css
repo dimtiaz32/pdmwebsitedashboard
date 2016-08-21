@@ -7,7 +7,14 @@ a.run-tab.tab-item i {
   a.run-tab.tab-item.tab-item-active i {
     content: url("../img/PDM-logo-white.svg");
   }
+/*^^^*/
 
+
+/*Filter Bar*/
+.filter-bar-cancel {
+  color: #fff !important;
+}
+/*^^^*/
 
 ion-tabs{
 }

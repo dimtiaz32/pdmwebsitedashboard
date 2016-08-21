@@ -1,4 +1,10 @@
 <ion-view view-title="Charities" ng-controller="CharitiesCtrl">
+
+  <ion-nav-buttons side="secondary">
+    <button class="button button-icon icon ion-ios-search-strong" ng-click="showFilterBar()" style="color: white">
+    </button>
+  </ion-nav-buttons>
+
   <ion-content>
     <div class="charity-page charity-header" ng-show="!noCharity" on-swipe-up="swipeGestureCharityDetail('swipe-up')" on-swipe-down="swipeGestureCharityDetail('swipe-down')">
       <h3>Every mile raises ${{moneyRaised}} for</h3>

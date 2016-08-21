@@ -19,7 +19,7 @@ angular.module('starter.charityController', ['starter.appServices',
   'angular-svg-round-progressbar'])
 
 
-.controller('CharitiesCtrl', function($rootScope, $timeout, $ionicModal, $window, $scope, CharityAPI, HistoryAPI, AuthAPI, UserAPI){
+.controller('CharitiesCtrl', function($rootScope, $timeout, $ionicModal, $window, $scope, CharityAPI, HistoryAPI, AuthAPI, UserAPI, $ionicFilterBar){
   $rootScope.$on('fetchCharities', function(){
     $rootScope.show("Loading charities");
 
@@ -32,6 +32,16 @@ angular.module('starter.charityController', ['starter.appServices',
       $scope.isCharityDetailDisplayed = true;
     }
   }
+
+  $scope.showFilterBar = function () {
+    filterBarInstance = $ionicFilterBar.show({
+      items: $scope.charitiesDisplayList,
+      update: function (filteredItems, filterText) {
+        $scope.charitiesDisplayList = filteredItems;
+      },
+      filterProperties: ['name']
+    });
+  };
 
   $scope.toggleCharityDetail = function() {
     $scope.isCharityDetailDisplayed = !$scope.isCharityDetailDisplayed;
