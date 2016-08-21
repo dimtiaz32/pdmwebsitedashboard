@@ -297,6 +297,7 @@ angular.module('starter.charityController', ['starter.appServices',
               description: $scope.charitiesList[i].description,
               url: $scope.charitiesList[i].url,
               moneyRaised: money,
+              avatar: $scope.charitiesList[i].avatar,
               isSelected: $scope.getSelected($scope.charitiesList[i]._id),
               position: i
             };
@@ -341,6 +342,8 @@ angular.module('starter.charityController', ['starter.appServices',
       $scope.selectedCharityDisplay.name = data.name;
       $scope.selectedCharityDisplay.description = data.description;
       $scope.selectedCharityDisplay.url = data.url;
+      $scope.selectedCharityDisplay.avatar = data.avatar;
+
       // $scope.selectedCharityDisplay.totalMoneyRaised = moneyRaised;
 
       $scope.getMonthMoneyRaised($rootScope.getSelectedCharityId());
