@@ -16,7 +16,9 @@
     <!--<div class="races find-races-container" ng-repeat="race in races" ng-click="selectRace(race._id)">-->
 
 
-    <div class="races find-races-container" ng-repeat="race in filteredRaces" ng-click="selectRace(race._id)">
+    <div class="races find-races-container" ng-repeat="race in filteredRaces"
+         style="background-image:{{race.banner}}" ng-click="selectRace(race._id)">
+
 
       <div class="races gradient">
         <h1 class="featured-race">{{race.name}}</h1>

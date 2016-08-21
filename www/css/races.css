@@ -60,7 +60,7 @@ p.races.races-detail {
 
   background-color: #fff;
 
-  background-image: url("../img/sunrun.png");
+  background-image: url("../img/race-images/sunrun.png");
   background-size: cover;
   background-repeat: no-repeat;
 
@@ -81,7 +81,7 @@ p.races.races-detail {
 
   background-color: #fff;
 
-  background-image: url("../img/look.png");
+  background-image: url("../img/race-images/look.png");
   background-size: cover;
   background-repeat: no-repeat;
 
@@ -102,7 +102,7 @@ p.races.races-detail {
 
   background-color: #fff;
 
-  background-image: url("../img/Crossing.png");
+  background-image: url("../img/race-images/Crossing.png");
   background-size: cover;
   background-repeat: no-repeat;
 
@@ -174,7 +174,7 @@ p.races.races-detail {
 
   border-radius: 5px;
 
-  background-image: url("../img/tree one.jpeg");
+  background-image: url("../img/race-images/tree one.jpeg");
   background-size: cover;
   background-repeat: no-repeat;
 
