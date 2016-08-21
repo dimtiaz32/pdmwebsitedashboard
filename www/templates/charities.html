@@ -8,8 +8,8 @@
       <div class="charity-page charity-detail" ng-show="isCharityDetailDisplayed">
         <hr class="charity-page">
         <ion-item class="charity-page charity-detail item-thumbnail-left">
-          <img ng-src="{{charityAvatar}}">
-          <a ng-href="{{charityUrl}}">{{selectedCharityDisplay.url}}</a>
+          <img ng-src="../img/charity-images/{{selectedCharityDisplay.avatar}}" alt="{{selectedCharityDisplay.avatar}}">
+          <a ng-href="{{selectedCharityDisplay.url}}">{{selectedCharityDisplay.url}}</a>
           <p class="description">{{selectedCharityDisplay.description}}</p>
         </ion-item>
         <hr>
@@ -37,7 +37,7 @@
       <ion-item ng-repeat="charity in charitiesDisplayList" class="charity-page charity-list item-thumbnail-left item-button-right">
         <div class="main row">
           <div class="col" ng-click="toggleListDetail(charity.id)">
-            <img ng-src="{{charity.logo}}">
+            <img ng-src="../img/charity-images/{{charity.avatar}}" alt="{{charity.avatar}}">
             <h2>{{charity.name}}</h2>
             <p>{{charity.description}}</p>
           </div>
