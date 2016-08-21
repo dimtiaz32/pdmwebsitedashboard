@@ -1,3 +1,23 @@
+/*Get rid of sign-in and sign-up tab bars*/
+/*NOTE: this CSS no longer needed*/
+  .auth .tab-nav.tabs{
+    /*display: none;*/
+    /*background-color: red;*/
+  }
+
+  .auth.tabs-icon-top.pane.tabs-bottom.tabs-standard {
+    /*background-color: red;*/
+  }
+
+  [name=auth-signin] .pane{
+    /*background-color: #00b9be;*/
+  }
+
+  [name=auth-signup] .pane{
+    /*background-color: #00b9be;*/
+  }
+/*^^^*/
+
 ion-content.sign-in{
   background-color: #00b9be;
 }

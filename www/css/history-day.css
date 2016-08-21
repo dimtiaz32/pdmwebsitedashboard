@@ -5,6 +5,7 @@
   font-size: 1.5em;
   padding-top: 15px;
   padding-bottom: 15px;
+  text-overflow: clip;
 }
 
   .history-day-page.date-header.item button {

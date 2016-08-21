@@ -45,26 +45,6 @@ ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.tab-item-active, ion-
 /*^^^*/
 
 
-/*Get rid of sign-in and sign-up tab bars*/
-  .auth .tab-nav.tabs{
-    display: none;
-    background-color: #00b9be;
-  }
-
-  .auth.tabs-icon-top.pane.tabs-bottom.tabs-standard {
-    background-color: #00b9be;
-  }
-
-  [name=auth-signin] .pane{
-    background-color: #00b9be;
-  }
-
-  [name=auth-signup] .pane{
-    background-color: #00b9be;
-}
-/*^^^*/
-
-
 
 
 

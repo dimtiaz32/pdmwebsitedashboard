@@ -41,8 +41,23 @@ angular.module('starter.directives', [])
       link: function (scope, element, attributes) {
         element.bind('keydown', function (event) {
           if (event.which == 13) {
-            console.log("Close keyboard");
-            element[0].blur();
+            console.log('Go to next input');
+            event.preventDefault();
+            var elements = document.querySelectorAll('input');
+            var focusNext = false;
+
+            for (var i = 0; i < elements.length; i++) {
+              var pe = elements[i];
+              if (focusNext) {
+                if (pe.style.display !== 'none') {
+                  pe.focus();
+                  break;
+                }
+              } else if (pe === event.srcElement) {
+                focusNext = true;
+              }
+            }
+            //element[0].blur();
           }
         })
       }

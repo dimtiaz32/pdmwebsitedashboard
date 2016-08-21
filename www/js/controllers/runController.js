@@ -19,7 +19,7 @@ angular.module('starter.runController', ['starter.appServices',
 
 //TODO: CLEAR VALUES AFTER RUN SUMMARY, NEW RUN BUTTON?
 
-  .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI, CharityAPI, HistoryAPI, DonationAPI, AuthAPI, $ionicPopup, $ionicModal){
+  .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI, CharityAPI, HistoryAPI, DonationAPI, $ionicPopup, AuthAPI, $ionicModal){
     $scope.user =  {
       name: ""
     };
@@ -568,14 +568,14 @@ angular.module('starter.runController', ['starter.appServices',
       $scope.addOriginalPositionLocateUI = function(){
         locateUI.style.position = 'absolute';
         locateUI.style.bottom = '90px';
-        locateUI.style.left = '72vw';
+        locateUI.style.left = '61vw';
         locateDiv.appendChild(locateUI);
       }
 
       $scope.addRepositionedLocateUI = function(){
         locateUI.style.position = 'absolute';
         locateUI.style.bottom = '170px';
-        locateUI.style.left = '72vw';
+        locateUI.style.left = '61vw';
         locateDiv.appendChild(locateUI);
       }
 
