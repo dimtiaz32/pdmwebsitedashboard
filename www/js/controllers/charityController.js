@@ -460,7 +460,7 @@ angular.module('starter.charityController', ['starter.appServices',
                 console.log('new (getSelected) CharityId: ' + $rootScope.getSelectedCharityId());
                 $scope.setSelected($scope.oldSelectedCharityId, $rootScope.getSelectedCharityId());
 
-                CharityAPI.updateCharityName($rootScope.getUserId(), data.name)
+                UserAPI.updateCharityName($rootScope.getUserId(), data.name)
                   .success(function(data, status, headers, config){
                     console.log('updateCharityName succeeded: ' + data.charityName);
                   })
