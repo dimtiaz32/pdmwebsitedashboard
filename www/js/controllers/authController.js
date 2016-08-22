@@ -319,6 +319,7 @@ angular.module('starter.authController', ['starter.appServices',
           $rootScope.$broadcast('initial');
           $rootScope.$broadcast('runMonthMoneyRaised');
           $rootScope.$broadcast('runWeekMoneyRaised');
+          $rootScope.$broadcast('newMap');
           $rootScope.$broadcast('initRun');
           $rootScope.hide();
           $window.location.href=('#/app/run');

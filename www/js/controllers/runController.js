@@ -912,7 +912,7 @@ angular.module('starter.runController', ['starter.appServices',
           // $scope.marker.setPosition($scope.ll);
           $scope.circle.setCenter($scope.ll);
           $scope.map.panTo($scope.ll);
-          $scope.mapOptions = map.setOptions({
+          $scope.mapOptions = $scope.map.setOptions({
             center: $scope.ll,
             zoom: 18,
             disableDefaultUI: true,
