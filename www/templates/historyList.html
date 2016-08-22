@@ -31,7 +31,7 @@
             {{run.distance | number:2 }} mi
           </div>
           <div class="col col-30">
-            {{run.pace | secondsToDateTime | date: 'mm:ss'}} min/mi
+            {{run.pace | minutesToDateTime | date: 'mm:ss'}} min/mi
 
             <!--{{run.pace | number: 2 }} min/mi-->
           </div>

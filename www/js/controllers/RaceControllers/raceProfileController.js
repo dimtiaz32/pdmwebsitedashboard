@@ -77,7 +77,7 @@ angular.module('starter.raceProfileController', ['starter.appServices',
         console.log('distanceSplit: ' + distanceSplit);
         if(distanceSplit.length> 0){
           for(var i=0; i< distanceSplit.length; i++){
-            var fDistance = distanceSplit[i] + ' km';
+            var fDistance = distanceSplit[i];
             $scope.raceDistances.push(fDistance);
 
           }

@@ -5,9 +5,11 @@
       <ion-slides options="slideOptions" slider="data.slider">
         <ion-slide-page ng-repeat="race in featuredRaces" ng-click="selectRace(race._id)">
           <div class="races featured-box">
-            <h1 class="featured-race">{{race.name}} </h1>
-            <p class="races featured-race-detail">Location: {{race.city}}</p>
-            <p class="races featured-race-detail">Distance: {{displayDistanceForRace(race)}}</p>
+            <h1 class="featured-race">{{race.name}}</h1>
+            <p class="races featured-race-detail"><b>Location:</b> {{race.city}}</p>
+            <p class="races featured-race-detail"><b>Distance:</b> {{displayDistanceForRace(race)}}</p>
+            <p class="races featured-race-detail"><b>Description:</b> {{race.description}}</p>
+
           </div>
         </ion-slide-page>
         <!--<ion-slide-page>-->
@@ -39,7 +41,7 @@
         <div class="races gradient">
             <h1 class="races">My Races</h1>
             <p class="races races-detail">{{myRacesSubHeader}}</p>
-            <p class="races races-detail">Next race: In 2 weeks</p>
+            <!--<p class="races races-detail">Next race: In 2 weeks</p>-->
         </div>
       </div>
     </a>
@@ -47,7 +49,7 @@
       <div class="races find-races-container">
         <div class="races gradient">
           <h1 class="races">Find Races</h1>
-          <p class="races races-detail">12 races in you area next month</p>
+          <!--<p class="races races-detail">12 races in you area next month</p>-->
         </div>
       </div>
     </a>
