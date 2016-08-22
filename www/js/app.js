@@ -347,8 +347,9 @@ angular.module('starter', ['ionic',
     Stripe.setPublishableKey('pk_test_U5LiYvbQvafjstjzow9RjSzg');
 
   })
-  .filter('secondsToDateTime', [function() {
-    return function(seconds) {
+  .filter('minutesToDateTime', [function(){
+    return function (minutes) {
+      var seconds = minutes * 60;
       return new Date(0,0,0,0,0,0,0).setSeconds(seconds);
-    };
+    }
   }]);

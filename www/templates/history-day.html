@@ -36,8 +36,6 @@
 <!--</ion-nav-bar>-->
 
 
-
-
 <ion-view>
   <ion-nav-title class="history-day-page">
     {{date}}
@@ -73,7 +71,7 @@
         <div class="col col-50">
           <!--Pace-->
           <p class="history-day-page head">Pace</p>
-          <p class="history-day-page label">{{pace | secondsToDateTime | date: 'mm:ss'}}<span class="history-day-page miles"> min/mi</span></p>
+          <p class="history-day-page label">{{pace | minutesToDateTime | date: 'mm:ss'}}<span class="history-day-page miles"> min/mi</span></p>
         </div>
         <div class="history-day-page vertical-line"></div>
         <div class="col col-50">
