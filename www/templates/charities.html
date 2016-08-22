@@ -5,7 +5,7 @@
     </button>
   </ion-nav-buttons>
 
-  <ion-content>
+  <ion-content class="charity-page">
     <div class="charity-page charity-header" ng-show="!noCharity" on-swipe-up="swipeGestureCharityDetail('swipe-up')" on-swipe-down="swipeGestureCharityDetail('swipe-down')">
       <h3>Every mile raises ${{moneyRaised}} for</h3>
       <hr class="charity-page">
@@ -15,7 +15,7 @@
         <hr class="charity-page">
         <ion-item class="charity-page charity-detail item-thumbnail-left">
           <img ng-src="img/charity-images/{{selectedCharityDisplay.avatar}}" alt="{{selectedCharityDisplay.avatar}}">
-          <a ng-href="{{selectedCharityDisplay.url}}">{{selectedCharityDisplay.url}}</a>
+          <a ng-click="openCharityLink(selectedCharityDisplay.url)">{{selectedCharityDisplay.url}}</a>
           <p class="description">{{selectedCharityDisplay.description}}</p>
         </ion-item>
         <hr>
@@ -39,45 +39,29 @@
       </button>
     </div>
 
-    <ion-list class="charity-page charity-list" show-delete="shouldShowDelete" show-reorder="shouldShowReorder" can-swipe="listCanSwipe">
-      <ion-item ng-repeat="charity in charitiesDisplayList" class="charity-page charity-list item-thumbnail-left item-button-right">
-        <div class="main row">
-          <div class="col" ng-click="toggleListDetail(charity.id)">
-            <img ng-src="img/charity-images/{{charity.avatar}}" alt="{{charity.avatar}}">
-            <h2>{{charity.name}}</h2>
-            <p>{{charity.description}}</p>
-          </div>
-          <div class="select col col-center">
-            <!--<p>{{charity.monthMoneyRaised}}</p>-->
-            <!--<p>${{charity.moneyRaised}}</p>-->
+
+    <ion-list class="charity-list" show-delete="shouldShowDelete" show-reorder="shouldShowReorder" can-swipe="listCanSwipe">
+      <div ng-repeat="charity in charitiesDisplayList" class="charity">
+        <ion-item class="item-thumbnail-left item-button-right">
+            <img ng-click="toggleListDetail(charity.id)" ng-src="img/charity-images/{{charity.avatar}}" alt="{{charity.avatar}}">
+            <h2 ng-click="toggleListDetail(charity.id)">{{charity.name}}</h2>
             <button class="button select" ng-click="selectCharity(charity.id, charity.moneyRaised)">
               <i class="not-selected ion-ios-circle-outline" ng-show="!charity.isSelected"></i>
               <i class="selected ion-ios-circle-filled" ng-show="charity.isSelected"></i>
             </button>
+        </ion-item>
+        <ion-item class="charity-detail" ng-show="isListDetailDisplayed(charity.id)">
+          <p class="description">{{charity.description}}</p>
+          <a class="url" ng-click="openCharityLink(charity.url)">{{charity.url}}</a>
+          <div class="row">
+            <p class="charity-page label col col-67">Total Fundraising:</p>
+            <p class="charity-page stat col col-33">{{charity.moneyRaised}}</p>
           </div>
-        </div>
-
-        <div class="charity-page charity-detail" ng-show="detailListShow(charity.id, toggledCharity)">
-          <ion-item class="charity-page charity-detail">
-
-            <p class="description">{{charity.description}}</p>
-            <a ng-href="{{charity.url}}">{{charity.url}}</a>
-
-          </ion-item>
-          <ion-item class="charity-page charity-detail stats">
-            <div class="charity-page row">
-              <div class="charity-page col">
-
-                <p class="charity-page head">Total Fundraising:</p>
-                <p class="charity-page label">${{charity.moneyRaised}}</p>
-              </div>
-
-            </div>
-          </ion-item>
-        </div>
-
-
-      </ion-item>
+        </ion-item>
+      </div>
     </ion-list>
+
+
+
   </ion-content>
 </ion-view>

@@ -19,7 +19,7 @@ angular.module('starter.charityController', ['starter.appServices',
   'angular-svg-round-progressbar'])
 
 
-.controller('CharitiesCtrl', function($rootScope, $timeout, $ionicModal, $window, $scope, CharityAPI, HistoryAPI, AuthAPI, UserAPI, $ionicFilterBar){
+.controller('CharitiesCtrl', function($rootScope, $timeout, $ionicModal, $window, $scope, CharityAPI, HistoryAPI, AuthAPI, UserAPI, $ionicFilterBar, $ionicScrollDelegate){
   $rootScope.$on('fetchCharities', function(){
     $rootScope.show("Loading charities");
 
@@ -519,21 +519,28 @@ angular.module('starter.charityController', ['starter.appServices',
 
   }
 
+  $scope.openCharityLink = function(link) {
+    $window.open(link, '_system', 'location=yes');
+  };
+
   //Get selected charity in list to expand
-  $scope.toggledCharity;
-  $scope.showCharity = false;
   $scope.toggleListDetail = function(charityId) {
-    $scope.toggledCharity = charityId;
-    $scope.showCharity = !$scope.showCharity;
-    console.log($scope.showCharity);
-
-  }
-
-  $scope.detailListShow = function(thisCharityId, toggleCharityId) {
-    if ((thisCharityId == toggleCharityId) && ($scope.showCharity)){
-      return true;
+    if ($scope.isListDetailDisplayed(charityId)) {
+      $scope.toggledCharity = null;
+    } else {
+      $scope.toggledCharity = charityId;
     }
+
+    //resize scroll view
+    $ionicScrollDelegate.resize()
+
+  };
+
+  $scope.isListDetailDisplayed = function(charityId) {
+    return $scope.toggledCharity === charityId;
   }
+
+
   });
 
   $rootScope.$broadcast('fetchCharities');
