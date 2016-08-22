@@ -121,13 +121,13 @@ angular.module('starter.historyController', [
         console.log('dailyGoals: distance: ' + data.dailyGoals.distance);
         console.log('dailyGoals: fundraising: ' + data.dailyGoals.fundraising);
         console.log('yearChallenge: ' + data.yearGoals.fundraising);
-        if(data.yearGoals.fundraising != undefined){
+        if(data.yearGoals.fundraising == undefined){
+          console.log('data.yearlygoals.fundraising thre undefined');
+          $scope.noYearlyGoal = true;
+        } else {
           console.log('data.yearlyGoals.fundraising: ' + data.yearlyGoals.fundraising);
           $scope.yearlyGoal = data.yearGoals.fundraising;
           $scope.noYearlyGoal = false;
-        } else {
-          console.log('data.yearlygoals.fundraising thre undefined');
-          $scope.noYearlyGoal = true;
 
         }
         $scope.goalDayDistance = data.dailyGoals.distance;

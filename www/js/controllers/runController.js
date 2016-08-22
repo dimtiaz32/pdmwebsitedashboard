@@ -19,7 +19,9 @@ angular.module('starter.runController', ['starter.appServices',
 
 //TODO: CLEAR VALUES AFTER RUN SUMMARY, NEW RUN BUTTON?
 
-  .controller('RunCtrl', function($scope, $window, $rootScope, $ionicLoading, $interval, RunAPI, CharityAPI, HistoryAPI, DonationAPI, $ionicPopup, AuthAPI, $ionicModal){
+  .controller('RunCtrl', function($scope, $window, $rootScope, $cordovaGeolocation, $ionicPlatform, $ionicLoading, $interval, RunAPI, CharityAPI, HistoryAPI, DonationAPI, $ionicModal){
+
+  $rootScope.$on('initRun', function(){
 
 
 
@@ -961,7 +963,7 @@ angular.module('starter.runController', ['starter.appServices',
             // $scope.path.setMap(null);
             // $scope.runPath = $scope.path;
           }
-
+          $scope.$broadcast('scroll.refreshComplete');
         }
 
         $scope.watchRetry = function(){
@@ -993,6 +995,7 @@ angular.module('starter.runController', ['starter.appServices',
 
 
       }
+
     });
     // $scope.mapCreated = function(map){
     //     console.log('isRunning load value: ' + $scope.isRunning);
@@ -1300,6 +1303,10 @@ angular.module('starter.runController', ['starter.appServices',
       $scope.map.setCenter(new google.maps.LatLng(centeringCenter));
       $rootScope.hide();
     };
+  });
 
+    $ionicPlatform.ready(function(){
+        $rootScope.$broadcast('initRun');
+    });
 
   });

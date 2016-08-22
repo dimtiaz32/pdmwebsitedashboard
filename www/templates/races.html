@@ -5,7 +5,7 @@
       <ion-slides options="slideOptions" slider="data.slider">
         <ion-slide-page ng-repeat="race in featuredRaces" ng-click="selectRace(race._id)">
           <div class="races featured-box">
-            <h1 class="featured-race"><!--{{race.name}}--> Super very very long race name</h1>
+            <h1 class="featured-race">{{race.name}} </h1>
             <p class="races featured-race-detail">Location: {{race.city}}</p>
             <p class="races featured-race-detail">Distance: {{displayDistanceForRace(race)}}</p>
           </div>

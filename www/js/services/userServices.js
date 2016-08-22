@@ -170,10 +170,11 @@ angular.module('starter.userServices', [])
     },
     updateCharityName: function(userId, charityName){
       return $http.post(SERVER_HOST+'user/updateCharityName', charityName, {
+        method: 'POST',
         params: {
           userId: userId
         }
       });
-    },
+    }
 	}
 });

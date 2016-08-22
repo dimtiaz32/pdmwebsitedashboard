@@ -82,26 +82,33 @@ angular.module('starter.raceController', ['starter.appServices',
       return distanceString;
     };
 
-    RaceAPI.getUserRaces($rootScope.getUserId())
-      .success(function(data, status, headers, config){
-        console.log('Race API getUsersRaces call succeeded ');
-        console.log('getUsersRaces data.length: ' + data.length);
-        var counter = 0;
-        if(data.length >0){
-          for(var i = 0; i< data.length; i++){
-            counter++;
-            console.log('counter: ' + counter);
+    $rootScope.$on('fetchMyRaces', function(){
+      RaceAPI.getUserRaces($rootScope.getUserId())
+        .success(function(data, status, headers, config){
+          console.log('Race API getUsersRaces call succeeded ');
+          console.log('getUsersRaces data.length: ' + data.length);
+          var counter = 0;
+          if(data.length >0){
+            for(var i = 0; i< data.length; i++){
+              counter++;
+              console.log('counter: ' + counter);
+            }
+            $scope.myRacesSubHeader = 'You have ' + counter +' upcoming races.'
           }
-          $scope.myRacesSubHeader = 'You have ' + counter +' upcoming races.'
-        }
-         else {
-          console.log('getUsersRaces data.length was less than 1');
-          $scope.myRacesSubHeader = 'You have not signed up for a race yet!';
-        }
-      })
-      .error(function(err, status){
-        console.log('Race API getUsersRaces call failed with status: ' + status +' and error: ' + err);
+          else {
+            console.log('getUsersRaces data.length was less than 1');
+            $scope.myRacesSubHeader = 'You have not signed up for a race yet!';
+          }
+        })
+        .error(function(err, status){
+          console.log('Race API getUsersRaces call failed with status: ' + status +' and error: ' + err);
+        }).finally(function(){
+          $rootScope.$broadcast('scroll.refreshComplete');
       });
+    });
+
+    $rootScope.$broadcast('fetchMyRaces');
+
 
 
     RaceAPI.getPastRaces($rootScope.getUserId())

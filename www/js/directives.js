@@ -11,16 +11,29 @@ angular.module('starter.directives', [])
       scope: {
         onCreate: '&'
       },
-      link: function($scope, $element, $attr){
+      link: function($scope, $element, $window, $attr){
         $scope.initialize= function(){
 
 
-          var map = new google.maps.Map($element[0]);
 
+          var mapOptions = {
+            zoom: 18,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+          };
+
+          var map = new google.maps.Map($element[0], mapOptions);
+
+
+          navigator.geolocation.watchPosition(function(pos){
+            console.log('navigator.geolocation.getCurrentPosition success');
+            $scope.myLatLng = (pos.coords.latitude, pos.coords.longitude);
+          }, function(){
+            console.log('navigator.geolocation.getCurrentPosiition failure');
+          }, {maximumAge: 3000, timeout: 5000});
 
           $scope.onCreate({map: map});
 
-
+          map.setCenter($scope.myLatLng);
           google.maps.event.addDomListener($element[0], 'mousedown', function(e){
             e.preventDefault();
             return false;
@@ -30,7 +43,7 @@ angular.module('starter.directives', [])
         if(document.readyState === "complete"){
           $scope.initialize();
         } else {
-          google.maps.event.addDomListener(window, 'load', $scope.initialize());
+          google.maps.event.addDomListener($window, 'load', $scope.initialize());
         }
       }
     }

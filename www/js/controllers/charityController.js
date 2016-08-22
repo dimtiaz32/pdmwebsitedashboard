@@ -457,9 +457,11 @@ angular.module('starter.charityController', ['starter.appServices',
                 $scope.setSelected($scope.oldSelectedCharityId, $rootScope.getSelectedCharityId());
                 $rootScope.$broadcast('ChangeCharity');
 
-                UserAPI.updateCharityName($rootScope.getUserId(), data.name)
+
+                UserAPI.updateCharityName($rootScope.getUserId(), {charityName: $scope.selectedCharityDisplay.name})
                   .success(function(data, status, headers, config){
                     console.log('updateCharityName succeeded: ' + data.charityName);
+
                   })
                   .error(function(err, status){
                     console.log('updateCharityName failed with error: ' + err + ' and status: ' + status);

@@ -2,9 +2,10 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <!--<meta http-equiv="Content-Security-Policy" content="script-src 'self' https://maps.googleapis.com/ https://maps.gstatic.com/ https://mts0.googleapis.com/ 'unsafe-inline' 'unsafe-eval'">-->
+
+  <meta http-equiv="Content-Security-Policy" content="default-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src  'self' 'unsafe-inline' *">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-  <!--<meta http-equiv="Content-Security-Policy" content="default-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src  'self' 'unsafe-inline' *">-->
+  <!--<meta http-equiv="Content-Security-Policy" content="script-src 'self' https://maps.googleapis.com/ https://maps.gstatic.com/ https://mts0.googleapis.com/ 'unsafe-inline' 'unsafe-eval'">-->
   <title></title>
 
   <link href="lib/ionic/css/ionic.css" rel="stylesheet">
@@ -26,6 +27,8 @@
   <link href="https://fonts.googleapis.com/icon?family=Material%20Icons" rel="stylesheet">
 
 
+  <!-- cordova script (this will be a 404 during development) -->
+  <script src="cordova.js"></script>
 
   <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
   <link href="css/ionic.app.css" rel="stylesheet">
@@ -37,8 +40,6 @@
   <!-- ionic/angularjs js -->
   <script src="lib/ionic/js/ionic.bundle.js"></script>
 
-  <!-- cordova script (this will be a 404 during development) -->
-  <!--script src="cordova.js"></script-->
 
 
   <!-- google maps -->
@@ -138,7 +139,6 @@
   <script type="text/javascript" src="lib/stripe-angular/stripe-angular.js"></script>
   <script type="text/javascript" src="lib/ngCordova/dist/ng-cordova.js"></script>
   <script type="text/javascript" src="lib/ngCordova/dist/ng-cordova.min.js"></script>
-  <!--<script type="text/javascript" src="cordova.js"></script>-->
   <script type="text/javascript" src="js/openfb.js"></script>
   <script type="text/javascript" src="js/ngopenfb.js"></script>
   <script type="text/javascript" src="https://cdn.rawgit.com/auth0/angular-storage/master/dist/angular-storage.js"></script>
