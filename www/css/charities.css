@@ -13,7 +13,7 @@
 
 .charity-page.charity-header h1 {
   text-align: center;
-  font-weight: 200;
+  font-weight: 300;
   padding: 0;
   margin: 5px;
 }
@@ -53,14 +53,14 @@
     position: relative;
     top: 5%;
 
-    left: -3%;
+    /*left: -3%;*/
     color: #00b9be;
   }
 
   .charity-page.charity-detail p.description {
     position: relative;
     word-wrap: break-word;
-    left: -3%;
+    /*left: -3%;*/
     height: 55px;
     white-space: normal;
     text-align: justify;
