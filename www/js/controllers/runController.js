@@ -925,6 +925,21 @@ angular.module('starter.runController', ['starter.appServices',
           });
           $scope.circle.setMap($scope.map);
 
+          $scope.centerOnMe = function(){
+            console.log("%cCentering", 'color: Green');
+            if(!$scope.map){
+              return;
+            }
+
+            $scope.loading = $ionicLoading.show({
+              content: 'Getting current location',
+              showBackdrop: false
+            });
+
+            $scope.map.setCenter($scope.ll);
+            $rootScope.hide();
+          };
+
           if($scope.isRunning  == true){
             $scope.path = null;
             $scope.polyCoords.push($scope.ll);
@@ -1281,28 +1296,7 @@ angular.module('starter.runController', ['starter.appServices',
 
 
 
-    $scope.centerOnMe = function(){
-      console.log("%cCentering", 'color: Green');
-      if(!$scope.map){
-        return;
-      }
 
-      $scope.loading = $ionicLoading.show({
-        content: 'Getting current location',
-        showBackdrop: false
-      });
-
-      var centeringCenter = navigator.geolocation.getCurrentPosition(function(pos){
-        console.log('Got pos', pos);
-
-
-      }, function(error){
-        alert('Unable to get location: ' + error.message);
-      });
-
-      $scope.map.setCenter(new google.maps.LatLng(centeringCenter));
-      $rootScope.hide();
-    };
   });
 
     $ionicPlatform.ready(function(){
