@@ -74,7 +74,7 @@ angular.module('starter.raceController', ['starter.appServices',
       distanceArray = race.distances.split(",");
       distanceString = "";
       for (var i = 0; i < distanceArray.length; i++) {
-        distanceString += distanceArray[i] + "km";
+        distanceString += distanceArray[i];
         if (i < (distanceArray.length - 1)) {
           distanceString += ", ";
         }
