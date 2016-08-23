@@ -1,7 +1,11 @@
+.races .swiper-pagination-bullet {
+  background: #fff;
+}
+
 .races.gradient {
   height: 100%;
   width: 100%;
-  background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6) );
+  background: linear-gradient(135deg, rgba(0, 0, 0, .7), rgba(0, 0, 0, .3) );
   padding: 0 0 0 0;
   margin: auto;
 }
@@ -42,6 +46,13 @@ p.races.races-detail {
   margin-bottom: auto;
   margin-top: auto;
 }
+
+  p.races.featured-race-detail.description {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 95%;
+  }
 
 .races.my-races-container {
   height: 23%;
@@ -112,7 +123,7 @@ p.races.races-detail {
 
   border-radius: 2px;
 
-  background-image: url("../img/User Header Background.png");
+  /*background-image: url("../img/User Header Background.png");*/
   background-size: cover;
   background-repeat: no-repeat;
 }

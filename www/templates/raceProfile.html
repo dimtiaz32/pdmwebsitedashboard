@@ -9,19 +9,21 @@
 
   <ion-content>
     <ion-list>
-      <ion-item class="heading">
-        <div class="row">
-          <div class="col">
-           <h1 class="race-name">{{raceName}}</h1>
+      <ion-item class="heading" style="background-image:url('../img/race-images/race-banner-{{raceId}}.png');">
+        <div class="heading-gradient">
+          <div class="row">
+            <div class="col">
+             <h1 class="race-name">{{raceName}}</h1>
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <h2 class="race-date">{{raceDate | date:'MM/dd/yyyy'}}</h2>
-          </div>
-          <div class="col">
-            <div  ng-repeat="distance in raceDistances">
-              <h2 class="race-distance">{{distance}}</h2>
+          <div class="row">
+            <div class="col">
+              <h2 class="race-date">{{raceDate | date:'MM/dd/yyyy'}}</h2>
+            </div>
+            <div class="col">
+              <div  ng-repeat="distance in raceDistances">
+                <h2 class="race-distance">{{distance}}</h2>
+              </div>
             </div>
           </div>
         </div>

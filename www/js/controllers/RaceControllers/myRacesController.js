@@ -44,7 +44,7 @@ angular.module('starter.myRacesController', [
             $scope.raceCity = data[i].city;
 
             console.log(data[i].distances);
-            var distances = $scope.displayDistances(data[i].distances);
+            var distances = $scope.displayDistanceForRace(data[i]);
 
         $scope.myRaces.push({name: $scope.raceName, date: $scope.raceDate,
               city: $scope.raceCity, distances: distances,  _id: data[i]._id});
@@ -64,16 +64,18 @@ angular.module('starter.myRacesController', [
       $window.location.href = ('#/app/raceProfile');
     }
 
-    $scope.displayDistances = function(distances) {
+    $scope.displayDistanceForRace = function(race) {
+      // console.log(race.distances)
+      distanceArray = race.distances.split(",");
       distanceString = "";
-      for (var i = 0; i < distances.length; i++) {
-        distanceString += (distances[i].distance + "km");
-        if (i < (distances.length - 1)) {
-          distanceString += ", "
+      for (var i = 0; i < distanceArray.length; i++) {
+        distanceString += distanceArray[i];
+        if (i < (distanceArray.length - 1)) {
+          distanceString += ", ";
         }
       }
       return distanceString;
-    }
+    };
 
 
   });
