@@ -129,7 +129,7 @@ angular.module('starter.raceProfileController', ['starter.appServices',
     }
 
     $scope.setFalse = function(){
-      $scope.isSignedUp = $scope.isSignedUp;
+      $scope.isSignedUp = false;
     }
 
 

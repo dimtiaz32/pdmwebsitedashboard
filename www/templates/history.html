@@ -13,7 +13,7 @@
         <ion-slides options="slideOptions" slider="data.slider">
 
           <!--TODO: change background image based on charity in the history.css using charities.css-->
-          <ion-slide-page class="charity-banner" ng-show="!hasCharityOne">
+          <ion-slide-page class="charity-banner" ng-show="!hasTopThree">
             <div class="charity-name" style="white-space: normal; line-height: normal">
               You do not have any top charities :(
             </div>
@@ -243,7 +243,7 @@
          <h3 class="col">Progress</h3>
          <h3 class="col avg">${{progressWeekAvg | number: 2}}/week</h3>
         </div>
-        <tek-progress-bar class="my-progress" ng-model="progressVal">${{yearlyFunds | number: 2}}</tek-progress-bar>
+        <tek-progress-bar class="my-progress" ng-model="progressVal">${{currentYearFunds | number: 2}}</tek-progress-bar>
 
         <div class="row">
           <h3 class="col">Pace Bunny</h3>

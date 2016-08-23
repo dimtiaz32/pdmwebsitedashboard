@@ -50,7 +50,7 @@ angular.module('starter.historyController', [
 
 
     //progress bar
-
+    $scope.currentYearFunds = 0;
     $scope.yearlyFunds = 0;
     $scope.yearlyGoal = 0;
 
@@ -81,10 +81,10 @@ angular.module('starter.historyController', [
     $rootScope.$on('paceBunnySetter', function(){
 
         $scope.yearlyPace = ((365-$scope.daysLeftInYear())/365) * $scope.yearlyGoal;
-        $scope.progressVal = 100*($scope.yearlyFunds/$scope.yearlyGoal);
+        $scope.progressVal = 100*($scope.currentYearFunds/$scope.yearlyGoal);
         $scope.paceBunnyVal = 100*($scope.yearlyPace/$scope.yearlyGoal);
 
-        $scope.progressWeekAvg =  7*($scope.yearlyFunds/(365-$scope.daysLeftInYear()));
+        $scope.progressWeekAvg =  7*($scope.currentYearFunds/(365-$scope.daysLeftInYear()));
         $scope.paceBunnyWeekAvg = 7*($scope.yearlyGoal/365);
 
     });
@@ -112,6 +112,8 @@ angular.module('starter.historyController', [
 
 
 
+
+
     UserAPI.getGoals($rootScope.getUserId())
       .success(function(data, status, config, headers){
         console.log('UserAPI getGoals function succeeded');
@@ -125,7 +127,7 @@ angular.module('starter.historyController', [
           console.log('data.yearlygoals.fundraising thre undefined');
           $scope.noYearlyGoal = true;
         } else {
-          console.log('data.yearlyGoals.fundraising: ' + data.yearlyGoals.fundraising);
+          console.log('data.yearlyGoals.fundraising: ' + data.yearGoals.fundraising);
           $scope.yearlyGoal = data.yearGoals.fundraising;
           $scope.noYearlyGoal = false;
 
@@ -174,10 +176,14 @@ angular.module('starter.historyController', [
         console.log('UserAPI call getYearProgress succeeded');
         console.log('getYearProgress data.length: ' + data.length);
         for(var i = 0; i< data.length; i++){
+          console.log('moneyRaised at i: ' + data[i].moneyRaised);
           $scope.currentYearDistance = $scope.currentYearDistance + data[i].distance;
           $scope.currentYearFunds = $scope.currentYearFunds + data[i].moneyRaised;
-          $rootScope.$broadcast('paceBunnySetter');
+          console.log('moneyRAised currentYearFunds: ' + $scope.currentYearFunds);
         }
+        $rootScope.$broadcast('paceBunnySetter');
+        console.log('currrent Year Distance: ' + $scope.currentYearDistance);
+        console.log('current Year Funds: ' + $scope.currentYearFunds);
       })
       .error(function(err, status){
         console.log('UserAPI call getYearProgress failed with error: ' + err + ' and status: ' + status);
@@ -459,24 +465,30 @@ angular.module('starter.historyController', [
           $scope.topThree.push(data.pastCharities[i]);
 
           if($scope.topThree === undefined){
-            $scope.hasCharityOne = false;
-            $scope.hasCharityTwo = false;
-            $scope.hasCharityThree = false;
+            $scope.hasTopThree = false;
           } else{
-            if($scope.topThree[i].id === undefined){
+            $scope.hasTopThree = true;
+            if($scope.topThree[i] == undefined){
               if(i==0){
                 $scope.hasCharityOne = false;
-                $scope.hasCharityTwo = false;
-                $scope.hasCharityThree = false;
+                return;
               } else if(i==1){
                 $scope.hasCharityTwo = false;
-                $scope.hasCharityThree = false;
+                return;
               } else if(i==2){
                 $scope.hasCharityThree =false;
+                return;
               }
             } else {
+              if(i==0){
+                $scope.hasCharityOne = true;
+              } else if(i==1){
+                $scope.hasCharityTwo = true;
+              } else if(i==2){
+                $scope.hasCharityThree =true;
+              }
               console.log('topThreeCharities: ' + JSON.stringify($scope.topThree));
-              $scope.getCharityName($scope.topThree[i]._id, $scope.topThree[i].moneyRaised);
+              $scope.getCharityName($scope.topThree[i].id, $scope.topThree[i].moneyRaised);
             }
           }
 
