@@ -3,11 +3,16 @@
   height: 100%;
   border: 0;
   margin: -1px 0 0 0;
+  padding: 0;
 
   background-image: url("../img/User Header Background.png");
   background-size: cover;
   background-repeat: no-repeat;
 }
+  .race-profile .heading .heading-gradient {
+    padding: 16px;
+    background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) );
+  }
   .race-profile .heading .race-name {
     text-align: center;
     color: #fff;

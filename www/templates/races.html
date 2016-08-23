@@ -3,12 +3,13 @@
 
     <div class="races featured-containter">
       <ion-slides options="slideOptions" slider="data.slider">
-        <ion-slide-page ng-repeat="race in featuredRaces" ng-click="selectRace(race._id)">
-          <div class="races featured-box">
+        <ion-slide-page ng-repeat="race in featuredRaces" ng-click="selectRace(race._id)" style="background-image:url('../img/race-images/race-banner-{{race._id}}.png');">
+          <div class="races featured-box gradient">
             <h1 class="featured-race">{{race.name}}</h1>
+            <p class="races featured-race-detail"><b>Date:</b> {{race.date | date: 'MM/dd/yyyy'}}</p>
             <p class="races featured-race-detail"><b>Location:</b> {{race.city}}</p>
             <p class="races featured-race-detail"><b>Distance:</b> {{displayDistanceForRace(race)}}</p>
-            <p class="races featured-race-detail"><b>Description:</b> {{race.description}}</p>
+            <p class="races featured-race-detail description"><b>Description</b> {{race.description}}</p>
 
           </div>
         </ion-slide-page>

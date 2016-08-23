@@ -57,10 +57,11 @@ angular.module('starter.findRacesController', [
     };
 
     $scope.displayDistanceForRace = function(race) {
+      console.log(race.distances)
       distanceArray = race.distances.split(",");
       distanceString = "";
       for (var i = 0; i < distanceArray.length; i++) {
-        distanceString += distanceArray[i] + "km";
+        distanceString += distanceArray[i];
         if (i < (distanceArray.length - 1)) {
           distanceString += ", ";
         }

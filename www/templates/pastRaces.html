@@ -9,12 +9,13 @@
   <ion-content class="">
 
     <!--User this template-->
-    <div class="races past-races-container" ng-repeat="race in pastRacesDisplay">
+    <div class="races past-races-container" ng-repeat="race in pastRacesDisplay"
+         style="background-image:url('../img/race-images/race-banner-{{race._id}}.png');">
       <div class="gradient">
         <h1 class="featured-race">{{race.name}}</h1>
         <p class="races races-detail">Location: {{race.city}}</p>
         <p class="races races-detail">Date: {{race.date | date:'MM/dd/yyyy'}}</p>
-        <p class="races races-detail">Distance: {{displayDistances(raceDistances)}}</p>
+        <p class="races races-detail">Distance: {{race.distances}}</p>
       </div>
     </div>
 <!--

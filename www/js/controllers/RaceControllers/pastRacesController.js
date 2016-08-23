@@ -30,6 +30,7 @@ angular.module('starter.pastRacesController', [
     $scope.raceDistances = [];
 
     RaceAPI.getPastRaces($rootScope.getUserId())
+    // RaceAPI.getAllRaces()
       .success(function(data, status, headers, config){
         console.log('RaceAPI getPastRaces succeeded');
         console.log('getPastRaces data.length: ' + data.length);
@@ -39,22 +40,14 @@ angular.module('starter.pastRacesController', [
           $scope.raceDate = data[i].date;
           $scope.raceCity = data[i].city;
           // $scope.raceDistances = data.distances;
+
           console.log(data[i].distances);
-          var tempDistanceHolder = data[i].distances;
-          var distanceSplit = tempDistanceHolder.toString().split(',');
-          console.log('distanceSplit: ' + distanceSplit);
-          if (distanceSplit.length > 0) {
-            for (var i = 0; i < distanceSplit.length; i++) {
-              var fDistance = distanceSplit[i];
-              $scope.raceDistances.push({distance: fDistance});
-
-            }
-
-          }
+          var distances = $scope.displayDistanceForRace(data[i]);
 
           $scope.pastRacesDisplay.push({name: $scope.raceName, date: $scope.raceDate,
-            city: $scope.raceCity});
+            city: $scope.raceCity, distances: distances,  _id: data[i]._id});
           console.log('pastRacesDisplay: ' + JSON.stringify($scope.pastRacesDisplay));
+
         }
       })
       .error(function(err, status){
@@ -68,15 +61,17 @@ angular.module('starter.pastRacesController', [
       $window.location.href = ('#/app/raceProfile');
     }
 
-    $scope.displayDistances = function(distances) {
+    $scope.displayDistanceForRace = function(race) {
+      // console.log(race.distances)
+      distanceArray = race.distances.split(",");
       distanceString = "";
-      for (var i = 0; i < distances.length; i++) {
-        distanceString += (distances[i].distance + "km");
-        if (i < (distances.length - 1)) {
-          distanceString += ", "
+      for (var i = 0; i < distanceArray.length; i++) {
+        distanceString += distanceArray[i];
+        if (i < (distanceArray.length - 1)) {
+          distanceString += ", ";
         }
       }
       return distanceString;
-    }
+    };
 
   });
