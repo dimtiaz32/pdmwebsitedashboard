@@ -912,7 +912,7 @@ angular.module('starter.runController', ['starter.appServices',
           // $scope.marker.setPosition($scope.ll);
           $scope.circle.setCenter($scope.ll);
           $scope.map.panTo($scope.ll);
-          $scope.mapOptions = map.setOptions({
+          $scope.mapOptions = $scope.map.setOptions({
             center: $scope.ll,
             zoom: 18,
             disableDefaultUI: true,
@@ -924,6 +924,21 @@ angular.module('starter.runController', ['starter.appServices',
             $scope.circle.setRadius($scope.getCustomRadiusForZoom(zoomLevel));
           });
           $scope.circle.setMap($scope.map);
+
+          $scope.centerOnMe = function(){
+            console.log("%cCentering", 'color: Green');
+            if(!$scope.map){
+              return;
+            }
+
+            $scope.loading = $ionicLoading.show({
+              content: 'Getting current location',
+              showBackdrop: false
+            });
+
+            $scope.map.setCenter($scope.ll);
+            $rootScope.hide();
+          };
 
           if($scope.isRunning  == true){
             $scope.path = null;
@@ -1281,28 +1296,7 @@ angular.module('starter.runController', ['starter.appServices',
 
 
 
-    $scope.centerOnMe = function(){
-      console.log("%cCentering", 'color: Green');
-      if(!$scope.map){
-        return;
-      }
 
-      $scope.loading = $ionicLoading.show({
-        content: 'Getting current location',
-        showBackdrop: false
-      });
-
-      var centeringCenter = navigator.geolocation.getCurrentPosition(function(pos){
-        console.log('Got pos', pos);
-
-
-      }, function(error){
-        alert('Unable to get location: ' + error.message);
-      });
-
-      $scope.map.setCenter(new google.maps.LatLng(centeringCenter));
-      $rootScope.hide();
-    };
   });
 
     $ionicPlatform.ready(function(){
