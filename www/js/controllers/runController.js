@@ -19,7 +19,7 @@ angular.module('starter.runController', ['starter.appServices',
 
 //TODO: CLEAR VALUES AFTER RUN SUMMARY, NEW RUN BUTTON?
 
-  .controller('RunCtrl', function($scope, $window, $rootScope, $cordovaGeolocation, $ionicPlatform, $ionicLoading, $interval, RunAPI, CharityAPI, HistoryAPI, DonationAPI, $ionicModal){
+  .controller('RunCtrl', function($scope, $window, $rootScope, $cordovaGeolocation, $ionicPlatform, $ionicLoading,$ionicPopup, $interval, RunAPI, CharityAPI, HistoryAPI, DonationAPI, $ionicModal){
 
   $rootScope.$on('initRun', function(){
 

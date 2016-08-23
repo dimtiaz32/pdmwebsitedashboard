@@ -46,7 +46,7 @@ angular.module('starter.myRacesController', [
             console.log(data[i].distances);
             var distances = $scope.displayDistances(data[i].distances);
 
-            $scope.myRaces.push({name: $scope.raceName, date: $scope.raceDate,
+        $scope.myRaces.push({name: $scope.raceName, date: $scope.raceDate,
               city: $scope.raceCity, distances: distances,  _id: data[i]._id});
             console.log('myRacesDisplay: ' + JSON.stringify($scope.myRaces));
           }
