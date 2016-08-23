@@ -28,6 +28,7 @@ angular.module('starter.raceProfileController', ['starter.appServices',
       //ionicHistory is a record of the app's navigation history
       $ionicHistory.goBack();
     };
+    $scope.isSignedUp;
 
     $scope.raceId = $rootScope.getRaceId();
     console.log('raceId:  ' + $scope.raceId);
@@ -127,14 +128,22 @@ angular.module('starter.raceProfileController', ['starter.appServices',
         });
     }
 
+    $scope.setFalse = function(){
+      $scope.isSignedUp = false;
+    }
+
+
     $scope.removeRace = function(){
       console.log('removing race: ' + $scope.raceId);
       RaceAPI.removeRace($scope.raceId, $rootScope.getUserId())
         .success(function(data, status, headers, config){
-          console.log('RaceAPI remove race call succeeded');
+
+          $scope.setFalse();
+          console.log('isSignedUp: ' + $scope.isSignedUp);
           $ionicPopup.alert({
             title:'Race removed!'
           });
+
 
         })
         .error(function(err, status){
