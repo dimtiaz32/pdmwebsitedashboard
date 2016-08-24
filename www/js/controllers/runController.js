@@ -1240,6 +1240,7 @@ angular.module('starter.runController', ['starter.appServices',
       $scope.stopTimer();
       $scope.resetRun();
       $scope.$broadcast('newMap');
+      $rootScope.hide();
 
     };
     $scope.postRun = function(){
