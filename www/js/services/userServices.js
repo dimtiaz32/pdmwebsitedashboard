@@ -5,9 +5,10 @@ angular.module('starter.userServices', [])
   // var base="http://localhost:5000/";
   $rootScope.show = function(text){
     $rootScope.loading = $ionicLoading.show({
+      template:'<ion-spinner icon="ripple" class="spinner"></ion-spinner>',
       content: text ? text : 'Loading',
       animation: 'fade-in',
-      showBackdrop: true,
+      showBackdrop: false,
       maxWidth: 200,
       delay: 0
     });

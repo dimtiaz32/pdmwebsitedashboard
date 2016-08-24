@@ -7,6 +7,7 @@ angular.module('starter.runServices', ['ionic'])
 
   $rootScope.show = function(text){
     $rootScope.loading = $ionicLoading.show({
+      template:'<ion-spinner icon="ripple" class="spinner"></ion-spinner>',
       content: text ? text : 'Loading',
       animation: 'fade-in',
       showBackdrop: true,
