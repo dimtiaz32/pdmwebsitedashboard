@@ -912,15 +912,13 @@ angular.module('starter.runController', ['starter.appServices',
 
         $scope.onSuccess = function(pos){
           console.log('onSuccess entered with pos: ' + pos);
-          $scope.name = $rootScope.getName();
+          $rootScope.hide();
           $scope.ll = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
           console.log('ll: ' + $scope.ll);
           // $scope.marker.setPosition($scope.ll);
 
           $scope.map.panTo($scope.ll);
-          $scope.mapOptions = $scope.map.setOptions({
-            center: $scope.ll
-          });
+          $scope.map.setCenter($scope.ll);
 
           // google.maps.event.addListener($scope.map, 'zoom_changed', function(){
           //   var zoomLevel = $scope.map.getZoom();
