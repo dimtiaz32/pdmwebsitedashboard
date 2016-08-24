@@ -18,8 +18,15 @@ angular.module('starter.historyDayController', [
   'angular-svg-round-progressbar',
   'Tek.progressBar'])
 
-  .controller('HistoryDayCtrl', function($scope, $rootScope, $window, HistoryAPI, AuthAPI, $ionicSlideBoxDelegate, AuthAPI, $filter, roundProgressService, $timeout, $ionicPopup, $ionicNavBarDelegate, $ionicViewSwitcher){
+  .controller('HistoryDayCtrl', function($scope, $rootScope, $window, HistoryAPI, RunAPI, $ionicSlideBoxDelegate, AuthAPI, $filter, roundProgressService, $timeout, $ionicPopup, $ionicNavBarDelegate, $ionicViewSwitcher){
     console.log('history day controller entered with run id: ' + $rootScope.dayRunId);
+
+
+    $rootScope.$on('setDayHistory', function() {
+      if($scope.historyRunPath !=undefined){
+
+        $scope.historyRunPath.setMap(null);
+      }
 
         $scope.goBack = function() {
           $ionicViewSwitcher.nextDirection('back');
@@ -209,6 +216,7 @@ angular.module('starter.historyDayController', [
           });
           $scope.historyRunPath.setMap($scope.map);
 
+
         } else {
           $rootScope.notify("Lat,Lng lengths do not match");
           console.log('setValuesForHistoryDayView: lat,long lengths do not match');
@@ -227,13 +235,15 @@ angular.module('starter.historyDayController', [
       } else {
         console.log('data returned more than one run with id: ' + $rootScope.dayRunId);
       }
-
+        $rootScope.$broadcast('scroll.refreshComplete');
     })
     .error(function(err){
       console.log('history API get by id failed with error: ' + err);
     });
 
+  })
 
+    $rootScope.$broadcast('setDayHistory');
 
 
 

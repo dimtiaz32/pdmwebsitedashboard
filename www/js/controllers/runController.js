@@ -1323,6 +1323,7 @@ angular.module('starter.runController', ['starter.appServices',
           console.log('data.id: ' + data._id);
           $rootScope.setRunIdDayView(data._id);
           console.log('$rootScope.dayRunId: ' + $rootScope.dayRunId);
+          $rootScope.$broadcast('setDayHistory');
           $window.location.href = ('#/app/historyDay');
 
         })
