@@ -28,7 +28,7 @@ angular.module('starter.historyDayController', [
     $scope.mapCreated = function(map) {
       $scope.map = map;
       console.log('mapCreated entered/should work');
-      $scope.mapOptions = map.setOptions({
+      $scope.map.setOptions({
         center: $scope.middle,
         zoom: 15,
         disableDefaultUI: true,
