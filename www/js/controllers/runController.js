@@ -1137,8 +1137,6 @@ angular.module('starter.runController', ['starter.appServices',
 
     }
     $scope.pauseRun = function(){
-      $scope.pauseTimer();
-
       $scope.pauseLapTimer();
       // $scope.pauseCoordsArrayUpdater();
       $scope.removeLap();

@@ -34,7 +34,6 @@ angular.module('starter.directives', [])
 
           $scope.onCreate({map: map});
 
-          map.setCenter($scope.myLatLng);
           google.maps.event.addDomListener($element[0], 'mousedown', function(e){
             e.preventDefault();
             return false;
@@ -44,7 +43,7 @@ angular.module('starter.directives', [])
         if(document.readyState === "complete"){
           $scope.initialize();
         } else {
-          google.maps.event.addDomListener($window, 'load', $scope.initialize());
+          google.maps.event.addDomListener(window, 'load', $scope.initialize);
         }
       }
     }
