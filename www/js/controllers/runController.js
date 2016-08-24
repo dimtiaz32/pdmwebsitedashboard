@@ -19,7 +19,7 @@ angular.module('starter.runController', ['starter.appServices',
 
 //TODO: CLEAR VALUES AFTER RUN SUMMARY, NEW RUN BUTTON?
 
-  .controller('RunCtrl', function($scope, $window, $rootScope, $cordovaGeolocation, $ionicPlatform, $ionicLoading,$ionicPopup, $interval, RunAPI, CharityAPI, HistoryAPI, DonationAPI, $ionicModal){
+  .controller('RunCtrl', function($scope, $window, $rootScope, $cordovaGeolocation, $ionicPlatform, $ionicLoading,$ionicPopup, $interval, AppAPI, RunAPI, CharityAPI, HistoryAPI, DonationAPI, $ionicModal){
 
   $rootScope.$on('initRun', function(){
 
@@ -996,14 +996,14 @@ angular.module('starter.runController', ['starter.appServices',
 
         $scope.watchRetry = function(){
           console.log('attempting watchRetry...');
-          $rootScope.show('Locating your position...');
+          $rootScope.show("Finding your location...");
           // if($scope.ll !== undefined){
           //
           // }
 
-          // if($scope.isRunning == true){
+          // if($scope.isRunning == true){}
             console.log('$scope.ll: ' + $scope.ll);
-            if($scope.ll !== undefined){
+            if($scope.ll != undefined){
 
               $scope.map.setCenter($scope.ll);
               $scope.circle.setCenter($scope.ll);
@@ -1019,7 +1019,10 @@ angular.module('starter.runController', ['starter.appServices',
         }
 
 
-        $scope.watch = navigator.geolocation.watchPosition($scope.onSuccess, $scope.onError, {maximumAge: 3000, timeout: 3000, enableHighAccuracy: true});
+        $rootScope.$on('resetWatch', function(){
+          $scope.watch = navigator.geolocation.watchPosition($scope.onSuccess, $scope.onError, {maximumAge: 3000, timeout: 3000, enableHighAccuracy: true});
+        });
+        $rootScope.$broadcast('resetWatch');
 
         console.log('watch: ' + JSON.stringify($scope.watch));
 
@@ -1039,6 +1042,8 @@ angular.module('starter.runController', ['starter.appServices',
 
 
       }
+
+
 
     });
     // $scope.mapCreated = function(map){
@@ -1117,9 +1122,9 @@ angular.module('starter.runController', ['starter.appServices',
     //
     // }
 
-
-
     $rootScope.$broadcast('newMap');
+
+
     $scope.startRun = function(){
       console.log('isRunning: ' + $scope.isRunning);
       $scope.removeStartUI();
@@ -1334,8 +1339,14 @@ angular.module('starter.runController', ['starter.appServices',
 
   });
 
-    $ionicPlatform.ready(function(){
+    // $ionicPlatform.ready(function(){
         $rootScope.$broadcast('initRun');
-    });
+    // });
+    $rootScope.$on('destroyWatch',function(){
+      navigator.geolocation.clearWatch($scope.watch);
 
+    });
+    $rootScope.$on('restoreWatch', function(){
+      $scope.watch = undefined;
+    })
   });

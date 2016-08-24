@@ -19,7 +19,7 @@ angular.module('starter.appController', [
 
 
 
-  .controller('AppCtrl', function($rootScope, $scope, $window, $filter, $ionicModal, $timeout, DonationAPI, CharityAPI, AuthAPI, $ionicNavBarDelegate) {
+  .controller('AppCtrl', function($rootScope, $scope, $window, $filter, $ionicModal, $timeout,AppAPI, DonationAPI, CharityAPI, RaceAPI, AuthAPI, RunAPI, $ionicNavBarDelegate) {
 
     $ionicNavBarDelegate.showBackButton(false);
 
@@ -44,7 +44,15 @@ angular.module('starter.appController', [
     }
 
 
+    $scope.doRefresh = function(tab){
+      console.log('doRefresh called from ctrl with #: ' + tab);
+      $rootScope.doRefresh(tab);
+    }
 
+    $scope.onMap = function(){
+      console.log('on map called function called');
+      $rootScope.$broadcast('renewWatch');
+    }
 
     $rootScope.$on('fetchMySponsors', function() {
       DonationAPI.getAllSponsors($rootScope.getUserId()).success(function(data, status, headers, config){

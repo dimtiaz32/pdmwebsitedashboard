@@ -30,28 +30,42 @@ angular.module('starter.appServices', ['starter.historyServices'])
 
     $rootScope.doRefresh = function(tab) {
       if (tab == 1) {
+        console.log('doRefresh APP API entered');
+        $rootScope.$broadcast('resetWatch');
         $rootScope.$broadcast('newMap');
+        $rootScope.$broadcast('initRun');
 
       } else
        if (tab == 2) {
+         // $rootScope.setMapStatus(false);
+         // $rootScope.$broadcast("removeFindingLocation");
         $rootScope.$broadcast('fetchHistory');
+         // $rootScope.$broadcast('destroyWatch');
       }
-      // else if (tab == 3) {
-      //   $rootScope.$broadcast('');
-      // }
+      else if (tab == 3) {
+         $rootScope.$broadcast('destroyWatch');
+      }
        if (tab == 4) {
         $rootScope.$broadcast('fetchMonthHistory');
+         $rootScope.$broadcast('destroyWatch');
       }
       else if (tab == 5) {
-         $rootScope.$broadcast('fetchCharities');
+         // $rootScope.$broadcast('fetchCharities');
+         $rootScope.$broadcast('destroyWatch');
       }
-     //  else if(tab == 6) {
-     //
-     // }
+      else if(tab == 6) {
+         $rootScope.$broadcast('destroyWatch');
+     }
 
-      $rootScope.$broadcast('scroll.refreshComplete');
+      // $rootScope.$broadcast('scroll.refreshComplete');
     }
 
+    $rootScope.setMapStatus = function(mapStatus){
+      $window.localStorage.mapStatus = mapStatus;
+    }
+    $rootScope.getMapStatus = function(){
+      return $window.localStorage.mapStatus;
+    }
 
     return {
 

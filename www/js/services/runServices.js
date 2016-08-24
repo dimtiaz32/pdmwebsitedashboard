@@ -28,7 +28,7 @@ angular.module('starter.runServices', ['ionic'])
   };
 
   $rootScope.loadMap = function(){
-    console.log('newMap broadcase entered');
+    console.log('newMap broadcast entered');
     $rootScope.$broadcast('newMap');
   };
 
