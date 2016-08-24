@@ -890,7 +890,7 @@ angular.module('starter.runController', ['starter.appServices',
         console.log('isRunning load value: ' + $scope.isRunning);
         // $scope.polyCoords = null;
 
-
+        $scope.map = map;
         $scope.circle = new google.maps.Circle({
           fillOpacity: 1,
           fillColor: '#00b9be',
@@ -900,45 +900,36 @@ angular.module('starter.runController', ['starter.appServices',
           radius: 5,
           zIndex: 2
         });
-        $scope.map = map;
+
+        $scope.mapOptions = $scope.map.setOptions({
+          zoom: 18,
+          disableDefaultUI: true,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+
         $scope.polyCoords = [];
-        $scope.latTrans = [];
-        $scope.lngTrans = [];
+
+
         $scope.onSuccess = function(pos){
           console.log('onSuccess entered with pos: ' + pos);
           $scope.name = $rootScope.getName();
           $scope.ll = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
           console.log('ll: ' + $scope.ll);
           // $scope.marker.setPosition($scope.ll);
-          $scope.circle.setCenter($scope.ll);
+
           $scope.map.panTo($scope.ll);
           $scope.mapOptions = $scope.map.setOptions({
-            center: $scope.ll,
-            zoom: 18,
-            disableDefaultUI: true,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
+            center: $scope.ll
           });
-          google.maps.event.addListener($scope.map, 'zoom_changed', function(){
-            var zoomLevel = $scope.map.getZoom();
-            // var circleRadius = $scope.circle.getRadius();
-            $scope.circle.setRadius($scope.getCustomRadiusForZoom(zoomLevel));
-          });
+
+          // google.maps.event.addListener($scope.map, 'zoom_changed', function(){
+          //   var zoomLevel = $scope.map.getZoom();
+          //   // var circleRadius = $scope.circle.getRadius();
+          //   $scope.circle.setRadius($scope.getCustomRadiusForZoom(zoomLevel));
+          // });
+
           $scope.circle.setMap($scope.map);
-
-          $scope.centerOnMe = function(){
-            console.log("%cCentering", 'color: Green');
-            if(!$scope.map){
-              return;
-            }
-
-            $scope.loading = $ionicLoading.show({
-              content: 'Getting current location',
-              showBackdrop: false
-            });
-
-            $scope.map.setCenter($scope.ll);
-            $rootScope.hide();
-          };
+          $scope.circle.setCenter($scope.ll);
 
           if($scope.isRunning  == true){
             $scope.path = null;
@@ -965,9 +956,10 @@ angular.module('starter.runController', ['starter.appServices',
             // console.log('pace: ' + $scope.pace);
             $scope.moneyRaised = $scope.mrCalculator($scope.distance);
           }
+
           // $scope.marker.setMap($scope.map);
 
-          $scope.prePath =  $scope.path;
+          // $scope.prePath =  $scope.path;
           $scope.removePolyLine = function(){
 
             if($scope.prePath){
@@ -978,19 +970,58 @@ angular.module('starter.runController', ['starter.appServices',
             // $scope.path.setMap(null);
             // $scope.runPath = $scope.path;
           }
+          $scope.centerOnMe = function(){
+            $rootScope.show('Centering Map...');
+            console.log("%cCentering", 'color: Green');
+            if(!$scope.map){
+              return;
+            }
+
+            $scope.loading = $ionicLoading.show({
+              content: 'Getting current location',
+              showBackdrop: false
+            });
+            if($scope.ll != undefined){
+              $scope.map.setCenter($scope.ll);
+            }
+
+            $rootScope.hide();
+          };
+          $rootScope.hide();
           $scope.$broadcast('scroll.refreshComplete');
         }
+        $scope.map.addListener('zoom_changed', function(){
+          var zoomLevel = $scope.map.getZoom();
+          // var circleRadius = $scope.circle.getRadius();
+          $scope.circle.setRadius($scope.getCustomRadiusForZoom(zoomLevel));
+        });
 
         $scope.watchRetry = function(){
           console.log('attempting watchRetry...');
-          $scope.watch = navigator.geolocation.watchPosition($scope.onSuccess, $scope.onError, {maximumAge: 3000, timeout: 5000, enableHighAccuracy: true});
+          $rootScope.show('Locating your position...');
+          // if($scope.ll !== undefined){
+          //
+          // }
+
+          // if($scope.isRunning == true){
+            console.log('$scope.ll: ' + $scope.ll);
+            if($scope.ll !== undefined){
+
+              $scope.map.setCenter($scope.ll);
+              $scope.circle.setCenter($scope.ll);
+            }
+
+            $scope.circle.setMap($scope.map);
         }
+
         $scope.onError = function(){
           console.log('watchPosition onErrror entered');
           $scope.watchRetry();
 
         }
-        $scope.watch = navigator.geolocation.watchPosition($scope.onSuccess, $scope.onError, {maximumAge: 3000, timeout: 5000, enableHighAccuracy: true});
+
+
+        $scope.watch = navigator.geolocation.watchPosition($scope.onSuccess, $scope.onError, {maximumAge: 3000, timeout: 3000, enableHighAccuracy: true});
 
         console.log('watch: ' + JSON.stringify($scope.watch));
 
@@ -1138,10 +1169,11 @@ angular.module('starter.runController', ['starter.appServices',
     }
     $scope.pauseRun = function(){
       $scope.pauseLapTimer();
+      $scope.pauseTimer();
       // $scope.pauseCoordsArrayUpdater();
       $scope.removeLap();
       $scope.removePause();
-      $scope.pauseTimer();
+
 
       var pausedControlDiv = document.createElement('div');
       var pausedControl = $scope.pausedControl(pausedControlDiv, $scope.map);
@@ -1174,6 +1206,9 @@ angular.module('starter.runController', ['starter.appServices',
       $scope.polyCoords = null;
       console.log('resetRun polyCoords vals post reset: ' + $scope.polyCoords);
       $scope.runPath = null;
+
+
+
       // $scope.runPath.setMap(null);
       // $scope.polyCoords.setMap(null);
 
@@ -1190,20 +1225,23 @@ angular.module('starter.runController', ['starter.appServices',
 
       $scope.mapCreated(this.map);
       $scope.removePolyLine();
-      $rootScope.$broadcast('newMap');
+
     }
 
     $scope.stopRun = function(){
-      $scope.runPath.setMap(null);
-      navigator.geolocation.clearWatch($scope.watch);
+
       $scope.lapNumbers.push($scope.lapNumber);
       $scope.lapDistances.push($scope.lapDistance);
       $scope.lapSecs.push($scope.lapSeconds);
       $scope.lapMins.push($scope.lapMinutes);
       $scope.lapPaces.push($scope.lapPace);
+      $scope.runPath.setMap(null);
+      $scope.circle.setMap(null);
+      navigator.geolocation.clearWatch($scope.watch);
       $scope.postRun();
       $scope.stopTimer();
       $scope.resetRun();
+      $scope.$broadcast('newMap');
 
     };
     $scope.postRun = function(){
