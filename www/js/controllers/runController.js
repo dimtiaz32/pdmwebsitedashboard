@@ -983,14 +983,14 @@ angular.module('starter.runController', ['starter.appServices',
 
         $scope.watchRetry = function(){
           console.log('attempting watchRetry...');
-          $scope.watch = navigator.geolocation.watchPosition($scope.onSuccess, $scope.onError, {maximumAge: 1000, timeout: 5000, enableHighAccuracy: true});
+          $scope.watch = navigator.geolocation.watchPosition($scope.onSuccess, $scope.onError, {maximumAge: 3000, timeout: 5000, enableHighAccuracy: true});
         }
         $scope.onError = function(){
           console.log('watchPosition onErrror entered');
           $scope.watchRetry();
 
         }
-        $scope.watch = navigator.geolocation.watchPosition($scope.onSuccess, $scope.onError, {maximumAge: 1000, timeout: 5000, enableHighAccuracy: true});
+        $scope.watch = navigator.geolocation.watchPosition($scope.onSuccess, $scope.onError, {maximumAge: 3000, timeout: 5000, enableHighAccuracy: true});
 
         console.log('watch: ' + JSON.stringify($scope.watch));
 
