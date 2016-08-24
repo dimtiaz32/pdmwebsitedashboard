@@ -1345,7 +1345,7 @@ angular.module('starter.runController', ['starter.appServices',
     // });
     $rootScope.$on('destroyWatch',function(){
       navigator.geolocation.clearWatch($scope.watch);
-
+      $rootScope.hide();
     });
     $rootScope.$on('restoreWatch', function(){
       $scope.watch = undefined;

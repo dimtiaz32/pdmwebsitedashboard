@@ -40,7 +40,7 @@ angular.module('starter.appServices', ['starter.historyServices'])
          // $rootScope.setMapStatus(false);
          // $rootScope.$broadcast("removeFindingLocation");
         $rootScope.$broadcast('fetchHistory');
-         // $rootScope.$broadcast('destroyWatch');
+         $rootScope.$broadcast('destroyWatch');
       }
       else if (tab == 3) {
          $rootScope.$broadcast('destroyWatch');
