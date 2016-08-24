@@ -11,7 +11,7 @@ angular.module('starter.appServices', ['starter.historyServices'])
         template:'<ion-spinner icon="ripple" class="spinner"></ion-spinner>',
         content: text ? text : 'Loading',
         animation: 'fade-in',
-        showBackdrop: true,
+        showBackdrop: false,
         maxWidth: 200,
         delay: 0
       });
