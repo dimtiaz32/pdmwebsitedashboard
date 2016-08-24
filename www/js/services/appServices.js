@@ -8,9 +8,10 @@ angular.module('starter.appServices', ['starter.historyServices'])
     //everything up until return should be put in a main API
     $rootScope.show = function (text) {
       $rootScope.loading = $ionicLoading.show({
+        template:'<ion-spinner icon="ripple" class="spinner"></ion-spinner>',
         content: text ? text : 'Loading',
         animation: 'fade-in',
-        showBackdrop: true,
+        showBackdrop: false,
         maxWidth: 200,
         delay: 0
       });

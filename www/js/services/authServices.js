@@ -17,9 +17,10 @@ angular.module('starter.authServices', ['ngCookies'])
 
   $rootScope.show = function (text) {
     $rootScope.loading = $ionicLoading.show({
+      template:'<ion-spinner icon="ripple" class="spinner"></ion-spinner>',
       content: text ? text : 'Loading',
       animation: 'fade-in',
-      showBackdrop: true,
+      showBackdrop: false,
       maxWidth: 200,
       delay: 0
     });

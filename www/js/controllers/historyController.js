@@ -663,7 +663,7 @@ angular.module('starter.historyController', [
       })
       .error(function(status, err){
         console.log('HistoryAPI getby week call failed with error: ' + err + 'and status: ' + status);
-        // $rootScope.hide();
+        $rootScope.hide();
       });
 
     console.log('$scope.data: ' + JSON.stringify($scope.data));
