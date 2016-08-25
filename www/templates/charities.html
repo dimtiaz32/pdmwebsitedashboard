@@ -14,7 +14,7 @@
       <div class="charity-page charity-detail" ng-show="isCharityDetailDisplayed">
         <hr class="charity-page">
         <ion-item class="charity-page charity-detail item-thumbnail-left">
-          <img ng-src="img/charity-images/{{selectedCharityDisplay.avatar}}" alt="{{selectedCharityDisplay.avatar}}">
+          <img ng-src="img/charity-images/logo-{{selectedCharityDisplay.id}}.png" alt="{{selectedCharityDisplay.avatar}}">
           <a ng-click="openCharityLink(selectedCharityDisplay.url)">{{selectedCharityDisplay.url}}</a>
           <p class="description">{{selectedCharityDisplay.description}}</p>
         </ion-item>

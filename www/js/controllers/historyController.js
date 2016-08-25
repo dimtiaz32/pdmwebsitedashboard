@@ -401,19 +401,23 @@ angular.module('starter.historyController', [
     $scope.charityOne = {
       name: String,
       moneyRaised: Number,
+      id: String
     };
     $scope.charityTwo = {
       name: String,
       moneyRaised: Number,
+      id: String
     };
     $scope.charityThree = {
       name: String,
       moneyRaised: Number,
+      id: String
     };
 
     $scope.getCharityName = function(id, moneyRaised){
       $scope.charityNames = [];
       $scope.charityMoneyRaised = [];
+      $scope.charityId = [];
 
       console.log('getCharityName entered with id: ' + id +'   and moneyRaised: ' + moneyRaised);
       CharityAPI.getById(id)
@@ -423,18 +427,19 @@ angular.module('starter.historyController', [
           var name = data.name;
           console.log('name name: ' + name);
           $scope.charityNames.push(name);
-          $scope.charityMoneyRaised.push(moneyRaised)
+          $scope.charityMoneyRaised.push(moneyRaised);
+          $scope.charityId.push(data._id);
           console.log('charityNames.length: ' + $scope.charityNames.length);
           console.log('charityNames[0]: ' + $scope.charityNames[0]);
           switch($scope.charityNames.length){
             case 1:
-              $scope.charityOne = {name: $scope.charityNames[0], moneyRaised: $scope.charityMoneyRaised[0]};
+              $scope.charityOne = {name: $scope.charityNames[0], moneyRaised: $scope.charityMoneyRaised[0], id: $scope.charityId[0]};
               break;
             case 2:
-              $scope.charityTwo = {name: $scope.charityNames[1], moneyRaised: $scope.charityMoneyRaised[1]};
+              $scope.charityTwo = {name: $scope.charityNames[1], moneyRaised: $scope.charityMoneyRaised[1], id: $scope.charityId[1]};
               break;
             case 3:
-              $scope.charityThree = {name: $scope.charityNames[2], moneyRaised: $scope.charityMoneyRaised[2]};
+              $scope.charityThree = {name: $scope.charityNames[2], moneyRaised: $scope.charityMoneyRaised[2], id: $scope.charityId[2]};
               break;
           }
 
