@@ -19,7 +19,9 @@ angular.module('starter.charityController', ['starter.appServices',
   'angular-svg-round-progressbar'])
 
 
-.controller('CharitiesCtrl', function($rootScope, $timeout, $ionicModal, $window, $scope, CharityAPI, HistoryAPI, AuthAPI, UserAPI, $ionicFilterBar, $ionicScrollDelegate){
+.controller('CharitiesCtrl', function($rootScope, $timeout, $ionicModal, $window, $scope, CharityAPI, HistoryAPI, AuthAPI, RunAPI, UserAPI, $ionicFilterBar, $ionicScrollDelegate){
+
+
   $rootScope.$on('fetchCharities', function(){
     $rootScope.show("Loading charities");
 
