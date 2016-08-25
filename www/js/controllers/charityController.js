@@ -126,6 +126,7 @@ angular.module('starter.charityController', ['starter.appServices',
   // }];
   $scope.charitiesDisplayList = [];
   $scope.selectedCharityDisplay = {
+    id: String,
     name: String,
     totalMoneyRaised: Number,
     monthMoneyRaised: Number,
@@ -141,6 +142,7 @@ angular.module('starter.charityController', ['starter.appServices',
   console.log('charityName: ' +$rootScope.getSelectedCharityName());
 
 
+  $scope.selectedCharityDisplay.id = $rootScope.getSelectedCharityId();
   $scope.selectedCharityDisplay.name = $rootScope.getSelectedCharityName();
   $scope.selectedCharityDisplay.url = $rootScope.getSelectedCharityUrl();
   $scope.selectedCharityDisplay.totalMoneyRaised = $rootScope.getSelectedCharityMoneyRaised();
@@ -352,6 +354,7 @@ angular.module('starter.charityController', ['starter.appServices',
       // $rootScope.setSelectedCharityUrl(data.url);
       // $rootScope.setSelectedCharityId(data._id);
       // $rootScope.setSelectedCharityMoneyRaised(moneyRaised);
+      $scope.selectedCharityDisplay.id = data._id;
       $scope.selectedCharityDisplay.name = data.name;
       $scope.selectedCharityDisplay.description = data.description;
       $scope.selectedCharityDisplay.url = data.url;
@@ -448,6 +451,7 @@ angular.module('starter.charityController', ['starter.appServices',
                 $rootScope.setSelectedCharityUrl(data.url);
                 $rootScope.setSelectedCharityId(data._id);
                 $rootScope.setSelectedCharityMoneyRaised(moneyRaised);
+                $scope.selectedCharityDisplay.id = data._id;
                 $scope.selectedCharityDisplay.name = data.name;
                 $scope.selectedCharityDisplay.description = data.description;
                 $scope.selectedCharityDisplay.url = data.url;

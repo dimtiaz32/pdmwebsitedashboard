@@ -14,7 +14,7 @@
       <div class="charity-page charity-detail" ng-show="isCharityDetailDisplayed">
         <hr class="charity-page">
         <ion-item class="charity-page charity-detail item-thumbnail-left">
-          <img ng-src="img/charity-images/{{selectedCharityDisplay.avatar}}" alt="{{selectedCharityDisplay.avatar}}">
+          <img ng-src="img/charity-images/logo-{{selectedCharityDisplay.id}}.png" alt="{{selectedCharityDisplay.name}}">
           <a ng-click="openCharityLink(selectedCharityDisplay.url)">{{selectedCharityDisplay.url}}</a>
           <p class="description">{{selectedCharityDisplay.description}}</p>
         </ion-item>
@@ -43,7 +43,7 @@
     <ion-list class="charity-list" show-delete="shouldShowDelete" show-reorder="shouldShowReorder" can-swipe="listCanSwipe">
       <div ng-repeat="charity in charitiesDisplayList" class="charity">
         <ion-item class="item-thumbnail-left item-button-right">
-            <img ng-click="toggleListDetail(charity.id)" ng-src="img/charity-images/{{charity.avatar}}" alt="{{charity.avatar}}">
+            <img ng-click="toggleListDetail(charity.id)" ng-src="img/charity-images/logo-{{charity.id}}.png" alt="{{charity.avatar}}">
             <h2 ng-click="toggleListDetail(charity.id)">{{charity.name}}</h2>
             <button class="button select" ng-click="selectCharity(charity.id, charity.moneyRaised)">
               <i class="not-selected ion-ios-circle-outline" ng-show="!charity.isSelected"></i>

@@ -12,87 +12,114 @@
       <ion-item class="activity-page charities-banner">
         <ion-slides options="slideOptions" slider="data.slider">
 
-          <!--TODO: change background image based on charity in the history.css using charities.css-->
-          <ion-slide-page class="charity-banner" ng-show="!hasTopThree">
-            <div class="charity-name" style="white-space: normal; line-height: normal">
-              You do not have any top charities :(
-            </div>
-            <div class="spacer">
-            </div>
-            <div class="detail-title row">
-              Impact
-            </div>
-            <div class="detail row">
-              <div class="funds col col-50 col-center">
-                $0<span class="units" style="font-size: small"> raised</span>
+          <ion-slide-page class="charity-banner" ng-show="hasTopThree">
+            <div class="gradient">
+              <div class="charity-name" style="white-space: normal; line-height: normal">
+                You do not have any top charities :(
               </div>
-              <div class="impact col col-50 col-center">
+              <!--<div class="spacer">-->
+              <!--</div>-->
+              <div class="detail-title row">
+                Impact
               </div>
-
+              <div class="detail row">
+                <div class="funds col col-50 col-center">
+                  $0<span class="units" style="font-size: small"> raised</span>
+                </div>
+                <div class="impact col col-50 col-center">
+                </div>
+              </div>
             </div>
 
           </ion-slide-page>
 
-          <ion-slide-page class="charity-banner" ng-show="hasCharityOne">
-            <div class="charity-name">
-              {{charityOne.name}}
-            </div>
-            <div class="spacer">
-            </div>
-            <div class="detail-title row">
-              Impact
-            </div>
-            <div class="detail row">
-              <div class="funds col col-50 col-center">
-                ${{charityOne.moneyRaised}} <span class="units" style="font-size: small">raised</span>
+          <ion-slide-page class="charity-banner" ng-repeat="charity in topThree" style="background-image: url('img/charity-images/banner-{{charity.id}}.png');">
+            <div class="gradient">
+              <div class="charity-name" style="white-space: normal; line-height: normal">
+                {{charity.name}}
               </div>
-              <div class="impact col col-50 col-center">
-                40 students put through college
+              <!--<div class="spacer">-->
+              <!--</div>-->
+              <div class="detail-title row">
+                Impact
               </div>
-
+              <div class="detail row">
+                <div class="funds col col-50 col-center">
+                  ${{charity.moneyRaised}} <span class="units" style="font-size: small">raised</span>
+                </div>
+                <!--<div class="impact col col-50 col-center">-->
+                <!--40 students put through college-->
+                <!--</div>-->
+              </div>
             </div>
 
           </ion-slide-page>
 
-          <ion-slide-page class="charity-banner" ng-show="hasCharityTwo">
-            <div class="charity-name">
-              {{charityTwo.name}}
-            </div>
-            <div class="spacer">
-            </div>
-            <div class="detail-title row">
-              Impact
-            </div>
-            <div class="detail row">
-              <div class="funds col col-50 col-center">
-                ${{charityTwo.moneyRaised}} <span class="units" style="font-size: small">raised</span>
-              </div>
-              <div class="impact col col-50 col-center">
-                40 students put through college
-              </div>
 
-            </div>
-          </ion-slide-page>
+          <!--NOTE: COMMENTED OUT CODE IS CHARLIE's old way of displaying top 3 charities-->
+          <!--<ion-slide-page class="charity-banner" ng-show="hasCharityOne" style="background-image: url('img/charity-images/banner-{{charityOne.id}}.png');">-->
+            <!--<div class="gradient">-->
+              <!--<div class="charity-name" style="white-space: normal; line-height: normal">-->
+                <!--{{charityOne.name}}-->
+              <!--</div>-->
+              <!--&lt;!&ndash;<div class="spacer">&ndash;&gt;-->
+              <!--&lt;!&ndash;</div>&ndash;&gt;-->
+              <!--<div class="detail-title row">-->
+                <!--Impact-->
+              <!--</div>-->
+              <!--<div class="detail row">-->
+                <!--<div class="funds col col-50 col-center">-->
+                  <!--${{charityOne.moneyRaised}} <span class="units" style="font-size: small">raised</span>-->
+                <!--</div>-->
+                <!--&lt;!&ndash;<div class="impact col col-50 col-center">&ndash;&gt;-->
+                  <!--&lt;!&ndash;40 students put through college&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+              <!--</div>-->
+            <!--</div>-->
 
-          <ion-slide-page class="charity-banner" ng-show="hasCharityThree">
-            <div class="charity-name">
-              {{charityThree.name}}
-            </div>
-            <div class="spacer">
-            </div>
-            <div class="detail-title row">
-              Impact
-            </div>
-            <div class="detail row">
-              <div class="funds col col-50 col-center">
-                ${{charityThree.moneyRaised}} <span class="units" style="font-size: small">raised</span>
-              </div>
-              <div class="impact col col-50 col-center">
-                40 students put through college
-              </div>
+          <!--</ion-slide-page>-->
 
-            </div>
-          </ion-slide-page>
+          <!--<ion-slide-page class="charity-banner" ng-show="hasCharityTwo" style="background-image: url('img/charity-images/banner-{{charityTwo.id}}.png');">-->
+            <!--<div class="gradient">-->
+              <!--<div class="charity-name" style="white-space: normal; line-height: normal">-->
+                <!--{{charityTwo.name}}-->
+              <!--</div>-->
+              <!--&lt;!&ndash;<div class="spacer">&ndash;&gt;-->
+              <!--&lt;!&ndash;</div>&ndash;&gt;-->
+              <!--<div class="detail-title row">-->
+                <!--Impact-->
+              <!--</div>-->
+              <!--<div class="detail row">-->
+                <!--<div class="funds col col-50 col-center">-->
+                  <!--${{charityTwo.moneyRaised}} <span class="units" style="font-size: small">raised</span>-->
+                <!--</div>-->
+                <!--&lt;!&ndash;<div class="impact col col-50 col-center">&ndash;&gt;-->
+                  <!--&lt;!&ndash;40 students put through college&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</ion-slide-page>-->
+
+          <!--<ion-slide-page class="charity-banner" ng-show="hasCharityThree" style="background-image: url('img/charity-images/banner-{{charityThree.id}}.png');">-->
+            <!--<div class="gradient">-->
+              <!--<div class="charity-name" style="white-space: normal; line-height: normal">-->
+                <!--{{charityThree.name}}-->
+              <!--</div>-->
+              <!--&lt;!&ndash;<div class="spacer">&ndash;&gt;-->
+              <!--&lt;!&ndash;</div>&ndash;&gt;-->
+              <!--<div class="detail-title row">-->
+                <!--Impact-->
+              <!--</div>-->
+              <!--<div class="detail row">-->
+                <!--<div class="funds col col-50 col-center">-->
+                  <!--${{charityThree.moneyRaised}} <span class="units" style="font-size: small">raised</span>-->
+                <!--</div>-->
+                <!--&lt;!&ndash;<div class="impact col col-50 col-center">&ndash;&gt;-->
+                  <!--&lt;!&ndash;40 students put through college&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</ion-slide-page>-->
 
         </ion-slides>
 
@@ -218,7 +245,7 @@
         </ion-slides>
       </ion-item>
 
-      <!--TODO: New Chart with swipeable bars-->
+      <!--TODO: Chart with swipeable bars-->
       <ion-item class="activity-page week-graph">
 
           <canvas id="bar"
