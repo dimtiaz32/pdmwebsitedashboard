@@ -231,6 +231,7 @@ angular.module('starter.historyController', [
 
               console.log('gdDistance type: ' + typeof gdDistance);
 
+
               if (gdDistance != "" && gdFunds != "") {
                 console.log('goalDayDistance: '+ gdDistance + 'goalDayFunds: ' + gdFunds);
 
@@ -245,6 +246,9 @@ angular.module('starter.historyController', [
                     console.log('User API updateDailyGoals call succeeded');
                     $scope.goalDayDistance = gdDistance;
                     $scope.goalDayFunds = gdFunds;
+                    $scope.goalPopup.goalDayFunds = "";
+                    $scope.goalPopup.goalDayFunds = "";
+
                     // console.log('data.dailyGoals.fundraising: ' + data.dailyGoals.fundraising);
                     // console.log('data.dailyGoals.distance: ' + data.dailyGoals.distance);
 
@@ -254,13 +258,44 @@ angular.module('starter.historyController', [
                     console.log('UserAPI updateDailyGoals call failed with status: ' + status);
                     $rootScope.hide();
                   });
-              } else if(goalDayDistance = "") {
-                console.log('NO new goal for dist')
-              } else if(goalDayFunds = ""){
+              } else if(gdDistance == "") {
+                console.log('NO new goal for dist');
+
+                var userId = $rootScope.getUserId();
+                console.log('userId: ' + userId);
+                UserAPI.updateDailyGoals(userId, {fundraising : gdFunds, distance: $scope.goalDayDistance})
+                  .success(function(data, status, headers, config){
+                    console.log('User API updateDailyGoals call succeeded');
+                    $scope.goalDayFunds = gdFunds;
+                    $scope.goalPopup.goalDayFunds = "";
+
+                    $rootScope.hide();
+                  })
+                  .error(function(status){
+                    console.log('UserAPI updateDailyGoals call failed with status: ' + status);
+                    $rootScope.hide();
+                  });
+
+
+              } else if(gdFunds == ""){
                 console.log('No new goal for funds');
+
+                var userId = $rootScope.getUserId();
+                console.log('userId: ' + userId);
+                UserAPI.updateDailyGoals(userId, {fundraising : $scope.goalDayFunds, distance: gdDistance})
+                  .success(function(data, status, headers, config){
+                    console.log('User API updateDailyGoals call succeeded');
+                    $scope.goalDayDistance = gdDistance;
+                    $scope.goalPopup.goalDayDistance = "";
+
+                    $rootScope.hide();
+                  })
+                  .error(function(status){
+                    console.log('UserAPI updateDailyGoals call failed with status: ' + status);
+                    $rootScope.hide();
+                  });
+
               }
-
-
 
 
             }
@@ -296,6 +331,9 @@ angular.module('starter.historyController', [
                     console.log('UserAPI updateWeekly goals call succeeded');
                     $scope.goalWeekDistance = gwDistance;
                     $scope.goalWeekFunds = gwFunds;
+                    $scope.goalPopup.goalWeekDistance = "";
+                    $scope.goalPopup.goalWeekFunds = "";
+
                     $rootScope.hide();
                   })
                   .error(function(status, err){
@@ -305,10 +343,43 @@ angular.module('starter.historyController', [
                   });
 
                 console.log('new goal for dist')
-              } else if(gwDistance = "") {
+              } else if(gwDistance == "") {
                 console.log('NO new goal for dist')
-              } else if(gwFunds = ""){
+
+                var userId = $rootScope.getUserId();
+                console.log('userId: ' + userId);
+                UserAPI.updateWeeklyGoals(userId, {fundraising : gwFunds, distance: $scope.goalWeekDistance})
+                  .success(function(data, status, headers, config){
+                    console.log('User API updateDailyGoals call succeeded');
+                    $scope.goalWeekFunds = gwFunds;
+                    $scope.goalPopup.goalWeekFunds = "";
+
+                    $rootScope.hide();
+                  })
+                  .error(function(status){
+                    console.log('UserAPI updateDailyGoals call failed with status: ' + status);
+                    $rootScope.hide();
+                  });
+
+              } else if(gwFunds == ""){
+
                 console.log('No new goal for funds');
+                var userId = $rootScope.getUserId();
+                console.log('userId: ' + userId);
+                UserAPI.updateWeeklyGoals(userId, {fundraising : $scope.goalWeekFunds, distance: gwDistance})
+                  .success(function(data, status, headers, config){
+                    console.log('User API updateDailyGoals call succeeded');
+                    $scope.goalWeekDistance = gwDistance;
+                    $scope.goalPopup.goalWeekDistance = "";
+
+                    $rootScope.hide();
+                  })
+                  .error(function(status){
+                    console.log('UserAPI updateDailyGoals call failed with status: ' + status);
+                    $rootScope.hide();
+                  });
+
+
               }
 
             }
