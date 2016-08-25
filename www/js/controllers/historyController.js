@@ -263,7 +263,7 @@ angular.module('starter.historyController', [
 
                 var userId = $rootScope.getUserId();
                 console.log('userId: ' + userId);
-                UserAPI.updateDailyGoals(userId, {fundraising : gdFunds, distance: $scope.goalDayDistance})
+                UserAPI.updateDailyGoals(userId, {fundraising : gdFunds, distance: ($scope.goalDayDistance/1)})
                   .success(function(data, status, headers, config){
                     console.log('User API updateDailyGoals call succeeded');
                     $scope.goalDayFunds = gdFunds;
@@ -282,7 +282,7 @@ angular.module('starter.historyController', [
 
                 var userId = $rootScope.getUserId();
                 console.log('userId: ' + userId);
-                UserAPI.updateDailyGoals(userId, {fundraising : $scope.goalDayFunds, distance: gdDistance})
+                UserAPI.updateDailyGoals(userId, {fundraising : ($scope.goalDayFunds/1), distance: gdDistance})
                   .success(function(data, status, headers, config){
                     console.log('User API updateDailyGoals call succeeded');
                     $scope.goalDayDistance = gdDistance;
@@ -348,7 +348,7 @@ angular.module('starter.historyController', [
 
                 var userId = $rootScope.getUserId();
                 console.log('userId: ' + userId);
-                UserAPI.updateWeeklyGoals(userId, {fundraising : gwFunds, distance: $scope.goalWeekDistance})
+                UserAPI.updateWeeklyGoals(userId, {fundraising : gwFunds, distance: ($scope.goalWeekDistance/1)})
                   .success(function(data, status, headers, config){
                     console.log('User API updateDailyGoals call succeeded');
                     $scope.goalWeekFunds = gwFunds;
@@ -366,7 +366,7 @@ angular.module('starter.historyController', [
                 console.log('No new goal for funds');
                 var userId = $rootScope.getUserId();
                 console.log('userId: ' + userId);
-                UserAPI.updateWeeklyGoals(userId, {fundraising : $scope.goalWeekFunds, distance: gwDistance})
+                UserAPI.updateWeeklyGoals(userId, {fundraising : ($scope.goalWeekFunds/1), distance: gwDistance})
                   .success(function(data, status, headers, config){
                     console.log('User API updateDailyGoals call succeeded');
                     $scope.goalWeekDistance = gwDistance;
@@ -485,45 +485,58 @@ angular.module('starter.historyController', [
       id: String
     };
 
-    $scope.getCharityName = function(id, moneyRaised){
-      $scope.charityNames = [];
-      $scope.charityMoneyRaised = [];
-      $scope.charityId = [];
+    // //NOTE: COMMENTED OUT CODE IS CHARLIE's old way of displaying top 3 charities
+    $scope.getCharityName = function(id, moneyRaised, count){
+      // $scope.charityNames = [];
+      // $scope.charityMoneyRaised = [];
+      // $scope.charityId = [];
 
+      // //NOTE: COMMENTED OUT CODE IS CHARLIE's old way of displaying top 3 charities
       console.log('getCharityName entered with id: ' + id +'   and moneyRaised: ' + moneyRaised);
       CharityAPI.getById(id)
         .success(function(data, status, headers, config){
-          console.log('data.name: ' + data.name);
-          console.log('moneyRaised: ' + moneyRaised);
-          var name = data.name;
-          console.log('name name: ' + name);
-          $scope.charityNames.push(name);
-          $scope.charityMoneyRaised.push(moneyRaised);
-          $scope.charityId.push(data._id);
-          console.log('charityNames.length: ' + $scope.charityNames.length);
-          console.log('charityNames[0]: ' + $scope.charityNames[0]);
-          switch($scope.charityNames.length){
-            case 1:
-              $scope.charityOne = {name: $scope.charityNames[0], moneyRaised: $scope.charityMoneyRaised[0], id: $scope.charityId[0]};
-              break;
-            case 2:
-              $scope.charityTwo = {name: $scope.charityNames[1], moneyRaised: $scope.charityMoneyRaised[1], id: $scope.charityId[1]};
-              break;
-            case 3:
-              $scope.charityThree = {name: $scope.charityNames[2], moneyRaised: $scope.charityMoneyRaised[2], id: $scope.charityId[2]};
-              break;
-          }
+          // console.log('data.name: ' + data.name);
+          // console.log('moneyRaised: ' + moneyRaised);
+          // var name = data.name;
+          // console.log('name name: ' + name);
+					//
+          // $scope.charityNames.push(name);
+          // $scope.charityMoneyRaised.push(moneyRaised);
+          // $scope.charityId.push(data._id);
 
-          console.log('charityNames: ' + JSON.stringify($scope.charityNames));
-          console.log('charityMoneyRaised: ' + JSON.stringify($scope.charityMoneyRaised));
+          //ng-repeat
+          $scope.topThree[count].name = data.name;
+          $scope.topThree[count].name = data.name;
+          //^^
+
+
+          // console.log('charityNames.length: ' + $scope.charityNames.length);
+          // console.log('charityNames[0]: ' + $scope.charityNames[0]);
+					//
+          // switch($scope.charityNames.length){
+          //   case 1:
+          //     $scope.charityOne = {name: $scope.charityNames[0], moneyRaised: $scope.charityMoneyRaised[0], id: $scope.charityId[0]};
+          //     break;
+          //   case 2:
+          //     $scope.charityTwo = {name: $scope.charityNames[1], moneyRaised: $scope.charityMoneyRaised[1], id: $scope.charityId[1]};
+          //     break;
+          //   case 3:
+          //     $scope.charityThree = {name: $scope.charityNames[2], moneyRaised: $scope.charityMoneyRaised[2], id: $scope.charityId[2]};
+          //     break;
+          // }
+					//
+          // console.log('charityNames: ' + JSON.stringify($scope.charityNames));
+          // console.log('charityMoneyRaised: ' + JSON.stringify($scope.charityMoneyRaised));
         })
         .error(function(err, status){
           console.log('getCharityName error: ' + err + ' status: ' + status);
         })
 
 
+
     }
 
+    $scope.hasTopThree = false;
     UserAPI.getTopThreeCharities($rootScope.getUserId())
       .success(function(data, status, headers, config){
         console.log('UserAPI getTopThreeCharities call succeeded');
@@ -536,38 +549,43 @@ angular.module('starter.historyController', [
         //
         // }
 
-
-        for(var i =0; i< 3; i++){
-          $scope.topThree.push(data.pastCharities[i]);
-
-          if($scope.topThree === undefined){
-            $scope.hasTopThree = false;
-          } else{
+        console.log(data.pastCharities.length == 0);
+        if (data.pastCharities.length == 0) {
             $scope.hasTopThree = true;
-            if($scope.topThree[i] == undefined){
-              if(i==0){
-                $scope.hasCharityOne = false;
-                return;
-              } else if(i==1){
-                $scope.hasCharityTwo = false;
-                return;
-              } else if(i==2){
-                $scope.hasCharityThree =false;
-                return;
-              }
-            } else {
-              if(i==0){
-                $scope.hasCharityOne = true;
-              } else if(i==1){
-                $scope.hasCharityTwo = true;
-              } else if(i==2){
-                $scope.hasCharityThree =true;
-              }
-              console.log('topThreeCharities: ' + JSON.stringify($scope.topThree));
-              $scope.getCharityName($scope.topThree[i].id, $scope.topThree[i].moneyRaised);
-            }
-          }
+        } else {
+          for(var i =0; i< data.pastCharities.length; i++){
+            $scope.topThree.push(data.pastCharities[i]);
+            $scope.hasTopThree = false;
 
+            // //NOTE: COMMENTED OUT CODE IS CHARLIE's old way of displaying top 3 charities
+            // if($scope.topThree === undefined){
+            //   $scope.hasTopThree = false;
+            // } else{
+            //   $scope.hasTopThree = true;
+            //   if($scope.topThree[i] === undefined){
+            //     if(i==0){
+            //       $scope.hasCharityOne = false;
+            //       return;
+            //     } else if(i==1){
+            //       $scope.hasCharityTwo = false;
+            //       return;
+            //     } else if(i==2){
+            //       $scope.hasCharityThree =false;
+            //       return;
+            //     }
+            //   } else {
+            //     if(i==0){
+            //       $scope.hasCharityOne = true;
+            //     } else if(i==1){
+            //       $scope.hasCharityTwo = true;
+            //     } else if(i==2){
+            //       $scope.hasCharityThree =true;
+            //     }
+            console.log('topThreeCharities: ' + JSON.stringify($scope.topThree));
+            $scope.getCharityName($scope.topThree[i].id, $scope.topThree[i].moneyRaised, i);
+              // }
+            // }
+          }
         }
 
       })
