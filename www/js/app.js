@@ -53,6 +53,10 @@ angular.module('starter', ['ionic',
         // org.apache.cordova.statusbar required
         StatusBar.styleDefault();
       }
+
+
+
+
     });
   })
 
@@ -337,9 +341,7 @@ angular.module('starter', ['ionic',
             controller: 'RaceProfileCtrl'
           }
         }
-      })
-
-      ;
+      });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/auth/signin');
     // $urlRouterProvider.otherwise('/app/run');

@@ -73,6 +73,7 @@ angular.module('starter.appController', [
           }
           console.log('My Sponsors JSON returned value of: ' + $scope.sponsors);
           console.log('Money raised per mile final result: ' + $scope.moneyRaised);
+          $scope.moneyRaised = $scope.moneyRaised/100;
           $rootScope.setMoneyRaisedPerMile($scope.moneyRaised);
           console.log('$scope.getMoneyRaised per mile: ' + $rootScope.getMoneyRaisedPerMile());
         }
