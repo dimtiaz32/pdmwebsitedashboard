@@ -403,8 +403,7 @@ angular.module('starter.charityController', ['starter.appServices',
     $scope.oldSelectedCharityId = $rootScope.getSelectedCharityId();
     console.log('oldSelectedCharityId: ' + $scope.oldSelectedCharityId);
 
-
-      console.log('updatePastCharities entered with objId: ' + $scope.objId);
+    if($rootScope.getSelectedCharityId() != null){
       UserAPI.updatePastCharities({
         userId: $rootScope.getUserId(),
         charityId: $rootScope.getSelectedCharityId(),
@@ -417,6 +416,9 @@ angular.module('starter.charityController', ['starter.appServices',
         .error(function (err, status) {
           console.log('UserAPI update past charities call failed with status: ' + status + ' and error: ' + err);
         });
+    }
+      console.log('updatePastCharities entered with objId: ' + $scope.objId);
+
 
 
 

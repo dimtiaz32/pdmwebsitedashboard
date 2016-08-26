@@ -20,7 +20,7 @@ angular.module('starter.historyDayController', [
 
   .controller('HistoryDayCtrl', function($scope, $rootScope, $window, HistoryAPI, RunAPI, $ionicSlideBoxDelegate, AuthAPI, $filter, roundProgressService, $timeout, $ionicPopup, $ionicNavBarDelegate, $ionicViewSwitcher){
     console.log('history day controller entered with run id: ' + $rootScope.dayRunId);
-
+    $rootScope.$broadcast('scroll.refreshComplete');
 
     $rootScope.$on('setDayHistory', function() {
       if($scope.historyRunPath !=undefined){
