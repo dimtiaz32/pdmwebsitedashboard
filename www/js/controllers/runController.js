@@ -13,13 +13,14 @@ angular.module('starter.runController', ['starter.appServices',
   'starter.runServices',
   'ionic',
   'chart.js',
+
   'ngCordova','ngOpenFB','ngCookies',
   'ionic.contrib.drawer.vertical',
   'angular-svg-round-progressbar'])
 
 //TODO: CLEAR VALUES AFTER RUN SUMMARY, NEW RUN BUTTON?
 
-  .controller('RunCtrl', function($scope, $window, $rootScope, $cordovaGeolocation, $ionicPlatform, $ionicLoading,$ionicPopup, $interval, AppAPI, RunAPI, CharityAPI, HistoryAPI, DonationAPI, $ionicModal){
+  .controller('RunCtrl', function($scope, $cordovaInsomnia, $window, $rootScope,$ionicPlatform, $cordovaGeolocation,  $ionicLoading,$ionicPopup, $interval, AppAPI, RunAPI, CharityAPI, HistoryAPI, DonationAPI, $ionicModal){
 
   $rootScope.$on('initRun', function(){
 
@@ -320,7 +321,12 @@ angular.module('starter.runController', ['starter.appServices',
 
       stopUI.addEventListener('click', function () {
         console.log('%c showing ensure stop...', 'color: Teal');
-        window.plugins.insomnia.allowSleepAgain();
+
+        $ionicPlatform.ready(function(){
+          if(window.cordova && window.cordova.plugins.insomnia){
+            cordova.plugins.insomnia.allowSleepAgain(true);
+          }
+        })
         $scope.showEnsureStop();
       });
 
@@ -510,7 +516,11 @@ angular.module('starter.runController', ['starter.appServices',
 
         // $scope.isRunning = !$scope.isRunning;
 
-        window.plugins.insomnia.keepAwake();
+        $ionicPlatform.ready(function(){
+          if(window.cordova && window.cordova.plugins.insomnia){
+            cordova.plugins.insomnia.keepAwake(true);
+          }
+        })
         console.log('%cStart DreamRun button clicked', 'color: red');
 
         $scope.toggleRun();
