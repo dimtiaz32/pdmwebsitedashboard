@@ -161,6 +161,14 @@ angular.module('starter.userServices', [])
 
       });
     },
+    getTopThreeCharities: function(userId){
+      return $http.get(SERVER_HOST+'user/topThreeCharities', {
+        method: 'GET',
+        params: {
+          userId: userId
+        }
+      });
+    },
     updateCharityName: function(userId, charityName){
       return $http.post(SERVER_HOST+'user/updateCharityName', charityName, {
         method: 'POST',
