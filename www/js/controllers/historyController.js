@@ -551,11 +551,11 @@ angular.module('starter.historyController', [
 
         console.log(data.pastCharities.length == 0);
         if (data.pastCharities.length == 0) {
-            $scope.hasTopThree = true;
+            $scope.hasTopThree = false;
         } else {
           for(var i =0; i< data.pastCharities.length; i++){
             $scope.topThree.push(data.pastCharities[i]);
-            $scope.hasTopThree = false;
+            $scope.hasTopThree = true;
 
             // //NOTE: COMMENTED OUT CODE IS CHARLIE's old way of displaying top 3 charities
             // if($scope.topThree === undefined){
