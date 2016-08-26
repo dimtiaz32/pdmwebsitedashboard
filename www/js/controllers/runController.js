@@ -116,6 +116,7 @@ angular.module('starter.runController', ['starter.appServices',
 
     if($rootScope.getMoneyRaisedPerMile() != undefined){
       $scope.mrPerMile = $rootScope.getMoneyRaisedPerMile();
+      console.log('amount raised per mile: ' + $scope.mrPerMile);
     } else {
       $scope.mrPerMile = 0;
     }
