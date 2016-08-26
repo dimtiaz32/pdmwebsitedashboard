@@ -20,7 +20,7 @@ angular.module('starter.runController', ['starter.appServices',
 
 //TODO: CLEAR VALUES AFTER RUN SUMMARY, NEW RUN BUTTON?
 
-  .controller('RunCtrl', function($scope, $cordovaInsomnia, $window, $rootScope,$ionicPlatform, $cordovaGeolocation,  $ionicLoading,$ionicPopup, $interval, AppAPI, RunAPI, CharityAPI, HistoryAPI, DonationAPI, $ionicModal){
+  .controller('RunCtrl', function($scope, $cordovaInsomnia, $window, $rootScope,$ionicPlatform, $cordovaGeolocation,  $ionicLoading,$ionicPopup, $interval, AppAPI, UserAPI, RunAPI, CharityAPI, HistoryAPI, DonationAPI, $ionicModal){
 
   $rootScope.$on('initRun', function(){
 
@@ -31,6 +31,7 @@ angular.module('starter.runController', ['starter.appServices',
     $rootScope.$on('LoadRun', function(){
       $scope.name = $rootScope.getName();
       $scope.charityName = $rootScope.getSelectedCharityName();
+      $rootScope.$broadcast('fetchMyPledges');
       $scope.$broadcast('scroll.refreshComplete');
     });
 
@@ -1039,7 +1040,8 @@ angular.module('starter.runController', ['starter.appServices',
         });
         $rootScope.$broadcast('resetWatch');
 
-        console.log('watch: ' + JSON.stringify($scope.watch));
+        console.log('watch JSON: ' + JSON.stringify($scope.watch));
+        console.log('watch: ' + $scope.watch);
 
         console.log('mapOptions: ' + JSON.stringify($scope.mapOptions));
         var startControlDiv = document.createElement('div');
@@ -1338,6 +1340,22 @@ angular.module('starter.runController', ['starter.appServices',
           console.log('data.id: ' + data._id);
           $rootScope.setRunIdDayView(data._id);
           console.log('$rootScope.dayRunId: ' + $rootScope.dayRunId);
+
+
+          UserAPI.updatePastCharities({
+            userId: $rootScope.getUserId(),
+            charityId: $rootScope.getSelectedCharityId(),
+            moneyRaised: form.moneyRaised
+        })
+            .success(function(data, status, headers, config){
+              console.log('UserAPI updatePastCharitiesMoney succeeded with charity: ' +data.charity +' and amount: ' + data.moneyRaised);
+
+            })
+            .error(function(status, err) {
+              console.log('UserAPI updatePastCharitiesMoney failed with err: ' + err + ' and status: ' + status);
+
+            });
+
           $rootScope.$broadcast('setDayHistory');
           $window.location.href = ('#/app/historyDay');
 
