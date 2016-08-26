@@ -75,6 +75,7 @@ angular.module('starter.appController', [
           console.log('Money raised per mile final result: ' + $scope.moneyRaised);
           $scope.moneyRaised = $scope.moneyRaised/100;
           $rootScope.setMoneyRaisedPerMile($scope.moneyRaised);
+          $scope.moneyRaised = 0;
           console.log('$scope.getMoneyRaised per mile: ' + $rootScope.getMoneyRaisedPerMile());
         }
 

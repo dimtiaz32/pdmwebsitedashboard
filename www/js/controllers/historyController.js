@@ -506,7 +506,7 @@ angular.module('starter.historyController', [
 
           //ng-repeat
           $scope.topThree[count].name = data.name;
-          $scope.topThree[count].name = data.name;
+          // $scope.topThree[count].name = data.name;
           //^^
 
 

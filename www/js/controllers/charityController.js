@@ -110,7 +110,13 @@ angular.module('starter.charityController', ['starter.appServices',
 
   var userId = $rootScope.getUserId();
   console.log('userId: ' + userId);
-  $scope.everyMileRaised = $rootScope.getMoneyRaisedPerMile();
+
+  if($rootScope.getMoneyRaisedPerMile() != undefined){
+    $scope.everyMileRaised = $rootScope.getMoneyRaisedPerMile();
+    console.log('amount raised per mile: ' + $scope.mrPerMile);
+  } else {
+    $scope.everyMileRaised = 0;
+  }
 
 
   $scope.pastCharities = [];

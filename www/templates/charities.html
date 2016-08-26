@@ -7,7 +7,7 @@
 
   <ion-content class="charity-page">
     <div class="charity-page charity-header" ng-show="!noCharity" on-swipe-up="swipeGestureCharityDetail('swipe-up')" on-swipe-down="swipeGestureCharityDetail('swipe-down')">
-      <h3>Every mile raises ${{moneyRaised}} for</h3>
+      <h3>Every mile raises {{ everyMileRaised | currency }} for</h3>
       <hr class="charity-page">
       <h1>{{selectedCharityDisplay.name}}</h1>
 

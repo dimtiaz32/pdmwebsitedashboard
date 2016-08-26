@@ -354,6 +354,7 @@ angular.module('starter.authController', ['starter.appServices',
             console.log("facebook avatar: " + $rootScope.getAvatar());
             $rootScope.$broadcast("initial");
             $rootScope.$broadcast("newMap");
+            $rootScope.$broadcast("fetchMySponsors");
             $window.location.href=('#/app/run');
           }).error(function(error){
             console.log("AuthAPI.signinByFB failed:" + error);
