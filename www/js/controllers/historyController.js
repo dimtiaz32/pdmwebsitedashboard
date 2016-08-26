@@ -549,7 +549,7 @@ angular.module('starter.historyController', [
         //
         // }
 
-        console.log(data.pastCharities.length == 0);
+        console.log('getTopThree: ' + JSON.stringify(data.pastCharities));
         if (data.pastCharities.length == 0) {
             $scope.hasTopThree = false;
         } else {
