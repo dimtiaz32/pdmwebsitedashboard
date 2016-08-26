@@ -62,6 +62,8 @@ angular.module('starter.runController', ['starter.appServices',
     $scope.isDetailDisplayed = false;
     $scope.isRunDetailDisplayed = false;
 
+
+
     $scope.hasCharity = function(){
       if($rootScope.getSelectedCharityId() != undefined && $rootScope.getSelectedCharityId() != null){
         console.log('has charity is true');
@@ -318,6 +320,7 @@ angular.module('starter.runController', ['starter.appServices',
 
       stopUI.addEventListener('click', function () {
         console.log('%c showing ensure stop...', 'color: Teal');
+        window.plugins.insomnia.allowSleepAgain();
         $scope.showEnsureStop();
       });
 
@@ -507,6 +510,7 @@ angular.module('starter.runController', ['starter.appServices',
 
         // $scope.isRunning = !$scope.isRunning;
 
+        window.plugins.insomnia.keepAwake();
         console.log('%cStart DreamRun button clicked', 'color: red');
 
         $scope.toggleRun();
