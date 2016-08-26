@@ -130,7 +130,7 @@ angular.module('starter.myDonationController', ['starter.appServices',
       var realAmount = parseInt(amount);
 
       if (realAmount < 100) {
-        return amount + " ¢";
+        return amount + "¢";
       } else {
         return realAmount / 100 + " $";
       }
