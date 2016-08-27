@@ -214,6 +214,7 @@ angular.module('starter.authController', ['starter.appServices',
 
     };
 
+
     $scope.setUserCharity  = function(charityId){
       console.log('setUserCharityCalled with ID: ' + charityId);
       CharityAPI.getById(charityId)
@@ -318,6 +319,10 @@ angular.module('starter.authController', ['starter.appServices',
 
           // $rootScope.$broadcast("initial");
           // $rootScope.$broadcast('newMap');
+
+          //Set these inputs to be empty
+          $scope.user.email = '';
+          $scope.user.password = '';
 
           $rootScope.$broadcast('LoadRun');
           $rootScope.$broadcast('ChangeCharity');
