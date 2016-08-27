@@ -30,7 +30,7 @@ angular.module('starter.charityServices', ['ionic'])
   };
 
   $rootScope.setSelectedCharityName = function(charityName){
-    return $window.localStorage.charityName = charityName;
+    $window.localStorage.charityName = charityName;
   };
   $rootScope.getSelectedCharityName = function(){
     return $window.localStorage.charityName;
@@ -75,7 +75,7 @@ angular.module('starter.charityServices', ['ionic'])
   };
 
   $rootScope.setSelectedCharityId = function(charityId){
-    return $window.localStorage.charityId = charityId;
+    $window.localStorage.charityId = charityId;
   };
 
   $rootScope.getSelectedCharityId = function(){

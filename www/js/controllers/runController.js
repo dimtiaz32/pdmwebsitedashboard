@@ -41,7 +41,7 @@ angular.module('starter.runController', ['starter.appServices',
       $scope.$broadcast('scroll.refreshComplete');
     });
 
-    $scope.charityName = $rootScope.getSelectedCharityName();
+    // $scope.charityName = $rootScope.getSelectedCharityName();
     $rootScope.$broadcast('LoadRun');
     $rootScope.$broadcast('ChangeCharity');
 

@@ -215,8 +215,10 @@ angular.module('starter.authController', ['starter.appServices',
     };
 
     $scope.setUserCharity  = function(charityId){
+      console.log('setUserCharityCalled with ID: ' + charityId);
       CharityAPI.getById(charityId)
         .success(function(data, status, headers, config){
+          ('setUserCharity CharityAPI getById successfully called');
           $rootScope.setSelectedCharityName(data.name);
           $rootScope.setSelectedCharityDescription(data.description);
           $rootScope.setSelectedCharityUrl(data.url);
@@ -295,8 +297,10 @@ angular.module('starter.authController', ['starter.appServices',
             $scope.noCharity = true;
           } else {
             console.log('data.user.charity.id: ' + data.user.charity.id);
+            console.log('data.user.charity');
             $rootScope.setSelectedCharityId(data.user.charity.id);
             $rootScope.setSelectedCharityMoneyRaised(data.user.charity.moneyRaised);
+            $rootScope.setSelectedCharityName(data.user.charityName);
             console.log('selectedCharityId: ' +  $rootScope.getSelectedCharityId());
             console.log('selectedCharityMoneyRaised: ' + $rootScope.getSelectedCharityMoneyRaised());
             $scope.setUserCharity($rootScope.getSelectedCharityId());
@@ -316,6 +320,7 @@ angular.module('starter.authController', ['starter.appServices',
           // $rootScope.$broadcast('newMap');
 
           $rootScope.$broadcast('LoadRun');
+          $rootScope.$broadcast('ChangeCharity');
           $rootScope.$broadcast('fetchMySponsors');
           $rootScope.$broadcast('initial');
           $rootScope.$broadcast('runMonthMoneyRaised');

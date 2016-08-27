@@ -149,13 +149,7 @@ angular.module('starter.authServices', ['ngCookies'])
 
 
   $rootScope.clearAll = function() {
-      $window.localStorage.email = undefined;
-    $window.localStorage.password =undefined;
-    $window.localStorage.name = undefined;
-    $window.localStorage.history="";
-    $window.localStorage.selectedCharity = "";
-    $window.localStorage.userId = "";
-    $window.localStorage.donorId ="";
+    console.log("localStorage cleared");
     $window.localStorage.clear();
       $cookies.remove();
   };
