@@ -48,6 +48,7 @@ angular.module('starter.myDonationController', ['starter.appServices',
         $scope.$broadcast('scroll.refreshComplete');
       });
 
+
     //Popover Menu - Sponsors/Pledges
 
     $scope.isLinkSelected = false;
@@ -248,4 +249,6 @@ angular.module('starter.myDonationController', ['starter.appServices',
     $scope.$on('modal.removed', function () {
       console.log("execute modal.removed");
     });
+
+    $rootScope.$broadcast('fetchMySponsors');
   });
