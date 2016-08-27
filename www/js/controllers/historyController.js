@@ -123,8 +123,8 @@ angular.module('starter.historyController', [
         console.log('weeklyGoals: fundraising: ' + data.weeklyGoals.fundraising);
         console.log('dailyGoals: distance: ' + data.dailyGoals.distance);
         console.log('dailyGoals: fundraising: ' + data.dailyGoals.fundraising);
-        console.log('yearChallenge: ' + data.yearGoals.fundraising);
-        if(data.yearGoals.fundraising == undefined){
+        // console.log('yearChallenge: ' + data.yearGoals.fundraising);
+        if(data.yearGoals == undefined){
           console.log('data.yearlygoals.fundraising thre undefined');
           $scope.noYearlyGoal = true;
         } else {

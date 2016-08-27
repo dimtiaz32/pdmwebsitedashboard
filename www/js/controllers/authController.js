@@ -319,6 +319,8 @@ angular.module('starter.authController', ['starter.appServices',
           // $rootScope.$broadcast("initial");
           // $rootScope.$broadcast('newMap');
 
+          $rootScope.getSponsors();
+
           $rootScope.$broadcast('LoadRun');
           $rootScope.$broadcast('ChangeCharity');
           $rootScope.$broadcast('fetchMySponsors');

@@ -1350,7 +1350,7 @@ angular.module('starter.runController', ['starter.appServices',
             userId: $rootScope.getUserId(),
             charityId: $rootScope.getSelectedCharityId(),
             moneyRaised: form.moneyRaised
-        })
+          })
             .success(function(data, status, headers, config){
               console.log('UserAPI updatePastCharitiesMoney succeeded with charity: ' +data.charity +' and amount: ' + data.moneyRaised);
 
