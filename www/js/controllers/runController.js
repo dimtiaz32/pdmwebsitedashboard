@@ -117,14 +117,18 @@ angular.module('starter.runController', ['starter.appServices',
     };
 
 
+    $rootScope.$on('fetchMoneyRaisedPerMile', function() {
+      if($rootScope.getMoneyRaisedPerMile() != undefined){
+        $scope.mrPerMile = $rootScope.getMoneyRaisedPerMile();
+        console.log('amount raised per mile: ' + $scope.mrPerMile);
+        $rootScope.$broadcast('scroll.refreshComplete');
+      } else {
+        $scope.mrPerMile = 0;
+        $rootScope.$broadcast('scroll.refreshComplete');
+      }
+    });
 
-    if($rootScope.getMoneyRaisedPerMile() != undefined){
-      $scope.mrPerMile = $rootScope.getMoneyRaisedPerMile();
-      console.log('amount raised per mile: ' + $scope.mrPerMile);
-    } else {
-      $scope.mrPerMile = 0;
-    }
-
+    $rootScope.$broadcast('fetchMoneyRaisedPerMile');
 
     console.log('$scope.moneyRaised: ' + $scope.getMoneyRaisedPerMile());
 

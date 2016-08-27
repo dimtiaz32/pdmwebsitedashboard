@@ -256,6 +256,7 @@ angular.module('starter.accountController', ['starter.appServices',
       console.log('token checkcheck: ' + $rootScope.getToken());
       console.log('Signout succeeded, redirecting to login');
       //redirect to login
+      $scope.$broadcast('scroll.refreshComplete');
       $window.location.href = ('#/auth/signin');
     //   AuthAPI.signout()
     //     .success(function(data, status, headers, config){

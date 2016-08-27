@@ -160,6 +160,10 @@ angular.module('starter.authServices', ['ngCookies'])
       $cookies.remove();
   };
 
+  $rootScope.getSponsors = function() {
+    $rootScope.$broadcast('fetchMySponsors');
+  }
+
   // $rootScope.setCharity = function(charity){
   //   return $window.localStorage.selectedCharity = charity;
   // };

@@ -364,6 +364,11 @@ angular.module('starter.authController', ['starter.appServices',
               console.log('selectedCharityMoneyRaised: ' + $rootScope.getSelectedCharityMoneyRaised());
               $scope.setUserCharity($rootScope.getSelectedCharityId());
             }
+
+
+
+            $rootScope.getSponsors();
+
             $rootScope.$broadcast("fetchMySponsors");
             $rootScope.$broadcast('LoadRun');
             $rootScope.$broadcast('initial');
