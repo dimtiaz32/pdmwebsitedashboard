@@ -371,10 +371,11 @@ angular.module('starter.charityController', ['starter.appServices',
       $scope.getMonthMoneyRaised($rootScope.getSelectedCharityId());
       // console.log('charityId from inside setSelectedCharity success call: ' + charityId);
       // $scope.getMonthMoneyRaised(charityId);
-
+      $scope.$broadcast('scroll.refreshComplete');
     })
     .error(function (err, status) {
       console.log('CharityAPI get by id failed with error: ' + err + ' and status: ' + status);
+      $scope.$broadcast('scroll.refreshComplete');
     })
 
 
