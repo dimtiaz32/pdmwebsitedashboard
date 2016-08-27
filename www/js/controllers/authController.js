@@ -316,6 +316,7 @@ angular.module('starter.authController', ['starter.appServices',
           // $rootScope.$broadcast('newMap');
 
           $rootScope.$broadcast('LoadRun');
+          $rootScope.$broadcast('fetchMySponsors');
           $rootScope.$broadcast('initial');
           $rootScope.$broadcast('runMonthMoneyRaised');
           $rootScope.$broadcast('runWeekMoneyRaised');
@@ -352,9 +353,25 @@ angular.module('starter.authController', ['starter.appServices',
             console.log("facebook name: " + $rootScope.getName());
             $rootScope.setAvatar(data.user.facebook.avatar);
             console.log("facebook avatar: " + $rootScope.getAvatar());
-            $rootScope.$broadcast("initial");
-            $rootScope.$broadcast("newMap");
+            if(data.user.charity == null || data.user.charity.id == null){
+              console.log('user.charityId is null');
+              $scope.noCharity = true;
+            } else {
+              console.log('data.user.charity.id: ' + data.user.charity.id);
+              $rootScope.setSelectedCharityId(data.user.charity.id);
+              $rootScope.setSelectedCharityMoneyRaised(data.user.charity.moneyRaised);
+              console.log('selectedCharityId: ' +  $rootScope.getSelectedCharityId());
+              console.log('selectedCharityMoneyRaised: ' + $rootScope.getSelectedCharityMoneyRaised());
+              $scope.setUserCharity($rootScope.getSelectedCharityId());
+            }
             $rootScope.$broadcast("fetchMySponsors");
+            $rootScope.$broadcast('LoadRun');
+            $rootScope.$broadcast('initial');
+            $rootScope.$broadcast('runMonthMoneyRaised');
+            $rootScope.$broadcast('newMap');
+            $rootScope.$broadcast('fetchCharities');
+            $rootScope.$broadcast('initRun');
+            $rootScope.hide();
             $window.location.href=('#/app/run');
           }).error(function(error){
             console.log("AuthAPI.signinByFB failed:" + error);
