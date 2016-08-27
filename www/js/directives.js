@@ -49,21 +49,31 @@ angular.module('starter.directives', [])
     }
   })
 
-  .directive('enterClose', function() {
+  .directive('enterNext', function() {
     return {
       link: function (scope, element, attributes) {
         element.bind('keydown', function (event) {
+
           if (event.which == 13) {
-            console.log('Go to next input');
             event.preventDefault();
-            var elements = document.querySelectorAll('input');
+            var elements = document.querySelectorAll('input, button');
             var focusNext = false;
+
+            console.log(elements);
 
             for (var i = 0; i < elements.length; i++) {
               var pe = elements[i];
+              console.log('id is ' + pe.id);
+
+              if(pe.id == "signin") {
+                console.log('this is the sign in button');
+                pe.click();
+              }
+
               if (focusNext) {
                 if (pe.style.display !== 'none') {
                   pe.focus();
+                  console.log('gone to next input');
                   break;
                 }
               } else if (pe === event.srcElement) {
@@ -78,7 +88,7 @@ angular.module('starter.directives', [])
   })
 
   .directive('clickSelect', function () {
-    // Linker function
+
     return function (scope, element, attrs) {
       element.bind('click', function () {
         this.select();
