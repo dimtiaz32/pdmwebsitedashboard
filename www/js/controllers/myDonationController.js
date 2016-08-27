@@ -19,7 +19,7 @@ angular.module('starter.myDonationController', ['starter.appServices',
   'angular-svg-round-progressbar'])
 
 
-  .controller('MyDonationCtrl',function($rootScope, $scope, HistoryAPI, AuthAPI,  $window, $ionicModal, $cordovaSms, $cordovaSocialSharing,DonationAPI,AuthAPI, CLIENT_HOST, $ionicPopover, $filter ,$cordovaClipboard) {
+  .controller('MyDonationCtrl',function($rootScope, $scope, HistoryAPI, AuthAPI,  $window, $ionicModal, $cordovaSms, $cordovaSocialSharing,DonationAPI,AuthAPI, CLIENT_HOST, $ionicPopover, $filter ,$cordovaClipboard, $ionicPopup) {
 
     $scope.test = 'test123';
 
@@ -204,6 +204,11 @@ angular.module('starter.myDonationController', ['starter.appServices',
             .copy(copied)
             .then(function () {
               // success
+
+              $scope.copyPopup = $ionicPopup.alert({
+                title: 'Link copied to clipboard!'
+              });
+
               console.log('donation link successfully copied: ' + $scope.inviteUrl);
             }, function () {
               // error

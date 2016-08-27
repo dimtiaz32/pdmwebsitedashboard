@@ -8,13 +8,25 @@
     </div>
 
     <h2 class="invite-sponsor">Donation Link</h2>
-    <div class="invite-sponsor donation-link unselected">
+    <div class="invite-sponsor donation-link unselected" ng-click="copyDonationLink()">
 
       <p class="invite-sponsor link selectable">
         <textarea class="invite-sponsor link selectable" type="text" value="{{ inviteUrl }}" class="transparent-input" readonly  size="50" click-select>{{inviteUrl}}</textarea>
       </p>
 
     </div>
+
+    <div class="invite-sponsor how-does-it-work">
+      <h2 class="invite-sponsor">How does it work?</h2>
+      <p class="invite-sponsor">
+        Send this link to family and friends and ask them to support your charity and training, or use the link to sponsor yourself!
+        <br>
+        &nbsp;
+        <br>
+        We transact the funds once a month and update your sponsors on your progress every 2 weeks.
+      </p>
+    </div>
+
     <div class="invite-sponsor">
       <button class="copy button button-positive button-full" ng-click="copyDonationLink()">
         Copy link to clipboard
@@ -43,15 +55,6 @@
       <!--&lt;!&ndash;a ng-click="shareByFB()" class="button" >hit me</a&ndash;&gt;-->
       <!--<a ng-click="shareByFB()"><img class="invite-sponsor fb-logo" ng-src="img/FB-f-Logo__blue_1024.png"/></a>-->
     <!--</div>-->
-    <div class="invite-sponsor how-does-it-work">
-      <h2 class="invite-sponsor">How does it work?</h2>
-      <p class="invite-sponsor">
-        Send this link to family and friends and ask them to support your charity and training, or use the link to sponsor yourself!
-        <br>
-        &nbsp;
-        <br>
-        We transact the funds once a month and update your sponsors on your progress every 2 weeks.
-      </p>
-    </div>
+
   </ion-content>
 </ion-modal-view>
