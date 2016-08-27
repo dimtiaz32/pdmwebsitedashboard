@@ -60,11 +60,12 @@ angular.module('starter.appController', [
         $scope.moneyRaisedHolder = [];
 
         if(data.length == 0) {
-          console.log('data length == 0')
+          console.log('data length == 0');
           return $scope.noSponsor = true;
         } else {
           for (var i = 0; i < data.length; i++) {
             $scope.sponsors.push(data[i]);
+            console.log('my donors' + JSON.stringify(data[i]));
             $scope.moneyRaisedHolder.push(data[i].per_mile_donation);
             console.log('data[i].per_mile_donation values: ' + data[i].per_mile_donation);
             console.log('$scope.moneyRaisedHolder: ' + $scope.moneyRaisedHolder[i] + '    ' + $scope.moneyRaisedHolder);

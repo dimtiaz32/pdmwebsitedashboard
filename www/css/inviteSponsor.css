@@ -131,3 +131,24 @@ input[type="text"].transparent-input{
   background-color:rgba(0,0,0,0) !important;
   border:none !important;
 }
+
+
+/*popup copy confirm notification*/
+.invite-sponsor.copy-confirm {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+
+  text-align: center;
+  font-size: 1.2em;
+  color: #fff;
+
+  background-color: rgba(0,0,0,.7);
+  padding: 15px;
+  border-radius: 10px;
+}
+
+  .invite-sponsor.copy-confirm span {
+    font-size: 2em;
+  }
