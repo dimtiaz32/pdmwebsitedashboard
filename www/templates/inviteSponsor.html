@@ -1,5 +1,5 @@
 <ion-modal-view>
-  <ion-content>
+  <ion-content class="invite-sponsor">
     <div class="invite-sponsor header">
       <h1 class="invite-sponsor heading">
         <span class="ion-close-round" ng-click="modal.hide()"></span>
@@ -11,11 +11,17 @@
     <div class="invite-sponsor donation-link unselected">
 
       <p class="invite-sponsor link selectable">
-        <textarea class="invite-sponsor link selectable" type="text" class="transparent-input" value="{{ inviteUrl }}" readonly  size="50" click-select>{{ inviteUrl }}</textarea>
+        <textarea class="invite-sponsor link selectable" type="text" value="{{ inviteUrl }}" class="transparent-input" readonly  size="50" click-select>{{inviteUrl}}</textarea>
       </p>
 
-      <!--<input class="invite-sponsor" value="{{ inviteUrl }}" readonly type="text" size="50" click-select/>-->
-      <!--<p class="invite-sponsor link" click-select>{{inviteUrl}}</p>-->
+    </div>
+    <div class="invite-sponsor">
+      <button class="copy button button-positive button-full" ng-click="copyDonationLink()">
+        Copy link to clipboard
+      </button>
+      <button class="self-sponsor button button-positive button-full" ng-click='openDonationLink("{{ inviteUrl }}")'>
+        Sponsor yourself!
+      </button>
     </div>
     <!--<div>-->
       <!--<h2 class="invite-sponsor">Share</h2>-->
@@ -39,7 +45,13 @@
     <!--</div>-->
     <div class="invite-sponsor how-does-it-work">
       <h2 class="invite-sponsor">How does it work?</h2>
-      <p class="invite-sponsor">Simply share the link with your family and friends, asking them to support your charity and training. They use the link to make a per-mile donation. We transact the funds once a month and update your sponsors on your progress every 2 weeks.</p>
+      <p class="invite-sponsor">
+        Send this link to family and friends and ask them to support your charity and training, or use the link to sponsor yourself!
+        <br>
+        &nbsp;
+        <br>
+        We transact the funds once a month and update your sponsors on your progress every 2 weeks.
+      </p>
     </div>
   </ion-content>
 </ion-modal-view>
