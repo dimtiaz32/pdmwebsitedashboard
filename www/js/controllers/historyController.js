@@ -259,6 +259,43 @@ angular.module('starter.historyController', [
                     console.log('UserAPI updateDailyGoals call failed with status: ' + status);
                     $rootScope.hide();
                   });
+              } else if(gdDistance == "") {
+                console.log('NO new goal for dist');
+
+                var userId = $rootScope.getUserId();
+                console.log('userId: ' + userId);
+                UserAPI.updateDailyGoals(userId, {fundraising : gdFunds, distance: ($scope.goalDayDistance/1)})
+                  .success(function(data, status, headers, config){
+                    console.log('User API updateDailyGoals call succeeded');
+                    $scope.goalDayFunds = gdFunds;
+                    $scope.goalPopup.goalDayFunds = "";
+
+                    $rootScope.hide();
+                  })
+                  .error(function(status){
+                    console.log('UserAPI updateDailyGoals call failed with status: ' + status);
+                    $rootScope.hide();
+                  });
+
+
+              } else if(gdFunds == ""){
+                console.log('No new goal for funds');
+
+                var userId = $rootScope.getUserId();
+                console.log('userId: ' + userId);
+                UserAPI.updateDailyGoals(userId, {fundraising : ($scope.goalDayFunds/1), distance: gdDistance})
+                  .success(function(data, status, headers, config){
+                    console.log('User API updateDailyGoals call succeeded');
+                    $scope.goalDayDistance = gdDistance;
+                    $scope.goalPopup.goalDayDistance = "";
+
+                    $rootScope.hide();
+                  })
+                  .error(function(status){
+                    console.log('UserAPI updateDailyGoals call failed with status: ' + status);
+                    $rootScope.hide();
+                  });
+
               }
             }
           }
