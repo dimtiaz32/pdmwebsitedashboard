@@ -90,4 +90,10 @@ angular.module('starter.findRacesController', [
       $window.location.href = ('#/app/raceProfile');
     }
 
+    $scope.addRaceUrl = 'https://www.projectdreammiles.com/#/races/add';
+
+    $scope.goToAddRace = function (link) {
+      window.open(link, '_system', 'location=yes');
+    }
+
   });

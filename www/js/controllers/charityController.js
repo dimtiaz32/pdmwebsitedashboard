@@ -551,7 +551,13 @@ angular.module('starter.charityController', ['starter.appServices',
 
   $scope.isListDetailDisplayed = function(charityId) {
     return $scope.toggledCharity === charityId;
-  }
+  };
+
+  $scope.addCharityUrl = 'https://www.projectdreammiles.com/#/charities/add';
+
+  $scope.goToAddCharity = function (link) {
+    window.open(link, '_system', 'location=yes');
+  };
 
 
   });

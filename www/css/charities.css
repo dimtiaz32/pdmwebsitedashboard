@@ -192,3 +192,11 @@ button.charity-page.button-slide-up:before {
         text-align: left;
 
       }
+button.charity.add-charity {
+  background-color: #00b9be;
+  color: white;
+}
+
+button.button-clear.charity.add-charity {
+  color: #00b9be;
+}
