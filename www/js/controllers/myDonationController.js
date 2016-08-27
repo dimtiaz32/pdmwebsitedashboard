@@ -19,7 +19,9 @@ angular.module('starter.myDonationController', ['starter.appServices',
   'angular-svg-round-progressbar'])
 
 
-  .controller('MyDonationCtrl',function($rootScope, $scope, HistoryAPI, AuthAPI,  $window, $ionicModal, $cordovaSms, $cordovaSocialSharing,DonationAPI,AuthAPI, CLIENT_HOST, $ionicPopover, $filter) {
+  .controller('MyDonationCtrl',function($rootScope, $scope, HistoryAPI, AuthAPI,  $window, $ionicModal, $cordovaSms, $cordovaSocialSharing,DonationAPI,AuthAPI, CLIENT_HOST, $ionicPopover, $filter ,$cordovaClipboard, $ionicPopup) {
+
+    $scope.test = 'test123';
 
     $scope.menuActive = false;
     $scope.menuToggle = function(){
@@ -152,6 +154,7 @@ angular.module('starter.myDonationController', ['starter.appServices',
         charity: $rootScope.getSelectedCharityId(),
         userId: $rootScope.getUserId()
       }).success(function (data, status, headers, config) {
+
         // $scope.inviteUrl = CLIENT_HOST + "#/app/inviteSponsor/start?id=" + data.code;
         $scope.inviteUrl = "https://www.projectdreammiles.com/#/invite/start?id=" + data.code;
         console.log("local data:" + $scope.inviteUrl);
@@ -191,7 +194,33 @@ angular.module('starter.myDonationController', ['starter.appServices',
             console.log('share facebook failure');
             console.log(err);
           });
+        };
+
+        $scope.copied = false;
+        $scope.copyDonationLink = function() {
+          var copied = $scope.inviteUrl;
+          console.log('link: ' + copied);
+          $cordovaClipboard
+            .copy(copied)
+            .then(function () {
+              // success
+
+              $scope.copyPopup = $ionicPopup.alert({
+                title: 'Link copied to clipboard!'
+              });
+
+              console.log('donation link successfully copied: ' + $scope.inviteUrl);
+            }, function () {
+              // error
+              console.log('donation link FAILED to copy: ' + $scope.inviteUrl);
+            });
+
         }
+
+        $scope.openDonationLink = function() {
+          console.log('link: '+ $scope.inviteUrl)
+          window.open($scope.inviteUrl, '_system');
+        };
 
 
       }).error(function (err, status) {

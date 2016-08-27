@@ -60,6 +60,7 @@ angular.module('starter.appController', [
         $scope.moneyRaisedHolder = [];
 
         if(data.length == 0) {
+          console.log('data length == 0')
           return $scope.noSponsor = true;
         } else {
           for (var i = 0; i < data.length; i++) {
@@ -77,6 +78,7 @@ angular.module('starter.appController', [
           $rootScope.setMoneyRaisedPerMile($scope.moneyRaised);
           $scope.moneyRaised = 0;
           console.log('$scope.getMoneyRaised per mile: ' + $rootScope.getMoneyRaisedPerMile());
+          $rootScope.$broadcast('fetchMoneyRaisedPerMile');
         }
 
       }).error(function(err, status){

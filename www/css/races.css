@@ -142,6 +142,15 @@ p.races.races-detail {
 
 
 /*Find Races*/
+button.races.find-races.add-race {
+  background-color: #00b9be;
+  color: white;
+}
+
+button.button-clear.button-full.races.find-races.add-race {
+  color: white;
+}
+
 .races.find-races-filter-container {
   width: 100%;
 

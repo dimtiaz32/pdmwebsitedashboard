@@ -371,10 +371,11 @@ angular.module('starter.charityController', ['starter.appServices',
       $scope.getMonthMoneyRaised($rootScope.getSelectedCharityId());
       // console.log('charityId from inside setSelectedCharity success call: ' + charityId);
       // $scope.getMonthMoneyRaised(charityId);
-
+      $scope.$broadcast('scroll.refreshComplete');
     })
     .error(function (err, status) {
       console.log('CharityAPI get by id failed with error: ' + err + ' and status: ' + status);
+      $scope.$broadcast('scroll.refreshComplete');
     })
 
 
@@ -551,7 +552,13 @@ angular.module('starter.charityController', ['starter.appServices',
 
   $scope.isListDetailDisplayed = function(charityId) {
     return $scope.toggledCharity === charityId;
-  }
+  };
+
+  $scope.addCharityUrl = 'https://www.projectdreammiles.com/#/charities/add';
+
+  $scope.goToAddCharity = function (link) {
+    window.open(link, '_system', 'location=yes');
+  };
 
 
   });
