@@ -127,7 +127,7 @@ angular.module('starter.authController', ['starter.appServices',
         //$rootScope.setCharity(charity);
         $rootScope.setEmail(email);
         console.log("data:" + JSON.stringify(data));
-        var name =data.user.name.first + data.user.name.last;
+        $scope.name =data.user.name.first +' '+ data.user.name.last;
         console.log('name: ' + name);
 
         $rootScope.setName(name);
