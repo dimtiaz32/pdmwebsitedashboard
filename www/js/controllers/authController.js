@@ -83,7 +83,6 @@ angular.module('starter.authController', ['starter.appServices',
       var lastName = this.user.lastName.trim();
       var email  =  this.user.email.trim().toLowerCase();
       var password = this.user.password.trim();
-      var charity = this.user.charity.trim();
 
       if(!firstName){
         $rootScope.notify("Please enter a valid first name");
@@ -122,7 +121,6 @@ angular.module('starter.authController', ['starter.appServices',
         lastName: lastName,
         email: email,
         password: password,
-        charity: charity,
         provider: 'local'
       }).success(function (data, status, headers, config){
         $rootScope.hide();
@@ -219,7 +217,7 @@ angular.module('starter.authController', ['starter.appServices',
       console.log('setUserCharityCalled with ID: ' + charityId);
       CharityAPI.getById(charityId)
         .success(function(data, status, headers, config){
-          ('setUserCharity CharityAPI getById successfully called');
+          console.log('setUserCharity CharityAPI getById successfully called');
           $rootScope.setSelectedCharityName(data.name);
           $rootScope.setSelectedCharityDescription(data.description);
           $rootScope.setSelectedCharityUrl(data.url);
