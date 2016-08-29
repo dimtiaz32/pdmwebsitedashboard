@@ -93,7 +93,6 @@
 }
 
 .run-page p.head {
-  font-family: "HelveticaNeue-Light";
   font-size: 1em;
   font-weight: lighter;
 
@@ -105,8 +104,8 @@
 
 p.run-page.detail-head {
   text-align: center;
-  font-family: "HelveticaNeue-Light";
   font-size: large;
+
 
 
   padding-bottom: 0;
@@ -120,8 +119,7 @@ p.run-page.detail-head {
 }
 
 .run-page p.label {
-  font-family: "HelveticaNeue-Light";
-  font-size: 1.75em;
+  font-size: x-large;
   margin-left: 5%;
   /*margin: 2% 0 5% 5%;*/
   /*line-height: 0.5;*/
@@ -130,14 +128,14 @@ p.run-page.detail-head {
 
   .run-page span.units {
     font-size: 0.5em;
-    color: #808080;
+    color: #444;
   }
 
   .run-page span.head {
-    font-family: "HelveticaNeue-Light";
+    /*font-family: "HelveticaNeue-Light";*/
     font-size: small;
-    /*margin-left: 5%;*/
-    color: #808080;
+    margin-left: 5%;
+    color: #444;
   }
 
 button.run-page.button-large.button-lap {
@@ -155,7 +153,7 @@ button.run-page.button-large.button-lap {
   z-index: 10;
 }
 
-button.run-page.button-large.button-pause {
+button.run-page.button-pause {
   position: absolute;
   top: 80%;
   left: 5%;
@@ -169,7 +167,7 @@ button.run-page.button-large.button-pause {
   z-index: 10;
 }
 
-button.run-page.button-large.button-pause-red{
+button.run-page.button-pause-red{
   position: absolute;
   top: 80%;
   left: 5%;
@@ -183,17 +181,18 @@ button.run-page.button-large.button-pause-red{
   z-index: 10;
 }
 
-button.run-page.button-large.button-start {
+button.run-page.button-start {
 
   position: absolute;
-  top: 50%;
-  left: 5%;
-  right: 5%;
-
-  width: 90%;
+  bottom: 5%;
+  left: 10%;
+  right: 10%;
+  width: 80%;
 
   background-color: #00b9be;
   color: white;
+
+  height: 10px;
 
   z-index: 10;
 }
@@ -265,7 +264,6 @@ button.run-page.button-slide-down:before {
 
 h2.run-page {
   /*Check to remove this later*/
-  font-family: "HelveticaNeue-Light";
   font-size: x-large;
   text-align: center;
 
@@ -283,10 +281,13 @@ h2.run-page {
 }
 
 p.run-page.header {
-  font-family: "HelveticaNeue-Light";
-  font-size: x-large;
+  font-size: large;
+  font-weight: 400;
   text-align: center;
-  padding: 15px 0 5px 0;
+
+  margin: 0;
+  padding: 10px 0 10px 0;
+
 }
 
 .run-page.bar-stable .button {
@@ -322,4 +323,23 @@ a.run-page.no-charity {
 
 .stop-popup.button-positive {
   background-color: rgb(206, 29, 31) !important;
+}
+
+/*popup copy confirm notification*/
+.run-page.lap-confirm {
+
+  z-index: 10;
+
+  position: absolute;
+  left: 50%;
+  top: 70%;
+  transform: translate(-50%, -50%);
+
+  text-align: center;
+  font-size: 2em;
+  color: #fff;
+
+  background-color: rgba(0,0,0,.7);
+  padding: 15px;
+  border-radius: 10px;
 }

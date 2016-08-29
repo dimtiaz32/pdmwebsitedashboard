@@ -77,6 +77,10 @@ ion-item.activity-page {
       position: absolute;
       right: 10px;
       top: 5px;
+
+      width: 30px;
+      height: 30px;
+      text-align: right;
     }
 
     .activity-page.goal-stats .row .col{
