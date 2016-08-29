@@ -1148,10 +1148,11 @@ angular.module('starter.runController', ['starter.appServices',
 
     $scope.startRun = function(){
       console.log('isRunning: ' + $scope.isRunning);
+      $rootScope.$broadcast('hideTabBar');
+
       $scope.removeStartUI();
       $scope.removeLocateUI();
       $scope.addRepositionedLocateUI();
-      $rootScope.$broadcast('hideTabBar');
       $scope.runPath = new google.maps.Polyline({
         strokeColor: '#FF0000',
         strokeOpacity: 1.0,
