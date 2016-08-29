@@ -120,6 +120,16 @@ angular.module('starter.appController', [
       });
     });
 
+    //toggle tab bar during run
+    $scope.hideTabBar = false;
+    $rootScope.$on('showTabBar', function(){
+      $scope.hideTabBar = false;
+      $scope.$broadcast('scroll.refreshComplete');
+    });
+    $rootScope.$on('hideTabBar', function(){
+      $scope.hideTabBar = true;
+      $scope.$broadcast('scroll.refreshComplete');
+    });
 
     //history stuff
     var t = Date.now();

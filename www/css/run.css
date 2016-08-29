@@ -323,3 +323,22 @@ a.run-page.no-charity {
 .stop-popup.button-positive {
   background-color: rgb(206, 29, 31) !important;
 }
+
+/*popup copy confirm notification*/
+.run-page.lap-confirm {
+
+  z-index: 10;
+
+  position: absolute;
+  left: 50%;
+  top: 70%;
+  transform: translate(-50%, -50%);
+
+  text-align: center;
+  font-size: 2em;
+  color: #fff;
+
+  background-color: rgba(0,0,0,.7);
+  padding: 15px;
+  border-radius: 10px;
+}

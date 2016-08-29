@@ -20,7 +20,7 @@ angular.module('starter.runController', ['starter.appServices',
 
 //TODO: CLEAR VALUES AFTER RUN SUMMARY, NEW RUN BUTTON?
 
-  .controller('RunCtrl', function($scope, $cordovaInsomnia, $window, $rootScope,$ionicPlatform, $cordovaGeolocation,  $ionicLoading,$ionicPopup, $interval, AppAPI, UserAPI, RunAPI, CharityAPI, HistoryAPI, DonationAPI, $ionicModal){
+  .controller('RunCtrl', function($scope, $cordovaInsomnia, $window, $rootScope,$ionicPlatform, $cordovaGeolocation,  $ionicLoading,$ionicPopup, $interval, AppAPI, UserAPI, RunAPI, CharityAPI, HistoryAPI, DonationAPI, $timeout, $ionicModal){
 
   $rootScope.$on('initRun', function(){
 
@@ -356,7 +356,7 @@ angular.module('starter.runController', ['starter.appServices',
               type: 'stop-popup button-positive',
               onTap: function(e) {
                 console.log('%cstop activated', 'color: Teal');
-                return $scope.stopRun();
+                $scope.stopRun();
 
               }
             }
@@ -1151,6 +1151,7 @@ angular.module('starter.runController', ['starter.appServices',
       $scope.removeStartUI();
       $scope.removeLocateUI();
       $scope.addRepositionedLocateUI();
+      $rootScope.$broadcast('hideTabBar');
       $scope.runPath = new google.maps.Polyline({
         strokeColor: '#FF0000',
         strokeOpacity: 1.0,
@@ -1169,6 +1170,14 @@ angular.module('starter.runController', ['starter.appServices',
 
 
     $scope.lap = function(){
+
+      //lap number display toggle
+      // $scope.popupToggleLap=true;
+      // $timeout(function(){
+      //   $scope.popupToggleLap=false
+      // }, 1250);
+
+
       $scope.stopLapTimer();
 
       $scope.previousLapDistance = $scope.distance;
@@ -1253,6 +1262,8 @@ angular.module('starter.runController', ['starter.appServices',
     }
 
     $scope.stopRun = function(){
+
+      $rootScope.$broadcast('showTabBar');
 
       $scope.lapNumbers.push($scope.lapNumber);
       $scope.lapDistances.push($scope.lapDistance);

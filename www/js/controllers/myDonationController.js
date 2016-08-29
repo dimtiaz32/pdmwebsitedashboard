@@ -197,27 +197,21 @@ angular.module('starter.myDonationController', ['starter.appServices',
           });
         };
 
-        $scope.copied = false;
         $scope.copyDonationLink = function() {
           console.log('link: ' + $scope.inviteUrl);
-
           $cordovaClipboard
             .copy($scope.inviteUrl)
             .then(function () {
               // success
-
-
               $scope.popupToggle=true;
               $timeout(function(){
                 $scope.popupToggle=false
               }, 500);
-
               console.log('donation link successfully copied: ' + $scope.inviteUrl);
             }, function () {
               // error
               console.log('donation link FAILED to copy: ' + $scope.inviteUrl);
             });
-
         }
 
         $scope.openDonationLink = function() {
