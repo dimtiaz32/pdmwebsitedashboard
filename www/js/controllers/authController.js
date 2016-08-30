@@ -195,6 +195,26 @@ angular.module('starter.authController', ['starter.appServices',
 
     //check to see if the user wanted to stay logged in
     var keepLoggedInString = localStorage.getItem('keepUserLoggedIn');
+    console.log('TOKEN: ' + localStorage.getItem('token'));
+
+    $scope.user = {
+      email: "",
+      id: "",
+      name: "",
+      password: "",
+      charity: "",
+      history: [],
+      provider: "",
+      donorId:"",
+      past_donations_from: [],
+      past_donations_to: [],
+      donations_to: [],
+      donations_from: [],
+      past_charities: [],
+      created: Date,
+      updated: Date
+
+    };
 
     console.log('Keep user logged in ? -> ' + keepLoggedInString);
 
@@ -204,9 +224,14 @@ angular.module('starter.authController', ['starter.appServices',
 
       var email = localStorage.getItem('email');
       var token = localStorage.getItem('token');
+      console.log('TOKEN: ' + token);
 
-      AuthAPI.authenticationCheck(email, token)
+      AuthAPI.authenticationCheck(token, {
+        email: email
+      })
         .success(function (data, status, header, config) {
+          console.log(data);
+
           var firstName = data.user.name.first.trim();
           var lastName = data.user.name.last.trim();
 
@@ -300,28 +325,6 @@ angular.module('starter.authController', ['starter.appServices',
         console.log('Keep user logged in -> ' + localStorage.getItem('keepUserLoggedIn'));
       }
     };
-
-
-    $scope.user = {
-      email: "",
-      id: "",
-      name: "",
-      password: "",
-      charity: "",
-      history: [],
-      provider: "",
-      donorId:"",
-      past_donations_from: [],
-      past_donations_to: [],
-      donations_to: [],
-      donations_from: [],
-      past_charities: [],
-      created: Date,
-      updated: Date
-
-    };
-
-
 
 
     $scope.setUserCharity  = function(charityId){
@@ -431,6 +434,10 @@ angular.module('starter.authController', ['starter.appServices',
 
 
           $rootScope.getSponsors();
+
+          localStorage.setItem('token', data.token);
+          console.log('SAVED TOKEN: ' + localStorage.getItem('token'));
+          localStorage.setItem('email', data.user.email.trim());
 
           //Set these inputs to be empty
           $scope.user.email = '';
