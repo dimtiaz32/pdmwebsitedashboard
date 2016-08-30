@@ -231,47 +231,47 @@ angular.module('starter.authController', ['starter.appServices',
         .success(function (data, status, header, config) {
           console.log(data);
 
-          var firstName = data.name.first.trim();
-          var lastName = data.name.last.trim();
+          var firstName = data.user.name.first.trim();
+          var lastName = data.user.name.last.trim();
 
-          $scope.name = firstName + ' ' + lastName;
+          $scope.user.name = firstName + ' ' + lastName;
           console.log('$scope.name set as: ' + $scope.user.name);
           $rootScope.setName($scope.user.name);
           console.log('user name localStorage set to: ' + $rootScope.getName());
 
-          $scope.user.email = data.email.trim();
+          $scope.user.email = data.user.email.trim();
           console.log('$scope.user.email set to: ' + $scope.user.email);
           $rootScope.setEmail($scope.user.email);
           console.log('Email set as: ' + $rootScope.getEmail());
 
-          $scope.user.created = data.created;
+          $scope.user.created = data.user.created;
           console.log('$scope.user.created set as: ' + $scope.user.created);
           $rootScope.setCreatedAt($scope.user.created);
           console.log('createdAt local storage set: ' + $rootScope.getCreatedAt());
 
-          $scope.user.id = data._id;
+          $scope.user.id = data.user._id;
           console.log('$scope.user.id set to: ' + $scope.user.id);
           $rootScope.setUserId($scope.user.id);
           console.log('User id local storage set: ' + $rootScope.getUserId());
           $rootScope.setToken(data.token);
           console.log("token: " + data.token);
-          $rootScope.setAvatar(data.avatar);
-          console.log("password: " + data.password);
-          $rootScope.setPassword(data.password);
+          $rootScope.setAvatar(data.user.avatar);
+          console.log("password: " + data.user.password);
+          $rootScope.setPassword(data.user.password);
 
-          $scope.user.donorId = data.donorId;
+          $scope.user.donorId = data.user.donorId;
           console.log('donorId: ' + $scope.user.donorId);
 
           // console.log(data.user.charityName);
-          if(data.charity == null || data.charity.id == null){
+          if(data.user.charity == null || data.user.charity.id == null){
             console.log('user.charityId is null');
             $scope.noCharity = true;
           } else {
-            console.log('data.user.charity.id: ' + data.charity.id);
+            console.log('data.user.charity.id: ' + data.user.charity.id);
             console.log('data.user.charity');
-            $rootScope.setSelectedCharityId(data.charity.id);
-            $rootScope.setSelectedCharityMoneyRaised(data.charity.moneyRaised);
-            $rootScope.setSelectedCharityName(data.charityName);
+            $rootScope.setSelectedCharityId(data.user.charity.id);
+            $rootScope.setSelectedCharityMoneyRaised(data.user.charity.moneyRaised);
+            $rootScope.setSelectedCharityName(data.user.charityName);
             console.log('selectedCharityId: ' +  $rootScope.getSelectedCharityId());
             console.log('selectedCharityMoneyRaised: ' + $rootScope.getSelectedCharityMoneyRaised());
             $scope.setUserCharity($rootScope.getSelectedCharityId());
