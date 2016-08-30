@@ -193,6 +193,115 @@ angular.module('starter.authController', ['starter.appServices',
 
   .controller('SigninCtrl', function($scope, $rootScope, $timeout, AuthAPI, $ionicPopup, $window, ngFB, GooglePlus, CharityAPI,HistoryAPI, UserAPI, RunAPI){
 
+    //check to see if the user wanted to stay logged in
+    var keepLoggedInString = localStorage.getItem('keepUserLoggedIn');
+
+    console.log('Keep user logged in ? -> ' + keepLoggedInString);
+
+    //Authenticates user if the user wants to stay logged in
+    $scope.authenticateUser = function() {
+      $rootScope.show("Logging you in...");
+
+      var email = localStorage.getItem('email');
+      var token = localStorage.getItem('token');
+
+      AuthAPI.authenticationCheck(email, token)
+        .success(function (data, status, header, config) {
+          var firstName = data.user.name.first.trim();
+          var lastName = data.user.name.last.trim();
+
+          $scope.user.name = firstName + ' ' + lastName;
+          console.log('$scope.name set as: ' + $scope.user.name);
+          $rootScope.setName($scope.user.name);
+          console.log('user name localStorage set to: ' + $rootScope.getName());
+
+          $scope.user.email = data.user.email.trim();
+          console.log('$scope.user.email set to: ' + $scope.user.email);
+          $rootScope.setEmail($scope.user.email);
+          console.log('Email set as: ' + $rootScope.getEmail());
+
+          $scope.user.created = data.user.created;
+          console.log('$scope.user.created set as: ' + $scope.user.created);
+          $rootScope.setCreatedAt($scope.user.created);
+          console.log('createdAt local storage set: ' + $rootScope.getCreatedAt());
+
+          $scope.user.id = data.user._id;
+          console.log('$scope.user.id set to: ' + $scope.user.id);
+          $rootScope.setUserId($scope.user.id);
+          console.log('User id local storage set: ' + $rootScope.getUserId());
+          $rootScope.setToken(data.token);
+          console.log("token: " + data.token);
+          $rootScope.setAvatar(data.user.avatar);
+          console.log("password: " + data.user.password);
+          $rootScope.setPassword(data.user.password);
+
+          $scope.user.donorId = data.user.donorId;
+          console.log('donorId: ' + $scope.user.donorId);
+
+          // console.log(data.user.charityName);
+          if(data.user.charity == null || data.user.charity.id == null){
+            console.log('user.charityId is null');
+            $scope.noCharity = true;
+          } else {
+            console.log('data.user.charity.id: ' + data.user.charity.id);
+            console.log('data.user.charity');
+            $rootScope.setSelectedCharityId(data.user.charity.id);
+            $rootScope.setSelectedCharityMoneyRaised(data.user.charity.moneyRaised);
+            $rootScope.setSelectedCharityName(data.user.charityName);
+            console.log('selectedCharityId: ' +  $rootScope.getSelectedCharityId());
+            console.log('selectedCharityMoneyRaised: ' + $rootScope.getSelectedCharityMoneyRaised());
+            $scope.setUserCharity($rootScope.getSelectedCharityId());
+          }
+
+          localStorage.setItem('token', data.token);
+
+          $rootScope.getSponsors();
+
+          $rootScope.$broadcast('LoadRun');
+          $rootScope.$broadcast('ChangeCharity');
+          $rootScope.$broadcast('fetchMySponsors');
+          $rootScope.$broadcast('initial');
+          $rootScope.$broadcast('runMonthMoneyRaised');
+          $rootScope.$broadcast('runWeekMoneyRaised');
+          $rootScope.$broadcast('newMap');
+          $rootScope.$broadcast('initRun');
+          $rootScope.hide();
+          $window.location.href=('#/app/run');
+        })
+        .error(function(error, status) {
+          console.log("An error ocurred: " + error);
+          console.log("Status: " + status);
+          console.log("Please try logging in again");
+          $rootScope.hide();
+        })
+    };
+
+    if (keepLoggedInString == 'yes') {
+      //authenticate the user
+      $scope.authenticateUser();
+    };
+
+    $scope.keepLoggedIn = function() {
+      if (keepLoggedInString == 'yes') {
+        return true;
+      } else {
+        return false;
+      }
+    };
+
+    $scope.toggleKeepLoggedIn = function () {
+      if (keepLoggedInString == 'yes') {
+        keepLoggedInString = 'no';
+        localStorage.setItem('keepUserLoggedIn', keepLoggedInString);
+        console.log('Keep user logged in -> ' + localStorage.getItem('keepUserLoggedIn'));
+      } else {
+        keepLoggedInString = 'yes';
+        localStorage.setItem('keepUserLoggedIn', keepLoggedInString);
+        console.log('Keep user logged in -> ' + localStorage.getItem('keepUserLoggedIn'));
+      }
+    };
+
+
     $scope.user = {
       email: "",
       id: "",
@@ -213,6 +322,8 @@ angular.module('starter.authController', ['starter.appServices',
     };
 
 
+
+
     $scope.setUserCharity  = function(charityId){
       console.log('setUserCharityCalled with ID: ' + charityId);
       CharityAPI.getById(charityId)
@@ -228,7 +339,7 @@ angular.module('starter.authController', ['starter.appServices',
         .error(function(err, status){
           console.log('Charity API getCharityById call failed with error: ' + err + ' and status: ' + status);
         });
-    }
+    };
 
 
     $scope.errorMessage = "";

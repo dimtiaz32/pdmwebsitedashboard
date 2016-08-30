@@ -189,6 +189,15 @@ angular.module('starter.authServices', ['ngCookies'])
     },
     signinByGG: function(form) {
       return $http.post(SERVER_HOST + 'authentication/google',form);
+    },
+    authenticationCheck: function(email, token) {
+      $http.defaults.headers.common.authorization = token;
+      return $http.post(SERVER_HOST + 'user/authenticationCheck', {
+        method: 'POST',
+        header: {
+          token: token
+        }
+      });
     }
   }
 });
