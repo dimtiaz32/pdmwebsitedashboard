@@ -37,7 +37,13 @@ angular.module('starter.authServices', ['ngCookies'])
     }, 1999);
   };
 
+  $rootScope.setAutoLogin = function(autoLogin){
+    $window.localStorage.autoLogin = autoLogin;
+  };
 
+  $rootScope.getAutoLogin = function(){
+    return $window.localStorage.autoLogin;
+  }
   $rootScope.setToken = function(token){
     // $cookies.put('token', token);
     $window.localStorage.token = token;
@@ -192,10 +198,33 @@ angular.module('starter.authServices', ['ngCookies'])
     },
     authenticationCheck: function(email, token) {
       $http.defaults.headers.common.authorization = token;
-      return $http.post(SERVER_HOST + 'user/authenticationCheck', {
+      return $http.post(SERVER_HOST + 'user/keepLoggedIn/authenticationCheck', {
         method: 'POST',
         header: {
           token: token
+        },
+        params: {
+          email: email
+        }
+      });
+    },
+    activateAutoAuthentication: function(email, token){
+      $http.defaults.headers.common.authorization = token;
+      return $http.post(SERVER_HOST+'user/keepLoggedIn/keepLoggedIn', {
+        method: 'POST',
+        header: {
+          token: token
+        },
+        params: {
+          email: email
+        }
+      });
+    },
+    deactivateAutoAuthentication: function(email){
+      return $http.post(SERVER_HOST+'user/keepLoggedIn/deactivateAuthentication', {
+        method: 'GET',
+        params: {
+          email: email
         }
       });
     }

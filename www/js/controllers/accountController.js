@@ -257,6 +257,7 @@ angular.module('starter.accountController', ['starter.appServices',
       console.log('Signout succeeded, redirecting to login');
       //redirect to login
       $scope.$broadcast('scroll.refreshComplete');
+      localStorage.setItem('keepUserLoggedIn', 'no');
       $window.location.href = ('#/auth/signin');
     //   AuthAPI.signout()
     //     .success(function(data, status, headers, config){

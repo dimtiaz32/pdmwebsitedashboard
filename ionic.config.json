@@ -1,4 +1,5 @@
 {
   "name": "DreamRun",
-  "app_id": "fc126d62"
+  "app_id": "fc126d62",
+  "defaultBrowser": "firefox"
 }
