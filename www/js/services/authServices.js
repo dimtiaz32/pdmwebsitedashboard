@@ -196,32 +196,10 @@ angular.module('starter.authServices', ['ngCookies'])
     signinByGG: function(form) {
       return $http.post(SERVER_HOST + 'authentication/google',form);
     },
-    authenticationCheck: function(email, token) {
+    authenticationCheck: function(token, email) {
       $http.defaults.headers.common.authorization = token;
-      return $http.post(SERVER_HOST + 'user/keepLoggedIn/authenticationCheck', {
-        method: 'POST',
-        header: {
-          token: token
-        },
-        params: {
-          email: email
-        }
-      });
-    },
-    activateAutoAuthentication: function(email, token){
-      $http.defaults.headers.common.authorization = token;
-      return $http.post(SERVER_HOST+'user/keepLoggedIn/keepLoggedIn', {
-        method: 'POST',
-        header: {
-          token: token
-        },
-        params: {
-          email: email
-        }
-      });
-    },
-    deactivateAutoAuthentication: function(email){
-      return $http.post(SERVER_HOST+'user/keepLoggedIn/deactivateAuthentication', {
+
+      return $http.get(SERVER_HOST + 'user/keepLoggedIn/authenticationCheck', {
         method: 'GET',
         params: {
           email: email
