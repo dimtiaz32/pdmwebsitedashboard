@@ -114,3 +114,20 @@ ion-content.sign-in{
   z-index: 10;
 }
 
+button.select {
+  border: none;
+  background: transparent;
+}
+
+.item.item-button-right {
+  background: transparent;
+  border: none;
+  font-size: small;
+  color: white;
+}
+
+i.selected,
+i.not-selected {
+  color: white;
+}
+

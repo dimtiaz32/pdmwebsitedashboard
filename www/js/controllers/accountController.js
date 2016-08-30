@@ -263,4 +263,5 @@ angular.module('starter.accountController', ['starter.appServices',
     //
     //     })
     }
+
   })

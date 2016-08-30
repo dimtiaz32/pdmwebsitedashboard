@@ -73,7 +73,7 @@ angular.module('starter', ['ionic',
 
   .constant('CLIENT_HOST','http://localhost:8100/')
   .constant('SERVER_HOST','https://dreamrun.herokuapp.com/')
-  // .constant('SERVER_HOST','http://localhost:5000/')
+  //.constant('SERVER_HOST','http://localhost:5000/')
 
 
   .config(['$httpProvider', function($httpProvider) {
