@@ -27,6 +27,9 @@
   <feature name="SocialSharing">
     <param name="ios-package" value="SocialSharing"/>
   </feature>
+  <feature name="Console">
+    <param name="ios-package" value="CDVLogger" />
+  </feature>
   <platform name="ios">
     <preference name="KeyboardDisplayRequiresUserAction" value="false"/>
     <icon src="resources/ios/icon/icon.png" width="57" height="57"/>

@@ -53,6 +53,9 @@ angular.module('starter', ['ionic',
         // org.apache.cordova.statusbar required
         StatusBar.styleDefault();
       }
+      if(window.cordova.logger){
+        cordova.plugins.logger._onDeviceReady();
+      }
 
 
 
