@@ -48,29 +48,3 @@
   .account.list input.editing {
     color: #000;
   }
-
-/*input {
-  text-align: right;
-}
-
-.name {
-  background-image: url("../img/account_info-bg.png");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-}
-
-h1 {
-  text-align: right;
-  vertical-align: middle;
-  color: white;
-  font-weight: 100;
-  float:right;
-}*/
-
-i {
-  color: #00b9be;
-}
-
-button.select {
-  background: transparent;
-}
