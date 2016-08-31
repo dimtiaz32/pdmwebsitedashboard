@@ -20,14 +20,6 @@
           <input type="password" placeholder="" ng-model="user.password" enter-next tabindex="2">
         </label>
 
-      <div class="item item-button-right">
-        Keep me logged
-        <button class="button select" ng-click="toggleKeepLoggedIn()">
-          <i class="not-selected ion-ios-circle-outline" ng-show="!keepLoggedIn()"></i>
-          <i class="selected ion-ios-circle-filled" ng-show="keepLoggedIn()"></i>
-        </button>
-      </div>
-
         <button class="sign-in login button button-full button-positive" type="submit" id="signin" ng-click="login()">
           Sign in
         </button>
@@ -36,16 +28,9 @@
           Create Account
         </button>
 
-      <div class="row">
-        <div class="col col-50">
-          <button class="sign-in forgot-password button button-full button-positive" ng-click="showForgotPassword()">
-            Forgot Password
-          </button>
-        </div>
-        <div class="col col-50">
-
-
-        </div>
+        <button class="sign-in forgot-password button button-full button-positive" ng-click="showForgotPassword()">
+          Forgot Password
+        </button>
       </div>
 
 

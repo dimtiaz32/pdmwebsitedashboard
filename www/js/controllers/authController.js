@@ -309,27 +309,7 @@ angular.module('starter.authController', [
         $scope.authenticateUser();
       };
 
-    })
-
-    $scope.keepLoggedIn = function() {
-      if (keepLoggedInString == 'yes') {
-        return true;
-      } else {
-        return false;
-      }
-    };
-
-    $scope.toggleKeepLoggedIn = function () {
-      if (keepLoggedInString == 'yes') {
-        keepLoggedInString = 'no';
-        localStorage.setItem('keepUserLoggedIn', keepLoggedInString);
-        console.log('Keep user logged in -> ' + localStorage.getItem('keepUserLoggedIn'));
-      } else {
-        keepLoggedInString = 'yes';
-        localStorage.setItem('keepUserLoggedIn', keepLoggedInString);
-        console.log('Keep user logged in -> ' + localStorage.getItem('keepUserLoggedIn'));
-      }
-    };
+    });
 
 
     $scope.setUserCharity  = function(charityId){
@@ -444,6 +424,7 @@ angular.module('starter.authController', [
           localStorage.setItem('token', data.token);
           console.log('SAVED TOKEN: ' + localStorage.getItem('token'));
           localStorage.setItem('email', data.user.email.trim());
+          localStorage.setItem('keepUserLoggedIn', 'yes');
 
           //Set these inputs to be empty
           $scope.user.email = '';
@@ -606,6 +587,30 @@ angular.module('starter.authController', [
         ]
       })
     }
+
+
+
+    /*
+     $scope.keepLoggedIn = function() {
+     if (keepLoggedInString == 'yes') {
+     return true;
+     } else {
+     return false;
+     }
+     };
+
+     $scope.toggleKeepLoggedIn = function () {
+     if (keepLoggedInString == 'yes') {
+     keepLoggedInString = 'no';
+     localStorage.setItem('keepUserLoggedIn', keepLoggedInString);
+     console.log('Keep user logged in -> ' + localStorage.getItem('keepUserLoggedIn'));
+     } else {
+     keepLoggedInString = 'yes';
+     localStorage.setItem('keepUserLoggedIn', keepLoggedInString);
+     console.log('Keep user logged in -> ' + localStorage.getItem('keepUserLoggedIn'));
+     }
+     };
+     */
 
   })
 
