@@ -300,10 +300,13 @@ angular.module('starter.authController', ['starter.appServices',
         })
     };
 
-    if (keepLoggedInString == 'yes') {
-      //authenticate the user
-      $scope.authenticateUser();
-    };
+    $rootScope.$on('autoLogin', function(){
+      if (keepLoggedInString == 'yes') {
+        //authenticate the user
+        $scope.authenticateUser();
+      };
+
+    })
 
     $scope.keepLoggedIn = function() {
       if (keepLoggedInString == 'yes') {

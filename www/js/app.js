@@ -56,6 +56,13 @@ angular.module('starter', ['ionic',
       if(window.cordova && window.cordova.plugins.console){
         cordova.plugins.logger._onDeviceReady();
       }
+      var loggedIn = localStorage.getItem('keepUserLoggedIn');
+      console.log('isLoggedIn: ' + localStorage.getItem('keepUserLoggedIn'));
+      console.log('loggedIn: ' + loggedIn);
+      if(loggedIn == 'yes'){
+        console.log('inside of loggedIn function, broadcast goes here');
+        $rootScope.$broadcast('autoLogin');
+      }
 
 
 
