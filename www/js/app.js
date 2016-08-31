@@ -34,16 +34,37 @@ angular.module('starter', ['ionic',
   'dtrw.bcrypt'
 ])
 
-  .run(function($ionicPlatform,$ionicAnalytics, ngFB, AuthAPI, $rootScope) {
+  .run(function($ionicPlatform,$ionicAnalytics, ngFB, AuthAPI, $rootScope, $window) {
 
     // TODO facebook application id, need to replace whenr release
     ngFB.init({appId: '1079958642070604'});
 
+
+    var loggedIn = localStorage.getItem('keepUserLoggedIn');
+    console.log('isLoggedIn: ' + localStorage.getItem('keepUserLoggedIn'));
+    console.log('loggedIn: ' + loggedIn);
+    $rootScope.$on('appLogin', function(){
+      if(loggedIn == 'yes'){
+        console.log('inside of loggedIn function, broadcast goes here');
+        $rootScope.$broadcast('scroll.refreshComplete');
+        $rootScope.$broadcast('autoLogin');
+        $window.location.href = ('#/app/run');
+      }
+    });
+
+    $rootScope.$broadcast('appLogin');
     $ionicPlatform.ready(function() {
+
 
       $ionicAnalytics.register();
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
+
+
+
+
+
+
       if (window.cordova && window.cordova.plugins.Keyboard) {
         cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
         cordova.plugins.Keyboard.disableScroll(true);
@@ -56,13 +77,7 @@ angular.module('starter', ['ionic',
       if(window.cordova && window.cordova.plugins.console){
         cordova.plugins.logger._onDeviceReady();
       }
-      var loggedIn = localStorage.getItem('keepUserLoggedIn');
-      console.log('isLoggedIn: ' + localStorage.getItem('keepUserLoggedIn'));
-      console.log('loggedIn: ' + loggedIn);
-      if(loggedIn == 'yes'){
-        console.log('inside of loggedIn function, broadcast goes here');
-        $rootScope.$broadcast('autoLogin');
-      }
+
 
 
 
@@ -79,8 +94,8 @@ angular.module('starter', ['ionic',
   }])
 
   .constant('CLIENT_HOST','http://localhost:8100/')
-  // .constant('SERVER_HOST','https://dreamrun.herokuapp.com/')
-  .constant('SERVER_HOST','http://localhost:5000/')
+  .constant('SERVER_HOST','https://dreamrun.herokuapp.com/')
+  // .constant('SERVER_HOST','http://localhost:5000/')
 
 
   .config(['$httpProvider', function($httpProvider) {

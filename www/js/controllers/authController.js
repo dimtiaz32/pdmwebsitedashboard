@@ -1,7 +1,9 @@
 /**
  * Created by dev on 8/2/16.
  */
-angular.module('starter.authController', ['starter.appServices',
+angular.module('starter.authController', [
+  'starter',
+  'starter.appServices',
   'starter.charityServices',
   'starter.authServices',
   'starter.runServices',
@@ -221,7 +223,7 @@ angular.module('starter.authController', ['starter.appServices',
     //Authenticates user if the user wants to stay logged in
     $scope.authenticateUser = function() {
       $rootScope.show("Logging you in...");
-
+      console.log('inside authenticate user');
       var email = localStorage.getItem('email');
       var token = localStorage.getItem('token');
       console.log('TOKEN: ' + token);
@@ -301,6 +303,7 @@ angular.module('starter.authController', ['starter.appServices',
     };
 
     $rootScope.$on('autoLogin', function(){
+      console.log('inside autoLogin broadcast');
       if (keepLoggedInString == 'yes') {
         //authenticate the user
         $scope.authenticateUser();
