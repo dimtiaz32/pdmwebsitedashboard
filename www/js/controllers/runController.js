@@ -21,12 +21,9 @@ angular.module('starter.runController', ['starter.appServices',
 //TODO: CLEAR VALUES AFTER RUN SUMMARY, NEW RUN BUTTON?
 
   .controller('RunCtrl', function($scope, $cordovaInsomnia, $window, $rootScope,$ionicPlatform, $cordovaGeolocation,  $ionicLoading,$ionicPopup, $interval, AppAPI, UserAPI, RunAPI, CharityAPI, HistoryAPI, DonationAPI, $timeout, $ionicModal){
-
+    $scope.isDetailDisplayed = false;
+    $scope.isRunDetailDisplayed = false;
   $rootScope.$on('initRun', function(){
-
-
-
-
 
     $rootScope.$on('LoadRun', function(){
       $scope.name = $rootScope.getName();
@@ -34,7 +31,6 @@ angular.module('starter.runController', ['starter.appServices',
       $rootScope.$broadcast('fetchMyPledges');
       $scope.$broadcast('scroll.refreshComplete');
     });
-
 
     $rootScope.$on('ChangeCharity', function(){
       $scope.charityName = $rootScope.getSelectedCharityName();
@@ -61,9 +57,10 @@ angular.module('starter.runController', ['starter.appServices',
     $scope.runPath = null;
     $scope.marker;
 
+    /*
     $scope.isDetailDisplayed = false;
     $scope.isRunDetailDisplayed = false;
-
+*/
 
 
     $scope.hasCharity = function(){
