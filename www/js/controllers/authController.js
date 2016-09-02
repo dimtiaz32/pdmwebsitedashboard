@@ -22,11 +22,11 @@ angular.module('starter.authController', [
   .controller('SignUpCtrl', function($scope, $rootScope, $ionicModal, $timeout, AuthAPI, RunAPI, $window, UserAPI){
 
     //Keyboard stuff
-    $scope.keyPressed = function(event) {
-      if (event.which === 13) {
-        cordova.plugins.Keyboard.close();
-      }
-    };
+    // $scope.keyPressed = function(event) {
+    //   if (event.which === 13) {
+    //     cordova.plugins.Keyboard.close();
+    //   }
+    // };
     //End keyboard stuff
 
     $scope.user = {
