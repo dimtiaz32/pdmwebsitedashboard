@@ -20,7 +20,7 @@ angular.module('starter.runController', ['starter.appServices',
 
 //TODO: CLEAR VALUES AFTER RUN SUMMARY, NEW RUN BUTTON?
 
-  .controller('RunCtrl', function($scope, $cordovaInsomnia, $window, $rootScope,$ionicPlatform, $cordovaGeolocation,  $ionicLoading,$ionicPopup, $interval, AppAPI, UserAPI, RunAPI, CharityAPI, HistoryAPI, DonationAPI, $timeout, $ionicModal){
+  .controller('RunCtrl', function($scope, $cordovaInsomnia, $window, $rootScope,$ionicPlatform, $cordovaGeolocation,  $ionicLoading,$ionicPopup, $interval, AppAPI, UserAPI, RunAPI, CharityAPI, HistoryAPI, DonationAPI, $filter, $timeout, $ionicModal){
     $scope.isDetailDisplayed = false;
     $scope.isRunDetailDisplayed = false;
   $rootScope.$on('initRun', function(){
@@ -1250,6 +1250,10 @@ angular.module('starter.runController', ['starter.appServices',
       console.log('charityId for run post: ' + $rootScope.getSelectedCharityId());
       console.log('charityId for run post: ' + $rootScope.getSelectedCharityName());
 
+
+      // var results = $filter('date')(new Date(), "yyyy-MM-dd HH:mm:ss.sssZ");
+      // var offset = new Date();
+      // console.log('timezone : '+ results);
 
       var form = {
         distance: $scope.distance,
