@@ -1,0 +1,73 @@
+<ion-view class="" view-title="Past Races">
+
+  <ion-nav-buttons side="left">
+    <button class="button back-button buttons button-clear header-item" ng-click="goBack()" >
+      <i class="icon ion-ios-arrow-back"></i>
+      Races</button>
+  </ion-nav-buttons>
+
+  <ion-content class="">
+
+    <!--User this template-->
+    <div class="races past-races-container" ng-repeat="race in pastRacesDisplay"
+         style="background-image:url('img/race-images/race-banner-{{race._id}}.png');">
+      <div class="gradient">
+        <h1 class="featured-race">{{race.name}}</h1>
+        <p class="races races-detail">Location: {{race.city}}</p>
+        <p class="races races-detail">Date: {{race.date | date:'MM/dd/yyyy'}}</p>
+        <p class="races races-detail">Distance: {{race.distances}}</p>
+      </div>
+    </div>
+<!--
+    <div class="races tile-container-one">
+      <div class="races gradient">
+        <h1 class="my-races">My Past Race 1</h1>
+        <p class="races my-races-detail">Washington, DC</p>
+        <p class="races my-races-detail">500mi</p>
+        <p class="races my-races-detail">7/29/2016</p>
+      </div>
+    </div>
+    <div class="races tile-container-two">
+      <div class="races gradient">
+        <h1 class="my-races">My Past Race 2</h1>
+        <p class="races my-races-detail">Arlington, VA</p>
+        <p class="races my-races-detail">500mi</p>
+        <p class="races my-races-detail">7/29/2016</p>
+      </div>
+    </div>
+    <div class="races tile-container-three">
+      <div class="races gradient">
+        <h1 class="my-races">My Past Race 3</h1>
+        <p class="races my-races-detail">Duluth, MN</p>
+        <p class="races my-races-detail">500mi</p>
+        <p class="races my-races-detail">7/29/2016</p>
+      </div>
+    </div>
+    <div class="races tile-container-one">
+      <div class="races gradient">
+        <h1 class="my-races">My Past Race 4</h1>
+        <p class="races my-races-detail">Baltimore, MD</p>
+        <p class="races my-races-detail">500mi</p>
+        <p class="races my-races-detail">7/29/2016</p>
+      </div>
+    </div>
+    <div class="races tile-container-two">
+      <div class="races gradient">
+        <h1 class="my-races">My Past Race 5</h1>
+        <p class="races my-races-detail">Chicago, IL</p>
+        <p class="races my-races-detail">500mi</p>
+        <p class="races my-races-detail">7/29/2016</p>
+      </div>
+    </div>
+    <div class="races tile-container-three">
+      <div class="races gradient">
+        <h1 class="my-races">My PastRace 6</h1>
+        <p class="races my-races-detail">Hayward, WI</p>
+        <p class="races my-races-detail">500mi</p>
+        <p class="races my-races-detail">7/29/2016</p>
+      </div>
+    </div>
+-->
+  </ion-content>
+
+</ion-view>

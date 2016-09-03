@@ -1,0 +1,37 @@
+<ion-view view-title="Find Races">
+
+  <ion-nav-buttons side="left">
+    <button class="button back-button buttons button-clear header-item" ng-click="goBack()" >
+      <i class="icon ion-ios-arrow-back"></i>
+      Races</button>
+  </ion-nav-buttons>
+
+  <ion-nav-buttons side="secondary">
+    <button class="button button-icon icon ion-ios-search-strong" ng-click="showFilterBar()" style="color: white">
+    </button>
+  </ion-nav-buttons>
+  <ion-content>
+
+
+    <!--<div class="races find-races-container" ng-repeat="race in races" ng-click="selectRace(race._id)">-->
+
+
+    <div class="races find-races-container" ng-repeat="race in filteredRaces"
+         style="background-image:url('img/race-images/race-banner-{{race._id}}.png');" ng-click="selectRace(race._id)">
+
+
+      <div class="races gradient">
+        <h1 class="featured-race">{{race.name}}</h1>
+        <p class="races races-detail">Location: {{race.city}}</p>
+        <p class="races races-detail">Distance: {{race.distances}}</p>
+        <p class="races races-detail">Date: {{race.date | date:'MM/dd/yyyy'}}</p>
+      </div>
+    </div>
+
+    <button class="button button-clear button-positive button-full races find-races add-race" ng-click="goToAddRace('{{addRaceUrl}}')">
+      Request a Race
+    </button>
+
+
+  </ion-content>
+</ion-view>

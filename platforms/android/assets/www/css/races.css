@@ -1,0 +1,171 @@
+.races .swiper-pagination-bullet {
+  background: #fff;
+}
+
+.races.gradient {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(135deg, rgba(0, 0, 0, .7), rgba(0, 0, 0, .3) );
+  padding: 0 0 0 0;
+  margin: auto;
+}
+
+.races.featured-containter {
+  height: 30%;
+  widht:100%;
+
+  margin-bottom: 0;
+}
+
+h1.races {
+  font-weight: 300;
+  font-size: x-large;
+  padding-left: 10px;
+  color: white;
+  padding-top: 10px;
+}
+
+h1.featured-race,
+h1.races.races-head {
+  font-weight: 300;
+  color: white;
+  text-align: left;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-bottom: 5px;
+  font-size: 28px;
+
+  margin-bottom: auto;
+}
+
+p.races.featured-race-detail,
+p.races.races-detail {
+  font-size: 14px;
+  color: white;
+  padding-left: 10px;
+  margin-bottom: auto;
+  margin-top: auto;
+}
+
+  p.races.featured-race-detail.description {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 95%;
+  }
+
+.races.my-races-container {
+  height: 23%;
+  width: 100%;
+
+  margin-top: 1px;
+  margin-bottom: 1px;
+
+  border-radius: 1px;
+
+  background-color: #fff;
+
+  background-image: url("../img/race-images/sunrun.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  overflow: auto;
+}
+
+.races.find-races-container {
+  height: 23%;
+  width: 100%;
+
+  margin-bottom: 1px;
+
+  border-radius: 1px;
+
+  background-color: #fff;
+
+  background-image: url("../img/race-images/look.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  overflow: auto;
+}
+
+.races.past-races-container {
+  height: 23%;
+  width: 100%;
+
+  margin-bottom: 1px;
+
+  border-radius: 1px;
+
+  background-color: #fff;
+
+  background-image: url("../img/race-images/Crossing.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  overflow: auto;
+}
+
+
+
+.races.find-tile-container {
+  height: 25%;
+  widht:100%;
+
+  margin-bottom: 1px;
+
+  overflow: auto;
+}
+
+.races.featured-box {
+  height: 100%;
+  width: 100%;
+
+  border-radius: 2px;
+
+  /*background-image: url("../img/User Header Background.png");*/
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.races.find-box {
+  height: 100%;
+  width: 100%;
+
+  border-radius: 5px;
+
+  background-image: url("../img/race-images/tree one.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+
+}
+
+
+/*Find Races*/
+
+button.button-clear.button-full.races.find-races.add-race {
+  color: #00b9be;
+}
+
+.races.find-races-filter-container {
+  width: 100%;
+
+  border-radius: 5px;
+  margin-bottom: 1px;
+
+  background-color: white;
+
+  overflow: auto;
+}
+
+.chip {
+  color: #00b9be;
+}
+
+strong {
+  padding-right: 5px;
+}
+
+a.races {
+  text-decoration: none;
+}

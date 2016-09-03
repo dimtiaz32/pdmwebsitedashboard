@@ -1,0 +1,7 @@
+{
+    "AudioToolbox.framework": 2,
+    "SystemConfiguration.framework": 2,
+    "AVFoundation.framework": 2,
+    "libsqlite3.dylib": 2,
+    "CoreLocation.framework": 2
+}

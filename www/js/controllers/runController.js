@@ -20,10 +20,9 @@ angular.module('starter.runController', ['starter.appServices',
 
 //TODO: CLEAR VALUES AFTER RUN SUMMARY, NEW RUN BUTTON?
 
-  .controller('RunCtrl', function($scope, $cordovaInsomnia, $window, $rootScope,$ionicPlatform, $cordovaGeolocation,  $ionicLoading,$ionicPopup, $interval, AppAPI, UserAPI, RunAPI, CharityAPI, HistoryAPI, DonationAPI, $timeout, $ionicModal){
+  .controller('RunCtrl', function($scope, $cordovaBackgroundGeolocation, $window, $rootScope,$ionicPlatform, $cordovaGeolocation,  $ionicLoading,$ionicPopup, $interval, AppAPI, UserAPI, RunAPI, CharityAPI, HistoryAPI, DonationAPI, $timeout, $ionicModal){
 
   $rootScope.$on('initRun', function(){
-
 
 
 
@@ -141,6 +140,7 @@ angular.module('starter.runController', ['starter.appServices',
 
     $scope.toggleRun = function() {
       $scope.isRunning = !$scope.isRunning;
+      console.log('toggled run value: ' + $scope.isRunning);
     }
 
     //lap, pause DOM elements
@@ -327,12 +327,6 @@ angular.module('starter.runController', ['starter.appServices',
 
       stopUI.addEventListener('click', function () {
         console.log('%c showing ensure stop...', 'color: Teal');
-
-        $ionicPlatform.ready(function(){
-          if(window.cordova && window.cordova.plugins.insomnia){
-            cordova.plugins.insomnia.allowSleepAgain(true);
-          }
-        })
         $scope.showEnsureStop();
       });
 
@@ -522,11 +516,6 @@ angular.module('starter.runController', ['starter.appServices',
 
         // $scope.isRunning = !$scope.isRunning;
 
-        $ionicPlatform.ready(function(){
-          if(window.cordova && window.cordova.plugins.insomnia){
-            cordova.plugins.insomnia.keepAwake(true);
-          }
-        })
         console.log('%cStart DreamRun button clicked', 'color: red');
 
         $scope.toggleRun();
@@ -779,18 +768,7 @@ angular.module('starter.runController', ['starter.appServices',
     $scope.polyCoords = [];
     $scope.line = [];
 
-    // $scope.marker = new google.maps.Marker({
-    //   // icon: '../img/blue-gps-tracker.png'
-    //   icon: {
-    //     path: google.maps.SymbolPath.CIRCLE,
-    //     scale: 10,
-    //     fillOpacity: 1,
-    //     fillColor: '#00b9be',
-    //     strokeOpacity: 1,
-    //     strokeColor: '#fff',
-    //     strokeWeight: 2,
-    //   }
-    // });
+
 
     $scope.oldZoom = 18;
 
@@ -928,11 +906,130 @@ angular.module('starter.runController', ['starter.appServices',
         });
 
         $scope.polyCoords = [];
+        $scope.locationSource = 'foreground';
+
+        $scope.bgError = function(){
+          console.log('background geolocation failed to find users location');
+        }
+
+        // $scope.bgSuccess = function(pos){
+        //   console.log('bgSuccess entered with: ' + JSON.stringify(pos));
+        //   var ll = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+        //   console.log('bg timestamp: ' + pos.coords.timeStamp)
+        //   console.log('background success: coords: ' + ll);
+        //   $scope.polyCoords.push(ll);
+        //   console.log('polyCoords updated from background: ' + JSON.stringify($scope.polyCoords));
+        // }
+
+
+        $scope.bgSuccess = function(lat, lng){
+          console.log('bgSuccess entered with lat: ' + lat +' and lng: ' + lng);
+          var yy = new google.maps.LatLng(lat, lng);
+          console.log('new bgSuccess google maps lat: ' + yy);
+
+        }
+        var bgTimer;
+        $scope.onPause = function(){
+          // $ionicPlatform.ready(function(){
+
+            if(window.BackgroundGeolocation) {
+              $scope.bgGeo = window.BackgroundGeolocation;
+              //This callback will be executed every time a geolocation is recorded in the background.
+              var callbackFn = function (location, taskId) {
+                var coords = location.coords;
+                var lat = coords.latitude;
+                var lng = coords.longitude;
+                console.log('- Location: ', JSON.stringify(location));
+
+                console.log('location called from BackgroundGeolocation');
+                // bgTimer = $interval(function(){
+                //   window.BackgroundGeolocation.getCurrentPosition($scope.bgSuccess, $scope.bgError, {enableHighAccuracy: true});
+                // }, 3000);
+                $scope.bgSuccess(lat, lng);
+                // Must signal completion of your callbackFn.
+                $scope.bgGeo.finish(taskId);
+              };
+
+              // This callback will be executed if a location-error occurs.  Eg: this will be called if user disables location-services.
+              var failureFn = function (errorCode) {
+                console.warn('- BackgroundGeoLocation error: ', errorCode);
+              }
+
+              // Listen to location events & errors.
+              $scope.bgGeo.on('location', callbackFn, failureFn);
+
+              // Fired whenever state changes from moving->stationary or vice-versa.
+
+              // BackgroundGeoLocation is highly configurable.
+              $scope.bgGeo.configure({
+                // Geolocation config
+                desiredAccuracy: 0,
+                distanceFilter: 25,
+                stationaryRadius: 5,
+                locationUpdateInterval: 3000,
+                fastestLocationUpdateInterval: 5000,
+              //
+              //   // Activity Recognition config
+                activityType: 'AutomotiveNavigation',
+                activityRecognitionInterval: 5000,
+                stopTimeout: 5,
+              //
+              //   // Application config
+                debug: true,
+                stopOnTerminate: false,
+                startOnBoot: true,
+              //
+              //   // HTTP / SQLite config
+              //   url: 'http://posttestserver.com/post.php?dir=cordova-background-geolocation',
+              //   method: 'POST',
+              //   autoSync: true,
+              //   maxDaysToPersist: 1,
+              //   headers: {
+              //     "X-FOO": "bar"
+              //   },
+              //   params: {
+              //     "auth_token": "maybe_your_server_authenticates_via_token_YES?"
+              //   }
+              }, function (state) {
+                // This callback is executed when the plugin is ready to use.
+                console.log('BackgroundGeolocation ready: ', state);
+                if (!state.enabled) {
+                  $scope.bgGeo.start();
+                }
+              });
+
+              // The plugin is typically toggled with some button on your UI.
+              $scope.toggleEnabled = function(value){
+                if(value == true){
+                  $scope.bgGeo.start();
+                } else {
+                  $scope.bgGeo.stop();
+                }
+              }
+            }
+          // });
+        }
+
+
+        $scope.onResume = function(){
+          $scope.toggleEnabled(false);
+          $rootScope.$broadcast('resetWatch');
+        }
+
+
+        $ionicPlatform.ready(function(){
+          document.addEventListener("pause", $scope.onPause, false);
+          document.addEventListener("resume", $scope.onResume, false);
+
+        });
 
 
         $scope.onSuccess = function(pos){
           console.log('onSuccess entered with pos: ' + pos);
           $rootScope.hide();
+          if($scope.locationSource == 'background'){
+            $scope.ll =new google.maps.LatLng(pos.Location.coords.latitude, pos.Location.coords.longitude);
+          }
           $scope.ll = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
           console.log('ll: ' + $scope.ll);
           // $scope.marker.setPosition($scope.ll);
@@ -948,9 +1045,9 @@ angular.module('starter.runController', ['starter.appServices',
 
           $scope.circle.setMap($scope.map);
           $scope.circle.setCenter($scope.ll);
-
           if($scope.isRunning  == true){
             $scope.path = null;
+
             $scope.polyCoords.push($scope.ll);
             console.log('polyCoords: ' + $scope.polyCoords);
             $scope.runPath.setPath($scope.polyCoords);
@@ -1006,7 +1103,7 @@ angular.module('starter.runController', ['starter.appServices',
             $rootScope.hide();
           };
           $rootScope.hide();
-          $scope.$broadcast('scroll.refreshComplete');
+          $rootScope.$broadcast('scroll.refreshComplete');
         }
         $scope.map.addListener('zoom_changed', function(){
           var zoomLevel = $scope.map.getZoom();
@@ -1030,6 +1127,7 @@ angular.module('starter.runController', ['starter.appServices',
             }
 
             $scope.circle.setMap($scope.map);
+
         }
 
         $scope.onError = function(){
@@ -1041,6 +1139,7 @@ angular.module('starter.runController', ['starter.appServices',
 
         $rootScope.$on('resetWatch', function(){
           $scope.watch = navigator.geolocation.watchPosition($scope.onSuccess, $scope.onError, {maximumAge: 3000, timeout: 3000, enableHighAccuracy: true});
+
         });
         $rootScope.$broadcast('resetWatch');
 
@@ -1252,6 +1351,7 @@ angular.module('starter.runController', ['starter.appServices',
       console.log('$scope.long: ' + $scope.long);
       console.log('charityId for run post: ' + $rootScope.getSelectedCharityId());
       console.log('charityId for run post: ' + $rootScope.getSelectedCharityName());
+
 
 
       var form = {

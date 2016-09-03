@@ -1,0 +1,106 @@
+<ion-view>
+  <ion-nav-title class="history-day-page">
+    {{date}}
+  </ion-nav-title>
+
+  <ion-nav-buttons side="left">
+    <button class="button back-button buttons button-clear header-item" ng-click="goBack()" >
+      <i class="icon ion-ios-arrow-back"></i>
+      Workouts</button>
+  </ion-nav-buttons>
+
+  <ion-content class="history-day-page has-header">
+    <div class="history-day-page map" style="height:30vh; width:100%; background-color: grey;">
+      <map on-create="mapCreated(map)"></map>
+    </div>
+    <div class="history-day-page">
+      <hr style="margin: 0;">
+      <div class="row">
+        <div class="col col-50">
+          <!--Duration-->
+          <p class="history-day-page head">Duration</p>
+          <p class="history-day-page label">{{duration}}</p><span class="history-day-page miles">min</span> </p>
+        </div>
+        <div class="history-day-page vertical-line"></div>
+        <div class="col col-50">
+          <!--Distance-->
+          <p class="history-day-page head">Distance</p>
+          <p class="history-day-page label">{{distance | number:2}}<span class="history-day-page miles"> mi</span> </p>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col col-50">
+          <!--Pace-->
+          <p class="history-day-page head">Pace</p>
+          <p class="history-day-page label">{{pace | minutesToDateTime | date: 'mm:ss'}}<span class="history-day-page miles"> min/mi</span></p>
+        </div>
+        <div class="history-day-page vertical-line"></div>
+        <div class="col col-50">
+          <!--Funds Raised-->
+          <p class="history-day-page head">Funds Raised</p>
+          <p class="history-day-page label">${{funds | number: 2}}</p>
+        </div>
+      </div>
+
+      <hr style="margin:0; height:2px;">
+
+      <div class="list">
+        <div class="item history-day-page splits title">
+          <div class="row">
+            <div class="col-25 history-day-page">Lap</div>
+            <div class="col-25 history-day-page">Distance</div>
+            <div class="col-25 history-day-page">Time</div>
+            <div class="col-25 history-day-page">Pace</div>
+          </div>
+        </div>
+
+        <div class="list-borderless history-day-page splits values" >
+          <div class="row" ng-repeat="lap in lapsForm">
+            <div class="col-25 history-day-page">{{lap.number}}</div>
+            <div class="col-25 history-day-page">{{lap.distance | number: 2}}</div>
+            <div class="col-25 history-day-page">{{lap.time}}</div>
+            <div class="col-25 history-day-page">{{lap.pace | number: 2}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
+
+
+<!--OLD-->
+<!--<ion-header-bar class="bar-stable bar bar-header" align-title="center">-->
+<!--<button ng-click="$ionicGoBack()" class="button back-button hide buttons  button-clear header-item">-->
+<!--<i class="icon ion-ios-arrow-back"></i>-->
+<!--<span class="back-text">-->
+<!--<span class="default-title">Back</span>-->
+<!--<span class="previous-title hide"></span>-->
+<!--</span>-->
+<!--</button>-->
+<!--<div class="buttons buttons-left header-item">-->
+<!--<span class="left-buttons">-->
+<!--<button class="button button-icon button-clear button-white ion-navicon" menu-toggle="left">-->
+<!--</button>-->
+<!--</span>-->
+<!--</div>-->
+<!--<div class="title title-center header-item" style="left: 48px; right: 48px;">-->
+<!--History-->
+<!--</div>-->
+<!--</ion-header-bar>-->
+
+<!--<div class="buttons buttons-left header-item">-->
+<!--<span class="left-buttons">-->
+<!--<button class="button button-icon button-clear button-white ion-navicon" menu-toggle="left">-->
+<!--</button>-->
+<!--</span>-->
+<!--</div>-->
+
+<!--<ion-nav-bar class=" dark">-->
+<!--<div class="buttons buttons-left header-item"><span class="left-buttons">-->
+<!--<button class="button button-icon button-clear button-white ion-navicon" menu-toggle="left">-->
+<!--</button>-->
+<!--</span>-->
+<!--</div>-->
+<!--</ion-nav-bar>-->
+

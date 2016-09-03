@@ -1,0 +1,66 @@
+.race-profile .heading {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  margin: -1px 0 0 0;
+  padding: 0;
+
+  background-image: url("../img/User Header Background.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+  .race-profile .heading .heading-gradient {
+    padding: 16px;
+    background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) );
+  }
+  .race-profile .heading .race-name {
+    text-align: center;
+    color: #fff;
+    white-space: normal;
+  }
+
+  .race-profile .heading .race-date {
+    text-align: center;
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .race-profile .heading .race-distance {
+    text-align: center;
+    color: #fff;
+    font-weight: 600;
+  }
+
+.race-profile .divider {
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  font-weight: 700;
+
+  color: #000;
+  background-color: #ccc;
+}
+
+  .race-profile .divider .row {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-left: 4px;
+  }
+
+  .race-profile .divider .row .col {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+
+.race-profile .register {
+  background-color: #00b9be;
+}
+
+.race-profile .remove {
+  background-color: #ed2024;
+}

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <meta http-equiv="Content-Security-Policy" content="default-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src  'self' 'unsafe-inline' *">
+  <!--<meta http-equiv="Content-Security-Policy" content="script-src 'self' https://maps.googleapis.com/ https://maps.gstatic.com/ https://mts0.googleapis.com/ 'unsafe-inline' 'unsafe-eval'">-->
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <title></title>
+
+  <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/charities.css" rel="stylesheet">
+  <link href="css/pledges.css" rel="stylesheet">
+  <link href="css/run.css" rel="stylesheet">
+  <link href="css/sponsor.css" rel="stylesheet">
+  <link href="css/inviteSponsor.css" rel="stylesheet">
+  <link href="css/auth-signin.css" rel="stylesheet">
+  <link href="css/auth-signup.css" rel="stylesheet">
+  <link href="css/accountinfo.css" rel="stylesheet">
+  <link href="css/history.css" rel="stylesheet">
+  <link href="css/history-day.css" rel="stylesheet">
+  <link href="lib/ion-drawer-vertical/src/ionic.contrib.drawer.vertical.css" rel="stylesheet">
+  <link href="css/historyList.css" rel="stylesheet">
+  <link href="css/races.css" rel="stylesheet">
+  <link href="css/raceProfile.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material%20Icons" rel="stylesheet">
+
+
+  <!-- cordova script (this will be a 404 during development) -->
+  <script src="cordova.js"></script>
+
+  <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+  <link href="css/ionic.app.css" rel="stylesheet">
+  -->
+  <!--<script src="lib/angular/angular.min.js"></script>-->
+  <!--shim is needed to support non-HTML5 FormData browsers (IE8-9)-->
+  <!--<script src="ng-file-upload-shim.js"></script>-->
+  <!--<script src="ng-file-upload.js"></script>-->
+  <!-- ionic/angularjs js -->
+  <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+
+
+  <!-- google maps -->
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBg7NikEOTAiOBXnpU10k5g4I-B0GD6unA&v=3&libraries=geometry"></script>
+
+  <!-- Angular Charts -->
+  <!--<script src="js/Chart.js"></script>-->
+  <!--<script src="js/angular-chart.min.js"></script>-->
+  <!--<script src="node_modules/angular/angular.min.js"></script>-->
+  <!--<script src="node_modules/chart.js/Chart.min.js"></script>-->
+  <!--<script src="node_modules/angular-chart.js/dist/angular-chart.min.js"></script>-->
+  <!--<script src="lib/angular/angular.min.js"></script>-->
+  <script src="lib/Chart.js/Chart.js"></script>
+  <script src="lib/angular-chart.js/dist/angular-chart.min.js"></script>
+
+  <!--Ionic Filter Bar-->
+  <link rel="stylesheet" href="css/ionic.filter.bar.css">
+  <script src="js/ionic.filter.bar.js"></script>
+
+  <!--D3 Library-->
+  <!--<script src="js/d3.min.js" charset="utf-8"></script>-->
+  <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+  <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-svg-round-progressbar/0.4.4/roundProgress.min.js"></script>-->
+  <script src="lib/angular-svg-round-progressbar/build/roundProgress.js"></script>
+  <script src="lib/angular-tek-progress-bar/dist/tek.progress-bar.min.js"></script>
+
+
+  <!--ion date-time-picker-->
+  <script src="lib/ion-datetime-picker/release/ion-datetime-picker.min.js"></script>
+  <link href="lib/ion-datetime-picker/release/ion-datetime-picker.min.css" rel="stylesheet">
+
+  <!--ion-drawer-->
+  <link href="css/ionic.contrib.drawer.vertical.css" rel="stylesheet">
+  <script src="js/ionic.contrib.drawer.vertical.js"></script>
+
+  <!--Angular Material-->
+  <!--
+  <script src="../node_modules/angular-material/angular.js"></script>
+  <script src="../node_modules/angular-material/angular-animate.js"></script>
+  <script src="../node_modules/angular-material/angular-aria.js"></script>
+  <script src="../node_modules/angular-material/angular-messages.js"></script>
+  <script src="../node_modules/angular-material/angular-material.js"></script>
+
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+-->
+  <!--&lt;!&ndash; Angular-nvd3 &ndash;&gt;-->
+  <!--<script src="lib/d3/d3.js"></script>-->
+  <!--<script src="lib/nvd3/build/nv.d3.js"></script> &lt;!&ndash; or use another assembly &ndash;&gt;-->
+  <!--<script src="lib/angular-nvd3/dist/angular-nvd3.js"></script>-->
+
+  <!--<script src="lib/ionic-platform-web-client/src/core/core.js"></script>-->
+  <!--<script src="lib/ionic-platform-web-client/src/analytics/analytics.js"></script>-->
+
+  <script src="lib/ionic-platform-web-client/dist/ionic.io.bundle.min.js"></script>
+
+  <script src="js/app.js"></script>
+  <script src="js/directives.js"></script>
+
+
+  <script src="js/controllers/accountController.js"></script>
+  <script src="js/controllers/appController.js"></script>
+  <script src="js/controllers/authController.js"></script>
+  <script src="js/controllers/charityController.js"></script>
+  <script src="js/controllers/historyController.js"></script>
+  <script src="js/controllers/historyListController.js"></script>
+  <script src="js/controllers/historyDayController.js"></script>
+  <script src="js/controllers/inviteSponsorController.js"></script>
+  <script src="js/controllers/myDonationController.js"></script>
+  <script src="js/controllers/runController.js"></script>
+
+
+  <script src="js/controllers/RaceControllers/addRaceController.js"></script>
+  <script src="js/controllers/RaceControllers/findRacesController.js"></script>
+  <script src="js/controllers/RaceControllers/myRacesController.js"></script>
+  <script src="js/controllers/RaceControllers/pastRacesController.js"></script>
+  <script src="js/controllers/RaceControllers/raceController.js"></script>
+  <script src="js/controllers/RaceControllers/raceProfileController.js"></script>
+
+
+  <script src="js/services/appServices.js"></script>
+  <script src="js/services/authServices.js"></script>
+  <script src="js/services/charityServices.js"></script>
+  <script src="js/services/donationServices.js"></script>
+  <script src="js/services/historyServices.js"></script>
+  <script src="js/services/raceServices.js"></script>
+  <script src="js/services/runServices.js"></script>
+  <script src="js/services/userServices.js"></script>
+
+
+
+  <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+  <script type="text/javascript" src="lib/stripe-angular/stripe-angular.js"></script>
+  <script type="text/javascript" src="lib/ngCordova/dist/ng-cordova.js"></script>
+  <script type="text/javascript" src="lib/ngCordova/dist/ng-cordova.min.js"></script>
+  <script type="text/javascript" src="js/openfb.js"></script>
+  <script type="text/javascript" src="js/ngopenfb.js"></script>
+  <script type="text/javascript" src="https://cdn.rawgit.com/auth0/angular-storage/master/dist/angular-storage.js"></script>
+  <script type="text/javascript" src="lib/angular-google-plus/dist/angular-google-plus.js"></script>
+  <script type="text/javascript" src="lib/angular-google-plus/dist/angular-google-plus.min.js"></script>
+  <script type="text/javascript" src="lib/angular-cookies/angular-cookies.js"></script>
+  <script type="text/javascript" src="lib/ion-drawer-vertical/src/ionic.contrib.drawer.vertical.js"></script>
+  <script type="text/javascript" src="lib/angular-bcrypt/dist/dtrw.bcrypt-df34c8d1.js"></script>
+  <script type="text/javascript" src="lib/angular-bcrypt/dist/dtrw.bcrypt.js"></script>
+</head>
+
+<body ng-app="starter" class="platform-android platform-cordova platform-webview">
+<!--
+  The nav bar that will be updated as we navigate between views.
+-->
+<ion-nav-bar class="bar-stable">
+  <ion-nav-back-button>
+  </ion-nav-back-button>
+</ion-nav-bar>
+<!--
+  The views will be rendered in the <ion-nav-view> directive below
+  Templates are in the /templates folder (but you could also
+  have templates inline in this html file if you'd like).
+-->
+<ion-nav-view></ion-nav-view>
+</body>
+</html>

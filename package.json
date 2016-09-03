@@ -353,10 +353,14 @@
     "cordova-plugin-splashscreen",
     "cordova-plugin-statusbar",
     "ionic-plugin-keyboard",
-    "cordova-plugin-inappbrowser"
+    "cordova-plugin-inappbrowser",
+    "cordova-plugin-background-mode",
+    "cordova-plugin-dialogs",
+    "cordova-plugin-device",
+    "cordova-plugin-background-fetch",
+    "cordova-background-geolocation-lt"
   ],
   "cordovaPlatforms": [
-    "ios",
-    "android"
+    "ios"
   ]
 }

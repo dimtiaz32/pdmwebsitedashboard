@@ -1,0 +1,68 @@
+<ion-view view-title="Pledges" ng-controller="MyDonationCtrl">
+    <ion-nav-title>
+      <a class="" ng-click="openPopover($event)">
+        <span class="">Pledges</span>
+        <i class="ion-arrow-right-b" ng-hide="menuActive"></i>
+        <i class="ion-arrow-down-b" ng-show="menuActive"></i>
+      </a>
+    </ion-nav-title>
+    <ion-nav-buttons side="right" >
+        <button class="my-pledges button button-clear button-positive" ng-click="openModal($event)">
+          <span class="ion-person-add" style="color: #fff;font-size: 22px;"></span>
+        </button>
+    </ion-nav-buttons>
+    <ion-content>
+      <ion-refresher ng-hide="noPledge" pulling-text="Pull to refresh..." on-refresh="doRefresh('fetchMyPledges')"></ion-refresher>
+      <div class="my-pledges wrapper">
+        <div class="my-pledges sponsor-header">
+
+          <div class="my-pledges row row-center">
+
+            <!--TODO: Renable user image-->
+            <!--<div class="my-pledges col col-50 image">-->
+              <!--<img src="{{ avatar }}"></img>-->
+            <!--</div>-->
+            <div class="my-pledges username col col-50">
+              <h2>{{ name }}</h2>
+            </div>
+
+            <div class="my-pledges row row-center">
+              <div class="my-pledges col col-67">{{pledgeMoney | currency}}</div>
+              <div class="my-pledges col col-33">donated to charity</div>
+              <div class="my-pledges row">
+                <!--<div class="my-pledges col">-->
+                  <!--<button class="my-pledges button button-small button-clear button-PDMLight" ng-click="manageSponsors()">Manage my sponsors</button>-->
+                <!--</div>-->
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="my-pledges row row-center">
+          <div class="my-pledges col">
+            <h3>My Pledges</h3>
+          </div>
+          <div class="my-pledges col pledge">
+            <p class="my-pledges pledge">Pledge</p>
+            <p class="my-pledges ending-date">ending date</p>
+          </div>
+        </div>
+        <hr>
+        <div class="my-pledges list">
+          <!-- use this template for all the cells. Add this class below for pledge image: item-icon-left-->
+          <a class="my-pledges item" ng-repeat="pledge in pledges">
+            <span class="my-pledges cell-vertical-center-text">{{ pledge.recipient.name.first }} {{pledge.recipient.name.last}}</span>
+              <span class="my-pledges item-note">
+                <p class="my-pledges pledge">{{ formateCurreny(pledge.per_mile_donation) }}/mile</p>
+                <p class="my-pledges ending-date">{{ formateDate(pledge.end_date) }}</p>
+              </span>
+          </a>
+        </div>
+        <span ng-show="noData">
+            No pledge now.
+        </span>
+      </div>
+      </div>
+    </ion-content>
+</ion-view>

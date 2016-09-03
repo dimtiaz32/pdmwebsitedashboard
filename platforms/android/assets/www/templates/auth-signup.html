@@ -1,0 +1,42 @@
+<!-- <ion-header-bar class="sign-up bar-positive">
+  <a class="button icon-left ion-chevron-left button-clear" href="#/auth/signin">Back</a>
+</ion-header-bar> -->
+<ion-view view-title="">
+  <ion-content class="sign-up padding">
+    <div class="sign-up logo">
+      <img class="sign-up logo-image" ng-src="img/PDM logo.png">
+      <h1 class="sign-up logo-title">Become a DREAM<span>RUNNER</span></h1>
+    </div>
+    <div class="error-message">
+      {{errorMessage}}
+    </div>
+    <div class="sign-up list">
+      <label class="sign-up item item-input">
+      <span class="sign-up input-label" ng-class="invalidFirstName ? 'error-highlight' : 'error-highlight-disabled'">First Name</span>
+      <input type="text" ng-model="user.firstName">
+      </label>
+      <label class="sign-up item item-input">
+        <span class="sign-up input-label" ng-class="invalidLastName ? 'error-highlight' : 'error-highlight-disabled'">Last Name</span>
+        <input type="text" ng-model="user.lastName">
+      </label>
+      <label class="sign-up item item-input">
+        <span class="sign-up input-label" ng-class="invalidEmail ? 'error-highlight' : 'error-highlight-disabled'">Email</span>
+        <input type="email" ng-model="user.email">
+      </label>
+        <label class="sign-up item item-input">
+        <span class="sign-up input-label" ng-class="invalidPassword ? 'error-highlight' : 'error-highlight-disabled'">Password</span>
+        <input type="password" ng-model="user.password">
+      </label>
+     <label class="sign-up item item-input">
+       <span class="sign-up input-label" ng-class="invalidPassword ? 'error-highlight' : 'error-highlight-disabled'">Verify Password</span>
+       <input type="password" ng-model="secondPassword.password" ng-required="">
+     </label>
+     <button class="sign-up button button-full button-positive" ng-click="createUser()">
+      Create Account
+     </button>
+     <button class="sign-up button button-full button-positive" onClick="location.href='#/auth/signin'">
+      Cancel
+     </button>
+    </div>
+  </ion-content>
+</ion-view>

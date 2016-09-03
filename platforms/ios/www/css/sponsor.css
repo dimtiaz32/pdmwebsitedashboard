@@ -1,0 +1,133 @@
+ion-content.sponsors {
+  overflow-scroll: true;
+}
+
+.sponsors.selectable {
+  -webkit-user-select: text;
+}
+
+.sponsors-pledges-page.popover {
+  height: 120px;
+}
+
+.my-sponsors.sponsor-header {
+  background-image: url("../img/account_info-bg.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+
+  width: 100%;
+  height: 75px;
+
+
+  display: inline-block;
+}
+
+.my-sponsors.col.col-50.image {
+  background-image: url("../img/Avatar.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  max-height: 120px;
+  margin: 10px 0;
+}
+
+.my-sponsors.col.col-67 {
+  color: white;
+  font-size: 1.5em;
+  font-weight: 300;
+
+  text-align: right;
+}
+
+.my-sponsors.col.col-33 {
+  color: #fff;
+  font-size: .65em;
+
+  font-weight: 300;
+  line-height: 100%;
+  text-align: right;
+  padding: 5px 0 5px 0;
+
+}
+
+.my-sponsors.username h2 {
+  font-weight: 300;
+  font-size: 2em;
+
+  color: #fff;
+  text-align: left;
+
+  width: 100%;
+  white-space: nowrap;
+  overflow: scroll;
+
+  margin: 10px 0 10px 0;
+}
+
+.my-pledge .wrapper {
+  width: 100vw;
+  height: 100vh;
+}
+
+.my-sponsors.button.button-small.button-clear.button-PDMLight {
+  color: #00b9be; /*PDMLight color*/
+  font-size: 1em;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.my-sponsors.button.button-clear.button-sponsor-help {
+  color: #00b9be; /*PDMLight color*/
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: center;
+  margin: auto;
+}
+
+.my-sponsors hr {
+  background-color: #00b9be;
+  padding: 0;
+
+  height: 3px;
+  border: none;
+  margin: 0px;
+}
+
+.my-sponsors h3 {
+  font-size: 1.5em;
+  font-weight: 300;
+  text-align: left;
+}
+
+.my-sponsors.col.pledge {
+  text-align: right;
+  line-height: 80%;
+}
+p.pledge.my-sponsors  {
+  font-weight: bold;
+  color: black;
+  text-align: right;
+  overflow: visible;
+}
+p.ending-date.my-sponsors  {
+  font-weight: 300;
+  font-size: .9em;
+  overflow: visible;
+}
+
+a.my-sponsors.item.item-icon-left {
+  height: 100%;
+}
+
+.my-sponsors.cell-vertical-center-text {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+a.my-sponsors {
+  color: #00b9be;
+  text-decoration: none;
+}

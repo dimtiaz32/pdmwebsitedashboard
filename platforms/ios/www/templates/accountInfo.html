@@ -1,0 +1,42 @@
+<ion-view view-title="Account Info">
+  <ion-content scroll="false">
+    <div class="account background background-image">
+      <!--TODO: Re-ennable User image (uncomment the div.accoutn.user.user-image)-->
+      <!--<div class="account user user-image">-->
+        <!--<img ng-src="../img/adam.jpg">-->
+      <!--</div>-->
+      <div class="account user user-name">
+        {{user.name}}
+      </div>
+    </div>
+    <!-- Switch to onclick spans -->
+    <div class="account list">
+      <label class="item item-input">
+        <span class="input-label">Email</span>
+        <input type="email" ng-class="editing" ng-model="user.email" placeholder="{{user.email}}" ng-change="formChanged()" onclick="this.select()">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Password</span>
+        <input type="password" ng-model="user.password" placeholder="&bullet; &bullet; &bullet; &bullet; &bullet; &bullet; &bullet; &bullet; &bullet; &bullet;"
+               ng-click="showConfirmPassword()" onclick="this.select()">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Date of Birth</span>
+        <input type="Date" ng-class="editing" ng-model="user.dob" ng-change="formChanged()" onclick="this.select()">
+      </label>
+      <label class="item item-button-right">
+        Keep me logged in
+        <button class="button select" ng-click="toggleKeepLoggedIn(keepLoggedInString)">
+          <i class="not-selected ion-ios-circle-outline" ng-show="!keepLoggedIn(keepLoggedInString)"></i>
+          <i class="selected ion-ios-circle-filled" ng-show="keepLoggedIn(keepLoggedInString)"></i>
+        </button>
+      </label>
+    </div>
+    <button class="account button button-full button-positive" ng-click="logout()">
+      Logout
+    </button>
+    <button class="account save button button-full button-positive" ng-hide="saveIsHidden" ng-click="save()">
+      Save
+    </button>
+  </ion-content>
+</ion-view>
