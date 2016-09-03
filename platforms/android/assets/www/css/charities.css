@@ -1,0 +1,198 @@
+.charity-page.charity-header, .charity-page.charity-detail ion-item:first-child {
+  border-bottom: 2px solid #00b9be;
+  z-index: 2;
+}
+
+.charity-page.charity-header h3 {
+    text-align: center;
+    font-size: 16px;
+    padding-top: 0;
+    margin: 5px;
+    font-weight: 400;
+}
+
+.charity-page.charity-header h1 {
+  text-align: center;
+  font-weight: 300;
+  padding: 0;
+  margin: 5px;
+}
+
+.charity-page.charity-detail {
+  width: auto;
+  height: auto;
+  background-color: transparent;
+  border: none;
+
+  transition: 0.09s all linear;
+}
+
+.charity-page.charity-detail.ng-hide {
+  line-height: 0px;
+}
+
+.charity-page.charity-detail.ng-hide-add,
+.charity-page.charity-detail.ng-hide-remove {
+  display: block !important;
+}
+
+  .charity-page.charity-detail.item-thumbnail-left.item {
+    border:none;
+  }
+
+  .charity-page.charity-detail img:first-child {
+    background-color: #00b9be;
+    margin: 15px 15px;
+    width: 70px;
+    height: 70px;
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+  }
+
+  .charity-page.charity-detail a {
+    position: relative;
+    top: 5%;
+
+    /*left: -3%;*/
+    color: #00b9be;
+  }
+
+  .charity-page.charity-detail p.description {
+    position: relative;
+    word-wrap: break-word;
+    /*left: -3%;*/
+    height: 55px;
+    white-space: normal;
+    text-align: justify;
+  }
+
+  .charity-page.charity-detail .stats {
+    padding: 0;
+    margin: 0;
+  }
+
+    .charity-page.charity-detail .stats .row{
+      padding-bottom: 0;
+      margin: 0;
+    }
+
+    .charity-page.charity-detail .stats .row p{
+      margin: 0 auto 0 15px;
+    }
+
+      .charity-page.charity-detail .stats .row p.head{
+        font-weight: bold;
+      }
+
+  .charity-page.charity-detail .verticalLine.charity-page {
+    border-left: thin solid lightgrey;
+    transition: 1s all linear;
+  }
+
+
+
+button.charity-page.button-slide-up {
+  background-image: url("../img/pull down grey bar straight.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: white;
+  border: none;
+  display: block;
+
+  width: 100%;
+  height: 0.8vh;
+
+  margin-bottom: 3px;
+  position: relative;
+}
+
+button.charity-page.button-slide-down {
+  background-image: url("../img/pull down grey bar.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: white;
+  border: none;
+  display: block;
+
+  width: 100%;
+  height: 1.5vh;
+
+  margin-bottom: 3px;
+  position: relative;
+}
+
+button.charity-page.button-slide-down:before {
+  position: absolute;
+  content: '';
+  top: -10px; bottom: -10px; left: -10px; right: -10px;
+}
+
+button.charity-page.button-slide-up:before {
+  position: absolute;
+  content: '';
+  top: -10px; bottom: -10px; left: -10px; right: -10px;
+}
+
+.charity-page .charity-list {
+}
+
+  .charity-page .charity-list .charity {
+    position: relative;
+  }
+
+    .charity-page .charity-list .charity img {
+      height: 70px;
+      width: 70px;
+      position: absolute;
+      top: 50%;
+      transform: translate(0, -50%);
+    }
+
+    .charity-page .charity-list .charity h2 {
+      font-size: 20px;
+
+      transform: translate(0, 115%);
+    }
+
+    .charity-page .charity-list .button.select {
+      text-align: right;
+      background-color: transparent;
+      color: #009b9e;
+      font-size: 32px;
+      transform: translate(0, 70%);
+    }
+
+  .charity-page .charity-list .charity-detail {
+  }
+
+    .charity-page .charity-list .charity-detail .description {
+      white-space: normal;
+      text-align: justify;
+    }
+
+    .charity-page .charity-list .charity-detail .url {
+      color: #00b9be;
+    }
+
+    .charity-page .charity-list .charity-detail .row {
+       padding-left: 0;
+       margin-left: 0
+    }
+
+
+      .charity-page .charity-list .charity-detail .label {
+        font-size: 18px;
+        padding-left: 0;
+      }
+
+      .charity-page .charity-list .charity-detail .stat {
+        font-size: 18px;
+        text-align: left;
+
+      }
+
+button.button-clear.charity.add-charity {
+  color: #00b9be;
+}

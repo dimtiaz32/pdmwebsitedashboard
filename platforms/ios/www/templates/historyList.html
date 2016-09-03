@@ -1,0 +1,44 @@
+<ion-view view-title="Workouts">
+
+    <ion-nav-buttons side="left">
+      <button class="button back-button buttons button-clear header-item" ng-click="goBack()" >
+        <i class="icon ion-ios-arrow-back"></i>
+        Activity</button>
+    </ion-nav-buttons>
+
+  <ion-content class="workout-page">
+    <ion-list class="workouts list">
+      <div ng-repeat="run in list">
+      <a class="workout item item-icon-left item-icon-right" ng-click="selectedRun(run._id)">
+
+
+        <div class="top row" style="font-size: small; font-weight: 600;">
+          <i class="icon ion-android-walk" style="font-size: large;"></i>
+
+          <!--<i class="icon material-icons" style="font-size: x-large;">directions_run</i>-->
+          <div class="col col-40">
+           {{run.date | date:'MM/dd/yyyy'}}
+          </div>
+          <div class="col col-40">
+            {{run.charityName}}
+          </div>
+        </div>
+        <div class="bottom row" style="font-size: small;">
+          <div class="col col-40">
+            {{run.minutes + ":" +run.seconds}} min
+          </div>
+          <div class="col col-30">
+            {{run.distance | number:2 }} mi
+          </div>
+          <div class="col col-30">
+            {{run.pace | minutesToDateTime | date: 'mm:ss'}} min/mi
+
+            <!--{{run.pace | number: 2 }} min/mi-->
+          </div>
+          <i class="icon ion-ios-arrow-right" style="font-size: large;"></i>
+        </div>
+      </a>
+      </div>
+    </ion-list>
+  </ion-content>
+</ion-view>

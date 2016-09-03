@@ -1,0 +1,284 @@
+<ion-view view-title="Activity">
+  <ion-nav-buttons side="right">
+    <button class="my-sponsors button button-clear button-positive" ng-click="viewHistory()">
+        <span class="ion-ios-list-outline" style="color: #fff;font-size: 22px;"></span>
+    </button>
+  </ion-nav-buttons>
+
+  <ion-content class="activity-page">
+    <ion-refresher pulling-text="Updating history..."></ion-refresher>
+    <ion-list class="activity-page">
+
+      <ion-item class="activity-page charities-banner">
+        <ion-slides options="slideOptions" slider="data.slider">
+
+          <ion-slide-page class="charity-banner" ng-hide="hasTopThree">
+            <div class="gradient">
+              <div class="charity-name" style="white-space: normal; line-height: normal">
+                You do not have any top charities :(
+              </div>
+              <!--<div class="spacer">-->
+              <!--</div>-->
+              <div class="detail-title row">
+                Impact
+              </div>
+              <div class="detail row">
+                <div class="funds col col-50 col-center">
+                  $0<span class="units" style="font-size: small"> raised</span>
+                </div>
+                <div class="impact col col-50 col-center">
+                </div>
+              </div>
+            </div>
+
+          </ion-slide-page>
+
+          <ion-slide-page class="charity-banner" ng-repeat="charity in topThree" style="background-image: url('img/charity-images/banner-{{charity.id}}.png');">
+            <div class="gradient">
+              <div class="charity-name" style="white-space: normal; line-height: normal">
+                {{charity.name}}
+              </div>
+              <!--<div class="spacer">-->
+              <!--</div>-->
+              <div class="detail-title row">
+                Impact
+              </div>
+              <div class="detail row">
+                <div class="funds col col-50 col-center">
+                  {{charity.moneyRaised/100 | currency}} <span class="units" style="font-size: small">raised</span>
+                </div>
+                <!--<div class="impact col col-50 col-center">-->
+                <!--40 students put through college-->
+                <!--</div>-->
+              </div>
+            </div>
+
+          </ion-slide-page>
+
+
+          <!--NOTE: COMMENTED OUT CODE IS CHARLIE's old way of displaying top 3 charities-->
+          <!--<ion-slide-page class="charity-banner" ng-show="hasCharityOne" style="background-image: url('img/charity-images/banner-{{charityOne.id}}.png');">-->
+            <!--<div class="gradient">-->
+              <!--<div class="charity-name" style="white-space: normal; line-height: normal">-->
+                <!--{{charityOne.name}}-->
+              <!--</div>-->
+              <!--&lt;!&ndash;<div class="spacer">&ndash;&gt;-->
+              <!--&lt;!&ndash;</div>&ndash;&gt;-->
+              <!--<div class="detail-title row">-->
+                <!--Impact-->
+              <!--</div>-->
+              <!--<div class="detail row">-->
+                <!--<div class="funds col col-50 col-center">-->
+                  <!--${{charityOne.moneyRaised}} <span class="units" style="font-size: small">raised</span>-->
+                <!--</div>-->
+                <!--&lt;!&ndash;<div class="impact col col-50 col-center">&ndash;&gt;-->
+                  <!--&lt;!&ndash;40 students put through college&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+              <!--</div>-->
+            <!--</div>-->
+
+          <!--</ion-slide-page>-->
+
+          <!--<ion-slide-page class="charity-banner" ng-show="hasCharityTwo" style="background-image: url('img/charity-images/banner-{{charityTwo.id}}.png');">-->
+            <!--<div class="gradient">-->
+              <!--<div class="charity-name" style="white-space: normal; line-height: normal">-->
+                <!--{{charityTwo.name}}-->
+              <!--</div>-->
+              <!--&lt;!&ndash;<div class="spacer">&ndash;&gt;-->
+              <!--&lt;!&ndash;</div>&ndash;&gt;-->
+              <!--<div class="detail-title row">-->
+                <!--Impact-->
+              <!--</div>-->
+              <!--<div class="detail row">-->
+                <!--<div class="funds col col-50 col-center">-->
+                  <!--${{charityTwo.moneyRaised}} <span class="units" style="font-size: small">raised</span>-->
+                <!--</div>-->
+                <!--&lt;!&ndash;<div class="impact col col-50 col-center">&ndash;&gt;-->
+                  <!--&lt;!&ndash;40 students put through college&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</ion-slide-page>-->
+
+          <!--<ion-slide-page class="charity-banner" ng-show="hasCharityThree" style="background-image: url('img/charity-images/banner-{{charityThree.id}}.png');">-->
+            <!--<div class="gradient">-->
+              <!--<div class="charity-name" style="white-space: normal; line-height: normal">-->
+                <!--{{charityThree.name}}-->
+              <!--</div>-->
+              <!--&lt;!&ndash;<div class="spacer">&ndash;&gt;-->
+              <!--&lt;!&ndash;</div>&ndash;&gt;-->
+              <!--<div class="detail-title row">-->
+                <!--Impact-->
+              <!--</div>-->
+              <!--<div class="detail row">-->
+                <!--<div class="funds col col-50 col-center">-->
+                  <!--${{charityThree.moneyRaised}} <span class="units" style="font-size: small">raised</span>-->
+                <!--</div>-->
+                <!--&lt;!&ndash;<div class="impact col col-50 col-center">&ndash;&gt;-->
+                  <!--&lt;!&ndash;40 students put through college&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</ion-slide-page>-->
+
+        </ion-slides>
+
+      </ion-item>
+
+      <ion-item class="activity-page goal-stats">
+
+        <ion-slides options="slideOptions" slider="data.slider">
+
+          <ion-slide-page>
+            <div class="goal-stats day row">
+              <div class="goal-settings ion-trophy" ng-click="showSetDayGoal()" style="z-index: 10"></div>
+              <div class="dist-day-goal col col-50 col-center">
+
+                <div class="heading">Daily Goals</div>
+                <div class="label">
+                  {{ currentDayDistance | number: 2 }} mi
+                  <br>
+                  <span class="goal">{{ goalDayDistance }} mi</span>
+                </div>
+
+                <round-progress
+                  max="goalDayDistance"
+                  current="currentDayDistance"
+                  color="{{ getColor() }}"
+                  bgcolor="#eaeaea"
+                  radius="40"
+                  stroke="5"
+                  semi="false"
+                  rounded="true"
+                  clockwise="true"
+                  responsive="true"
+                  duration="800"
+                  animation="easeInOutQuart"
+                  animation-delay="0"></round-progress>
+
+
+              </div>
+
+              <div class="col col-50 col-center">
+
+                <div class="label">
+                  ${{ currentDayFunds | number: 2  }}
+                  <br>
+                  <span class="goal">${{ goalDayFunds | number: 2 }}</span>
+                </div>
+
+                <round-progress
+                  max="goalDayFunds"
+                  current="currentDayFunds"
+                  color="{{ getColor() }}"
+                  bgcolor="#eaeaea"
+                  radius="40"
+                  stroke="5"
+                  semi="false"
+                  rounded="true"
+                  clockwise="true"
+                  responsive="true"
+                  duration="800"
+                  animation="easeInOutQuart"
+                  animation-delay="0"></round-progress>
+              </div>
+
+            </div>
+          </ion-slide-page>
+
+          <ion-slide-page>
+            <div class="goal-settings ion-trophy" ng-click="showSetWeekGoal()" style="z-index: 10"></div>
+            <div class="goal-stats week row">
+              <div class="col col-50 col-center">
+                <div class="heading">Weekly Goals</div>
+
+                <div class="label">
+                  {{ currentWeekDistance | number: 2 }} mi
+                  <br>
+                  <span class="goal">{{ goalWeekDistance }} mi</span>
+                </div>
+
+
+                <round-progress
+                  max="goalWeekDistance"
+                  current="currentWeekDistance"
+                  color="{{ getColor() }}"
+                  bgcolor="#eaeaea"
+                  radius="40"
+                  stroke="5"
+                  semi="false"
+                  rounded="true"
+                  clockwise="true"
+                  responsive="true"
+                  duration="800"
+                  animation="easeInOutQuart"
+                  animation-delay="0"></round-progress>
+              </div>
+
+              <div class="col col-50 col-center">
+
+                <div class="label">
+                  ${{ currentWeekFunds | number: 2  }}
+                  <br>
+                  <span class="goal">${{ goalWeekFunds | number: 2  }}</span>
+                </div>
+
+                <round-progress
+                  max="goalWeekFunds"
+                  current="currentWeekFunds"
+                  color="{{ getColor() }}"
+                  bgcolor="#eaeaea"
+                  radius="40"
+                  stroke="5"
+                  semi="false"
+                  rounded="true"
+                  clockwise="true"
+                  responsive="true"
+                  duration="800"
+                  animation="easeInOutQuart"
+                  animation-delay="0"></round-progress>
+              </div>
+
+            </div>
+          </ion-slide-page>
+
+        </ion-slides>
+      </ion-item>
+
+      <!--TODO: Chart with swipeable bars-->
+      <ion-item class="activity-page week-graph">
+
+          <canvas id="bar"
+                  class="chart chart-bar"
+                  width="300"
+                  height="150"
+                  chart-data="data"
+                  chart-series="series"
+                  chart-colours="colors"
+                  chart-options="options"
+                  chart-labels="labels | date:'MM/dd/yyyy'"
+                  chart-click="onClick">
+          </canvas>
+
+      </ion-item>
+
+      <ion-item class="activity-page summary">
+        <h1>2016 Challenge</h1>
+        <div class="year-settings ion-trophy" ng-click="showSetYearGoal()" style="z-index: 10"></div>
+        <h2>Raise ${{yearlyGoal | number: 2}} in 2016: <span style="color: #00b9be"> {{daysLeftInYear()}} days left</span></h2>
+        <div class="row">
+         <h3 class="col">Progress</h3>
+         <h3 class="col avg">${{progressWeekAvg | number: 2}}/week</h3>
+        </div>
+        <tek-progress-bar class="my-progress" ng-model="progressVal">${{currentYearFunds | number: 2}}</tek-progress-bar>
+
+        <div class="row">
+          <h3 class="col">Pace Bunny</h3>
+          <h3 class="col avg">${{paceBunnyWeekAvg | number: 2}}/week</h3>
+        </div>
+        <tek-progress-bar class="my-pace-bunny" ng-model="paceBunnyVal">${{yearlyPace | number: 2}}</tek-progress-bar>
+      </ion-item>
+
+    </ion-list>
+  </ion-content>
+</ion-view>

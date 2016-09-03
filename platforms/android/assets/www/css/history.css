@@ -1,0 +1,208 @@
+.activity-page .spacer {
+  padding: 10px;
+}
+
+ion-content.activity-page {
+  background-color: #efefef;
+}
+
+ion-list.activity-page {
+}
+
+ion-item.activity-page {
+  height: 50vw;
+  padding: 0;
+
+  margin-bottom: 2px;
+
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+  .activity-page.charities-banner .swiper-pagination-bullet {
+    background-color: #fff;
+  }
+  .activity-page.charities-banner .charity-banner {
+    background-position: center;
+    background-image: url('../img/account_info-bg.png');
+    background-size: contain;
+    /*padding: 16px;*/
+    color: #fff;
+  }
+    .activity-page.charities-banner .charity-banner .gradient {
+      background: linear-gradient( rgba(0, 0, 0, .7), rgba(0, 0, 0, .7) );
+      height: 50vw;
+      padding: 16px;
+    }
+
+    .activity-page.charities-banner .charity-banner .charity-name {
+      font-size: xx-large;
+      font-weight: 300;
+    }
+
+    .activity-page.charities-banner .charity-banner .detail-title {
+      font-size: medium;
+      font-weight: 600;
+
+    }
+
+    .activity-page.charities-banner .charity-banner .detail {
+      -ms-word-wrap: break-word;
+      word-wrap: break-word;
+
+      white-space: normal;
+    }
+
+
+      .activity-page.charities-banner .charity-banner .detail .funds {
+        text-align: left;
+        font-size: xx-large;
+      }
+
+      .activity-page.charities-banner .charity-banner .detail .impact {
+        text-align: left;
+        font-size: medium;
+      }
+
+  .activity-page.goal-stats {
+    border: 8px solid transparent;
+    position: relative;
+
+    -ms-word-wrap: break-word;
+    word-wrap: break-word;
+    white-space: normal;
+  }
+
+    .activity-page.goal-stats .goal-settings {
+      position: absolute;
+      right: 10px;
+      top: 5px;
+
+      width: 30px;
+      height: 30px;
+      text-align: right;
+    }
+
+    .activity-page.goal-stats .row .col{
+      position: relative;
+    }
+
+      .activity-page.goal-stats .row .col .heading{
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+    .activity-page.goal-stats .row .col:first-child {
+      /*border-right: 1px solid #ccc;*/
+    }
+
+      .activity-page.goal-stats .row .label{
+         position: absolute;
+         top: 50%;
+         bottom: auto;
+         left: 50%;
+         transform: translateY(-50%) translateX(-50%);
+
+         color: #000;
+         font-weight: 200;
+         line-height: 1;
+         font-size: 3.75vh;
+         text-align: center;
+       }
+
+        .activity-page.goal-stats .row .label span {
+          font-size: 2.5vh;
+          font-weight: 400;
+          color: #777;
+        }
+
+
+      .activity-page.goal-stats .row .round-progress-wrapper{
+      }
+
+      .activity-page.goal-stats .row svg.round-progress{
+        display:block;
+        margin: auto;
+        padding: 20px;
+      }
+
+
+
+ion-item.activity-page.week-graph {
+  position: relative;
+  height: 50vw;
+}
+
+  .activity-page.week-graph {
+    background: #efefef;
+    /*background: linear-gradient(#00c4ca, #00686D); !* Standard syntax *!*/
+  }
+
+    .activity-page.week-graph canvas{
+      position: absolute;
+      bottom: 0;
+      padding: 0 4px;
+    }
+
+
+ion-item.activity-page.summary {
+  position: relative;
+  padding: 16px;
+  height: 200px;
+}
+
+.activity-page.summary .col, .activity-page.summary .row {
+  padding: 0;
+}
+
+  .activity-page.summary .col.avg {
+    text-align: right;
+  }
+
+  .activity-page.summary .year-settings {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+  }
+.activity-page.summary h1{
+    font-size: x-large;
+    font-weight: 200;
+    margin-bottom: 10px;
+  }
+
+  .activity-page.summary h2{
+    font-weight: 500;
+    /*font-size: x-large;*/
+    margin-bottom: 15px;
+  }
+
+    .activity-page.summary tek-progress-bar.my-progress .progress .progress-bar {
+      background-color: #00b9be;
+      position: relative;
+      height: 20px;
+      border-radius: 3px;
+
+      font-size: small;
+      vertical-align: top;
+      padding-left: 5px;
+      color: #000;
+      font-weight: 500;
+
+      margin-bottom: 10px;
+    }
+
+    .activity-page.summary tek-progress-bar.my-pace-bunny .progress .progress-bar {
+      background-color: orange;
+      position: relative;
+      height: 20px;
+      border-radius: 3px;
+
+      font-size: small;
+      vertical-align: top;
+      padding-left: 5px;
+      color: #000;
+      font-weight: 500;
+    }
+
+

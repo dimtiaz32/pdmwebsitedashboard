@@ -1,0 +1,65 @@
+<ion-view view-title="{{raceName}}" class="race-profile">
+
+  <ion-nav-buttons side="left">
+    <button class="button back-button buttons button-clear header-item" ng-click="goBack()">
+      <i class="icon ion-ios-arrow-back"></i>
+      Back
+    </button>
+  </ion-nav-buttons>
+
+  <ion-content>
+    <ion-list>
+      <ion-item class="heading" style="background-image:url('img/race-images/race-banner-{{raceId}}.png');">
+        <div class="heading-gradient">
+          <div class="row">
+            <div class="col">
+             <h1 class="race-name">{{raceName}}</h1>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <h2 class="race-date">{{raceDate | date:'MM/dd/yyyy'}}</h2>
+            </div>
+            <div class="col">
+              <div  ng-repeat="distance in raceDistances">
+                <h2 class="race-distance">{{distance}}</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ion-item>
+
+      <ion-item class="item-text-wrap">
+        <p class="">Description{{raceDescription}}</p>
+      </ion-item>
+
+      <ion-item class="divider">
+        <div class="row">
+          <div class="col">
+            Partner Charities
+          </div>
+        </div>
+      </ion-item>
+
+
+      <ion-list>
+        <ion-item ng-repeat="charity in charityPartners">
+          {{charity}}
+        </ion-item>
+      </ion-list>
+      <!--<ion-item>-->
+        <!--<div class="">RANDOM CHARITY - TEST {{raceCharityPartners}}</div>-->
+      <!--</ion-item>-->
+      <!--<ion-item>-->
+        <!--<div class="">RANDOM CHARITY - TEST {{raceCharityPartners}}</div>-->
+      <!--</ion-item>-->
+      <!--<ion-item>-->
+        <!--<div class="">RANDOM CHARITY - TEST {{raceCharityPartners}}</div>-->
+      <!--</ion-item>-->
+
+
+    </ion-list>
+    <button class="register button button-positive button-full" ng-show="!isSignedUp" ng-click="registerForRace()">Sign Up For Race</button>
+    <button class="remove button button-positive button-full" ng-show="isSignedUp" ng-click="removeRace()">Remove race</button>
+  </ion-content>
+</ion-view>

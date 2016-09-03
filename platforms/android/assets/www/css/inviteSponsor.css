@@ -1,0 +1,154 @@
+
+.invite-sponsor.header{
+  padding-top: 8px;
+  background-color: #efefef;
+}
+
+
+.invite-sponsor.header .heading {
+  background-color: #efefef;
+  color: #000000;
+  font-weight: 200;
+  font-size: 2em;
+  text-align: center;
+  padding: 2% 2% 2% 2%;
+}
+
+  .invite-sponsor.header .heading .ion-close-round{
+    position: absolute;
+    left: 10px;
+  }
+
+h2.invite-sponsor {
+  margin: 20px 20px 5px 20px;;
+  /*margin: 0;*/
+  font-weight: 300;
+  font-size: 1.25em;
+  color: black;
+  text-align: left;
+}
+
+p.invite-sponsor {
+  font-size: 1em;
+  font-weight: 300;
+  margin: 0 5% 0% 5%;
+  padding: 3%;
+  background-color: #efefef;
+}
+
+  p.invite-sponsor textarea {
+    resize: none;
+    width: 100%;
+    text-align: center;
+    background-color: transparent !important;
+  }
+
+/*Donation Link Styling*/
+.donation-link.invite-sponsor.unselected p {
+  text-align: center;
+  background-color: #efefef;
+  margin: 0 20px 20px 20px;
+}
+
+.donation-link.invite-sponsor.selected p {
+  text-align: center;
+  background-color: #00b9be;
+  padding: 2%;
+  margin: 0 20px 20px 20px;
+  color: white;
+  -webkit-user-select: auto;
+}
+
+p.invite-sponsor.link {
+  -webkit-user-select: text;
+}
+
+.scroll-content {
+  -webkit-user-select: auto !important;
+  -moz-user-select: inherit !important;
+  -ms-user-select: inherit !important;
+  user-select: inherit !important;
+}
+
+.invite-sponsor.how-does-it-work {
+  margin-bottom: 30px;
+}
+
+
+/*Share Buttons Styling - Text and Email*/
+ul.invite-sponsor {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 3%;
+}
+
+ul.invite-sponsor li {
+    display: inline;
+}
+/*#buttons {*/
+  /*text-align: center;*/
+/*}*/
+/*.invite-sponsor.button.button-assertive {*/
+    /*background-color: #ce1d1f;*/
+    /*width: 35%;*/
+    /*padding: 0;*/
+    /*margin-right: 7%;*/
+    /*margin-left: 7%*/
+/*}*/
+/*.invite-sponsor.button.button-assertive.activated {*/
+    /*background-color: #00b9be;*/
+/*}*/
+
+.invite-sponsor .button {
+  background-color: #00b9be;
+}
+
+.invite-sponsor .button.activated {
+  /*background-color: #00b9be;*/
+}
+
+.invite-sponsor.fb-logo {
+  position: relative;
+  top: 10px;
+  left: 5%;
+  width: 5%;
+  height: 50px;
+  width: auto;
+}
+
+
+input[type="text"].transparent-input {
+  border:none !important
+}
+
+.transparent-input {
+  background-color: rgba(0, 0, 0, 0);
+  border:none;
+}
+
+input[type="text"].transparent-input{
+  background-color:rgba(0,0,0,0) !important;
+  border:none !important;
+}
+
+
+/*popup copy confirm notification*/
+.invite-sponsor.copy-confirm {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+
+  text-align: center;
+  font-size: 1.2em;
+  color: #fff;
+
+  background-color: rgba(0,0,0,.7);
+  padding: 15px;
+  border-radius: 10px;
+}
+
+  .invite-sponsor.copy-confirm span {
+    font-size: 2em;
+  }

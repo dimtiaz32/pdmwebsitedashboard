@@ -1,0 +1,117 @@
+.my-pledges.sponsor-header {
+  background-image: url("../img/account_info-bg.png");
+  background-position: bottom;
+   background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+
+  width: 100%;
+  height: 75px;
+
+
+  display: inline-block;
+}
+
+.my-pledges.col.col-50.image {
+  background-image: url("../img/Avatar.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  max-height: 120px;
+  margin: 10px 0;
+}
+
+.my-pledges.col.col-67 {
+  color: white;
+  font-weight: 300;
+  font-size: 1.5em;
+
+  text-align: right;
+}
+
+.my-pledges.col.col-33 {
+  color: #fff;
+  font-size: .65em;
+
+  font-weight: 300;
+  line-height: 100%;
+  text-align: right;
+  padding: 5px 0px 5px 0;
+}
+
+.my-pledges.username h2 {
+  font-weight: 300;
+  font-size: 2em;
+
+  color: #fff;
+  text-align: left;
+
+  width: 100%;
+  white-space: nowrap;
+  overflow: scroll;
+
+  margin: 10px 0 10px 0;
+
+}
+
+.my-pledge .wrapper {
+  width: 100vw;
+  height: 100vh;
+}
+
+.my-pledges.button.button-small.button-clear.button-PDMLight {
+  color: #00b9be; /*PDMLight color*/
+  font-size: 1em;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.my-pledges.button.button-clear.button-sponsor-help {
+  color: #00b9be; /*PDMLight color*/
+  font-size: 1em;
+  font-weight: 500;
+
+  text-align: center;
+  margin: auto;
+}
+
+.my-pledges hr {
+  background-color: #00B50C;
+  padding: 0;
+
+  height: 3px;
+  border: none;
+  margin: 0px;
+}
+
+.my-pledges h3 {
+  font-size: 1.5em;
+  font-weight: 300;
+  text-align: left;
+}
+
+.my-pledges.col.pledge {
+  text-align: right;
+  line-height: 80%;
+}
+p.pledge.my-pledges  {
+  font-weight: bold;
+  color: black;
+  text-align: right;
+  overflow: visible;
+}
+p.ending-date.my-pledges  {
+  font-weight: 300;
+  font-size: .9em;
+  overflow: visible;
+}
+
+a.my-pledges.item.item-icon-left {
+  height: 100%;
+}
+
+.my-pledges.cell-vertical-center-text {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}

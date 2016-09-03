@@ -1,0 +1,74 @@
+<ion-content ng-controller="SponsorsAmountCtrl">
+
+  <div class="card">
+
+    <div class="item item-divider">
+      Sponsor Yesh!
+      <i class="icon icon-left ion-home"></i>
+    </div>
+
+    <div class="item item-text-wrap">
+      <h1>Pledge Duration</h1>
+      <div class="row">
+        <div class="col col-33">
+          <button class="button"
+                  ng-class="{'active': isActive('one')}"
+                  ng-click="saveMonthsWithMonths(1); setActive('one')">
+            1<span style="font-size: smaller"> months</span>
+          </button>
+        </div>
+        <div class="col col-33">
+          <button class="button"
+                  ng-class="{'active': isActive('two')}"
+                  ng-click="saveMonthsWithMonths(3); setActive('two')">
+            3<span style="font-size: smaller"> months</span>
+          </button>
+        </div>
+        <div class="col col-33">
+          <button class="button"
+                  ng-class="{'active': isActive('three')}"
+                  ng-click="saveMonthsWithMonths(6); setActive('three')">
+            6<span style="font-size: smaller"> months</span>
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-33">
+          <button class="button"
+                  ng-class="{'active': isActive('four')}"
+                  ng-click="saveMonthsWithMonths(12); setActive('four')">
+            1<span style="font-size: smaller"> year</span>
+          </button>
+        </div>
+        <div class="col col-33">
+          <button class="button"
+                  ng-class="{'active': isActive('five')}"
+                  ng-click="saveMonthsWithMonths(24); setActive('five')">
+            2<span style="font-size: smaller"> years</span>
+          </button>
+        </div>
+        <div class="col col-33">
+          <div style="text-align:center;">
+            <input type="text" placeholder="0 months" ng-model="donor.months" size="8"/>
+          </div>
+        </div>
+      </div>
+
+      <p style="color: #808080">At a <b>30¢/mile</b> pledge, the average runner (at 100 miles per month) will raise
+        <b>$30 per month</b></p>
+
+      <ion-checkbox ng-click="toggleCheck()">Do you want to place a limit on the maximum amount donated each month?</ion-checkbox>
+
+      <ion-item class="item-accordion item-text-wrap" ng-show="isChecked">
+        <h1>Limit to <u>$20.00/month</u></h1>
+      </ion-item>
+
+    </div>
+
+    <div class="item item-divider">
+      <button class="button button-full button-assertive" style="color: white; font-size: x-large; font-weight: normal;">Next</button>
+    </div>
+
+  </div>
+
+</ion-content>
