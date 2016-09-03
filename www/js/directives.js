@@ -12,6 +12,8 @@ angular.module('starter.directives', [])
         onCreate: '&'
       },
       link: function($scope, $element, $window, $attr){
+
+        localStorage.setItem('readyToRun', 'no');
         $scope.initialize= function(){
 
           // navigator.geolocation.watchPosition(function(pos){
@@ -28,9 +30,6 @@ angular.module('starter.directives', [])
           // };
 
           var map = new google.maps.Map($element[0]);
-
-
-
 
           $scope.onCreate({map: map});
 

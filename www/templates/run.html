@@ -115,6 +115,38 @@
       <!--Lap {{lapNumber}}-->
     <!--</div>-->
 
+    <img src="img/locate-me-icon.png" class="run-page button-locate running" ng-class="isRunning ? 'running' : 'not-running'" ng-click="locateBtnTpd()">
+
+    <button class="run-page button button-medium button-start"
+            ng-show="!isRunning"
+            ng-click="startRunBtnTpd()">
+      Start My DREAM<b>RUN</b>
+    </button>
+
+    <button class="run-page button button-medium button-lap"
+            ng-show="displayThisBtnRun()"
+            ng-click="lapBtnTapped()">
+      Lap
+    </button>
+
+    <button class="run-page button button-medium button-pause"
+            ng-show="displayThisBtnRun()"
+            ng-click="pauseBtnTapped()">
+      Pause
+    </button>
+
+    <button class="run-page button button-medium button-resume"
+            ng-show="displayThisBtnPaused()"
+            ng-click="resumeBtnTpd()">
+      Resume
+    </button>
+
+    <button class="run-page button button-medium button-stop"
+            ng-show="displayThisBtnPaused()"
+            ng-click="stopButtonTpd()">
+      Stop
+    </button>
+
   </ion-content>
 
   <!-- <ion-footer-bar class="run-page bar-stable">
@@ -125,11 +157,7 @@
 
   <!-- These are the buttons that control the run-->
   <!--
-    <button class="run-page button button-medium button-start"
-            ng-show="!isRunning"
-            ng-click="toggleRun()">
-      Start My DREAMRUN
-    </button>
+
     <button class="run-page button button-medium button-lap"
             ng-show="isRunning"
             ng-click="lapBtnTapped()">

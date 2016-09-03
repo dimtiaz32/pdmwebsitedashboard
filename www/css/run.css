@@ -143,9 +143,8 @@ p.run-page.detail-head {
     color: #444;
   }
 
-button.run-page.button-large.button-lap {
-
-  position: absolute;
+button.run-page.button-lap {
+  /*
   top: 65%;
   left: 5%;
   right: 5%;
@@ -154,12 +153,36 @@ button.run-page.button-large.button-lap {
 
   background-color: #00b9be;
   color: white;
+*/
+  position: absolute;
+
+  background-color: #00b9be;
+  align: center;
+  border: 2px solid #00b9be;
+  border-radius: 3px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  width: 275px;
+  height: 25px;
+  margin-bottom: 20px;
+  text-align: center;
+  bottom: 75px;
+  left: 50%;
+  transform: translate(-50%,0);
+
+  color: rgba(255, 255, 255, 1);
+  font-family: "HelveticaNeue";
+  font-weight: 300;
+  font-size: 24px;
+  line-width: 556px;
+  padding-lefft: 5px;
+  padding-right: 5px;
 
   z-index: 10;
 }
 
 button.run-page.button-pause {
-  position: absolute;
+  /*
   top: 80%;
   left: 5%;
   right: 5%;
@@ -168,12 +191,75 @@ button.run-page.button-pause {
 
   background-color: white;
   color: #00b9be;
+*/
+  position: absolute;
+
+  background-color: #ffffff;
+  align: center;
+  border: 2px solid #ffffff;
+  border-radius: 3px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+
+  height: 50px;
+  width: 275px;
+  margin-bottom: 25px;
+  text-align: center;
+  bottom: 5px;
+
+  color: #00b9be;
+  font-family: "HelveticaNeue";
+  font-weight: 300;
+  font-size: 24px;
+  line-width: 556px;
+  padding-left: 5px;
+  padding-right: 5px;
+  left: 50%;
+  transform: translate(-50%,0);
 
   z-index: 10;
 }
 
-button.run-page.button-pause-red{
+button.run-page.button-resume {
+ /*
+  top: 65%;
+  left: 5%;
+  right: 5%;
+
+  width: 90%;
+
+  background-color: #00b9be;
+  color: white;
+*/
   position: absolute;
+
+  background-color: #00b9be;
+  align: center;
+  border: 2px solid #00b9be;
+  border-radius: 3px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  width: 275px;
+  height: 25px;
+  margin-bottom: 20px;
+  text-align: center;
+  bottom: 75px;
+  left: 50%;
+  transform: translate(-50%,0);
+
+  color: rgba(255, 255, 255, 1);
+  font-family: "HelveticaNeue";
+  font-weight: 300;
+  font-size: 24px;
+  line-width: 556px;
+  padding-lefft: 5px;
+  padding-right: 5px;
+
+  z-index: 10;
+}
+
+button.run-page.button-stop {
+ /*
   top: 80%;
   left: 5%;
   right: 5%;
@@ -182,24 +268,123 @@ button.run-page.button-pause-red{
 
   background-color: red;
   color: white;
+  */
+  position: absolute;
+
+  background-color: #ce1d1f;
+  align: center;
+  border: 2px solid #ce1d1f;
+  border-radius: 3px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+
+  height: 50px;
+  width: 275px;
+  margin-bottom: 25px;
+  text-align: center;
+  bottom: 5px;
+
+  color: rgba(255, 255, 255, 1);
+  font-family: "HelveticaNeue";
+  font-weight: 300;
+  font-size: 24px;
+  line-width: 556px;
+  padding-left: 5px;
+  padding-right: 5px;
+  left: 50%;
+  transform: translate(-50%,0);
 
   z-index: 10;
 }
 
 button.run-page.button-start {
-
-  position: absolute;
+ /*
   bottom: 5%;
   left: 10%;
   right: 10%;
-  width: 80%;
+  width: 80vw;
 
   background-color: #00b9be;
   color: white;
 
   height: 10px;
+*/
+  font-family: "HelveticaNeue";
+  font-weight: 300;
+
+  position: absolute;
+
+  background-color: #00b9be;
+  border: 2px solid #00b9be;
+  border-radius: 3px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+
+  width: 275px;
+  height: 50px;
+  margin-bottom: 25px;
+  text-align: center;
+  margin: inherit auto;
+  bottom: 5px;
+  left: 50%;
+  transform: translate(-50%,0);
+
+  color: white;
+
+  font-size: 24px;
+  line-width: 556px;
+  z-index: 10;
+
+}
+
+img.run-page.button-locate.running {
+
+  background-color: white;
+  color: #808080;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 45px;
+  height: 45px;
+  position: absolute;
+
+  right: 0;
+  padding: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .3);
+
+  position: absolute;
+  bottom: 130px;
+  left: 70vw;
+  margin-bottom: 25px;
 
   z-index: 10;
+
+}
+
+img.run-page.button-locate.not-running {
+
+  background-color: white;
+  color: #808080;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 45px;
+  height: 45px;
+  position: absolute;
+
+  right: 0;
+  padding: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .3);
+
+  position: absolute;
+  bottom: 70px;
+  margin-bottom: 25px;
+  left: 70vw;
+
+  z-index: 10;
+
+}
+
+button.run-page.button-locate.not-running {
+
 }
 
 .verticalLine.run-page {
@@ -348,3 +533,5 @@ a.run-page.no-charity {
   padding: 15px;
   border-radius: 10px;
 }
+
+
