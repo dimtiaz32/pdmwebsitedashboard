@@ -672,7 +672,9 @@ angular.module('starter.historyController', [
         console.log('getByWeek data.length: data.length: ' + data.length);
         for(var i=0; i< data.length; i++){
           $scope.weekHistory.push(data[i]);
+          console.log('ANGULAR FILTER data['+i+'].date: ' + $filter('date')(data[i].date, "yyyy-MM-dd HH:mm:ss.sssZ"));
           console.log('data['+i+'].date: ' + data[i].date);
+          // $scope.dates.push($filter('date')(data[i].date, "yyyy-MM-dd HH:mm:ss.sssZ"));
           $scope.dates.push(data[i].date);
           $scope.distances.push(data[i].distance);
           // $scope.dates
@@ -709,10 +711,12 @@ angular.module('starter.historyController', [
 
         $scope.matchDateToLabel = function(date){
           console.log('matchDateToLabel entered with date: ' + date);
-          var fDate = $scope.removeTimeSplit(date);
+          // var fDate = $scope.removeTimeSplit(date);
+          var fDate = $filter('date')(date, 'yyyy-MM-dd');
           for(var i=0; i< 7; i++){
             console.log('$scope.labelsNotForDisplay: ' + $scope.labelsNotForDisplay[i]);
-            var label = $scope.labelTimeSplit($scope.labelsNotForDisplay[i]);
+            // var label = $scope.labelTimeSplit($scope.labelsNotForDisplay[i]);
+            var label = $filter('date')($scope.labelsNotForDisplay[i], 'yyyy-MM-dd');
             console.log('label: ' + label + ' fDate: ' + fDate );
             if(fDate == label){
               console.log('matched date to label with values: ' + fDate + '    ' + label);

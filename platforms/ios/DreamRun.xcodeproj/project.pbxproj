@@ -71,15 +71,12 @@
 		D75F1F201D78EFB4009C4CF0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D75F1F151D78EFB4009C4CF0 /* QuartzCore.framework */; };
 		D75F1F211D78EFB4009C4CF0 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D75F1F161D78EFB4009C4CF0 /* QuickLook.framework */; };
 		D75F1F221D78EFB4009C4CF0 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D75F1F171D78EFB4009C4CF0 /* Security.framework */; };
-		D7F5D86F1D7B1D580052669D /* workDullesData.gpx in Resources */ = {isa = PBXBuildFile; fileRef = D7F5D86E1D7B1D580052669D /* workDullesData.gpx */; };
-		D7F5D8711D7B1D750052669D /* workDullesData.gpx in Resources */ = {isa = PBXBuildFile; fileRef = D7F5D8701D7B1D750052669D /* workDullesData.gpx */; };
 		D9E28C8CDDD04F3B89D5FDC5 /* gzlib.c in Sources */ = {isa = PBXBuildFile; fileRef = FC8821F161174AE0B4D6922A /* gzlib.c */; };
 		E08F5C33FAA242FE86FBF095 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E70521AC9D4993A84A504F /* AudioToolbox.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		E4CF2E521BE042B9A9217B69 /* UNIJsonNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 126701429B524CBDBDB273CE /* UNIJsonNode.m */; };
 		F21DB5765574465C872E0C87 /* CDVNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E1F76D0A3B4D14B9687C87 /* CDVNotification.m */; };
 		F29D6708A3704501B1C8D09E /* UNIRest.m in Sources */ = {isa = PBXBuildFile; fileRef = A305DFB699ED40359268835A /* UNIRest.m */; };
 		F4727E3A5B0B48E29C11304F /* inftrees.c in Sources */ = {isa = PBXBuildFile; fileRef = 8204F00952244BA6A2DF0F53 /* inftrees.c */; };
-		F770268559644819919771FF /* appbeep.wav in Resources */ = {isa = PBXBuildFile; fileRef = 74AA29BAF95F4C33990D0BAD /* appbeep.wav */; };
 		F7D9D4AAC0714D5BAB197BBE /* UNIHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7700E534B0C34732B4A83F40 /* UNIHTTPRequest.m */; };
 		FED1A7F7233B4DD594CA362F /* DisableShakeToEdit.m in Sources */ = {isa = PBXBuildFile; fileRef = 69ACD37B343C4984B0157F17 /* DisableShakeToEdit.m */; };
 /* End PBXBuildFile section */
@@ -155,7 +152,6 @@
 		69ACD37B343C4984B0157F17 /* DisableShakeToEdit.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = DisableShakeToEdit.m; path = "cordova-plugin-ios-disableshaketoedit/DisableShakeToEdit.m"; sourceTree = "<group>"; };
 		6EFAB8715C72485DA70386AD /* zip.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = zip.h; path = "ionic-plugin-deploy/zip.h"; sourceTree = "<group>"; };
 		739B95F1B38B480A9E4F3611 /* ioapi.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = ioapi.h; path = "ionic-plugin-deploy/ioapi.h"; sourceTree = "<group>"; };
-		74AA29BAF95F4C33990D0BAD /* appbeep.wav */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; path = appbeep.wav; sourceTree = "<group>"; };
 		7700E534B0C34732B4A83F40 /* UNIHTTPRequest.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = UNIHTTPRequest.m; path = "ionic-plugin-deploy/UNIHTTPRequest.m"; sourceTree = "<group>"; };
 		78E1F76D0A3B4D14B9687C87 /* CDVNotification.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVNotification.m; path = "cordova-plugin-dialogs/CDVNotification.m"; sourceTree = "<group>"; };
 		79FF005394924966B0C40B4C /* UNIJsonNode.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = UNIJsonNode.h; path = "ionic-plugin-deploy/UNIJsonNode.h"; sourceTree = "<group>"; };
@@ -209,8 +205,6 @@
 		D75F1F151D78EFB4009C4CF0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D75F1F161D78EFB4009C4CF0 /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
 		D75F1F171D78EFB4009C4CF0 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		D7F5D86E1D7B1D580052669D /* workDullesData.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = workDullesData.gpx; path = ../../../../../../../Desktop/workDullesData.gpx; sourceTree = "<group>"; };
-		D7F5D8701D7B1D750052669D /* workDullesData.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = workDullesData.gpx; path = ../../../../../../../Desktop/workDullesData.gpx; sourceTree = "<group>"; };
 		D9A1F1F90568412EB503E888 /* inflate.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = inflate.h; path = "ionic-plugin-deploy/inflate.h"; sourceTree = "<group>"; };
 		DA407D45467341EF845972EB /* TSLocationManager.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = TSLocationManager.framework; path = "DreamRun/Plugins/com.transistorsoft.cordova.background-geolocation/TSLocationManager.framework"; sourceTree = "<group>"; };
 		DDE54AEBAF07436E873E1553 /* inffast.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = inffast.h; path = "ionic-plugin-deploy/inffast.h"; sourceTree = "<group>"; };
@@ -292,8 +286,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				D7F5D8701D7B1D750052669D /* workDullesData.gpx */,
-				D7F5D86E1D7B1D580052669D /* workDullesData.gpx */,
 				EB87FDF41871DAF40020F90C /* config.xml */,
 				EB87FDF31871DA8E0020F90C /* www */,
 				EB87FDF11871DA420020F90C /* Staging */,
@@ -325,7 +317,6 @@
 				0207DA571B56EA530066E2B4 /* Images.xcassets */,
 				3047A50E1AB8057F00498E2A /* config */,
 				8D1107310486CEB800E47090 /* DreamRun-Info.plist */,
-				74AA29BAF95F4C33990D0BAD /* appbeep.wav */,
 				CDDD197CEE0044E589021099 /* CDVNotification.bundle */,
 			);
 			name = Resources;
@@ -559,10 +550,7 @@
 			files = (
 				302D95F214D2391D003F00A1 /* MainViewController.xib in Resources */,
 				0207DA581B56EA530066E2B4 /* Images.xcassets in Resources */,
-				F770268559644819919771FF /* appbeep.wav in Resources */,
-				D7F5D86F1D7B1D580052669D /* workDullesData.gpx in Resources */,
 				D4EC4B8F136F48F3AC78BE52 /* CDVNotification.bundle in Resources */,
-				D7F5D8711D7B1D750052669D /* workDullesData.gpx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

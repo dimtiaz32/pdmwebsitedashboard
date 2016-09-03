@@ -20,11 +20,22 @@ angular.module('starter.runController', ['starter.appServices',
 
 //TODO: CLEAR VALUES AFTER RUN SUMMARY, NEW RUN BUTTON?
 
+
   .controller('RunCtrl', function($scope, $cordovaBackgroundGeolocation, $window, $rootScope,$ionicPlatform, $cordovaGeolocation,  $ionicLoading,$ionicPopup, $interval, AppAPI, UserAPI, RunAPI, CharityAPI, HistoryAPI, DonationAPI, $timeout, $ionicModal){
 
+    $rootScope.$broadcast('runMonthMoneyRaised');
+    $rootScope.$broadcast('runWeekMoneyRaised');
+    $rootScope.$broadcast('fetchMoneyRaisedPerMile');
+    $rootScope.$broadcast('ChangeCharity');
+    $scope.isDetailDisplayed = false;
+    $scope.isRunDetailDisplayed = false;
   $rootScope.$on('initRun', function(){
 
 
+
+    $rootScope.$broadcast('LoadRun');
+
+    $rootScope.$broadcast('scroll.refreshComplete');
 
 
     $rootScope.$on('LoadRun', function(){
@@ -34,15 +45,13 @@ angular.module('starter.runController', ['starter.appServices',
       $scope.$broadcast('scroll.refreshComplete');
     });
 
-
     $rootScope.$on('ChangeCharity', function(){
       $scope.charityName = $rootScope.getSelectedCharityName();
       $scope.$broadcast('scroll.refreshComplete');
     });
 
     // $scope.charityName = $rootScope.getSelectedCharityName();
-    $rootScope.$broadcast('LoadRun');
-    $rootScope.$broadcast('ChangeCharity');
+
 
     $scope.lat =[];
     $scope.long = [];
@@ -60,9 +69,10 @@ angular.module('starter.runController', ['starter.appServices',
     $scope.runPath = null;
     $scope.marker;
 
+    /*
     $scope.isDetailDisplayed = false;
     $scope.isRunDetailDisplayed = false;
-
+*/
 
 
     $scope.hasCharity = function(){
@@ -127,9 +137,11 @@ angular.module('starter.runController', ['starter.appServices',
       }
     });
 
-    $rootScope.$broadcast('fetchMoneyRaisedPerMile');
+
 
     console.log('$scope.moneyRaised: ' + $scope.getMoneyRaisedPerMile());
+
+
 
 
 
@@ -583,8 +595,7 @@ angular.module('starter.runController', ['starter.appServices',
       console.log("--------end runMonthMoneyRaised---------");
     });
 
-    $rootScope.$broadcast('runMonthMoneyRaised');
-    $rootScope.$broadcast('runWeekMoneyRaised');
+
 
 
     //Center-Map Button
@@ -767,9 +778,6 @@ angular.module('starter.runController', ['starter.appServices',
 
     $scope.polyCoords = [];
     $scope.line = [];
-
-
-
     $scope.oldZoom = 18;
 
     $scope.getCustomRadiusForZoom = function(zoomLevel){
@@ -912,16 +920,6 @@ angular.module('starter.runController', ['starter.appServices',
           console.log('background geolocation failed to find users location');
         }
 
-        // $scope.bgSuccess = function(pos){
-        //   console.log('bgSuccess entered with: ' + JSON.stringify(pos));
-        //   var ll = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-        //   console.log('bg timestamp: ' + pos.coords.timeStamp)
-        //   console.log('background success: coords: ' + ll);
-        //   $scope.polyCoords.push(ll);
-        //   console.log('polyCoords updated from background: ' + JSON.stringify($scope.polyCoords));
-        // }
-
-
         $scope.bgSuccess = function(lat, lng){
           console.log('bgSuccess entered with lat: ' + lat +' and lng: ' + lng);
           var yy = new google.maps.LatLng(lat, lng);
@@ -956,7 +954,10 @@ angular.module('starter.runController', ['starter.appServices',
               }
 
               // Listen to location events & errors.
-              $scope.bgGeo.on('location', callbackFn, failureFn);
+              if($scope.isRunning == true){
+                console.log('entered scope.isRunning with isRunning value: ' + $scope.isRunning);
+                $scope.bgGeo.on('location', callbackFn, failureFn);
+              }
 
               // Fired whenever state changes from moving->stationary or vice-versa.
 
@@ -1006,6 +1007,8 @@ angular.module('starter.runController', ['starter.appServices',
                   $scope.bgGeo.stop();
                 }
               }
+
+              $scope.toggleEnabled(true);
             }
           // });
         }
@@ -1353,6 +1356,10 @@ angular.module('starter.runController', ['starter.appServices',
       console.log('charityId for run post: ' + $rootScope.getSelectedCharityName());
 
 
+
+      // var results = $filter('date')(new Date(), "yyyy-MM-dd HH:mm:ss.sssZ");
+      // var offset = new Date();
+      // console.log('timezone : '+ results);
 
       var form = {
         distance: $scope.distance,
